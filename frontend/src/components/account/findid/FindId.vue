@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>비밀번호 찾기</h1>
+    <h1>가나다라</h1>
   </div>
 </template>
 
 <script>
 export default {
-    name:'Find_Pw'
+  name:'findId'
 }
 </script>
 
