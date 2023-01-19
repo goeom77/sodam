@@ -1,8 +1,19 @@
 <template>
   <nav>
+<<<<<<< HEAD
+    <div id="navCategory">
+      <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
+      <router-link to="/about">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+      <router-link to="/about">HELP DESK</router-link>
+    </div>
+    <div id="navMypage">
+      <router-link to="/">마이 페이지</router-link>
+    </div>
+=======
     <router-link to="/">Home</router-link> |
 
     <router-link to="/login">login</router-link>
+>>>>>>> 48b5e7a7bdf60c8f54e951f97d32c601157c96da
   </nav>
   <router-view/>
 </template>
@@ -13,19 +24,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000000;
 }
 
 nav {
-  padding: 30px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F1E7DB;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #000000;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #579BB1;
 }
 </style>
