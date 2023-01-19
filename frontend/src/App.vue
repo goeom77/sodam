@@ -2,8 +2,8 @@
   <nav>
     <div id="navCategory">
       <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
-      <router-link to="/about">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/about">HELP DESK</router-link>
+      <router-link to="/">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+      <router-link to="/">HELP DESK</router-link>
     </div>
     <div id="navMypage">
       <router-link to="/login">Login</router-link>

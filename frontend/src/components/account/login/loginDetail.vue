@@ -9,20 +9,18 @@
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
         <br>
-        <button class="btn" @click="moveFindId">아이디 찾기</button>
-        <button class="btn" @click="moveFindPw">비밀번호 찾기</button>
+        <button @click="moveFindId">아이디 찾기</button>
+        <button type="submit" @click="moveFindPw">비밀번호 찾기</button>
         <br>
         <button class="btn">로그인</button>
         <br>
-        <button class="btn" @click="moveKakao">카카오 로그인</button>
+        <button @click="moveKakao">카카오 로그인</button>
         <div style="display:block">
           <h4>계정이 없으신가요?</h4>
           <button class="btn" @click="moveSignUp">회원 가입</button>
           <router-link to="/login">login</router-link>
-
         </div>
       </form>
-
     </div>
   </div>
 
@@ -49,17 +47,15 @@ export default {
         }
         this.$store.dispatch('login', payload)
       },
-      moveSignUp(){
-        this.$router.push({name:'SignUp'})
-      },
       moveFindId(){
-        this.$router.push({name:'Find_Id'})
+        console.log('파인드 아이디 입구')
+        this.$router.push({name:'find_Id'})
       },
       moveFindPw(){
-        this.$router.push({name:'Find_Pw'})
+        this.$router.push({name:'find_Pw'})
       },
       moveKakao(){
-        this.$router.push({name:'kakao'})
+        this.$router.push({name:'loginKakao'})
       }
 
     }
