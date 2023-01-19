@@ -1,6 +1,5 @@
 <template>
   <nav>
-<<<<<<< HEAD
     <div id="navCategory">
       <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
       <router-link to="/about">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
@@ -9,11 +8,6 @@
     <div id="navMypage">
       <router-link to="/">마이 페이지</router-link>
     </div>
-=======
-    <router-link to="/">Home</router-link> |
-
-    <router-link to="/login">login</router-link>
->>>>>>> 48b5e7a7bdf60c8f54e951f97d32c601157c96da
   </nav>
   <router-view/>
 </template>

@@ -21,7 +21,7 @@ export default {
 #homeview {
   margin-top: 61px;
   width: 100%;
-  background-image: url('file:///C:/Users/SSAFY/Desktop/hand.webp');
+  background-image: url('../assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
   background-size: cover;
