@@ -1,12 +1,14 @@
-import { createStore } from "vuex";
-import accountStore from "./accountStore";
-import menuStore from "./menuStore";
-import platformInfoStore from "./platformInfoStore";
+import { createStore } from 'vuex'
 
 export default createStore({
+  state: {
+  },
+  getters: {
+  },
+  mutations: {
+  },
+  actions: {
+  },
   modules: {
-    accountStore,
-    menuStore,
-    platformInfoStore
   }
-});
+})
