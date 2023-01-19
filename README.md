@@ -7,10 +7,10 @@
 | Application | Domain | Language | Framework |
 | ---- | ---- | ---- | ---- |
 | :white_check_mark: Desktop Web | :black_square_button: AI | :white_check_mark: JavaScript | :white_check_mark: Vue.js |
-| :white_check_mark: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :black_square_button: React |
+| ::black_square_button: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :black_square_button: React |
 | :white_check_mark: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
 | :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :black_square_button: Node.js |
-| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :white_check_mark: Python | :white_check_mark: Flask/Django |
+| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :white_check_mark: Python | :black_square_button: white_check_mark: Flask/Django |
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
 | | | :black_square_button: Kotlin | |
 
@@ -43,11 +43,19 @@
 <!-- 자유 양식 -->
 
 ## 팀 소개
-* 김ㅇㅇ: 팀장, 프론트엔드 개발
-* 이ㅇㅇ: 부팀장, 기획 및 와이어프레임 작성, 프론트엔드 개발
-* 박ㅇㅇ: 백엔드 개발 및 QA 담당
-* 홍ㅇㅇ: 백엔드 개발, Swagger API 문서 관리
-* 전ㅇㅇ: 코드 리뷰 및 인프라 담당, CI/CD, HTTPS, Docker 구성
+* 황호선: 팀장, 프론트엔드 개발
+* 정재훈: 와이어프레임 작성, 프론트엔드 개발
+* 엄형규: 백엔드 개발
+* 김아현: 백엔드 개발
+* 김미현: 백엔드 개발,  Docker 구성
+* 김빛누리 : 백엔드 개발
+
+## git convention
+
++ Master(main) : 제품 출시할 수 있는 브랜치
++ Develop : 다음 버전 개발 브랜치
++ {Feature} : 기능을 개발하는 브랜치
++ Release : 배포 브랜치
 
 <!-- 자유 양식 -->
 
