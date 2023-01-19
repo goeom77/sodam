@@ -9,8 +9,8 @@
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
         <br>
-        <button @click="moveFindId">아이디 찾기</button>
-        <button type="submit" @click="moveFindPw">비밀번호 찾기</button>
+        <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
+        <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
         <br>
         <button class="btn">로그인</button>
         <br>
@@ -76,5 +76,8 @@ export default {
   height: 300px;
   background-color: white;
   border: 1px solid black;
+}
+.find{
+  text-decoration-line: none;
 }
 </style>
