@@ -1,19 +1,19 @@
 <template>
   <div class="row">
-    <loginImage style="float:left"/>
-    <loginDetail style="float:left"/>
+    <LoginImage style="float:left"/>
+    <LoginDetail style="float:left"/>
   </div>
 </template>
 
 <script>
-import loginImage from './loginImage.vue';
-import loginDetail from './loginDetail.vue';
+import LoginDetail from '@/components/account/login/LoginDetail.vue'
+import LoginImage from '@/components/account/login/LoginImage.vue'
 
 export default {
-  name:'loginView',
+  name:'LoginPage',
   components: {
-    loginImage,
-    loginDetail
+    LoginImage,
+    LoginDetail
   }
 }
 </script>

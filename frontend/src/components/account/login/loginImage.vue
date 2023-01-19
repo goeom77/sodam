@@ -6,7 +6,7 @@
   
   <script>
   export default {
-    name:'loginView'
+    name:'LoginImage'
   }
   </script>
   
