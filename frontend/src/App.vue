@@ -5,6 +5,7 @@
       <router-link to="/">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
       <router-link to="/">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
       <router-link to="/calendar">상담관리</router-link>
+
     </div>
     <div id="navMypage">
       <router-link to="/login">Login</router-link>
@@ -50,5 +51,4 @@ nav a {
 nav a.router-link-exact-active {
   color: #579BB1;
 }
-
 </style>
