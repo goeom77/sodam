@@ -9,16 +9,16 @@
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
         <br>
-        <button @click="moveFindId">아이디 찾기</button>
-        <button type="submit" @click="moveFindPw">비밀번호 찾기</button>
+        <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
+        <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
         <br>
         <button class="btn">로그인</button>
         <br>
-        <button @click="moveKakao">카카오 로그인</button>
+        <LoginKakao/>
+        <router-link class="find" :to="{name:'loginKakao'}">카카오 로그인</router-link>
         <div style="display:block">
           <h4>계정이 없으신가요?</h4>
-          <button class="btn" @click="moveSignUp">회원 가입</button>
-          <router-link to="/login">login</router-link>
+          <router-link class="find" :to="{name:'signupclient'}">회원가입</router-link>
         </div>
       </form>
     </div>
@@ -28,8 +28,12 @@
 </template>
 
 <script>
+import LoginKakao from './LoginKakao.vue'
 export default {
     name:'LoginDetail',
+    components:{
+      LoginKakao
+    },
     data(){
       return {
         ID: null,
@@ -67,6 +71,7 @@ export default {
 .input {
   background-color: #fff;
   border: none;
+  border-radius: 30px;
   padding: 0.9rem 0.9rem;
   margin: 0.5rem 0;
   width: 90%;
@@ -76,5 +81,9 @@ export default {
   height: 300px;
   background-color: white;
   border: 1px solid black;
+  border-radius: 30px;
+}
+.find{
+  text-decoration-line: none;
 }
 </style>
