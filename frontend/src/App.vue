@@ -10,7 +10,7 @@
       <router-link to="/">마이 페이지</router-link>
     </div>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
@@ -29,6 +29,7 @@ nav {
   align-items: center;
   background-color: #F1E7DB;
   position: fixed;
+  z-index: 3;
   top: 0;
   left: 0;
   right: 0;
