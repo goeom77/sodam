@@ -7,6 +7,7 @@ import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
+import KidBoard from '../views/board/Kid/KidBoard.vue'
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path:'/calendar',
     name:'calendar',
     component: CalendarView
+  },
+  {
+    path: '/KidBoard',
+    name: 'KidBoard',
+    component: KidBoard
   },
 ]
 

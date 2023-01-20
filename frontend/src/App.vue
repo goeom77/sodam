@@ -2,7 +2,7 @@
   <nav>
     <div id="navCategory">
       <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
-      <router-link to="/">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+      <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
       <router-link to="/">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
       <router-link to="/calendar">상담관리</router-link>
 
@@ -29,6 +29,10 @@ document.querySelector('body').setAttribute('style',"margin: 0;")
 }
 
 nav {
+  /* 반응형 x */
+  width: 1200px;
+  margin: 0 auto;
+
   padding: 20px;
   display: flex;
   justify-content: space-between;

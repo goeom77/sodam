@@ -30,19 +30,23 @@ export default {
 </script>
 <style>
 #homeview {
-
+  /* 반응형 x */
+  width: 1200px;
+  margin: 0 auto;
 }
 
 #hand {
   margin-top: 61px;
   /* width: 100%; */
-  background-image: url('../assets/hand.png');
+  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('../assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
-  /* background-size: 100% 100%; */
-  background-size: cover;
-  opacity: 0.7;
+  background-size: 100% 100%;
+  /* background-size: cover; */
+    /* opacity: 0.7; */
   text-align: start;
+  font-size: large;
+  font-weight: 100;
   padding-top: 20px;
   padding-bottom: 40px;
   padding-left: 50px;

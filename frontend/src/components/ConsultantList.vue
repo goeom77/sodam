@@ -2,7 +2,7 @@
   <div id="ConsultantList" class="hello">
     <div id="ConsultantCategory">
       <div id="box1">상담사</div>
-      <div id="box2">아동, 청소년, 성인, 부부, 노인, 기타</div>
+      <div id="box2">전체, 아동, 청소년, 성인, 부부, 노인, 기타</div>
     </div>
     <div id="ConsultantCategory">
       <div id="box3">
