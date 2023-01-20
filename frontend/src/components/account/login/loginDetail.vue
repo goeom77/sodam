@@ -14,11 +14,11 @@
         <br>
         <button class="btn">로그인</button>
         <br>
-        <button @click="moveKakao">카카오 로그인</button>
+        <LoginKakao/>
+        <router-link class="find" :to="{name:'loginKakao'}">카카오 로그인</router-link>
         <div style="display:block">
           <h4>계정이 없으신가요?</h4>
-          <button class="btn" @click="moveSignUp">회원 가입</button>
-          <router-link to="/login">login</router-link>
+          <router-link class="find" :to="{name:'signupclient'}">회원가입</router-link>
         </div>
       </form>
     </div>
@@ -28,8 +28,12 @@
 </template>
 
 <script>
+import LoginKakao from './LoginKakao.vue'
 export default {
     name:'LoginDetail',
+    components:{
+      LoginKakao
+    },
     data(){
       return {
         ID: null,

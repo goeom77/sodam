@@ -1,7 +1,6 @@
-<template>
-    <section class="test">
-      <div v-on:click="kakaoLoginBtn">카카오 연동</div>
-    </section>
+  <template>
+    <div v-on:click="kakaoLoginBtn">카카오 연동</div>
+
   </template>
   
   <script>
@@ -10,7 +9,6 @@
     name: "LoginKakao",
     methods: {
       kakaoLoginBtn:function(){
-  
         window.Kakao.init('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') // Kakao Developers에서 요약 정보 -> JavaScript 키
   
         if (window.Kakao.Auth.getAccessToken()) {
@@ -52,6 +50,6 @@
   </script>
   
   <style scoped>
-    .test{ display:flex; justify-content: center; align-items: center; height:100vh; }
+
     div{ width: 200px; height:40px; background-color:#fdd101; color:white; display:flex; align-items: center; justify-content: center; cursor:pointer; }
   </style>
