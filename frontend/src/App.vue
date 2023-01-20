@@ -4,7 +4,7 @@
       <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
       <router-link to="/">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
       <router-link to="/">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/">상담관리</router-link>
+      <router-link to="/calendar">상담관리</router-link>
     </div>
     <div id="navMypage">
       <router-link to="/login">Login</router-link>

@@ -6,6 +6,7 @@ import FindPw from '@/components/account/findpw/FindPw.vue'
 import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
+import CalendarView from '@/components/management/CalendarView.vue'
 
 const routes = [
   {
@@ -42,6 +43,11 @@ const routes = [
     path:'/signupcounselor',
     name:'signupcounselor',
     component: SignUpCounselor
+  },
+  {
+    path:'/calendar',
+    name:'calendar',
+    component: CalendarView
   },
 ]
 
