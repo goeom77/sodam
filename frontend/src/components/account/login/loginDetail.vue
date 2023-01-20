@@ -71,6 +71,7 @@ export default {
 .input {
   background-color: #fff;
   border: none;
+  border-radius: 30px;
   padding: 0.9rem 0.9rem;
   margin: 0.5rem 0;
   width: 90%;
@@ -80,6 +81,7 @@ export default {
   height: 300px;
   background-color: white;
   border: 1px solid black;
+  border-radius: 30px;
 }
 .find{
   text-decoration-line: none;
