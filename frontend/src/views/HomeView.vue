@@ -9,7 +9,7 @@
         placeholder="상담사, 카테고리 검색.."
       />
     </div>
-    <HelloWorld/>
+    <ConsultantList/>
 
   </div>
 </template>
@@ -17,13 +17,13 @@
 <script>
 // @ is an alias to /srcz
 
-import HelloWorld from '@/components/HelloWorld.vue'
+import ConsultantList from '@/components/ConsultantList.vue'
 
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    ConsultantList
   },
 
 }
@@ -39,6 +39,7 @@ export default {
   background-image: url('../assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
+  /* background-size: 100% 100%; */
   background-size: cover;
   opacity: 0.7;
   text-align: start;
@@ -46,7 +47,6 @@ export default {
   padding-bottom: 40px;
   padding-left: 50px;
   padding-right: 50px;
-  border: 1px solid red;
 }
 #searhBar {
   width: 100%;

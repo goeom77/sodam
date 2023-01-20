@@ -14,6 +14,10 @@
   <router-view />
 </template>
 
+<script>
+document.querySelector('body').setAttribute('style',"margin: 0;")
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
