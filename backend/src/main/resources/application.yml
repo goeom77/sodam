@@ -12,22 +12,13 @@ spring:
     hibernate:
       ddl-auto: update
 
-  security:
-    oauth2:
-      client:
-        registration:
-          kakao:
-            client-id: 9e0f9a70f672fba12b71ea1b5ec10e80
-            client-secret: clientsecret
-            client-name: Kakao
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080
-        provider:
-          kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token_uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user_name_attribute: id
+# 로그 레벨 설정
+logging:
+  level:
+    # hibernate 가 남기는 모든 로그가 debug모드로 설정
+    # jpa hibernate가 생성하는 sql이 로거를 통해서 찍히도록 하는 설정
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace # 실제 들어가는 파라미터값 찍어주는 설정
 
 jwt:
   # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용

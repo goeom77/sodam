@@ -7,13 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CounselorRepository extends JpaRepository<Counselor,String> {
 
-    // 아직 덜만들어서 주석처리
-    //public void deleteByCounselorId(String id); 
+    // Integer deleteByCounselorId(Integer id);
+
+    // Counselor findCounselor(String email);
+
+   // Counselor saveCounselor(Counselor counselor);
 
     boolean existsByEmail(String email);
 
     Counselor getByCounselorId(String id);
     Counselor findByCounselorId(String id);
-
 
 }
