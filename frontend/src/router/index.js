@@ -39,7 +39,7 @@ const routes = [
     component: LoginKakao
   },
   {
-    path:'/signupclient',
+    path:'/api/auth/signup/client',
     name:'signupclient',
     component: SignUpClient
   },
