@@ -5,12 +5,12 @@
       <h1>고민 게시판</h1>
       <br>
       <div id="worryCategory"> 
-        <div id="KidCategory" class="row" >아동 상담</div>
-        <div id="TeenCategory" class="row">청소년 상담</div>
-        <div id="AdultCategory" class="row">성인 상담</div>
-        <div id="CoupleCategory" class="row">부부 상담</div>
-        <div id="OldCategory" class="row">노년 상담</div>
-        <div id="GuitarCategory" class="row" >기타 상담</div>
+        <router-link to="/KidBoard" id="KidCategory" class="row" >아동 상담</router-link> &nbsp;&nbsp;&nbsp;
+        <router-link to="/" id="TeenCategory" class="row">청소년 상담</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/" id="AdultCategory" class="row">성인 상담</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/" id="CoupleCategory" class="row">부부 상담</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/" id="OldCategory" class="row">노년 상담</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/" id="GuitarCategory" class="row">기타 상담</router-link>&nbsp;&nbsp;&nbsp;
       </div>
       <div>
 
@@ -32,6 +32,14 @@ export default {
   components: {
     KidBoardList
   },
+  // created() {
+  //   this.getKidBoardArticles()
+  // },
+  // methods: {
+  //   getKidBoardArticles() {
+  //   this.$store.dispatch('getKidBoardArticles')
+  //   }
+  // }
 }
 </script>
 
@@ -42,6 +50,16 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:visited {
+  background-color: #579BB1;
+}
+
 
 #worryBoard {
   margin-top: 61px;
@@ -63,7 +81,6 @@ export default {
   line-height: 50px;
   /* justify-content: center; */
   text-align: center;
-  color: white;
   background-color:rgba(96, 96, 96, 0.5);
 } 
 
