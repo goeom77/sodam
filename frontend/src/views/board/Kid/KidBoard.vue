@@ -12,20 +12,29 @@
         <div id="OldCategory" class="row">노년 상담</div>
         <div id="GuitarCategory" class="row" >기타 상담</div>
       </div>
+      <div>
+
+      </div>
     </div>
     <div>
       
     </div>
+    <KidBoardList/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /srcz
+import KidBoardList from '@/components/BoardItem/KidBoardList.vue'
 
 export default {
   name: 'KidBoard',
+  components: {
+    KidBoardList
+  },
 }
 </script>
+
 
 <style>
 #KidBoard {
