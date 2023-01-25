@@ -10,6 +10,7 @@ import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/Kid/KidBoard.vue'
 import announce from '../views/helpdesk/announce/announce.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
+import notice from '../views/my/notice/notice.vue'
 
 
 const routes = [
@@ -63,12 +64,18 @@ const routes = [
     name: 'announce',
     component: announce
   },
+  {
+    path: '/notice',
+    name: 'notice',
+    component: notice
+  },
   
   {
     path: '/clientmanage',
     name: 'clientmanage',
     component: ClientManage
   },
+
 ]
 
 const router = createRouter({
