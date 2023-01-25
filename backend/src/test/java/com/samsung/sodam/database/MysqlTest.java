@@ -1,23 +1,22 @@
 package com.samsung.sodam.database;
 
+import com.samsung.sodam.config.TestConfig;
 import com.samsung.sodam.db.entity.Counselor;
-import com.samsung.sodam.db.entity.STATE;
-import com.samsung.sodam.db.entity.USER_TYPE;
 import com.samsung.sodam.db.repository.CounselorRepository;
-import com.samsung.sodam.db.specification.CounselorSpecification;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
-@Transactional
+@DataJpaTest
+@Import(TestConfig.class)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class MysqlTest {
 
     @Autowired
@@ -25,12 +24,16 @@ public class MysqlTest {
 
     @Test
     public void createDummyCounselor(){
+        //given
+        Counselor dummyCounselor = Counselor.builder().counselorId("idid").name("유저이름").password("비밀번호").email("user1@naver.com").tel("01012341234").career("경력사항입니다.").refreshToken("token").groopCodeId("001").major("부부상담").gender("여").qualification(true).routine("rooooootine").build();
+        repository.save(dummyCounselor);
 
-        Counselor dummyCounselor = new Counselor(null,"유저이름","비밀번호","user1@naver.com","01012341234","경력사항입니다.","token", USER_TYPE.COUNSELOR,"부부상담","여", STATE.APPROVED,true,true);
-        repository.saveCounselor(dummyCounselor);
+        //when
+        List<Counselor> postsList = repository.findAll();
 
-        List<Counselor> allCounselor = repository.findAll(CounselorSpecification.equalFilterKeyword("유저이름"));
+        //then
+        Counselor counselor = postsList.get(0);
 
-        assertThat(allCounselor.get(0).getEmail()).isEqualTo(dummyCounselor.getEmail());
+        assertThat(counselor.getEmail()).isEqualTo(dummyCounselor.getEmail());
     }
 }
