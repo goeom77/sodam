@@ -7,10 +7,7 @@ import com.samsung.sodam.jwt.TokenDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("/api/auth")
@@ -39,4 +36,16 @@ public class AuthController {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @GetMapping(value="/check-duplicate-id/{id}")
+    public HttpStatus checkDuplicate(@PathVariable String id) {
+        try {
+            authService.validateDuplicateId(id);
+            return HttpStatus.OK;
+        } catch (Exception e){
+                System.out.println(e.getMessage());
+                return HttpStatus.CONFLICT;
+        }
+    }
+
 }
