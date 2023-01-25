@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>kakao register</h1>
+<div id="code">?</div>
+<a onclick="f()">getToken!</a>
+<script>
+
+    let KAKAO_CODE;
+    window.onload = function() {
+        const PARAMS = new URL(document.location).searchParams;
+        KAKAO_CODE = PARAMS.get('code');
+        console.log(KAKAO_CODE)
+        document.querySelector("#code").innerHTML = KAKAO_CODE
+    }
+
+    async function f() {
+        let url = 'http://localhost:8080/api/auth/kakao/get-token'
+        let response = await fetch(url + '?code=' + KAKAO_CODE);
+
+
+        if(response.ok){ // HTTP 상태 코드가 200~299일 경우
+            // 응답 본문을 받습니다.
+            let json = await response.json();
+            console.log(json)
+        }else{
+            alert('HTTP-Error: '+response.status);
+        }
+    }
+
+</script>
+</body>
+</html>
+

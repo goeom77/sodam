@@ -1,6 +1,5 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,25 +9,51 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Counselor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Id
+    @Column(length=30)
+    private String counselorId;
+
+    @Column(length = 50)
     private String name;
+
+    @Column(length = 100)
     private String password;
+
+    @Column(length = 50)
     private String email;
+
+    @Column(length = 50)
     private String tel;
-    private String carrer;
-    @Column(name = "refresh_token")
+
+    @Column(length = 300)
+    private String career;
+
+    @Column(length = 150)
+    private String introduce;
+
+    @Column(length = 200)
     private String refreshToken;
-    @Column(name = "group_code")
-    private USER_TYPE groupCode;
+
+    @Column(length = 3)
+    private String groopCodeId;
+
+    @Column(length = 30)
     private String major;
+
+    @Column(length = 3)
     private String gender;
-    private STATE qualification;
-    private Boolean routine;
-    @Column(name = "enterprise_id")
-    private Boolean enterpriseId;
+
+    private Boolean qualification;
+
+    @Column(length = 28)
+    private String routine;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "enterprise_id")
+    private Enterprise enterprise;
 }

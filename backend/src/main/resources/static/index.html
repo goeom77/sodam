@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>This is Sodam 1</h1>
+<h2>This is Sodam 2</h2>
+<h3>This is Sodam 3</h3>
+<h4>This is Sodam 4</h4>
+<h5>This is Sodam 5</h5>
+<h6>This is Sodam 6</h6>
+
+<a id="loginBtn" type="button" onclick="function login() {
+    const redirectUri = 'http://localhost:8080/auth/kakao/callback';
+        const appKey = '9e0f9a70f672fba12b71ea1b5ec10e80'
+            window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + appKey +
+    '&redirect_uri=' + redirectUri + '&response_type=code';
+
+}
+login()"><img src="kakao_login_btn.png" alt="button"></a>
+<a onclick="alert('alert test')">alert?</a>
+</body>
+</html>
+

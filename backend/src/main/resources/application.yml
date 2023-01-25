@@ -10,10 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # ?? ?? ??
     show-sql: true   # sql ??? ????.
     hibernate:
-      ddl-auto: create
-    properties: # property 사용 설정
-      hibernate: # hibernate property 설정
-        format_sql: true
+      ddl-auto: update
 
 # 로그 레벨 설정
 logging:
@@ -22,3 +19,9 @@ logging:
     # jpa hibernate가 생성하는 sql이 로거를 통해서 찍히도록 하는 설정
     org.hibernate.SQL: debug
     org.hibernate.type: trace # 실제 들어가는 파라미터값 찍어주는 설정
+
+jwt:
+  # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용
+  # base64 encode
+  secret-key: and0LXRvcC1zZWNyZXQtbG9sbG9sbG9sLXNwcmluZy1zZWN1cml0eS10b29vby1oYXJkLVRULUFNMDE1MS05ODc2NTQzMjE
+  token-validity-in-seconds: 86400
