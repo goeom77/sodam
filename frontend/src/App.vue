@@ -12,7 +12,7 @@
       <router-link to="/">마이 페이지</router-link>
     </div>
   </nav>
-  <router-view />
+  <router-view /> 
 </template>
 
 <script>
