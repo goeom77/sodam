@@ -36,15 +36,14 @@ public class Client {
     private String refreshToken;
 
     @Column(length = 3)
-    private String groopCodeId;
+    private String groopCodeId = "2";   // 내담자 그룹코드
 
     @Builder
-    public Client(String clientId, String password, String email, String tel, String name, String groopCodeId) {
+    public Client(String clientId, String password, String email, String tel, String name) {
         this.clientId = clientId;
         this.password = password;
         this.email = email;
         this.tel = tel;
         this.name = name;
-        this.groopCodeId = groopCodeId;
     }
 }

@@ -14,6 +14,9 @@ public interface ClientRepository extends JpaRepository<Client,String> , ClientC
     int updatePassword(String id, String password);
 
 
+    boolean existsByEmail(String email);
 
+    Client getByClientId(String id);
 
+    Client findByClientId(String id);
 }
