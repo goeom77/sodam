@@ -10,4 +10,6 @@ public interface AuthService {
     String clientSignup(ClientRequest request);
 
     TokenDto login(LoginRequest request);
+
+    void validateDuplicateId(String id);
 }

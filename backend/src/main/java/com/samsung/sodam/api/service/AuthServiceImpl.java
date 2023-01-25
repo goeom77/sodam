@@ -29,6 +29,14 @@ public class AuthServiceImpl implements AuthService{
         }
     }
     @Override
+    public void validateDuplicateId(String id) {
+        boolean existClient = clientRepository.existsById(id);
+        boolean existCounselor = conselorRepository.existsById(id);
+        if (existClient || existCounselor) {
+            throw new IllegalStateException("존재하는 아이디입니다");
+        }
+    }
+    @Override
     public String clientSignup(ClientRequest request) {
         validateDuplicateMember(request.getEmail());
 
@@ -66,13 +74,12 @@ public class AuthServiceImpl implements AuthService{
         System.out.println("input pw - " + request.getPassword());
         System.out.println("input encode pw - " + request.getPassword());
 
-        if(!passwordEncoder.matches(request.getPassword(), encodePassword)){
+        if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-
-
         return jwtTokenProvider.generateToken(type==2? client.getClientId():counselor.getCounselorId(), type);
     }
+
 
 
 }
