@@ -11,7 +11,8 @@ import KidBoard from '../views/board/Kid/KidBoard.vue'
 import announce from '../views/helpdesk/announce/announce.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
 import notice from '../views/my/notice/notice.vue'
-
+import CheckEditInformation from '../views/editinformation/CheckEditInformation.vue'
+import EditInformation from '../views/editinformation/EditInformation.vue'
 
 const routes = [
   {
@@ -69,13 +70,21 @@ const routes = [
     name: 'notice',
     component: notice
   },
-  
   {
     path: '/clientmanage',
     name: 'clientmanage',
     component: ClientManage
   },
-
+  {
+    path: '/checkeditinformation',
+    name: 'checkeditinformation',
+    component: CheckEditInformation
+  },
+  {
+    path: '/editinformation',
+    name: 'editinformation',
+    component: EditInformation
+  },
 ]
 
 const router = createRouter({
