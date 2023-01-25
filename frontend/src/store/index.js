@@ -22,6 +22,24 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    getKidBoardArticles(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/backend/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_KIDBOARDARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
     login(context,payload){
       axios({
         method:'post',
