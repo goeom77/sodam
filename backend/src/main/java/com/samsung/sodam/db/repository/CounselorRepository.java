@@ -1,11 +1,12 @@
 package com.samsung.sodam.db.repository;
 
 import com.samsung.sodam.db.entity.Counselor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CounselorRepository extends JpaRepository<Counselor,Integer> {
+public interface CounselorRepository extends JpaSpecificationExecutor<Counselor> {
+    Counselor findCounselor(String email);
 
-    Integer deleteByCounselorId(Integer id);
+    Counselor saveCounselor(Counselor counselor);
+
 }
