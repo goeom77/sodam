@@ -10,7 +10,7 @@
 
     <div id="navMypage">
       <router-link to="/login">Login</router-link> | 
-      <router-link to="/">마이 페이지</router-link>
+      <router-link to="/notice">마이 페이지</router-link>
     </div>
   </nav>
   <router-view /> 
