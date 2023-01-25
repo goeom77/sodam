@@ -8,6 +8,7 @@ import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/Kid/KidBoard.vue'
+import ClientManage from '@/components/management/ClientManage.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/KidBoard',
     name: 'KidBoard',
     component: KidBoard
+  },
+  {
+    path: '/clientmanage',
+    name: 'clientmanage',
+    component: ClientManage
   },
 ]
 

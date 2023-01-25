@@ -1,7 +1,11 @@
 <template>
-  <div class="row">
-    <LoginImage style="float:left"/>
-    <LoginDetail style="float:left"/>
+  <div id="cover">
+    <div class="check">
+      <LoginImage />
+    </div>
+    <div class="check">
+      <LoginDetail/>
+    </div>
   </div>
 </template>
 
@@ -19,5 +23,10 @@ export default {
 </script>
 
 <style>
-
+#cover{
+  text-align: center;
+}
+.check {
+  display: inline-block;
+}
 </style>
