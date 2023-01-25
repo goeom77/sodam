@@ -49,6 +49,7 @@ export default {
           ID: ID,
           password: password
         }
+        console.log(payload)
         this.$store.dispatch('login', payload)
       },
       moveFindId(){
