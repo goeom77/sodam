@@ -57,7 +57,7 @@ export default {
           email: email,
           number: number,
         }
-
+        console.log(payload)
         this.$store.dispatch('signup', payload)
 
       }

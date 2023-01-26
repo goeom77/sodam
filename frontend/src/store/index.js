@@ -56,7 +56,6 @@ export default new Vuex.Store({
         })
     },
     signup(context, payload){
-
       axios({
         method:'post',
         url: `${API_URL}/api/auth/signup/client`,
@@ -71,6 +70,8 @@ export default new Vuex.Store({
       })
         .then((res)=>{
           console.log(res)
+          context.commit('SAVE_TOKEN',response.data.key)
+
 
         })
     }
