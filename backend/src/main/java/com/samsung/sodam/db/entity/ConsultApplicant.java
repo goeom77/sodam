@@ -33,4 +33,7 @@ public class ConsultApplicant {
     private Integer turn; // 회차
     @Column(name = "session_id")
     private Integer sessionId;
+
+    @Column(name = "apply_datetime")
+    private LocalDateTime applyDateTime;
 }

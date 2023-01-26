@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class ConsultSchedule {
-    @Id @GeneratedValue
+    @Id
     private Long id;
     @Column(name = "consult_type")
     private ConsultType consultType;
