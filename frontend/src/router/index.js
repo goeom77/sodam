@@ -8,7 +8,12 @@ import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/Kid/KidBoard.vue'
+import announce from '../views/helpdesk/announce/announce.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
+import notice from '../views/my/notice/notice.vue'
+import CheckEditInformation from '../views/editinformation/CheckEditInformation.vue'
+import EditInformation from '../views/editinformation/EditInformation.vue'
+import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 
 const routes = [
   {
@@ -37,7 +42,7 @@ const routes = [
     component: LoginKakao
   },
   {
-    path:'/signupclient',
+    path:'/api/auth/signup/client',
     name:'signupclient',
     component: SignUpClient
   },
@@ -57,9 +62,34 @@ const routes = [
     component: KidBoard
   },
   {
+    path: '/announce',
+    name: 'announce',
+    component: announce
+  },
+  {
+    path: '/notice',
+    name: 'notice',
+    component: notice
+  },
+  {
     path: '/clientmanage',
     name: 'clientmanage',
     component: ClientManage
+  },
+  {
+    path: '/checkeditinformation',
+    name: 'checkeditinformation',
+    component: CheckEditInformation
+  },
+  {
+    path: '/editinformation',
+    name: 'editinformation',
+    component: EditInformation
+  },
+  {
+    path: '/KidBoardCreate',
+    name: 'KidBoardCreate',
+    component: KidBoardCreate
   },
 ]
 

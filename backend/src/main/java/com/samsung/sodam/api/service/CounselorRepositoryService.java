@@ -26,7 +26,7 @@ public class CounselorRepositoryService {
     }
 
     public Counselor getCounselorInfo(String id) {
-        return repository.findByCounselorId(id);
+        return repository.getById(id);
     }
 
     public List<Review> getReviews(Long id) {

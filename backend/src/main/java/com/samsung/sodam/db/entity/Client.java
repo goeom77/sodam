@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.jwt.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,11 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Client {
+public class Client extends Member {
 
     @Id
     @Column(length=30)
-    private String clientId;
+    private String id;
 
 
     @Column(length = 100)
@@ -39,11 +40,13 @@ public class Client {
     private String groopCodeId = "2";   // 내담자 그룹코드
 
     @Builder
-    public Client(String clientId, String password, String email, String tel, String name) {
-        this.clientId = clientId;
+    public Client(String id, String password, String email, String tel, String name) {
+        super();
+        this.id = id;
         this.password = password;
         this.email = email;
         this.tel = tel;
         this.name = name;
     }
+
 }

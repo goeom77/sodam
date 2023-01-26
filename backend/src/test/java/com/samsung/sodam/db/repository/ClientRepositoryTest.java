@@ -25,14 +25,14 @@ public class ClientRepositoryTest {
     @Test
     @DisplayName("고객 회원가입")
     @Order(1)
-    public void clientSignUp(){
+    public void clientSignUp() {
         //given
         String id = "idd";
         String pw = "pw";
         String email = "ddd@gmail.com";
 
         clientRepository.save(Client.builder()
-                .clientId(id)
+                .id(id)
                 .password(pw)
                 .email(email)
                 .tel("010-0000-0000")
@@ -43,7 +43,7 @@ public class ClientRepositoryTest {
 
         //then
         Client client = postsList.get(0);
-        assertThat(client.getClientId()).isEqualTo(id);
+        assertThat(client.getId()).isEqualTo(id);
         assertThat(client.getPassword()).isEqualTo(pw);
 
 
@@ -52,7 +52,7 @@ public class ClientRepositoryTest {
     @Test
     @DisplayName("고객 비밀번호 수정")
     @Order(2)
-    public void clientUpdatePassword(){
+    public void clientUpdatePassword() {
 
         String id = "idd";
         String pw = "pw";
@@ -61,7 +61,7 @@ public class ClientRepositoryTest {
 
         clientSignUp();
         Client client1 = new Client();
-        client1.setClientId(id);
+        client1.setId(id);
         client1.setPassword(newPw);
         //clientRepository.updateClientInfo(client1);
         clientRepository.updatePassword(id, newPw);
@@ -71,7 +71,7 @@ public class ClientRepositoryTest {
 
         //then
         Client client = postsList.get(0);
-        assertThat(client.getClientId()).isEqualTo(id);
+        assertThat(client.getId()).isEqualTo(id);
         assertThat(client.getPassword()).isEqualTo(newPw);
         assertThat(client.getEmail()).isEqualTo(email);
     }

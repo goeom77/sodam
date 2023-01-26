@@ -8,20 +8,21 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface CounselorRepository extends JpaRepository<Counselor, String> {
+public interface CounselorRepository extends JpaRepository<Counselor,String> {
 
     // Integer deleteByCounselorId(Integer id);
 
     // Counselor findCounselor(String email);
 
-    // Counselor saveCounselor(Counselor counselor);
+   // Counselor saveCounselor(Counselor counselor);
 
     boolean existsByEmail(String email);
 
-    Counselor getByCounselorId(String id);
-
-    Counselor findByCounselorId(String id);
+    Counselor getById(String id);
+    Optional<Counselor> findById(String id);
 
     Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable);
 }
