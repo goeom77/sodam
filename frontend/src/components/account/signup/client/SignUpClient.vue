@@ -6,7 +6,6 @@
       </v-card-title>
       <v-card-text> 
           <v-row>
-            
             <v-col cols="12">
               <v-text-field
               label="Id"
@@ -18,25 +17,24 @@
               <div>
                 <span v-if="!idDuplicateFlag">중복</span>
                 <span v-else-if="idDuplicateFlag">사용 가능</span>
-
               </div>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 label="Password"
-                type="text"
+                type="password"
                 v-model="password"
                 @blur="passwordValid"
                 required
               ></v-text-field>
             </v-col>
             <div v-if="!passwordValidFlag">
-              유효하지않은 비밀번호입니다.              
+              유효하지않은 비밀번호입니다.                
             </div>
             <v-col cols="12">
               <v-text-field
               label="RE Password"
-              type="text"
+              type="password"
               v-model="password2"
               @blur="passwordCheckValid"
               required
@@ -53,7 +51,6 @@
                 required
               ></v-text-field>
             </v-col>
-
             <v-col cols="12">
               <v-text-field
                 label="E-mail"
@@ -71,7 +68,6 @@
               ></v-text-field>
             </v-col>
           </v-row>
-  
       </v-card-text>
       <v-card-actions>
         <!-- 오른쪽 끝으로 이동 -->

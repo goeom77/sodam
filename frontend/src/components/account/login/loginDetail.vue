@@ -3,7 +3,9 @@
     <!-- 로그인 창  -->
     <div class="loginform">
       <div class="container__form container--signup">
-      <form action="#" class="form" id="form1">
+      <form class="form" id="form1"
+      @submit.prevent="logIn"
+      >
         <h2 class="form__title">Sign Up</h2>
         
         <input type="text" v-model="ID"  placeholder="ID"/>

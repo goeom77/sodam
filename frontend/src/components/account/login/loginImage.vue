@@ -1,10 +1,7 @@
 <template>
-<v-img
-  lazy-src="@/assets/loginImage.png"
-  max-height="150"
-  max-width="250"
-  src="@/assets/loginImage.png"
-></v-img>
+  <div>
+    <img src="../../../assets/" alt="img">
+  </div>
 </template>
   
   <script>
