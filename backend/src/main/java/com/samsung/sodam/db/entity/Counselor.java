@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.jwt.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Counselor {
+public class Counselor extends Member {
     @Id
     @Column(length=30)
-    private String counselorId;
+    private String id;
 
     @Column(length = 50)
     private String name;
@@ -58,8 +59,8 @@ public class Counselor {
 
 
     @Builder
-    public Counselor(String counselorId, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, String gender, Boolean qualification, String routine) {
-        this.counselorId = counselorId;
+    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, String gender, Boolean qualification, String routine) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;

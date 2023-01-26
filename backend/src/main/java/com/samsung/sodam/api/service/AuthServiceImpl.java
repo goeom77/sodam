@@ -1,7 +1,7 @@
 package com.samsung.sodam.api.service;
 
+import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
-import com.samsung.sodam.api.request.LoginRequest;
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.repository.ClientRepository;
@@ -52,10 +52,10 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public TokenDto login(LoginRequest request) {
+    public TokenDto login(AuthCommonRequest request) {
         System.out.println("authService - " + request.getId());
-        Client client = clientRepository.getByClientId(request.getId());
-        Counselor counselor = conselorRepository.getByCounselorId(request.getId());
+        Client client = clientRepository.getById(request.getId());
+        Counselor counselor = conselorRepository.getById(request.getId());
 
         String encodePassword = null;
         int type = -1;
@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService{
         if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-        return jwtTokenProvider.generateToken(type==2? client.getClientId():counselor.getCounselorId(), type);
+        return jwtTokenProvider.generateToken(type==2? client.getEmail():counselor.getEmail(), type);
     }
 
 

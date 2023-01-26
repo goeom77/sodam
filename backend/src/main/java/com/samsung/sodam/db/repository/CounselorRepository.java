@@ -4,6 +4,8 @@ import com.samsung.sodam.db.entity.Counselor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CounselorRepository extends JpaRepository<Counselor,String> {
 
@@ -15,7 +17,7 @@ public interface CounselorRepository extends JpaRepository<Counselor,String> {
 
     boolean existsByEmail(String email);
 
-    Counselor getByCounselorId(String id);
-    Counselor findByCounselorId(String id);
+    Counselor getById(String id);
+    Optional<Counselor> findById(String id);
 
 }
