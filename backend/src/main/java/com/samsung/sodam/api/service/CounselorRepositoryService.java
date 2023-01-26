@@ -38,8 +38,8 @@ public class CounselorRepositoryService {
         return null;
     }
 
-    public Page<ConsultSchedule> getHistory(String id, Pageable pageable) {
-        return scheduleRepository.getAllSchedule(id, pageable);
+    public Page<ConsultSchedule> getHistory(Integer id, Pageable pageable) {
+        return scheduleRepository.getAllBySessionId(id, pageable);
     }
 
     public void setFavCounselor(FavoriteCounselor favoriteCounselor) {

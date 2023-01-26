@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class CounselorController {
 
     private final CounselorRepositoryService service;
@@ -66,9 +65,9 @@ public class CounselorController {
         service.removeFavCounselor(fav);
     }
 
-    //상담기록
+    //상담기록(한 세션에 대한 기록)
     @GetMapping("/client/{id}/consult")
-    public Page<ConsultSchedule> getHistory(Pageable pageable, @PathVariable String id) {
+    public Page<ConsultSchedule> getHistory(Pageable pageable, @PathVariable Integer id) {
         return service.getHistory(id, pageable);
     }
 

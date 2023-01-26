@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Id;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 public class Member {
 
+    @Id
     private String id;
 
     private String password;

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ScheduleRepository extends JpaRepository<ConsultSchedule, Long> {
+public interface ScheduleRepository extends JpaRepository<ConsultSchedule, Integer> {
 
-    Optional<ConsultSchedule> getSchedule(String id);
+    Optional<ConsultSchedule> getConsultSchedulesBySessionId(String sessionId);
 
-    Page<ConsultSchedule> getAllSchedule(String id, Pageable pageable);
+    Page<ConsultSchedule> getAllBySessionId(Integer sessionId, Pageable pageable);
 }

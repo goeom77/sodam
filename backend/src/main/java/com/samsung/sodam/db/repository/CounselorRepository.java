@@ -25,5 +25,5 @@ public interface CounselorRepository extends JpaRepository<Counselor,String>{
     Counselor getById(String id);
     Optional<Counselor> findById(String id);
 
-    Page<Counselor> findAll(CounselorSearchRequest request, Pageable pageable);
+//    Page<Counselor> findAll(CounselorSearchRequest request, Pageable pageable);
 }
