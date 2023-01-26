@@ -6,13 +6,14 @@ import router from '@/router'
 const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
   state: {
+    token:null,
   },
   getters: {
   },
   mutations: {
     SAVE_TOKEN(state, token) {
       state.token = token
-      router.push({ name: 'movie' })
+
     },
     SET_USER_DATA(state, payload) {
       state.payload = {
@@ -43,7 +44,7 @@ export default new Vuex.Store({
     login(context,payload){
       axios({
         method:'post',
-        url:'192.33333333',
+        url:`${API_URL}/api/auth/login/client`,
         data:{
           ID: payload.ID,
           password: payload.password,
@@ -68,11 +69,9 @@ export default new Vuex.Store({
           number:payload.number,
         }
       })
-        .then((res)=>{
-          console.log(res)
+        .then((response)=>{
+          console.log(response)
           context.commit('SAVE_TOKEN',response.data.key)
-
-
         })
     }
   },
