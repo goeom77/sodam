@@ -14,7 +14,12 @@
               v-model="id"
               required
               ></v-text-field>
-              <button type="button" class="btn btn-light" @click="findId">중복확인</button>
+              <button type="button" class="btn btn-light" @click="duplicateId">중복확인</button>
+              <div>
+                <span v-if="!idDuplicateFlag">중복</span>
+                <span v-else-if="idDuplicateFlag">사용 가능</span>
+
+              </div>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -91,8 +96,8 @@
 </template>
 
 <script>
-// const API_URL = 'http://127.0.0.1:8080'
-
+const API_URL = 'http://127.0.0.1:8080'
+import axios from 'axios'
 export default {
     name:'SignUpClient',
     data(){
@@ -103,12 +108,30 @@ export default {
         name:null,
         email:null,
         number:null,
+        idDuplicateFlag:true,
         passwordValidFlag: true,
         passwordCheckFlag: true,
       }
     },
 
     methods:{
+      // 아이디 중복 검사
+      duplicateId(){
+        axios({
+          method: 'get',
+          url:`${API_URL}/api/auth/check-duplicate-id/${this.id}`
+        })
+        .then(res =>{
+          if (res.data === 'OK'){
+            console.log(`${this.id}는 사용할 수 있는 아이디입니다.`)
+            this.idDuplicateFlag = true
+          }else{
+            console.log(`${this.id}는 사용할 수 없는 아이디입니다.`)
+            this.idDuplicateFlag = false
+          }
+        })
+      },
+
       //비밀번호 유효성 검사 
       passwordValid(){
         if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/.test(this.password)) {
