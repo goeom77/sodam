@@ -11,7 +11,7 @@
       확인
     </v-btn>
     </div>
-    <router-link to="/editinformation">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+    <router-link style="color: black;" to="/editinformation">고객관리</router-link>&nbsp;&nbsp;&nbsp;
   </div>
 </template>
 
