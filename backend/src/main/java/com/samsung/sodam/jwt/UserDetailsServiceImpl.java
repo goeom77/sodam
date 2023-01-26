@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -20,17 +22,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         Member member = null;
-        Client client = clientRepository.findByClientId(id);
-        Counselor counselor = conselorRepository.findByCounselorId(id);
+        Optional<Client> client = clientRepository.findById(id);
+        Optional<Counselor> counselor = conselorRepository.findById(id);
         System.out.println("UserDetailsServiceImpl - "+id);
         
-        if(client == null && counselor == null) throw new UsernameNotFoundException("로그인 실패");
+        if(client.isEmpty() && counselor.isEmpty()) throw new UsernameNotFoundException("로그인 실패");
 
-        if(client != null){
-            member = new Member(client.getClientId(), client.getPassword(), Role.CLIENT);
-        } else{
-            member = new Member(counselor.getCounselorId(), counselor.getPassword(), Role.COUNSELOR);
-        }
+        if(client.isEmpty()) member = counselor.orElse(null);
+        else member = client.orElse(null);
+
         return new UserDetailsImpl(member);
     }
 }

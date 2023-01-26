@@ -43,7 +43,7 @@ public class ClientRepositoryTest {
 
         //then
         Client client = postsList.get(0);
-        assertThat(client.getClientId()).isEqualTo(id);
+        assertThat(client.getId()).isEqualTo(id);
         assertThat(client.getPassword()).isEqualTo(pw);
 
 
@@ -61,7 +61,7 @@ public class ClientRepositoryTest {
 
         clientSignUp();
         Client client1 = new Client();
-        client1.setClientId(id);
+        client1.setId(id);
         client1.setPassword(newPw);
         //clientRepository.updateClientInfo(client1);
         clientRepository.updatePassword(id, newPw);
@@ -71,7 +71,7 @@ public class ClientRepositoryTest {
 
         //then
         Client client = postsList.get(0);
-        assertThat(client.getClientId()).isEqualTo(id);
+        assertThat(client.getId()).isEqualTo(id);
         assertThat(client.getPassword()).isEqualTo(newPw);
         assertThat(client.getEmail()).isEqualTo(email);
     }
