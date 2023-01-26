@@ -21,6 +21,7 @@ public class CounselorRepositoryService {
     SessionRepository sessionRepository;
     ApplicantRepository applicantRepository;
     FavoriteRepository favoriteRepository;
+    ClientRepository clientRepository;
 
 //    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
 //        return repository.searchCounselor(request, pageable);
@@ -34,8 +35,8 @@ public class CounselorRepositoryService {
         return reviewRepository.findAllByClientId(id);
     }
 
-    public Page<Client> getClients(String id) {
-        return null;
+    public Page<Client> getAllClients(Pageable pageable) {
+        return clientRepository.findAll(pageable);
     }
 
     public Page<ConsultSchedule> getHistory(Integer id, Pageable pageable) {

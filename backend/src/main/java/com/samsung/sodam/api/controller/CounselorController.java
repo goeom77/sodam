@@ -4,6 +4,7 @@ import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.db.entity.*;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ public class CounselorController {
 //        return service.searchCounselor(request, pageable);
 //    }
 
+    @ApiOperation(value = "상담사의 상세 정보를 조회")
     @GetMapping("counselor/{id}")
     //상담사 정보 조회
     public Counselor getCounselorInfo(@PathVariable String id) {
@@ -37,6 +39,7 @@ public class CounselorController {
 
     //상담 예약
     @PostMapping("/consult")
+    @ApiOperation(value = "상담 예약")
     public void makeNewSchedule(ConsultSchedule schedule) {
         service.makeNewSchedule(schedule);
     }
@@ -77,11 +80,19 @@ public class CounselorController {
         return service.makeSession(session);
     }
 
-    @GetMapping("/client/{consultantId}")
+    @GetMapping("/client")
+    @ApiOperation(value = "모든 고객 목록 조회")
     //고객목록
-    public Page<Client> getClients(@PathVariable String consultantId) {
-        return service.getClients(consultantId);
+    public Page<Client> getClients(@PathVariable Pageable pageable) {
+        return service.getAllClients(pageable);
     }
+
+//    @GetMapping("/client/{consultantId}")
+//    @ApiOperation(value = "고객 목록 조회")
+//    //고객목록
+//    public Page<Client> getClients(@PathVariable String consultantId) {
+//        return service.getAllClients(consultantId);
+//    }
 
     //일정 상세 정보
 
