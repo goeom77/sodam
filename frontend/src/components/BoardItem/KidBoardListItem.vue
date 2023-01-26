@@ -1,12 +1,22 @@
 <template>
   <div id="KidBoardListItem">
     <h1>여기는 각 게시글</h1>
-    <!-- <h5>{{ KidBoardarticle.id }}</h5>
-    <p>작성자 : {{ KidBoardarticle.username }}</p>
-    <p>{{ KidBoardarticle.title }}</p>
-    <router-link :to="{ name: 'KidBoardDetail', params: { id: KidBoardarticle.id } }">
-      [DETAIL]
-    </router-link> -->
+    <div>
+      <!-- <h5>{{ KidBoardarticle.id }} -->
+    </div>
+    <div>
+      <div>
+        <!-- <router-link :to="{ name: 'KidBoardDetail', params: { id: KidBoardarticle.id } }">
+          {{ KidBoardarticle.title }}
+        </router-link> -->
+      </div>
+      <div>
+        <!-- <p>{{ KidBoardarticle.username }}  {{ KidBoardarticle?.created_at }}</p> -->
+      </div>
+    </div>
+    <div>
+      <!-- <h3>조회수, 답변 수</h3> -->
+    </div>
     <hr>
 
   </div>

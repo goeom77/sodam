@@ -5,12 +5,12 @@
       <h1>고민 게시판</h1>
       <br>
       <div id="worryCategory"> 
-        <router-link to="/KidBoard" id="KidCategory" class="row" >아동 상담</router-link> &nbsp;&nbsp;&nbsp;
-        <router-link to="/" id="TeenCategory" class="row">청소년 상담</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/" id="AdultCategory" class="row">성인 상담</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/" id="CoupleCategory" class="row">부부 상담</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/" id="OldCategory" class="row">노년 상담</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/" id="GuitarCategory" class="row">기타 상담</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
+        <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
+        <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
+        <router-link to="/KidBoard" id="CoupleCategory" class="CategoryClass">부부 상담</router-link>
+        <router-link to="/KidBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
+        <router-link to="/KidBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
       </div>
       <div>
 
@@ -47,7 +47,7 @@ export default {
 <style>
 #KidBoard {
   /* 반응형 x */
-  width: 1200px;
+  width: 1080px;
   margin: 0 auto;
 }
 
@@ -62,13 +62,10 @@ a:visited {
 
 
 #worryBoard {
-  margin-top: 61px;
-  /* width: 100%; */
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  /* background-size: cover; */
   text-align: center;
   font-size: large;
   font-weight: 100;
@@ -77,68 +74,25 @@ a:visited {
 }
 #worryCategory {
   width:100%; 
+  /* width: 50vw; */
   height:50px; 
-  line-height: 50px;
-  /* justify-content: center; */
-  text-align: center;
+  line-height: 53.5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   background-color:rgba(96, 96, 96, 0.5);
-} 
-
-#KidCategory {
-  float:left;
-  width: 150px;
-  height:50px; 
-  margin-left: 150px;
-  font-weight: 700;
+  padding-left: 60px;
+  padding-right:60px;
+}
+#worryCategory a.router-link-exact-active {
   background-color: #579BB1;
-  border-left: 1px solid white;
-  border-top: 1px solid white;
 }
-/* ECE8DD */
-#TeenCategory {
+
+.CategoryClass {
   float:left;
-  width: 150px;
   height:50px; 
   font-weight: 700;
-  /* background-color: rgba(0, 0, DD, 0.5); */
-  border-left: 1px solid white;
-  border-top: 1px solid white;
+  border: 1px solid white;
+  border-bottom: 0px;
 }
-#AdultCategory {
-  float:left;
-  width: 150px;
-  height:50px; 
-  font-weight: 700;
-  /* background-color: #ECE8DD; */
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-}
-#CoupleCategory {
-  float:left;
-  width: 150px;
-  height:50px; 
-  font-weight: 700;
-  /* background-color: #ECE8DD; */
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-}
-#OldCategory {
-  float:left;
-  width: 150px;
-  height:50px; 
-  font-weight: 700;
-  /* background-color: #ECE8DD; */
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-}
-#GuitarCategory {
-  float:left;
-  width: 150px;
-  height:50px; 
-  font-weight: 700;
-  /* background-color: #ECE8DD; */
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-  border-right: 1px solid white;
-}
+
 </style>
