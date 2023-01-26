@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    private final String TRUE_STRING = "true";
+    private final String FALSE_STRING = "false";
 
     private final AuthService authService;
 
@@ -59,7 +61,6 @@ public class AuthController {
         TokenDto dto = authService.login(request);
         System.out.println("AuthController - accessToken :" + dto.getAccessToken());
         System.out.println("AuthController - refreshToken :" + dto.getRefreshToken());
-
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

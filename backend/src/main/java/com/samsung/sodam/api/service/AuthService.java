@@ -12,4 +12,5 @@ public interface AuthService {
     TokenDto login(AuthCommonRequest request);
 
     void validateDuplicateId(String id);
+    void validateDuplicateMember(String email);
 }

@@ -1,22 +1,23 @@
 package com.samsung.sodam.db.entity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Enterprise {
 
     @Id
-    @Column(length=30)
-    private String enterpriseId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int enterpriseId;
 
     @Column(length = 30)
     private String enterprise;  // 기업명
