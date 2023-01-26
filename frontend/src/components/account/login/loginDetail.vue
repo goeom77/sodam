@@ -86,5 +86,6 @@ export default {
 }
 .find{
   text-decoration-line: none;
+  color: black;
 }
 </style>
