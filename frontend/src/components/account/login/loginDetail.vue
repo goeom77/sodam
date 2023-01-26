@@ -5,6 +5,7 @@
       <div class="container__form container--signup">
       <form action="#" class="form" id="form1">
         <h2 class="form__title">Sign Up</h2>
+        
         <input type="text" v-model="ID"  placeholder="ID"/>
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
@@ -52,10 +53,10 @@ export default {
         console.log(payload)
         this.$store.dispatch('login', payload)
       },
-      moveFindId(){
-        console.log('파인드 아이디 입구')
-        this.$router.push({name:'find_Id'})
-      },
+      // moveFindId(){
+      //   console.log('파인드 아이디 입구')
+      //   this.$router.push({name:'find_Id'})
+      // },
       moveFindPw(){
         this.$router.push({name:'find_Pw'})
       },
