@@ -36,6 +36,7 @@
         <v-btn
           color="blue darken-1"
           text
+          @click="moveBack"
         >
           취소
         </v-btn>
@@ -53,7 +54,10 @@ export default {
       Email: null,
     }
   },
-  // methods:{
+  methods:{
+    moveBack(){
+        this.$router.push({ name: 'login' })
+      },
   //   findPw(){
   //     const id = this.id
   //     const email = this.email
@@ -64,7 +68,7 @@ export default {
   //     }
   //     this.$store.dispatch('findPw', pack)
   //   }
-  // }
+  }
 }
 </script>
 

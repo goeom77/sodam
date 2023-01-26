@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '@/components/account/login/LoginPage.vue'
+import Login from '@/components/account/login/LoginPage.vue'
 import FindId from '@/components/account/findid/FindId.vue'
 import FindPw from '@/components/account/findpw/FindPw.vue'
 import LoginKakao from '@/components/account/login/LoginKakao.vue'
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: Login
   },
   {
     path:'/findId',
@@ -42,7 +42,7 @@ const routes = [
     component: LoginKakao
   },
   {
-    path:'/api/auth/signup/client',
+    path:'/signupclient',
     name:'signupclient',
     component: SignUpClient
   },

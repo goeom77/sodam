@@ -67,6 +67,7 @@
         <v-btn
           color="blue darken-1"
           text
+          @click="signup"
         >
           확인
         </v-btn>
@@ -100,7 +101,7 @@ export default {
 
     methods:{
       moveBack(){
-        this.$router.push({ name : login})
+        this.$router.push({ name: 'login' })
       },
       // 중복확인
       signup(){
