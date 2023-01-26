@@ -1,26 +1,86 @@
 <template>
-  <div class="findidform">
-    <h1>회원 가입</h1>
-      <h2>아이디</h2>
-      <input type="text" v-model="id" placeholder="아이디를 입력해주세요"/>
-      <button type="button" class="btn btn-light" @click="findId">중복확인</button>
-      <h2>비밀번호</h2>
-      <input type="text" v-model="password" placeholder="비밀번호를 입력해주세요"/>
-      <br>
-      <h2>비밀번호 확인</h2>
-      <input type="text" v-model="password2" placeholder="비밀번호를 입력해주세요"/>
-      <br>
-      <h2>성함</h2>
-      <input type="text" v-model="name" placeholder="이름을 입력해주세요"/>
-      <br>
-      <h2>이메일</h2>
-      <input type="text" v-model="email" placeholder="이메일을 입력해주세요"/>
-      <br>
-      <h2>전화번호</h2>
-      <input type="text" v-model="number" placeholder="연락처를 입력해주세요"/>
-      <br>
-      <button type="button" class="btn btn-light" @click="signup">회원가입</button>
-  </div>
+  <v-container style="width:500px; height:800px;">
+    <v-card>
+      <v-card-title >
+        <span class="text-h5">회원 가입</span>
+      </v-card-title>
+      <v-card-text> 
+          <v-row>
+            
+            <v-col cols="12">
+              <v-text-field
+              label="Id"
+              type="text"
+              v-model="id"
+              required
+              ></v-text-field>
+              <button type="button" class="btn btn-light" @click="findId">중복확인</button>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Password"
+                type="text"
+                v-model="password"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="RE   Password"
+                type="text"
+                v-model="password2"
+                required
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <v-text-field
+                label="Name"
+                type="text"
+                v-model="name"
+                required
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <v-text-field
+                label="E-mail"
+                type="text"
+                v-model="email"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Tel"
+                type="text"
+                v-model="number"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+  
+      </v-card-text>
+      <v-card-actions>
+        <!-- 오른쪽 끝으로 이동 -->
+        <v-spacer></v-spacer>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="signup"
+        >
+          확인
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="moveBack"
+        >
+          취소
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -40,6 +100,9 @@ export default {
     },
 
     methods:{
+      moveBack(){
+        this.$router.push({ name: 'login' })
+      },
       // 중복확인
       signup(){
         const id = this.id
@@ -57,7 +120,7 @@ export default {
           email: email,
           number: number,
         }
-
+        console.log(payload)
         this.$store.dispatch('signup', payload)
 
       }

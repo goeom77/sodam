@@ -1,44 +1,48 @@
 <template>
-  <v-card class="cardposition">
-    <v-card-title >
-      <span class="text-h5">아이디 찾기</span>
-    </v-card-title>
-    <v-card-text> 
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-text-field
-              label="ID"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              label="Email"
-              type="Email"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card-text>
-    <v-card-actions>
-      <!-- 오른쪽 끝으로 이동 -->
-      <v-spacer></v-spacer>
-      <v-btn
-        color="blue darken-1"
-        text
-      >
-        확인
-      </v-btn>
-      <v-btn
-        color="blue darken-1"
-        text
-      >
-        취소
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-container style="width:500px; height:300px;">
+
+    <v-card>
+      <v-card-title >
+        <span class="text-h5">아이디 찾기</span>
+      </v-card-title>
+      <v-card-text> 
+  
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                label="이름을 입력해주세요"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="이메일을 입력해주세요"
+                type="Email"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+  
+      </v-card-text>
+      <v-card-actions>
+        <!-- 오른쪽 끝으로 이동 -->
+        <v-spacer></v-spacer>
+        <v-btn
+          color="blue darken-1"
+          text
+        >
+          확인
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          text
+          @click="moveBack"
+        >
+          취소
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -50,7 +54,10 @@ export default {
       Email: null,
     }
   },
-  // methods:{
+  methods:{
+    moveBack(){
+        this.$router.push({ name: 'login' })
+      },
   //   findId(){
   //     const ID = this.ID
   //     const Email = this.Email
@@ -61,19 +68,11 @@ export default {
   //     }
   //     this.$store.dispatch('findId', pack)
   //   }
-  // }
+  }
 }
 </script>
 
 <style>
-.findidform{
-  width : 500px;
-  height: 300px;
-  background-color: white;
-  border: 1px solid black;
-}
-.cardposition{
-  width:700px;
-  justify-content: center;
-}
+
+
 </style>

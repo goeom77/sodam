@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    private final String TRUE_STRING = "true";
+    private final String FALSE_STRING = "false";
 
     private final AuthService authService;
 

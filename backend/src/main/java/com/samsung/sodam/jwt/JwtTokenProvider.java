@@ -31,17 +31,10 @@ public class JwtTokenProvider {
     private final UserDetailsServiceImpl userDetailsService;
 
 
-    public TokenDto generateToken(String id, int role) {
+    public TokenDto generateToken(String id, Role role) {
 
         Map<String, Object> claims = new HashMap<>();
-
-        String roleName = null;
-        if(role == 0) roleName = Role.ADMIN.getRoleName();
-        else if(role == 1) roleName = Role.COUNSELOR.getRoleName();
-        else roleName = Role.CLIENT.getRoleName();
-
-
-        claims.put("role", roleName); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("role", role.getRoleName()); // 정보는 key / value 쌍으로 저장된다.
 
         // Access Token 생성
         //Date accessTokenExpiresIn = new Date(now() + ACCESS_TOKEN_EXPIRE_TIME);

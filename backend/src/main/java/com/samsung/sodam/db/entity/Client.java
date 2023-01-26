@@ -48,5 +48,4 @@ public class Client extends Member {
         this.tel = tel;
         this.name = name;
     }
-
 }

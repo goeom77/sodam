@@ -7,6 +7,7 @@ import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.repository.ClientRepository;
 import com.samsung.sodam.db.repository.CounselorRepository;
 import com.samsung.sodam.jwt.JwtTokenProvider;
+import com.samsung.sodam.jwt.Role;
 import com.samsung.sodam.jwt.TokenDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +22,8 @@ public class AuthServiceImpl implements AuthService{
     private final CounselorRepository conselorRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private void validateDuplicateMember(String email) {
+    @Override
+    public void validateDuplicateMember(String email) {
         boolean existClient = clientRepository.existsByEmail(email);
         boolean existCounselor = conselorRepository.existsByEmail(email);
         if (existClient || existCounselor) {
@@ -54,29 +56,33 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public TokenDto login(AuthCommonRequest request) {
         System.out.println("authService - " + request.getId());
-        Client client = clientRepository.getById(request.getId());
-        Counselor counselor = conselorRepository.getById(request.getId());
-
         String encodePassword = null;
-        int type = -1;
+        String email = null;
 
-        if(client != null){
+
+        System.out.println(request.getCommonCode());
+        Role role = Role.find(request.getCommonCode());
+
+        if(role == Role.CLIENT){
+            Client client = clientRepository.getById(request.getId());
             encodePassword = client.getPassword();
-            type = 2;
-        }else if (counselor != null){
+            email = client.getEmail();
+        }else if (role == Role.COUNSELOR){
+            Counselor counselor = conselorRepository.getById(request.getId());
             encodePassword = counselor.getPassword();
-            type = 1;
+            email = counselor.getEmail();
         }else {
             throw new IllegalArgumentException("로그인 실패");
         }
-        System.out.println("AuthServiceImpl");
+
         System.out.println("encodePassword - "+encodePassword);
         System.out.println("input pw - " + request.getPassword());
+        System.out.println("input encode pw - " + request.getPassword());
 
         if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-        return jwtTokenProvider.generateToken(type==2? client.getEmail():counselor.getEmail(), type);
+        return jwtTokenProvider.generateToken(email, role);
     }
 
 
