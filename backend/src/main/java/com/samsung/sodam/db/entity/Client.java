@@ -40,7 +40,7 @@ public class Client extends Member {
     private String groopCodeId = "2";   // 내담자 그룹코드
 
     @Builder
-    public Client(String clientId, String password, String email, String tel, String name) {
+    public Client(String id, String password, String email, String tel, String name) {
         super();
         this.id = id;
         this.password = password;

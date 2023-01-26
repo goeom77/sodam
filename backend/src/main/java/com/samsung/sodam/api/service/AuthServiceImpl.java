@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService{
         validateDuplicateMember(request.getEmail());
 
         clientRepository.save(Client.builder()
-                .clientId(request.getId())
+                .id(request.getId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .email(request.getEmail())
