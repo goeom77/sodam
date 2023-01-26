@@ -32,7 +32,7 @@ document.querySelector('body').setAttribute('style',"margin: 0;")
 
 nav {
   /* 반응형 x */
-  width: 1200px;
+  width: 1100px;
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -56,11 +56,6 @@ nav a.router-link-exact-active {
   color: #579BB1;
 }
 
-figuercaption{
-  display:none;
-  border:1px solid black;
-  width:150px; height:50px;
-  text-align:center;
-}
+
 
 </style>

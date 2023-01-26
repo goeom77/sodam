@@ -13,6 +13,7 @@ import ClientManage from '@/components/management/ClientManage.vue'
 import notice from '../views/my/notice/notice.vue'
 import CheckEditInformation from '../views/editinformation/CheckEditInformation.vue'
 import EditInformation from '../views/editinformation/EditInformation.vue'
+import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 
 const routes = [
   {
@@ -84,6 +85,11 @@ const routes = [
     path: '/editinformation',
     name: 'editinformation',
     component: EditInformation
+  },
+  {
+    path: '/KidBoardCreate',
+    name: 'KidBoardCreate',
+    component: KidBoardCreate
   },
 ]
 
