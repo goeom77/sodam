@@ -41,7 +41,7 @@ public class AuthServiceImpl implements AuthService{
         validateDuplicateMember(request.getEmail());
 
         clientRepository.save(Client.builder()
-                .clientId(request.getId())
+                .id(request.getId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .email(request.getEmail())
@@ -69,10 +69,9 @@ public class AuthServiceImpl implements AuthService{
         }else {
             throw new IllegalArgumentException("로그인 실패");
         }
-
+        System.out.println("AuthServiceImpl");
         System.out.println("encodePassword - "+encodePassword);
         System.out.println("input pw - " + request.getPassword());
-        System.out.println("input encode pw - " + request.getPassword());
 
         if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
