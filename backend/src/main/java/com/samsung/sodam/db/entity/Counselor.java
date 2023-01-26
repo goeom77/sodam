@@ -1,17 +1,17 @@
 package com.samsung.sodam.db.entity;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import com.samsung.sodam.jwt.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Counselor extends Member {
     @Id
     @Column(length=30)
@@ -45,7 +45,7 @@ public class Counselor extends Member {
     private String major;
 
     @Column(length = 3)
-    private String gender;
+    private Gender gender;
 
     private Boolean qualification;
 
@@ -59,7 +59,7 @@ public class Counselor extends Member {
 
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, String gender, Boolean qualification, String routine) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, Gender gender, Boolean qualification, String routine) {
         this.id = id;
         this.name = name;
         this.password = password;

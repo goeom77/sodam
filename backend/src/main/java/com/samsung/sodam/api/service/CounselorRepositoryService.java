@@ -20,19 +20,18 @@ public class CounselorRepositoryService {
     ScheduleRepository scheduleRepository;
     SessionRepository sessionRepository;
     ApplicantRepository applicantRepository;
+    FavoriteRepository favoriteRepository;
 
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
-        return repository.searchCounselor(request, pageable);
-    }
+//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//        return repository.searchCounselor(request, pageable);
+//    }
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
     }
 
-    public List<Review> getReviews(Long id) {
-        List<Long> idList = new ArrayList<>();
-        idList.add(id);
-        return reviewRepository.findAllById(idList);
+    public List<Review> getReviews(String id) {
+        return reviewRepository.findAllByClientId(id);
     }
 
     public Page<Client> getClients(String id) {
@@ -44,7 +43,11 @@ public class CounselorRepositoryService {
     }
 
     public void setFavCounselor(FavoriteCounselor favoriteCounselor) {
+        favoriteRepository.save(favoriteCounselor);
+    }
 
+    public void removeFavCounselor(FavoriteCounselor favoriteCounselor) {
+        favoriteRepository.delete(favoriteCounselor);
     }
 
     public Integer makeSession(ConsultSession session) {

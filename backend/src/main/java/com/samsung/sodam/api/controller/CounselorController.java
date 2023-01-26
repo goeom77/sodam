@@ -2,8 +2,9 @@ package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
-import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
+import com.samsung.sodam.db.entity.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,16 +15,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CounselorController {
 
-    @Autowired
-    CounselorRepositoryService service;
+    private final CounselorRepositoryService service;
+
+    public CounselorController(CounselorRepositoryService service) {
+        this.service = service;
+    }
 
     //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
-    @PostMapping("counselor/")
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-        return service.searchCounselor(request, pageable);
-    }
+//    @PostMapping("counselor/")
+//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
+//        return service.searchCounselor(request, pageable);
+//    }
 
     @GetMapping("counselor/{id}")
     //상담사 정보 조회
@@ -39,20 +44,26 @@ public class CounselorController {
 
     //상담 예약 확정
     @PostMapping("/consult/{consult_id}")
-    public void acceptApplicant(@PathVariable String consult_id,@RequestBody SessionStateRequest request) {
+    public void acceptApplicant(@PathVariable String consult_id, @RequestBody SessionStateRequest request) {
         service.acceptApplicant(request);
     }
 
     //상담사 후기 목록 보기
-    public List<Review> getReviews(Long id) {
-        return service.getReviews(id);
-    }
+//    public List<Review> getReviews(Long id) {
+//        return service.getReviews(id);
+//    }
 
     //관심 상담사 담기
     @PostMapping("/client/{clientId}/fav/{counselorId}")
-    public void setFavCounselor(@PathVariable String clientId,String counselorId) {
-        FavoriteCounselor fav = new FavoriteCounselor(clientId,counselorId);
+    public void setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+        FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.setFavCounselor(fav);
+    }
+
+    @DeleteMapping("/client/{clientId}/fav/{counselorId}")
+    public void deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+        FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
+        service.removeFavCounselor(fav);
     }
 
     //상담기록
