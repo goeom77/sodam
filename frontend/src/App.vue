@@ -9,7 +9,8 @@
     </div>
 
     <div id="navMypage">
-      <router-link to="/login">Login</router-link> | 
+      <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
+      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn>
       <router-link to="/notice">마이 페이지</router-link>
       <router-link to="/checkeditinformation">정보 수정</router-link>
     </div>
@@ -19,6 +20,33 @@
 
 <script>
 document.querySelector('body').setAttribute('style',"margin: 0;")
+const API_URl = 'http://127.0.0.1:8080'
+export default {
+  name:'App',
+  methods: {
+    logOut(){
+      console.log(this.isLogin)
+      axios({
+        method: 'post',
+        url: `${API_URl}/logout/{id}`,
+        headers: {
+          Authorization: `Token ${ this.$store.state.token}`
+        }
+      })
+      .then(
+        this.$store.dispatch('logOut')
+      )
+    },
+    logIn(){
+      this.$router.push({name:'login'})
+    }
+  },
+  computed:{
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
+  }
+}
 </script>
 
 <style>

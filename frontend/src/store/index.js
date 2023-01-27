@@ -9,6 +9,9 @@ export default new Vuex.Store({
     token:null,
   },
   getters: {
+    isLogin(state) {
+      return state.token ? true : false
+    },
   },
   mutations: {
     SAVE_TOKEN(state, token) {
