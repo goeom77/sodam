@@ -9,6 +9,9 @@ export default new Vuex.Store({
     token:null,
   },
   getters: {
+    isLogin(state) {
+      return state.token ? true : false
+    },
   },
   mutations: {
     SAVE_TOKEN(state, token) {
@@ -44,16 +47,16 @@ export default new Vuex.Store({
     login(context,payload){
       axios({
         method:'post',
-        url:`${API_URL}/api/auth/login/client`,
+        url:`${API_URL}/api/auth/login`,
         data:{
           ID: payload.ID,
           password: payload.password,
         }
       })
         .then((res)=>{
-          context.commit('SAVE_TOKEN', res.data.key)
-          context.commit('SET_USER_DATA', payload)
-          console.log(res)
+          console.log(res)  
+          // context.commit('SAVE_TOKEN', res.data.key)
+
         })
     },
     signup(context, payload){
