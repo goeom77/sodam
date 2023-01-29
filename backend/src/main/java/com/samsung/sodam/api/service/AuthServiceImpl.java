@@ -43,6 +43,17 @@ public class AuthServiceImpl implements AuthService{
             throw new IllegalStateException("존재하는 아이디입니다");
         }
     }
+
+    @Override
+    public Member getMemberByEmail(String email) {
+        Client client = clientRepository.getByEmail(email);
+        Counselor counselor = conselorRepository.getByEmail(email);
+        Member m = null;
+        if(client != null) m = client;
+        else if(counselor != null) m = counselor;
+        return m;
+    }
+
     @Override
     public Counselor counselorSignup(CounselorRequest request) {
         Enterprise e = enterpriseRepository.getReferenceById(request.getEnterpriseId());
@@ -64,22 +75,23 @@ public class AuthServiceImpl implements AuthService{
 
 
     @Override
-    public String clientSignup(ClientRequest request) {
+    public Client clientSignup(ClientRequest request) {
         validateDuplicateEmail(request.getEmail());
 
-        clientRepository.save(Client.builder()
+        Client client = clientRepository.save(Client.builder()
                 .id(request.getId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .email(request.getEmail())
                 .tel(request.getTel())
+                .profileImg(request.getProfileImg())
                 .build());
 
-        return request.getId();
+        return client;
     }
 
     @Override
-    public AuthCommonResponse login(AuthCommonRequest request) {
+    public AuthCommonResponse login(AuthCommonRequest request, Boolean isKakaoLogin) {
         AuthCommonResponse response = new AuthCommonResponse(request);
 
         System.out.println("authService - " + request.getId());
@@ -104,10 +116,10 @@ public class AuthServiceImpl implements AuthService{
         System.out.println("input pw - " + request.getPassword());
         System.out.println("input encode pw - " + request.getPassword());
 
-        if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
+        if(!isKakaoLogin && !passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-        TokenDto token = jwtTokenProvider.generateToken(member.getEmail(), role);
+        TokenDto token = jwtTokenProvider.generateToken(member.getId(), role);
         response.setToken(token);
         response.setName(member.getName());
         return response;

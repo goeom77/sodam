@@ -75,4 +75,18 @@ public class ClientRepositoryTest {
         assertThat(client.getPassword()).isEqualTo(newPw);
         assertThat(client.getEmail()).isEqualTo(email);
     }
+    @Test
+    @DisplayName("고객 아이디로 정보 찾기")
+    @Order(3)
+    public void clientFindById() {
+        //given
+        clientSignUp();
+        String id = "idd";
+
+        //when
+        Client client = clientRepository.getById(id);
+
+        //then
+        System.out.println(client.toString());
+    }
 }

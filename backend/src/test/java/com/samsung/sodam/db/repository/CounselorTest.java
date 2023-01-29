@@ -1,6 +1,5 @@
 package com.samsung.sodam.db.repository;
 
-import com.nimbusds.openid.connect.sdk.claims.Gender;
 import com.samsung.sodam.config.TestConfig;
 import com.samsung.sodam.db.entity.Counselor;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ public class CounselorTest {
                 .major("major")
                 .career("career")
                 .groopCodeId("group-code")
-                .gender(Gender.MALE)
+                //.gender(Gender.MALE)
                 .qualification(false)
                 .introduce("introduce")
                 .name("이름")

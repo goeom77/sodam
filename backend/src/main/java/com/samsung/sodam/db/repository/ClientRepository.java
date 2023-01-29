@@ -1,7 +1,6 @@
 package com.samsung.sodam.db.repository;
 
 import com.samsung.sodam.db.entity.Client;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +24,6 @@ public interface ClientRepository extends JpaRepository<Client,String> , ClientC
     Optional<Client> findById(String id);
 
     List<Client> findByName(String name);
+
+    Client getByEmail(String email);
 }
