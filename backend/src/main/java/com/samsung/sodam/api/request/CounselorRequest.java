@@ -1,11 +1,14 @@
 package com.samsung.sodam.api.request;
 
-import com.samsung.sodam.jwt.Role;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.samsung.sodam.db.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CounselorRequest {
     private String id;
     private String password;
@@ -19,8 +22,10 @@ public class CounselorRequest {
     private String introduce;
     private String major;
     private String gender;
-    private String routine;
+    private String[] routine;
     private Role role = Role.COUNSELOR;
+
+    private int enterpriseId;
 
 
 }
