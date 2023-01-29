@@ -1,6 +1,7 @@
 package com.samsung.sodam.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
@@ -8,6 +9,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
+@DynamicInsert
 @Builder
 public class Counselor extends Member {
     @Id
@@ -44,7 +47,7 @@ public class Counselor extends Member {
 
     @Column(length = 3)
     private Gender gender;
-
+    @Column(columnDefinition = "boolean default false")
     private Boolean qualification;
 
     @Column(length = 28)
@@ -54,10 +57,12 @@ public class Counselor extends Member {
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
+    @Column(length = 200)
+    private String profileImg;
 
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, Gender gender, Boolean qualification, String routine, Enterprise enterprise) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, Gender gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -72,6 +77,7 @@ public class Counselor extends Member {
         this.qualification = qualification;
         this.routine = routine;
         this.enterprise = enterprise;
+        this.profileImg = profileImg;
 
         this.groopCodeId = "1";
     }

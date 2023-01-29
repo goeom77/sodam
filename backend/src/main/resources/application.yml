@@ -22,6 +22,14 @@ spring:
     host: localhost
     port: 6379
 
+auth:
+  kakao:
+    client-id: 9e0f9a70f672fba12b71ea1b5ec10e80
+    redirect-uri: http://localhost:8080/auth/kakao/callback
+    authorize-uri: https://kauth.kakao.com/oauth/authorize
+    token-uri: https://kauth.kakao.com/oauth/token
+    kakao-api-host: https://kapi.kakao.com
+
 # 로그 레벨 설정
 logging:
   level:

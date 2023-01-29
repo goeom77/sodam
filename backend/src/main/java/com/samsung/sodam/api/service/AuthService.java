@@ -4,7 +4,9 @@ import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
+import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.db.entity.Member;
 
 
 public interface AuthService {
@@ -14,9 +16,9 @@ public interface AuthService {
      * @param request id, password, name, tel, email
      * @return
      * */
-    String clientSignup(ClientRequest request);
+    Client clientSignup(ClientRequest request);
 
-    AuthCommonResponse login(AuthCommonRequest request);
+    AuthCommonResponse login(AuthCommonRequest request, Boolean isKakaoLogin);
 
     void validateDuplicateId(String id);
 
@@ -34,4 +36,14 @@ public interface AuthService {
      * @author nuri
      */
     Counselor counselorSignup(CounselorRequest request);
+
+    /**
+     * email로 유저 정보 가져오기
+     *
+     * @param email
+     * @author nuri
+     */
+    public Member getMemberByEmail(String email);
+
+
 }
