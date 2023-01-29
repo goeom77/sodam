@@ -3,10 +3,10 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.api.service.AuthService;
 import com.samsung.sodam.api.service.EnterpriseService;
 import com.samsung.sodam.db.entity.Counselor;
-import com.samsung.sodam.jwt.TokenDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +24,7 @@ public class AuthController {
     private final EnterpriseService enterpriseService;
 
     private String confirmCode;
+    private Boolean isFindId;
     @PostMapping(value = "/signup/client")
     @ApiOperation(value="고객 회원가입", notes="새로운 고객 회원가입")
     public ResponseEntity<String> clientSignup(@RequestBody ClientRequest request) {
@@ -66,11 +67,11 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value="로그인", notes="아이디, 비밀번호로 로그인")
-    public ResponseEntity<TokenDto>  login(@RequestBody AuthCommonRequest request){
-        TokenDto dto = authService.login(request);
-        System.out.println("AuthController - accessToken :" + dto.getAccessToken());
-        System.out.println("AuthController - refreshToken :" + dto.getRefreshToken());
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+    public ResponseEntity<AuthCommonResponse>  login(@RequestBody AuthCommonRequest request){
+        AuthCommonResponse response = authService.login(request);
+        System.out.println("AuthController - accessToken :" + response.getToken().getAccessToken());
+        System.out.println("AuthController - refreshToken :" + response.getToken().getRefreshToken());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value="/check-duplicate-id/{id}")
@@ -88,15 +89,18 @@ public class AuthController {
     private HttpStatus sendMail(@RequestBody AuthCommonRequest request){
         System.out.println(request.getEmail());
         confirmCode = "000";
+
         return HttpStatus.OK;
     }
 
     @GetMapping(value = "/confirm-mail")
-    private HttpStatus confirmMail(@RequestParam String code){
+    private ResponseEntity<AuthCommonResponse> confirmMail(@RequestParam String code){
+        AuthCommonResponse response = new AuthCommonResponse();
 
-        if(confirmCode.equals(code))
-        return HttpStatus.OK;
-        else return HttpStatus.UNAUTHORIZED;
+        if(confirmCode.equals(code)) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
 }
