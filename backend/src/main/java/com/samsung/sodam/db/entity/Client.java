@@ -1,6 +1,5 @@
 package com.samsung.sodam.db.entity;
 
-import com.samsung.sodam.jwt.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

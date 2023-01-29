@@ -1,4 +1,4 @@
-package com.samsung.sodam.jwt;
+package com.samsung.sodam.db.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +28,6 @@ public enum Role {
         if (OPERATOR_MAP.containsKey(groopCodeId)) {
             return OPERATOR_MAP.get(groopCodeId);
         }
-        throw new IllegalArgumentException("연산자를 찾을 수 없습니다.");
+        throw new IllegalArgumentException("해당 enum 없음");
     }
 }

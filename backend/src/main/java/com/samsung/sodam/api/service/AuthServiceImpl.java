@@ -2,17 +2,19 @@ package com.samsung.sodam.api.service;
 
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
-import com.samsung.sodam.db.entity.Client;
-import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.ClientRepository;
 import com.samsung.sodam.db.repository.CounselorRepository;
+import com.samsung.sodam.db.repository.EnterpriseRepository;
 import com.samsung.sodam.jwt.JwtTokenProvider;
-import com.samsung.sodam.jwt.Role;
 import com.samsung.sodam.jwt.TokenDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
 
 @Service
 @Transactional
@@ -20,16 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl implements AuthService{
     private final ClientRepository clientRepository;
     private final CounselorRepository conselorRepository;
+    private final EnterpriseRepository enterpriseRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     @Override
-    public void validateDuplicateMember(String email) {
+    public void validateDuplicateEmail(String email) {
         boolean existClient = clientRepository.existsByEmail(email);
         boolean existCounselor = conselorRepository.existsByEmail(email);
         if (existClient || existCounselor) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+
     @Override
     public void validateDuplicateId(String id) {
         boolean existClient = clientRepository.existsById(id);
@@ -39,8 +43,28 @@ public class AuthServiceImpl implements AuthService{
         }
     }
     @Override
+    public Counselor counselorSignup(CounselorRequest request) {
+        Enterprise e = enterpriseRepository.getReferenceById(request.getEnterpriseId());
+        Counselor c = Counselor.builder()
+                .id(request.getId())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .name(request.getName())
+                .email(request.getEmail())
+                .tel(request.getTel())
+                .career(request.getCareer())
+                .introduce(request.getIntroduce())
+                .major(request.getMajor())
+                .gender(Gender.find(request.getGender()))
+                .routine(Arrays.toString(request.getRoutine()))
+                .enterprise(e)
+                .build();
+        return conselorRepository.save(c);
+    }
+
+
+    @Override
     public String clientSignup(ClientRequest request) {
-        validateDuplicateMember(request.getEmail());
+        validateDuplicateEmail(request.getEmail());
 
         clientRepository.save(Client.builder()
                 .id(request.getId())

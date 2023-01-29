@@ -1,5 +1,6 @@
 package com.samsung.sodam.jwt;
 
+import com.samsung.sodam.db.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

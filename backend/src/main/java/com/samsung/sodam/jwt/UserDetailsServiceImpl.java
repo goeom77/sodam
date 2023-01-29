@@ -2,6 +2,7 @@ package com.samsung.sodam.jwt;
 
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.db.entity.Member;
 import com.samsung.sodam.db.repository.ClientRepository;
 import com.samsung.sodam.db.repository.CounselorRepository;
 import lombok.RequiredArgsConstructor;

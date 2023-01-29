@@ -4,7 +4,10 @@ import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.service.AuthService;
+import com.samsung.sodam.api.service.EnterpriseService;
+import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.jwt.TokenDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +21,11 @@ public class AuthController {
     private final String FALSE_STRING = "false";
 
     private final AuthService authService;
+    private final EnterpriseService enterpriseService;
 
     private String confirmCode;
     @PostMapping(value = "/signup/client")
-    //@ApiOperation(value="고객 회원가입", notes="새로운 고객 회원가입")
+    @ApiOperation(value="고객 회원가입", notes="새로운 고객 회원가입")
     public ResponseEntity<String> clientSignup(@RequestBody ClientRequest request) {
         try{
             authService.clientSignup(request);
@@ -32,12 +36,17 @@ public class AuthController {
         }
     }
     @PostMapping(value = "/signup/counselor")
-    //@ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
+    @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
     public ResponseEntity<String> counselorSignup(@RequestBody CounselorRequest request) {
         try{
-            //authService.counselorSignup(request);
-            return new ResponseEntity<String>(request.getId(), HttpStatus.OK);
-        } catch (Exception e){
+            //enterpriseService.existByEnterpriseId(request.getEnterpriseId());
+            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
+            Counselor c = authService.counselorSignup(request);
+            return new ResponseEntity<String>(c.getId(), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            e.printStackTrace();
+            return new ResponseEntity<String>(request.getId(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<String>(request.getId(), HttpStatus.NOT_FOUND);
         }
@@ -56,7 +65,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    //@ApiOperation(value="로그인", notes="아이디, 비밀번호로 로그인")
+    @ApiOperation(value="로그인", notes="아이디, 비밀번호로 로그인")
     public ResponseEntity<TokenDto>  login(@RequestBody AuthCommonRequest request){
         TokenDto dto = authService.login(request);
         System.out.println("AuthController - accessToken :" + dto.getAccessToken());
