@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.ClientRepository;
 import com.samsung.sodam.db.repository.CounselorRepository;
@@ -78,27 +79,27 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public TokenDto login(AuthCommonRequest request) {
+    public AuthCommonResponse login(AuthCommonRequest request) {
+        AuthCommonResponse response = new AuthCommonResponse(request);
+
         System.out.println("authService - " + request.getId());
         String encodePassword = null;
-        String email = null;
-
+        Member member = null;
 
         System.out.println(request.getCommonCode());
         Role role = Role.find(request.getCommonCode());
 
+        // id로 유저 찾기
         if(role == Role.CLIENT){
-            Client client = clientRepository.getById(request.getId());
-            encodePassword = client.getPassword();
-            email = client.getEmail();
+            member = clientRepository.getById(request.getId());
         }else if (role == Role.COUNSELOR){
-            Counselor counselor = conselorRepository.getById(request.getId());
-            encodePassword = counselor.getPassword();
-            email = counselor.getEmail();
+            member = conselorRepository.getById(request.getId());
         }else {
             throw new IllegalArgumentException("로그인 실패");
         }
+        encodePassword = member.getPassword();
 
+        // 확인용 코드
         System.out.println("encodePassword - "+encodePassword);
         System.out.println("input pw - " + request.getPassword());
         System.out.println("input encode pw - " + request.getPassword());
@@ -106,7 +107,10 @@ public class AuthServiceImpl implements AuthService{
         if(!passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-        return jwtTokenProvider.generateToken(email, role);
+        TokenDto token = jwtTokenProvider.generateToken(member.getEmail(), role);
+        response.setToken(token);
+        response.setName(member.getName());
+        return response;
     }
 
 

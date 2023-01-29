@@ -3,8 +3,8 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.db.entity.Counselor;
-import com.samsung.sodam.jwt.TokenDto;
 
 
 public interface AuthService {
@@ -16,7 +16,7 @@ public interface AuthService {
      * */
     String clientSignup(ClientRequest request);
 
-    TokenDto login(AuthCommonRequest request);
+    AuthCommonResponse login(AuthCommonRequest request);
 
     void validateDuplicateId(String id);
 
