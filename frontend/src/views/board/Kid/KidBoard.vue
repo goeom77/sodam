@@ -27,10 +27,11 @@
 // @ is an alias to /srcz
 import KidBoardList from '@/components/BoardItem/KidBoardList.vue'
 
+
 export default {
   name: 'KidBoard',
   components: {
-    KidBoardList
+    KidBoardList,
   },
   // created() {
   //   this.getKidBoardArticles()

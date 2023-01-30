@@ -1,11 +1,11 @@
 
 <template>
-  <div id="KidBoardCreate">
-    <div id="worryBoardWrite">
+  <div id="AnnounceCreate">
+    <div id="AnnounceWrite">
       <br>
       <h1>고민 게시판</h1>
       <br>
-      <div id="worryCategoryWrite"> 
+      <div id="HelpCategoryWrite"> 
         <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
         <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
         <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
@@ -18,8 +18,8 @@
       </div>
     </div>
     <div>
-      <div id="Writebox">
-        <form @submit.prevent="KidBoardcreateArticle">
+      <div id="HelpWritebox">
+        <form @submit.prevent="AnnouncecreateArticle">
           <div style="text-align:start; padding: 10px;">
             <label for="category">대상</label>
             <select id="worryselect">
@@ -54,7 +54,7 @@ const API_URL = 'http://127.0.0.1:8000'
 
 
 export default {
-  name: 'KidBoardCreate',
+  name: 'AnnounceCreate',
   data() {
     return {
       title: null,
@@ -62,7 +62,7 @@ export default {
     }
   },
   methods: {
-    KidBoardcreateArticle() {
+    AnnouncecreateArticle() {
       const title = this.title
       const content = this.content
       if (!title) {
@@ -98,7 +98,7 @@ export default {
 
 
 <style>
-#KidBoardCreate {
+#AnnounceCreate {
   width: 1080px;
   margin: 0 auto;
 }
@@ -108,7 +108,7 @@ a {
   color: white;
 }
 
-#worryBoardWrite {
+#AnnounceWrite {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -119,7 +119,7 @@ a {
   padding-top: 20px;
 
 }
-#worryCategoryWrite {
+#HelpCategoryWrite {
   width:100%; 
   height:50px; 
   line-height: 53.5px;
@@ -130,7 +130,7 @@ a {
   padding-right:60px;
 }
 
-#Writebox {
+#HelpWritebox {
   border-top: 1px solid black;
   /* border-bottom: 1px solid black; */
   margin: 60px;

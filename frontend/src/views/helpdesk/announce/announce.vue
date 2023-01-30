@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /srcz
-// import announceList from '@/components/BoardItem/announceList.vue'
+// import announceList from '@/components/HelpItem/announceList.vue'
 
 export default {
   name: 'KidBoard',

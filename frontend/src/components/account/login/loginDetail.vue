@@ -4,8 +4,7 @@
     <div class="loginform">
       <div class="container__form container--signup">
       <form action="#" class="form" id="form1">
-        <h2 class="form__title">Sign Up</h2>
-        
+        <h2 class="form__title">SignUp</h2>
         <input type="text" v-model="ID"  placeholder="ID"/>
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
