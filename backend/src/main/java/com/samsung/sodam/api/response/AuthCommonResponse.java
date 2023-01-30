@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
         private String id;
         private String name;
         private String isFindId = "false";    // "true" / "false"
+        private String isFirst = "false";    // "true" / "false"
+        private String isInfoRequired = "false";
         private String groupCode;
         private String commonCode;
 
