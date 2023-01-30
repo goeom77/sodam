@@ -1,7 +1,7 @@
 
 <template>
-  <div id="AnnounceCreate">
-    <div id="AnnounceWrite">
+  <div id="InquiryCreate">
+    <div id="InquiryWrite">
       <br>
       <h1>HELP DESK</h1>
       <br>
@@ -15,7 +15,7 @@
     </div>
     <div>
       <div id="HelpWritebox">
-        <form @submit.prevent="AnnouncecreateArticle">
+        <form @submit.prevent="InquirycreateArticle">
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
             <input type="text" id="title" v-model.trim="title">
@@ -39,7 +39,7 @@ const API_URL = 'http://127.0.0.1:8000'
 
 
 export default {
-  name: 'AnnounceCreate',
+  name: 'InquiryCreate',
   data() {
     return {
       title: null,
@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    AnnouncecreateArticle() {
+    InquirycreateArticle() {
       const title = this.title
       const content = this.content
       if (!title) {
@@ -70,7 +70,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'announce' })
+          this.$router.push({ name: 'inquiry' })
         })
         .catch((err) => {
           console.log(err)
@@ -83,7 +83,7 @@ export default {
 
 
 <style>
-#AnnounceCreate {
+#InquiryCreate {
   width: 1080px;
   margin: 0 auto;
 }
@@ -93,7 +93,7 @@ a {
   color: white;
 }
 
-#AnnounceWrite {
+#InquiryWrite {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;

@@ -1,39 +1,39 @@
 <template>
-  <div id="AnnounceList">
-    <div id="AnnounceWriteButton">
-      <router-link to="/announce" id="AnnounceListAll" style="color:black">전체 (5)</router-link> 
-      <router-link to="/AnnounceCreate" id="AnnounceCreateButton" class="AnnounceCreateButton" >글쓰기</router-link> 
+  <div id="InquiryList">
+    <div id="InquiryWriteButton">
+      <router-link to="/announce" id="InquiryListAll" style="color:black">전체 (5)</router-link> 
+      <router-link to="/InquiryCreate" id="InquiryCreateButton" class="InquiryCreateButton" >글쓰기</router-link> 
     </div>
 
-    <AnnounceListItem
-      v-for="Announcearticle in Announcearticles"
-      :key="Announcearticle.id"
-      :Announcearticle="Announcearticle"
+    <InquiryListItem
+      v-for="Inquiryarticle in Inquiryarticles"
+      :key="Inquiryarticle.id"
+      :Inquiryarticle="Inquiryarticle"
     /> 
-    <AnnounceListItem/>
+    <InquiryListItem/>
   </div>
 
 </template>
 
 <script>
-import AnnounceListItem from '@/components/HelpItem/AnnounceListItem.vue'
+import InquiryListItem from '@/components/HelpItem/InquiryListItem.vue'
 
 export default {
-  name: 'AnnounceList',
+  name: 'InquiryList',
   components: {
-    AnnounceListItem
+    InquiryListItem
   },
   // computed: {
   //   articles() {
-  //     return this.$store.state.Announcearticles
+  //     return this.$store.state.Inquiryarticles
   //   }
   // },
   // created() {
-  //   this.getAnnouncearticles()
+  //   this.getInquiryarticles()
   // },
   // methods: {
-  //   getAnnouncearticles() {
-  //   this.$store.dispatch('getAnnouncearticles')
+  //   getInquiryarticles() {
+  //   this.$store.dispatch('getInquiryarticles')
   //   }
   // }
 
@@ -45,7 +45,7 @@ export default {
 /* #KidBoardList {
   text-align: end;
 } */
-#AnnounceWriteButton {
+#InquiryWriteButton {
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -60,7 +60,7 @@ export default {
   font-weight: 700;
 }
 
-.AnnounceCreateButton {
+.InquiryCreateButton {
   float:left;
   height: 30px;
   line-height: 25px;
