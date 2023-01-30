@@ -111,7 +111,7 @@ public class AuthServiceImpl implements AuthService{
         }
 
         encodePassword = member.getPassword();
-        member.setRoleByGroupCode();
+        member.setRoleByCommonCode();
 
         System.out.println("------------------------AuthService test log start");
 
@@ -128,7 +128,7 @@ public class AuthServiceImpl implements AuthService{
         TokenDto token = jwtTokenProvider.generateToken(member.getId(), member.getRole());
         response.setToken(token);
         response.setName(member.getName());
-
+        response.setCommonCode(member.getRole().getCommonCode());
 
         return response;
     }
