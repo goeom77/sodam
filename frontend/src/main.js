@@ -13,3 +13,5 @@ createApp(App).use(router)
   .use(store)
   .use(vuetify)
   .mount('#app')
+
+  window.Kakao.init('46ea2a430e00975ef0166ed7e47277e9');
