@@ -16,7 +16,6 @@ export default new Vuex.Store({
   mutations: {
     SAVE_TOKEN(state, token) {
       state.token = token
-
     },
     SET_USER_DATA(state, payload) {
       state.payload = {
@@ -55,7 +54,7 @@ export default new Vuex.Store({
       })
         .then((res)=>{
           console.log(res)  
-          // context.commit('SAVE_TOKEN', res.data.key)
+          context.commit('SAVE_TOKEN', res.data.key)
 
         })
     },
