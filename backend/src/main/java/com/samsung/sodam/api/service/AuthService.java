@@ -18,6 +18,13 @@ public interface AuthService {
      * */
     Client clientSignup(ClientRequest request);
 
+    /**
+     * 로그인 (client, counselor, admin)
+     * @author nuri
+     * @param request id, password
+     * @param isKakaoLogin 카카오로그인인지 check
+     * @return
+     * */
     AuthCommonResponse login(AuthCommonRequest request, Boolean isKakaoLogin);
 
     void validateDuplicateId(String id);

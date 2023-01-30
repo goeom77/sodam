@@ -1,9 +1,6 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +9,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class Member {
 
     @Id
@@ -23,6 +20,13 @@ public class Member {
     private String name;
 
     private String email;
+
+    private String groopCodeId;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public void setRoleByGroupCode() {
+        this.role = Role.find(this.getGroopCodeId());
+    }
 }

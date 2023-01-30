@@ -70,8 +70,6 @@ public class AuthController {
     @ApiOperation(value="로그인", notes="아이디, 비밀번호로 로그인")
     public ResponseEntity<AuthCommonResponse>  login(@RequestBody AuthCommonRequest request){
         AuthCommonResponse response = authService.login(request, false);
-        System.out.println("AuthController - accessToken :" + response.getToken().getAccessToken());
-        System.out.println("AuthController - refreshToken :" + response.getToken().getRefreshToken());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
