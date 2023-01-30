@@ -1,6 +1,9 @@
 package com.samsung.sodam.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.samsung.sodam.db.converter.CategoryConverter;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,9 +25,6 @@ public class TroubleBoard extends BaseTime {
     @Convert(converter = CategoryConverter.class)
     private String category;
 
-    @Column(length = 30)
-    private String type;
-
     @Column(length = 100)
     private String title;
 
@@ -32,13 +32,24 @@ public class TroubleBoard extends BaseTime {
     private String content;
 
     @Column
-    private Integer views;
+    private Integer views = 0;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @Column
+    private String clientId;
 
-    @OneToMany(mappedBy = "troubleBoard", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @OrderBy("id asc")
+    @Column
+    private Integer comments = 0;
+
+    @OneToMany(mappedBy = "troubleBoard", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<TroubleComment> troubleComment;
+
+    @Builder
+    public TroubleBoard(String category, String title, String content, String clientId) {
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.clientId = clientId;
+        this.views = 0;
+        this.comments = 0;
+    }
 }

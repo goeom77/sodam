@@ -1,17 +1,22 @@
 package com.samsung.sodam.api.service;
 
-import com.samsung.sodam.db.entity.TroubleBoard;
-import com.samsung.sodam.db.repository.TroubleCustomRepositoryImpl;
+import com.samsung.sodam.api.request.TroubleCommentRequest;
+import com.samsung.sodam.api.request.TroubleRequest;
+import com.samsung.sodam.api.response.TroubleOneResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
-public class TroubleRepositoryService {
+public interface TroubleRepositoryService {
 
-    TroubleCustomRepositoryImpl repository;
+    Page<TroubleOneResponse> getTroubleList(String category, String searchWord, Pageable pageable);
+    void saveTrouble(TroubleRequest request);
+    TroubleOneResponse getTrouble(Long id);
+    void updateTrouble(Long id, TroubleRequest request);
+    void deleteTrouble(Long id);
+    Page<TroubleOneResponse> getMyTroubleList(String clientId, Pageable pageable);
 
-    public Page<TroubleBoard> getTroubleList(String category, String searchWord, Pageable pageable) {
-        return repository.getTroubleBoardList(category, searchWord, pageable);
-    }
+    void saveComment(TroubleCommentRequest request);
+    void updateComment(Long id, TroubleCommentRequest request);
+    void deleteComment(Long id);
+    void commentLike(String clientId, Long id);
 }
