@@ -4,8 +4,10 @@
     <div class="loginform">
       <div class="container__form container--signup" style="margin: 0 auto; width:455px;">
       <form action="#" class="form" id="form1">
-        <h2 class="form__title">SignUp</h2>
-
+        <h2 class="form__title">Login</h2>
+        <input type="radio" name="gender" v-model="common_code" common_code="2">고객
+        <input type="radio" name="gender" v-model="common_code" common_code="1">상담사
+        <br>
         <input type="text" v-model="ID"  placeholder="ID"/>
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
@@ -40,6 +42,7 @@ export default {
       return {
         ID: null,
         password: null,
+        common_code:2,
       }
     },
     methods:{
