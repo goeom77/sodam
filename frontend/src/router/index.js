@@ -13,12 +13,12 @@ import announce from '../views/helpdesk/announce/announce.vue'
 import inquiry from '../views/helpdesk/inquiry/inquiry.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
 import notice from '../views/my/notice/notice.vue'
+import write from '../views/my/write_review/write.vue'
 import CheckEditInformation from '../views/editinformation/CheckEditInformation.vue'
 import EditInformation from '../views/editinformation/EditInformation.vue'
 import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
-
 const routes = [
   {
     path: '/',
@@ -85,6 +85,11 @@ const routes = [
     path: '/notice',
     name: 'notice',
     component: notice
+  },
+  {
+    path: '/write',
+    name: 'write',
+    component: write
   },
   {
     path: '/clientmanage',
