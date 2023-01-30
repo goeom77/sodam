@@ -47,7 +47,7 @@ export default {
 <style>
 #notice {
   /* 반응형 x */
-  width: 1080px;
+  width: 1255px;
   margin: 0 auto;
 }
 

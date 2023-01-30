@@ -1,9 +1,9 @@
 <template>
   <div id="cover">
-    <div class="check">
-      <LoginImage />
+    <div class="background">
+
     </div>
-    <div class="check">
+    <div id="LoginDetail">
       <LoginDetail/>
     </div>
   </div>
@@ -11,12 +11,9 @@
 
 <script>
 import LoginDetail from '@/components/account/login/LoginDetail.vue'
-import LoginImage from '@/components/account/login/LoginImage.vue'
-
 export default {
   name:'LoginPage',
   components: {
-    LoginImage,
     LoginDetail
   }
 }
@@ -24,9 +21,28 @@ export default {
 
 <style>
 #cover{
+  width: 1255px;
+  margin: 0 auto;
   text-align: center;
 }
 .check {
-  display: inline-block;
+  /* display: inline-block; */
+}
+
+.background {
+  float:left; 
+  width: 800px;
+  height: 608px;
+  background-image: url(../../../assets/loginImage.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#LoginDetail {
+  float:left; 
+  width:455px;
+  height: 608px;
+  background-color: #FCFAEF;
+  margin-right: 0px;
 }
 </style>

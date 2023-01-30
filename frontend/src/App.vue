@@ -60,10 +60,11 @@ export default {
 
 nav {
   /* 반응형 x */
-  width: 1100px;
+  width: 1255px;
   margin: 0 auto;
   padding: 20px;
   display: flex;
+  background-color: #F1E7DB;
   justify-content: space-between;
   align-items: center;
   /* background-color: #F1E7DB; */
@@ -80,9 +81,9 @@ nav a {
   text-decoration-line: none;
 }
 
-nav a.router-link-exact-active {
+/* nav a.router-link-exact-active {
   color: #579BB1;
-}
+} */
 
 
 

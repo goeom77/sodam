@@ -2,18 +2,14 @@
   <div id="announce">
     <div id="helpBoard">
       <br>
+      <br>
       <h1>HELP DESK</h1>
+      <br>
       <br>
       <div id="helpCategory"> 
         <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
         <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
-      <div>
-
-      </div>
-    </div>
-    <div>
-      
     </div>
     <AnnounceList/>
   </div>
@@ -35,7 +31,7 @@ export default {
 <style>
 #announce {
   /* 반응형 x */
-  width: 1080px;
+  width: 1255px;
   margin: 0 auto;
 }
 
@@ -61,12 +57,13 @@ a:visited {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
 }
 #helpCategory {
   width:100%; 
-  height:50px; 
+  height:60px; 
   display: grid;
+  margin-bottom: 0%;
   grid-template-columns: 1fr 1fr;
   line-height: 53.5px;
   text-align: center;

@@ -64,6 +64,7 @@ const routes = [
     name: 'KidBoard',
     component: KidBoard
   },
+
   {
     path: '/announce',
     name: 'announce',

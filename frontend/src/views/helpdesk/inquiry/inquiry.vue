@@ -35,7 +35,7 @@ export default {
 <style>
 #inquiry {
   /* 반응형 x */
-  width: 1080px;
+  width: 1255px;
   margin: 0 auto;
 }
 
@@ -61,7 +61,7 @@ a:visited {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
 }
 #helpCategory {
   width:100%; 
