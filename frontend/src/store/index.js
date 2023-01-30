@@ -6,6 +6,7 @@ import router from '@/router'
 const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
   state: {
+    KidBoardarticles: [],
     token:null,
     userSignupData:{
       id:null,
@@ -24,6 +25,9 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    GET_KIDBOARDARTICLES(state, KidBoardarticles) {
+      state.KidBoardarticles = KidBoardarticles
+    },
     SAVE_TOKEN(state, token) {
       state.token = token
     },

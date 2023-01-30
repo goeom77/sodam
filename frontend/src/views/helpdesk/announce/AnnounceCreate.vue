@@ -1,11 +1,11 @@
 
 <template>
   <div id="AnnounceCreate">
-    <div id="AnnounceWrite">
-      <br>
-      <h1>HELP DESK</h1>
-      <br>
-      <div id="helpCategory"> 
+    <div id="AnnounceCreateBoard">
+      <div id="AnnounceCreateBoardtitle">
+        <h1>HELP DESK</h1>
+      </div>
+      <div id="AnnounceCreateWrite"> 
         <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
         <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
@@ -93,7 +93,7 @@ a {
   color: white;
 }
 
-#AnnounceWrite {
+#AnnounceCreateBoard {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -102,17 +102,26 @@ a {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
+  position: relative;
 }
-#HelpCategoryWrite {
+#AnnounceCreateWrite {
   width:100%; 
-  height:50px; 
-  line-height: 53.5px;
+  height:60px; 
+  line-height: 65px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   background-color:rgba(96, 96, 96, 0.5);
   padding-left: 60px;
   padding-right:60px;
+  position: absolute;
+  bottom: 0px;
+} 
+#AnnounceCreateBoardtitle {
+  position: absolute;
+  left: 50%; 
+  bottom: 50%; 
+  transform: translate(-50%);
 }
 
 #HelpWritebox {
@@ -149,7 +158,13 @@ border-radius: 0px;
 appearance: none;
 margin-left: 100px;
 }
-
+.CategoryClass {
+  float:left;
+  height:60px; 
+  font-weight: 700;
+  border: 1px solid white;
+  border-bottom: 0px;
+}
 /* worryselect::-ms-expand {
         display: none;
 } */

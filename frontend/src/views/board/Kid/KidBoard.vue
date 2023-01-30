@@ -1,9 +1,10 @@
 <template>
   <div id="KidBoard">
     <div id="worryBoard">
-      <br>
-      <h1>고민 게시판</h1>
-      <br>
+      <div id="worryBoardtitle">
+        <h1>고민 게시판</h1>
+      </div>
+
       <div id="worryCategory"> 
         <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
         <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
@@ -41,6 +42,7 @@ export default {
   //   this.$store.dispatch('getKidBoardArticles')
   //   }
   // }
+
 }
 </script>
 
@@ -71,26 +73,37 @@ a:visited {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
+  position: relative;
 }
 #worryCategory {
   width:100%; 
   /* width: 50vw; */
-  height:50px; 
-  line-height: 53.5px;
+  height:60px; 
+  line-height: 65px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   background-color:rgba(96, 96, 96, 0.5);
   padding-left: 60px;
   padding-right:60px;
+  position: absolute;
+  bottom: 0px;
+} 
+#worryBoardtitle {
+  position: absolute;
+  left: 50%; 
+  bottom: 50%; 
+  transform: translate(-50%);
 }
+
+
 #worryCategory a.router-link-exact-active {
   background-color: #579BB1;
 }
 
 .CategoryClass {
   float:left;
-  height:50px; 
+  height:60px; 
   font-weight: 700;
   border: 1px solid white;
   border-bottom: 0px;

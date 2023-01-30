@@ -1,11 +1,11 @@
 
 <template>
   <div id="KidBoardCreate">
-    <div id="worryBoardWrite">
-      <br>
-      <h1>고민 게시판</h1>
-      <br>
-      <div id="worryCategoryWrite"> 
+    <div id="KidBoardCreateBoard">
+      <div id="KidBoardCreateBoardtitle">
+        <h1>고민 게시판</h1>
+      </div>
+      <div id="KidBoardCategoryWrite"> 
         <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
         <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
         <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
@@ -22,13 +22,13 @@
         <form @submit.prevent="KidBoardcreateArticle">
           <div style="text-align:start; padding: 10px;">
             <label for="category">대상</label>
-            <select id="worryselect">
-              <option>아동</option>
-              <option>청소년</option>
-              <option>성인</option>
-              <option>부부</option>
-              <option>노년</option>
-              <option>기타</option>
+            <select id="worryselect" v-model="person">
+              <option
+                v-for="(item, index) in selectList"
+                :key="index"
+                :value="item.value"
+                >{{ item.name }}</option
+              >
             </select>
           </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
@@ -56,26 +56,50 @@ const API_URL = 'http://127.0.0.1:8000'
 export default {
   name: 'KidBoardCreate',
   data() {
+    // 추가
+    // const id = this.$route.params.contentId;
+
     return {
+      // 추가
+      // KidBoardarticle: KidBoardarticle,
+      // id: id,
+      // person: id !== undefined ? KidBoardarticle[id].person : null, 
+      // person: id !== undefined ? KidBoardarticle[id].title : null, 
+      // person: id !== undefined ? KidBoardarticle[id].content : null, 
+
+      person: null,
       title: null,
       content: null,
+      selectList: [
+        { name: "아동", value: "KidBoard" },
+        { name: "청소년", value: "TeenBoard" },
+        { name: "성인", value: "AdultBoard" },
+        { name: "부부", value: "CoupleBoard" },
+        { name: "노년", value: "OldBoard" },
+        { name: "기타", value: "GuitarBoard" },
+      ],
     }
   },
   methods: {
     KidBoardcreateArticle() {
+      const person = this.person
       const title = this.title
       const content = this.content
-      if (!title) {
-        alert('제목을 입력해주세요')
+      if (!person) {
+        alert('대상을 선택해주세요')
         return
       } else if (!content) {
         alert('내용을 입력해주세요')
+        return
+      } else if (!title) {
+        alert('제목을 입력해주세요')
         return
       }
       axios({
         method: 'post',
         url: `${API_URL}/backend/`,
         data: {
+          person: person,
           title: title,
           content: content,
         },
@@ -85,7 +109,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'KidBoard' })
+          this.$router.push({ name: {person} })
         })
         .catch((err) => {
           console.log(err)
@@ -108,7 +132,7 @@ a {
   color: white;
 }
 
-#worryBoardWrite {
+#KidBoardCreateBoard {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -117,17 +141,26 @@ a {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
+  position: relative;
 }
-#worryCategoryWrite {
+#KidBoardCategoryWrite {
   width:100%; 
-  height:50px; 
-  line-height: 53.5px;
+  height:60px; 
+  line-height: 65px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   background-color:rgba(96, 96, 96, 0.5);
   padding-left: 60px;
   padding-right:60px;
+  position: absolute;
+  bottom: 0px;
+} 
+#KidBoardCreateBoardtitle {
+  position: absolute;
+  left: 50%; 
+  bottom: 50%; 
+  transform: translate(-50%);
 }
 
 #Writebox {

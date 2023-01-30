@@ -4,7 +4,6 @@
       <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link> 
       <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link> 
     </div>
-
     <KidBoardListItem
       v-for="KidBoardarticle in KidBoardarticles"
       :key="KidBoardarticle.id"
@@ -28,15 +27,6 @@ export default {
   //     return this.$store.state.KidBoardarticles
   //   }
   // },
-  // created() {
-  //   this.getKidBoardArticles()
-  // },
-  // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
-  //   }
-  // }
-
 
 }
 </script>

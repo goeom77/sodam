@@ -1,9 +1,9 @@
 <template>
   <div id="notice">
     <div id="MyBoard">
-      <br>
-      <h1>마이페이지</h1>
-      <br>
+      <div id="MyBoardtitle">
+        <h1>마이페이지</h1>
+      </div>  
       <div id="myCategory"> 
         <router-link to="/notice" id="NoticeCategory" class="CategoryClass" >내게 온 알림</router-link>
         <router-link to="/" id="HistoryCategory" class="CategoryClass">상담 내역</router-link>
@@ -73,19 +73,28 @@ a:visited {
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
-
+  height: 250px;
+  position: relative;
 }
 #myCategory {
   width:100%; 
-  height:50px; 
-  line-height: 53.5px;
+  height:60px; 
+  line-height: 65px;
   /* justify-content: center; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   background-color:rgba(96, 96, 96, 0.5);
   padding-left: 60px;
   padding-right:60px;
+  position: absolute;
+  bottom: 0px;
 } 
+#MyBoardtitle {
+  position: absolute;
+  left: 50%; 
+  bottom: 50%; 
+  transform: translate(-50%);
+}
 
 #myCategory a.router-link-exact-active {
   background-color: #579BB1;
@@ -93,7 +102,7 @@ a:visited {
 
 .CategoryClass {
   float:left;
-  height:50px; 
+  height:60px; 
   font-weight: 700;
   border: 1px solid white;
   border-bottom: 0px;
