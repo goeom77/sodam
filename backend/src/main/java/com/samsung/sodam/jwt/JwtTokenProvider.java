@@ -1,5 +1,6 @@
 package com.samsung.sodam.jwt;
 
+import com.samsung.sodam.db.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,15 +38,19 @@ public class JwtTokenProvider {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role.getRoleName()); // 정보는 key / value 쌍으로 저장된다.
 
+        long now = (new Date()).getTime();
         // Access Token 생성
-        //Date accessTokenExpiresIn = new Date(now() + ACCESS_TOKEN_EXPIRE_TIME);
+        Date accessTokenExpiresInDate = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = doGenerateToken(claims, id, ACCESS_TOKEN_EXPIRE_TIME);
 
         // Refresh Token 생성
         String refreshToken = doGenerateToken(claims,id, REFRESH_TOKEN_EXPIRE_TIME);
 
-        //return doGenerateToken(claims, );
-        return new TokenDto(accessToken, refreshToken);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd/HH:mm:ss");
+        //원하는 데이터 포맷 지정
+        String accessTokenExpiresIn = simpleDateFormat.format(accessTokenExpiresInDate);
+
+        return new TokenDto(accessToken, refreshToken, accessTokenExpiresIn);
     }
 
     private String doGenerateToken(Map<String, Object> claims,String id, long tokenValidTime) {

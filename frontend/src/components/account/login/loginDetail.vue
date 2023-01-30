@@ -5,6 +5,7 @@
       <div class="container__form container--signup">
       <form action="#" class="form" id="form1">
         <h2 class="form__title">SignUp</h2>
+
         <input type="text" v-model="ID"  placeholder="ID"/>
         <br>
         <input type="password" v-model="password" placeholder="Password"/>
@@ -12,7 +13,8 @@
         <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
         <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
         <br>
-        <button class="btn">로그인</button>
+        <button @click="logIn">로그인</button>
+        <v-btn @click="logIn">로그인</v-btn>
         <br>
         <LoginKakao/>
         <router-link class="find" :to="{name:'loginKakao'}">카카오 로그인</router-link>
@@ -44,7 +46,6 @@ export default {
       logIn(){
         const ID = this.ID
         const password = this.password
-
         const payload = {
           ID: ID,
           password: password
@@ -56,12 +57,12 @@ export default {
       //   console.log('파인드 아이디 입구')
       //   this.$router.push({name:'find_Id'})
       // },
-      moveFindPw(){
-        this.$router.push({name:'find_Pw'})
-      },
-      moveKakao(){
-        this.$router.push({name:'loginKakao'})
-      }
+      // moveFindPw(){
+      //   this.$router.push({name:'find_Pw'})
+      // },
+      // moveKakao(){
+      //   this.$router.push({name:'loginKakao'})
+      // }
 
     }
     

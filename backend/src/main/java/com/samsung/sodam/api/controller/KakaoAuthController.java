@@ -1,79 +1,92 @@
 package com.samsung.sodam.api.controller;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.samsung.sodam.api.request.AuthCommonRequest;
+import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.response.AuthCommonResponse;
+import com.samsung.sodam.api.response.AuthKakaoResponse;
+import com.samsung.sodam.api.service.AuthService;
+import com.samsung.sodam.api.service.KakaoAuthService;
+import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.db.entity.Member;
+import com.samsung.sodam.db.entity.Role;
+import com.samsung.sodam.jwt.KakaoUser;
+import com.samsung.sodam.jwt.TokenDto;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 @RestController()
 @RequestMapping("/api/auth/kakao")
 @CrossOrigin(
-        // localhost:5500 과 127.0.0.1 구분
-        origins = {"https://kauth.kakao.com/oauth/authorize"},
+        origins = {"https://kauth.kakao.com/oauth"},
         allowCredentials = "true",
         allowedHeaders = "*",
         methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
 )
+@AllArgsConstructor
 public class KakaoAuthController {
-    @GetMapping("/get-token")
-    public String getToken(@RequestParam("code") String code) {
-        String access_Token="";
-        String refresh_Token ="";
-        String reqURL = "https://kauth.kakao.com/oauth/token";
 
-        try{
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    private final String TRUE_STRING = "true";
+    private final String FALSE_STRING = "false";
+    private final KakaoAuthService kakaoService;
 
-            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
+    private final AuthService authService;
+    @PostMapping("/get-token")
+    public ResponseEntity<AuthKakaoResponse> login(@RequestBody AuthCommonRequest request) {
+        AuthKakaoResponse response = new AuthKakaoResponse(request);
+        TokenDto tokenDto = kakaoService.getToken(request.getConfirmCode());
+        KakaoUser user = kakaoService.getUserInfo(tokenDto.getAccessToken());
 
-            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=9e0f9a70f672fba12b71ea1b5ec10e80"); // TODO REST_API_KEY 입력
-            sb.append("&redirect_uri=http://localhost:8080/auth/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&code=" + code);
-            bw.write(sb.toString());
-            bw.flush();
+        if(user.getId() == null || user.getEmail() == null) throw new IllegalArgumentException("카카오 로그인 실패");
 
-            //결과 코드가 200이라면 성공
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
+        Member m = authService.getMemberByEmail(user.getEmail());
+        String id = null;
+        if(m == null){ // 기존회원 아님
+            id = "kakao_" + user.getId();
+            response.setIsFirst(TRUE_STRING);
 
-            while ((line = br.readLine()) != null) {
-                result += line;
+            System.out.println("first - "+id);
+            user.setId(id);
+
+            Role role = Role.find(request.getCommonCode());
+            if(role == Role.COUNSELOR){
+                response.setEmail(user.getEmail());
+                response.setName(user.getName());
+                response.setId(id);
+                response.setIsInfoRequired(TRUE_STRING);
+            }else if(role == Role.CLIENT) {
+                m = kakaoService.clientSignupKakao(user);
             }
-            System.out.println("response body : " + result);
+        } else{ // 기존 가입한 회원
+            id = m.getId();
+            System.out.println("prev signup - "+id);
+            request.setId(id);
+            request.setEmail(user.getEmail());
+            AuthCommonResponse authResponse = authService.login(request, true);
 
-            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
+            response.setEmail(user.getEmail());
+            response.setId(authResponse.getId());
+            response.setName(authResponse.getName());
+            response.setToken(authResponse.getToken());
 
-            access_Token = element.getAsJsonObject().get("access_token").getAsString();
-            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+            System.out.println("KakaoAuthController - accessToken :" + response.getToken().getAccessToken());
+            System.out.println("KakaoAuthController - refreshToken :" + response.getToken().getRefreshToken());
 
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
-
-            br.close();
-            bw.close();
-
-        }catch (IOException e) {
-            e.printStackTrace();
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-
-        return access_Token;
+        if(m != null) return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @PostMapping("/counselor-signup")
+    public ResponseEntity<AuthKakaoResponse> counselorSignUp(@RequestBody CounselorRequest request) {
+        Counselor c = kakaoService.counselorSignupKakao(request);
+        AuthKakaoResponse response = new AuthKakaoResponse();
+        response.setIsInfoRequired(FALSE_STRING);
+        response.setName(c.getName());
+        response.setId(c.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

@@ -13,6 +13,7 @@ import lombok.Setter;
 public class AuthCommonRequest {
     private String id;
     private String password;
+    private String isFindId;    // "true" / "false"
     private String email;
 
     private String confirmCode;

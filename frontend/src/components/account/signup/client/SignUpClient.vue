@@ -6,7 +6,6 @@
       </v-card-title>
       <v-card-text> 
           <v-row>
-            
             <v-col cols="12">
               <v-text-field
               label="Id"
@@ -14,29 +13,25 @@
               v-model="id"
               required
               ></v-text-field>
-              <button type="button" class="btn btn-light" @click="duplicateId">중복확인</button>
-              <div>
-                <span v-if="!idDuplicateFlag">중복</span>
-                <span v-else-if="idDuplicateFlag">사용 가능</span>
-
-              </div>
+              <v-btn @click="duplicateId(),checkDuplicate()">중복 확인</v-btn>
+              {{ this.msg }}
             </v-col>
             <v-col cols="12">
               <v-text-field
                 label="Password"
-                type="text"
+                type="password"
                 v-model="password"
                 @blur="passwordValid"
                 required
               ></v-text-field>
             </v-col>
             <div v-if="!passwordValidFlag">
-              유효하지않은 비밀번호입니다.              
+              유효하지않은 비밀번호입니다.                
             </div>
             <v-col cols="12">
               <v-text-field
               label="RE Password"
-              type="text"
+              type="password"
               v-model="password2"
               @blur="passwordCheckValid"
               required
@@ -53,7 +48,6 @@
                 required
               ></v-text-field>
             </v-col>
-
             <v-col cols="12">
               <v-text-field
                 label="E-mail"
@@ -71,25 +65,18 @@
               ></v-text-field>
             </v-col>
           </v-row>
-  
       </v-card-text>
       <v-card-actions>
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="signup"
-        >
-          확인
-        </v-btn>
-        <v-btn
-          color="blue darken-1"
-          text
-          @click="moveBack"
-        >
-          취소
-        </v-btn>
+        <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag">
+          <v-btn color="blue darken-1" text @click="signup">확인</v-btn>
+        </div>
+        <div v-else>
+          <v-btn color="blue darken-1" disabled text>확인</v-btn>
+        </div>
+        
+        <v-btn color="blue darken-1" text @click="moveBack">취소</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -109,12 +96,19 @@ export default {
         email:null,
         number:null,
         idDuplicateFlag:true,
+        // 중복 확인 여부 
+        checkDuplicateFlag:0,
         passwordValidFlag: true,
         passwordCheckFlag: true,
+        msg:null,
       }
     },
 
     methods:{
+      checkDuplicate(){
+      this.checkDuplicateFlag = this.checkDuplicateFlag+1
+      console.log(this.checkDuplicateFlag)
+      },
       // 아이디 중복 검사
       duplicateId(){
         axios({
@@ -123,10 +117,10 @@ export default {
         })
         .then(res =>{
           if (res.data === 'OK'){
-            console.log(`${this.id}는 사용할 수 있는 아이디입니다.`)
+            this.msg = `${this.id}는 사용할 수 있는 아이디입니다.`
             this.idDuplicateFlag = true
           }else{
-            console.log(`${this.id}는 사용할 수 없는 아이디입니다.`)
+            this.msg = `${this.id}는 사용할 수 없는 아이디입니다.`
             this.idDuplicateFlag = false
           }
         })
@@ -151,7 +145,7 @@ export default {
       moveBack(){
         this.$router.push({ name: 'login' })
       },
-      // 중복확인
+      // 회원가입
       signup(){
         const id = this.id
         const password = this.password
@@ -170,7 +164,7 @@ export default {
         }
         console.log(payload)
         this.$store.dispatch('signup', payload)
-
+        this.$router.push({name:'login'})
       }
     }
 }

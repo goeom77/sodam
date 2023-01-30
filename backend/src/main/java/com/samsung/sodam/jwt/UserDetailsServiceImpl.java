@@ -2,6 +2,8 @@ package com.samsung.sodam.jwt;
 
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.db.entity.Member;
+import com.samsung.sodam.db.entity.Role;
 import com.samsung.sodam.db.repository.ClientRepository;
 import com.samsung.sodam.db.repository.CounselorRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +30,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         
         if(client.isEmpty() && counselor.isEmpty()) throw new UsernameNotFoundException("로그인 실패");
 
-        if(client.isEmpty()) member = counselor.orElse(null);
-        else member = client.orElse(null);
+        if(client.isEmpty()) {
+            member = counselor.orElse(null);
+            member.setRole(Role.COUNSELOR);
+        }
+        else {
+            member = client.orElse(null);
+            member.setRole(Role.CLIENT);
+        }
 
+        System.out.println("userDetailsService " + member.toString());
         return new UserDetailsImpl(member);
     }
 }
