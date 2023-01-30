@@ -1,5 +1,7 @@
 package com.samsung.sodam.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,15 +22,18 @@ public class TroubleComment extends BaseTime {
     @Column(length = 200)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private TroubleBoard troubleBoard;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_like")
+    @OneToMany(mappedBy = "troubleComment", cascade = CascadeType.REMOVE)
     private List<TroubleCommentLike> troubleCommentLike;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column
+    private Integer likes;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "counselor_id")
     private Counselor counselor;
+
 }

@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CATEGORY {
-    CHILD("0", "아동"),
-    TEENAGER("1", "청소년"),
-    ADULT("2", "성인"),
-    COUPLE("3", "가족"),
-    ELDER("4", "노년"),
-    OTHER("5", "기타");
+    CHILD(0, "child"),
+    TEENAGER(1, "teenager"),
+    ADULT(2, "adult"),
+    COUPLE(3, "couple"),
+    ELDER(4, "elder"),
+    OTHER(5, "other");
 
-    private final String code;
+    private final Integer code;
     private final String value;
 }
