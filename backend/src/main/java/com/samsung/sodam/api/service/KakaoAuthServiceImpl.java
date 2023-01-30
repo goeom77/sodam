@@ -46,7 +46,6 @@ public class KakaoAuthServiceImpl implements KakaoAuthService{
         String refresh_Token ="";
         String accessTokenExpiresIn = null;
 
-
         try{
             long now = (new Date()).getTime();
 
@@ -94,11 +93,6 @@ public class KakaoAuthServiceImpl implements KakaoAuthService{
             //원하는 데이터 포맷 지정
             accessTokenExpiresIn = simpleDateFormat.format(accessTokenExpiresInDate);
 
-
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
-            System.out.println("accessTokenExpiresIn : " + accessTokenExpiresIn);
-
             br.close();
             bw.close();
 
@@ -133,8 +127,6 @@ public class KakaoAuthServiceImpl implements KakaoAuthService{
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
-            System.out.println("result type" + result.getClass().getName()); // java.lang.String
 
             try {
 

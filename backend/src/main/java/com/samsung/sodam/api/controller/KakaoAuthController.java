@@ -1,16 +1,15 @@
 package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.AuthCommonRequest;
-import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.api.response.AuthKakaoResponse;
 import com.samsung.sodam.api.service.AuthService;
 import com.samsung.sodam.api.service.KakaoAuthService;
-import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Member;
 import com.samsung.sodam.db.entity.Role;
 import com.samsung.sodam.jwt.KakaoUser;
 import com.samsung.sodam.jwt.TokenDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,9 @@ public class KakaoAuthController {
     private final KakaoAuthService kakaoService;
 
     private final AuthService authService;
-    @PostMapping("/get-token")
+    @PostMapping("/login")
+    @ApiOperation(value="카카오 로그인",
+            notes="첫 로그인일 경우 client는 바로 회원가입후 로그인, counselor는 카카오에서 가져온 유저 정보와 함께 isInfoRequired = \"true\"가 response됨")
     public ResponseEntity<AuthKakaoResponse> login(@RequestBody AuthCommonRequest request) {
         AuthKakaoResponse response = new AuthKakaoResponse(request);
         TokenDto tokenDto = kakaoService.getToken(request.getConfirmCode());
@@ -57,6 +58,14 @@ public class KakaoAuthController {
                 response.setIsInfoRequired(TRUE_STRING);
             }else if(role == Role.CLIENT) {
                 m = kakaoService.clientSignupKakao(user);
+                request.setId(id);
+                request.setEmail(user.getEmail());
+                AuthCommonResponse authResponse = authService.login(request, true);
+
+                response.setEmail(user.getEmail());
+                response.setId(authResponse.getId());
+                response.setName(authResponse.getName());
+                response.setToken(authResponse.getToken());
             }
         } else{ // 기존 가입한 회원
             id = m.getId();
@@ -77,16 +86,6 @@ public class KakaoAuthController {
         }
         if(m != null) return new ResponseEntity<>(response, HttpStatus.OK);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-    }
-
-    @PostMapping("/counselor-signup")
-    public ResponseEntity<AuthKakaoResponse> counselorSignUp(@RequestBody CounselorRequest request) {
-        Counselor c = kakaoService.counselorSignupKakao(request);
-        AuthKakaoResponse response = new AuthKakaoResponse();
-        response.setIsInfoRequired(FALSE_STRING);
-        response.setName(c.getName());
-        response.setId(c.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

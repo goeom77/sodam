@@ -6,12 +6,15 @@ import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.api.service.AuthService;
 import com.samsung.sodam.api.service.EnterpriseService;
+import com.samsung.sodam.api.service.KakaoAuthService;
 import com.samsung.sodam.db.entity.Counselor;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.StringTokenizer;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,6 +25,7 @@ public class AuthController {
 
     private final AuthService authService;
     private final EnterpriseService enterpriseService;
+    private final KakaoAuthService kakaoService;
 
     private String confirmCode;
     private Boolean isFindId;
@@ -40,9 +44,18 @@ public class AuthController {
     @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
     public ResponseEntity<String> counselorSignup(@RequestBody CounselorRequest request) {
         try{
-            //enterpriseService.existByEnterpriseId(request.getEnterpriseId());
+            enterpriseService.existByEnterpriseId(request.getEnterpriseId());
             System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
-            Counselor c = authService.counselorSignup(request);
+
+            Counselor c = null;
+            StringTokenizer st = new StringTokenizer(request.getId(), "_");
+            String prefix = st.nextToken();
+            if(prefix != null && prefix.equals("kakao")) {
+                c = kakaoService.counselorSignupKakao(request);
+            }
+            else
+                c = authService.counselorSignup(request);
+
             System.out.println(c.toString());
             return new ResponseEntity<String>(c.getId(), HttpStatus.OK);
         } catch (IllegalStateException e){

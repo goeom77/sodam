@@ -14,6 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CounselorRequest {
+
+    private String isKakaoRegister = "false";
     private String id;
     private String password;
     private String name;
@@ -32,6 +34,8 @@ public class CounselorRequest {
     private int enterpriseId;
 
     private String profileImg;
+
+
 
 
 }
