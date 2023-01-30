@@ -7,11 +7,21 @@ const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
   state: {
     token:null,
+    userSignupData:{
+      id:null,
+      password:null,
+      name:null,
+      tel:null,
+      email:null,
+      gender:null,
+      enterprise_id:null,
+    }
   },
   getters: {
     isLogin(state) {
       return state.token ? true : false
     },
+
   },
   mutations: {
     SAVE_TOKEN(state, token) {
@@ -22,6 +32,9 @@ export default new Vuex.Store({
         username: payload.username,
         password: payload.password
       }
+    },
+    SIGNUPCOUNSELOR(state,payload){
+      state.userSignupData = payload
     },
   },
   actions: {
@@ -42,7 +55,6 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-
     login(context,payload){
       axios({
         method:'post',
@@ -55,10 +67,13 @@ export default new Vuex.Store({
         .then((res)=>{
           console.log(res)  
           context.commit('SAVE_TOKEN', res.data.key)
-
+        })
+        .catch((res) =>{
+          console.log(res)
+          console.log('err')
         })
     },
-    signup(context, payload){
+    signupClient(context, payload){
       axios({
         method:'post',
         url: `${API_URL}/api/auth/signup/client`,
@@ -68,13 +83,18 @@ export default new Vuex.Store({
           password2:payload.password2,
           name:payload.name,
           email:payload.email,
-          number:payload.number,
+          tel:payload.tel,
         }
       })
         .then((response)=>{
           console.log(response)
           context.commit('SAVE_TOKEN',response.data.key)
         })
+    },
+    signupCounselor(context, payload){
+      console.log(payload)
+      context.commit('SIGNUPCOUNSELOR',payload)
+      
     }
   },
   modules: {

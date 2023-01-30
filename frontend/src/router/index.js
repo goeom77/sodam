@@ -6,6 +6,7 @@ import FindPw from '@/components/account//FindPw.vue'
 import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
+import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/Kid/KidBoard.vue'
 import announce from '../views/helpdesk/announce/announce.vue'
@@ -53,6 +54,11 @@ const routes = [
     path:'/signupcounselor',
     name:'signupcounselor',
     component: SignUpCounselor
+  },
+  {
+    path:'/signupcounselor2',
+    name:'signupcounselor2',
+    component: SignUpCounselor2
   },
   {
     path:'/calendar',
