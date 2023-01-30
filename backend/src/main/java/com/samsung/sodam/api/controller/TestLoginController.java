@@ -31,4 +31,12 @@ public class TestLoginController {
         System.out.println("dashboard");
         return "/index.html";
     }
+
+    @GetMapping(value = "/admin/board")
+    public String setAdmin(){
+        System.out.println("============================");
+        System.out.println("testLoginController - admin");
+        System.out.println("============================");
+        return "/admin.html";
+    }
 }

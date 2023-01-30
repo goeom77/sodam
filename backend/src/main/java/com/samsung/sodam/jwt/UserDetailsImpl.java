@@ -19,6 +19,8 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Role role = member.getRole();
+
+        // role name test
         System.out.println("jwt / UserDetailsImpl - "+role.getRoleName());
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_PREFIX + role.getRoleName());
         Collection<GrantedAuthority> authorities = new ArrayList<>();

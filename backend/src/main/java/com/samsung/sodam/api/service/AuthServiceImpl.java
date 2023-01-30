@@ -94,34 +94,42 @@ public class AuthServiceImpl implements AuthService{
     public AuthCommonResponse login(AuthCommonRequest request, Boolean isKakaoLogin) {
         AuthCommonResponse response = new AuthCommonResponse(request);
 
-        System.out.println("authService - " + request.getId());
         String encodePassword = null;
         Member member = null;
 
-        System.out.println(request.getCommonCode());
         Role role = Role.find(request.getCommonCode());
 
         // id로 유저 찾기
         if(role == Role.CLIENT){
+            // 프론트에서 admin도 client에서 로그인하게 되어있음
+            // if문 아래의 setRoleByGroupCode으로 맞춰주기
             member = clientRepository.getById(request.getId());
         }else if (role == Role.COUNSELOR){
             member = conselorRepository.getById(request.getId());
         }else {
             throw new IllegalArgumentException("로그인 실패");
         }
-        encodePassword = member.getPassword();
 
+        encodePassword = member.getPassword();
+        member.setRoleByGroupCode();
+
+        System.out.println("------------------------AuthService test log start");
+
+        System.out.println(member.getRole().getRoleName());
         // 확인용 코드
         System.out.println("encodePassword - "+encodePassword);
         System.out.println("input pw - " + request.getPassword());
         System.out.println("input encode pw - " + request.getPassword());
+        System.out.println("------------------------AuthService test log end");
 
         if(!isKakaoLogin && !passwordEncoder.matches(request.getPassword(), encodePassword)) {
             throw new IllegalArgumentException("로그인 실패");
         }
-        TokenDto token = jwtTokenProvider.generateToken(member.getId(), role);
+        TokenDto token = jwtTokenProvider.generateToken(member.getId(), member.getRole());
         response.setToken(token);
         response.setName(member.getName());
+
+
         return response;
     }
 
