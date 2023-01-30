@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div >
     <!-- 로그인 창  -->
     <div class="loginform">
-      <div class="container__form container--signup">
+      <div class="container__form container--signup" style="margin: 0 auto; width:455px;">
       <form action="#" class="form" id="form1">
         <h2 class="form__title">SignUp</h2>
 
@@ -13,11 +13,12 @@
         <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
         <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
         <br>
-        <button @click="logIn">로그인</button>
+
         <v-btn @click="logIn">로그인</v-btn>
         <br>
+        <br>
         <LoginKakao/>
-        <router-link class="find" :to="{name:'loginKakao'}">카카오 로그인</router-link>
+
         <div style="display:block">
           <h4>계정이 없으신가요?</h4>
           <router-link class="find" :to="{name:'signupclient'}">회원가입</router-link>
@@ -25,12 +26,11 @@
       </form>
     </div>
   </div>
-
   </div>
 </template>
 
 <script>
-import LoginKakao from './LoginKakao.vue'
+import LoginKakao from '@/components/account/login/LoginKakao.vue'
 export default {
     name:'LoginDetail',
     components:{
@@ -42,7 +42,7 @@ export default {
         password: null,
       }
     },
-    method:{
+    methods:{
       logIn(){
         const ID = this.ID
         const password = this.password
@@ -90,4 +90,5 @@ export default {
   text-decoration-line: none;
   color: black;
 }
+
 </style>

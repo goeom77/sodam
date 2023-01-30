@@ -1,7 +1,6 @@
 <template>
   <div id="cover">
     <div class="background">
-
     </div>
     <div id="LoginDetail">
       <LoginDetail/>
@@ -44,5 +43,6 @@ export default {
   height: 608px;
   background-color: #FCFAEF;
   margin-right: 0px;
+  justify-content: center;
 }
 </style>
