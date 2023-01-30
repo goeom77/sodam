@@ -101,7 +101,6 @@ export default {
         passwordValidFlag: true,
         passwordCheckFlag: true,
         msg:null,
-
       }
     },
 
@@ -146,7 +145,7 @@ export default {
       moveBack(){
         this.$router.push({ name: 'login' })
       },
-      // 중복확인
+      // 회원가입
       signup(){
         const id = this.id
         const password = this.password
@@ -165,7 +164,7 @@ export default {
         }
         console.log(payload)
         this.$store.dispatch('signup', payload)
-
+        this.$router.push({name:'login'})
       }
     }
 }
