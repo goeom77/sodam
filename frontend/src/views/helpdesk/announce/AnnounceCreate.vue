@@ -1,36 +1,21 @@
 
 <template>
-  <div id="KidBoardCreate">
-    <div id="worryBoardWrite">
+  <div id="AnnounceCreate">
+    <div id="AnnounceWrite">
       <br>
-      <h1>고민 게시판</h1>
+      <h1>HELP DESK</h1>
       <br>
-      <div id="worryCategoryWrite"> 
-        <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
-        <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
-        <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
-        <router-link to="/KidBoard" id="CoupleCategory" class="CategoryClass">부부 상담</router-link>
-        <router-link to="/KidBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
-        <router-link to="/KidBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
+      <div id="helpCategory"> 
+        <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
+        <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
       <div>
 
       </div>
     </div>
     <div>
-      <div id="Writebox">
-        <form @submit.prevent="KidBoardcreateArticle">
-          <div style="text-align:start; padding: 10px;">
-            <label for="category">대상</label>
-            <select id="worryselect">
-              <option>아동</option>
-              <option>청소년</option>
-              <option>성인</option>
-              <option>부부</option>
-              <option>노년</option>
-              <option>기타</option>
-            </select>
-          </div>
+      <div id="HelpWritebox">
+        <form @submit.prevent="AnnouncecreateArticle">
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
             <input type="text" id="title" v-model.trim="title">
@@ -54,7 +39,7 @@ const API_URL = 'http://127.0.0.1:8000'
 
 
 export default {
-  name: 'KidBoardCreate',
+  name: 'AnnounceCreate',
   data() {
     return {
       title: null,
@@ -62,7 +47,7 @@ export default {
     }
   },
   methods: {
-    KidBoardcreateArticle() {
+    AnnouncecreateArticle() {
       const title = this.title
       const content = this.content
       if (!title) {
@@ -85,7 +70,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'KidBoard' })
+          this.$router.push({ name: 'announce' })
         })
         .catch((err) => {
           console.log(err)
@@ -98,7 +83,7 @@ export default {
 
 
 <style>
-#KidBoardCreate {
+#AnnounceCreate {
   width: 1080px;
   margin: 0 auto;
 }
@@ -108,7 +93,7 @@ a {
   color: white;
 }
 
-#worryBoardWrite {
+#AnnounceWrite {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -119,7 +104,7 @@ a {
   padding-top: 20px;
 
 }
-#worryCategoryWrite {
+#HelpCategoryWrite {
   width:100%; 
   height:50px; 
   line-height: 53.5px;
@@ -130,25 +115,12 @@ a {
   padding-right:60px;
 }
 
-#Writebox {
+#HelpWritebox {
   border-top: 1px solid black;
   /* border-bottom: 1px solid black; */
   margin: 60px;
 }
 
-#worryselect {
-width: 800px; 
-height: 50px;
-padding: .8em .5em; 
-border: 1px solid #B9B6B6;
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 100px;
-}
 
 #title {
 width: 800px; 

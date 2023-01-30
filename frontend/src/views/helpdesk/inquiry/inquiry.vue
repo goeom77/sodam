@@ -1,5 +1,5 @@
 <template>
-  <div id="announce">
+  <div id="inquiry">
     <div id="helpBoard">
       <br>
       <h1>HELP DESK</h1>
@@ -15,25 +15,25 @@
     <div>
       
     </div>
-    <AnnounceList/>
+    <InquiryList/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /srcz
-import AnnounceList from '@/components/HelpItem/AnnounceList.vue'
+import InquiryList from '@/components/HelpItem/InquiryList.vue'
 
 export default {
-  name: 'announce',
+  name: 'inquiry',
   components: {
-    AnnounceList
+    InquiryList
   },
 }
 </script>
 
 
 <style>
-#announce {
+#inquiry {
   /* 반응형 x */
   width: 1080px;
   margin: 0 auto;

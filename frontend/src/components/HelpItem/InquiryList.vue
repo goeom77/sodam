@@ -1,39 +1,39 @@
 <template>
-  <div id="KidBoardList">
-    <div id="WriteButton">
-      <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link> 
-      <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link> 
+  <div id="InquiryList">
+    <div id="InquiryWriteButton">
+      <router-link to="/announce" id="InquiryListAll" style="color:black">전체 (5)</router-link> 
+      <router-link to="/InquiryCreate" id="InquiryCreateButton" class="InquiryCreateButton" >글쓰기</router-link> 
     </div>
 
-    <KidBoardListItem
-      v-for="KidBoardarticle in KidBoardarticles"
-      :key="KidBoardarticle.id"
-      :KidBoardarticle="KidBoardarticle"
+    <InquiryListItem
+      v-for="Inquiryarticle in Inquiryarticles"
+      :key="Inquiryarticle.id"
+      :Inquiryarticle="Inquiryarticle"
     /> 
-    <KidBoardListItem/>
+    <InquiryListItem/>
   </div>
 
 </template>
 
 <script>
-import KidBoardListItem from '@/components/BoardItem/KidBoardListItem.vue'
+import InquiryListItem from '@/components/HelpItem/InquiryListItem.vue'
 
 export default {
-  name: 'KidBoardList',
+  name: 'InquiryList',
   components: {
-    KidBoardListItem
+    InquiryListItem
   },
   // computed: {
   //   articles() {
-  //     return this.$store.state.KidBoardarticles
+  //     return this.$store.state.Inquiryarticles
   //   }
   // },
   // created() {
-  //   this.getKidBoardArticles()
+  //   this.getInquiryarticles()
   // },
   // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
+  //   getInquiryarticles() {
+  //   this.$store.dispatch('getInquiryarticles')
   //   }
   // }
 
@@ -45,7 +45,7 @@ export default {
 /* #KidBoardList {
   text-align: end;
 } */
-#WriteButton {
+#InquiryWriteButton {
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -60,7 +60,7 @@ export default {
   font-weight: 700;
 }
 
-.KidBoardCreateButton {
+.InquiryCreateButton {
   float:left;
   height: 30px;
   line-height: 25px;
@@ -74,7 +74,7 @@ export default {
   border-radius: 5px;
 }
 
-#KidBoardListAll {
+#AnnounceList {
   color: black;
 }
 

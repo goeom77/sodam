@@ -67,7 +67,9 @@ a {
 }
 #box1 {
   float:left; 
-  margin: 30px;
+  margin-top: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
   width:20%; 
   height:50px; 
   line-height: 50px;
@@ -78,8 +80,10 @@ a {
           
 #box2 {
   display:inline-block; 
-  margin: 30px;
-  width:65%; 
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  width:74%; 
   height:50px; 
   line-height: 50px;
   border-top: 1px solid #5F5F5F;
@@ -88,7 +92,9 @@ a {
 
 #box3 {
   float:left; 
-  margin: 0px 30px;
+  margin-top: 0;
+  margin-right: 30px;
+  margin-bottom: 0px;
   width:20%; 
   line-height: 50px;
   /* justify-content: center; */
@@ -98,7 +104,9 @@ a {
           
 #box4 {
   display:inline-block; 
-  margin: 0px 30px;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-bottom: 0px;
   width:65%; 
   height:50px; 
   line-height: 50px;

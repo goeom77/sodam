@@ -1,39 +1,39 @@
 <template>
-  <div id="KidBoardList">
-    <div id="WriteButton">
-      <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link> 
-      <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link> 
+  <div id="AnnounceList">
+    <div id="AnnounceWriteButton">
+      <router-link to="/announce" id="AnnounceListAll" style="color:black">전체 (5)</router-link> 
+      <router-link to="/AnnounceCreate" id="AnnounceCreateButton" class="AnnounceCreateButton" >글쓰기</router-link> 
     </div>
 
-    <KidBoardListItem
-      v-for="KidBoardarticle in KidBoardarticles"
-      :key="KidBoardarticle.id"
-      :KidBoardarticle="KidBoardarticle"
+    <AnnounceListItem
+      v-for="Announcearticle in Announcearticles"
+      :key="Announcearticle.id"
+      :Announcearticle="Announcearticle"
     /> 
-    <KidBoardListItem/>
+    <AnnounceListItem/>
   </div>
 
 </template>
 
 <script>
-import KidBoardListItem from '@/components/BoardItem/KidBoardListItem.vue'
+import AnnounceListItem from '@/components/HelpItem/AnnounceListItem.vue'
 
 export default {
-  name: 'KidBoardList',
+  name: 'AnnounceList',
   components: {
-    KidBoardListItem
+    AnnounceListItem
   },
   // computed: {
   //   articles() {
-  //     return this.$store.state.KidBoardarticles
+  //     return this.$store.state.Announcearticles
   //   }
   // },
   // created() {
-  //   this.getKidBoardArticles()
+  //   this.getAnnouncearticles()
   // },
   // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
+  //   getAnnouncearticles() {
+  //   this.$store.dispatch('getAnnouncearticles')
   //   }
   // }
 
@@ -45,7 +45,7 @@ export default {
 /* #KidBoardList {
   text-align: end;
 } */
-#WriteButton {
+#AnnounceWriteButton {
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -60,7 +60,7 @@ export default {
   font-weight: 700;
 }
 
-.KidBoardCreateButton {
+.AnnounceCreateButton {
   float:left;
   height: 30px;
   line-height: 25px;
@@ -74,7 +74,7 @@ export default {
   border-radius: 5px;
 }
 
-#KidBoardListAll {
+#AnnounceList {
   color: black;
 }
 
