@@ -79,11 +79,12 @@ export default {
   width: 90%;
 }
 .loginform{
-  width : 500px;
+  margin-top: 100px;
+  width : 300px;
   height: 300px;
-  background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 30px;
+  background-color: #FCFAEF;
 }
 .find{
   text-decoration-line: none;

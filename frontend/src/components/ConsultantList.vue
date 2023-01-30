@@ -83,7 +83,7 @@ a {
   margin-top: 30px;
   margin-left: 30px;
   margin-bottom: 30px;
-  width:74%; 
+  width:75%; 
   height:50px; 
   line-height: 50px;
   border-top: 1px solid #5F5F5F;

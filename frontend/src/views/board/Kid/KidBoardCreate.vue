@@ -99,7 +99,7 @@ export default {
 
 <style>
 #KidBoardCreate {
-  width: 1080px;
+  width: 1255px;
   margin: 0 auto;
 }
 
@@ -137,7 +137,7 @@ a {
 }
 
 #worryselect {
-width: 800px; 
+width: 980px; 
 height: 50px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
@@ -151,7 +151,7 @@ margin-left: 100px;
 }
 
 #title {
-width: 800px; 
+width: 980px; 
 height: 50px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
@@ -165,7 +165,7 @@ margin-left: 100px;
 }
 
 #content {
-width: 800px; 
+width: 980px; 
 height: 500px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
