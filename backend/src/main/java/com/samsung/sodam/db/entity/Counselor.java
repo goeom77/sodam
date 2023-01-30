@@ -39,7 +39,7 @@ public class Counselor extends Member {
     private String refreshToken;
 
     @Column(length = 3)
-    private String groopCodeId;
+    private String commonCodeId;
 
 
     @Column(length = 30)
@@ -62,7 +62,7 @@ public class Counselor extends Member {
 
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String groopCodeId, String major, Gender gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, Gender gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -71,7 +71,6 @@ public class Counselor extends Member {
         this.career = career;
         this.introduce = introduce;
         this.refreshToken = refreshToken;
-        this.groopCodeId = groopCodeId;
         this.major = major;
         this.gender = gender;
         this.qualification = qualification;
@@ -79,6 +78,6 @@ public class Counselor extends Member {
         this.enterprise = enterprise;
         this.profileImg = profileImg;
 
-        this.groopCodeId = "1";
+        this.commonCodeId = "1";
     }
 }

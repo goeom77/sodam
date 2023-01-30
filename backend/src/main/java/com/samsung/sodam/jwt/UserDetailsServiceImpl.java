@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             member = client.orElse(null);
         }
 
-        member.setRoleByGroupCode();
+        member.setRoleByCommonCode();
         return new UserDetailsImpl(member);
     }
 }

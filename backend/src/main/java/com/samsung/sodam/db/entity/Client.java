@@ -34,7 +34,7 @@ public class Client extends Member {
     private String refreshToken;
 
     @Column(length = 3)
-    private String groopCodeId = "2";   // 내담자 그룹코드
+    private String commonCodeId = "2";   // 내담자 공통코드
 
     @Column(length = 200)
     private String profileImg;

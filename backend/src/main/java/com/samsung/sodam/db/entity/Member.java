@@ -21,12 +21,12 @@ public class Member {
 
     private String email;
 
-    private String groopCodeId;
+    private String commonCodeId;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public void setRoleByGroupCode() {
-        this.role = Role.find(this.getGroopCodeId());
+    public void setRoleByCommonCode() {
+        this.role = Role.find(this.getCommonCodeId());
     }
 }
