@@ -19,6 +19,7 @@ public interface ClientRepository extends JpaRepository<Client,String> , ClientC
 
     boolean existsByEmail(String email);
 
+    // 내부적으로 EntityManager.getReference() 메소드를 호출하기 때문에 프록시만 반환, 실제로 사용하기 전에는 db 접근 x)
     Client getById(String id);
 
     Optional<Client> findById(String id);
