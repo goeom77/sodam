@@ -2,6 +2,7 @@ package com.samsung.sodam.api.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.samsung.sodam.db.entity.GENDER;
 import com.samsung.sodam.db.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,17 +28,11 @@ public class CounselorRequest {
 
     private String introduce;
     private String major;
-    private String gender;
+    private GENDER gender;
     private String[] routine;
     private Role role = Role.COUNSELOR;
 
     private int enterpriseId;
 
     private String profileImg;
-
-    private String isKakaoRegister = "false";
-
-
-
-
 }

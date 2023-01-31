@@ -1,41 +1,39 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.samsung.sodam.db.converter.ConsultConverter;
+import com.samsung.sodam.db.converter.GenderConverter;
+import com.samsung.sodam.db.converter.StateAttributeConverter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultApplicant {
-    @Id @GeneratedValue
-    private Long id;
-    @Column(name = "consult_type")
-    private ConsultType consultType;
+    @Id @Column(name = "session_id")
+    private Integer sessionId;
+    private String name;
+    private Integer age;
+    @Convert(converter = ConsultConverter.class)
+    private CONSULT_TYPE consultType;
     private String tel;
     private String email;
-    @Column(name = "first_day_time")
-    private LocalDateTime firstDayTime; //신청일시
+    @Column(name = "create_date_time")
+    private LocalDateTime createdDateTime; //신청일시
     private String content;
-
+    @Convert(converter = GenderConverter.class)
+    private GENDER gender;
+    @Convert(converter = StateAttributeConverter.class)
     private STATE state; // 신청상태
-    @Column(name = "day_time")
-    private LocalDateTime dayTime; //상담일시
     @Column(name = "is_consult")
     private String isConsult;
     private Integer turn; // 회차
-    @Column(name = "session_id")
-    private Integer sessionId;
 
-    @Column(name = "apply_datetime")
-    private LocalDateTime applyDateTime;
+    @Column(name = "due_date")
+    private LocalDateTime dueDate;
 }

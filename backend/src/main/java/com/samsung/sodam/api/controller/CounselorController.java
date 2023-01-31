@@ -1,5 +1,6 @@
 package com.samsung.sodam.api.controller;
 
+import com.samsung.sodam.api.request.ConsultApplicantRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
@@ -97,5 +98,12 @@ public class CounselorController {
     //일정 상세 정보
 
     //상담 결과지
+
+    //최초 상담 신청
+    @PostMapping("/consultApplicant")
+    @ApiOperation(value = "상담예약신청")
+    public ConsultApplicant makeConsultApplicant(@RequestBody ConsultApplicantRequest request) {
+        return service.makeApplicant(request);
+    }
 
 }

@@ -1,14 +1,9 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.samsung.sodam.db.converter.StateAttributeConverter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 세션 생성 이후에 상담신청서 생성됨.
@@ -17,6 +12,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class ConsultSession {
     @Id
@@ -28,6 +24,7 @@ public class ConsultSession {
     @Column(name = "counselor_id")
     String counselorId;
 
+    @Convert(converter = StateAttributeConverter.class)
     STATE status;
 
 }

@@ -1,11 +1,12 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.db.converter.BaseEnumCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum CATEGORY {
+public enum CATEGORY implements BaseEnumCode<Integer> {
     CHILD(0, "child"),
     TEENAGER(1, "teenager"),
     ADULT(2, "adult"),
@@ -13,6 +14,6 @@ public enum CATEGORY {
     ELDER(4, "elder"),
     OTHER(5, "other");
 
-    private final Integer code;
-    private final String value;
+    private final Integer value;
+    private final String name;
 }

@@ -1,24 +1,36 @@
 package com.samsung.sodam.api.service;
 
+import com.samsung.sodam.api.request.ConsultApplicantRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 @Service
+@AllArgsConstructor
+@Setter
+@Getter
 public class CounselorRepositoryService {
 
+    @Autowired
+    SessionRepository sessionRepository;
     CounselorRepository repository;
     ReviewRepository reviewRepository;
     ScheduleRepository scheduleRepository;
-    SessionRepository sessionRepository;
+
     ApplicantRepository applicantRepository;
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
@@ -60,13 +72,46 @@ public class CounselorRepositoryService {
         return scheduleRepository.save(schedule);
     }
 
-    public void acceptApplicant(SessionStateRequest request){
+    public void acceptApplicant(SessionStateRequest request) {
         ConsultApplicant applicant = applicantRepository.findById(request.getSessionId()).orElseGet(ConsultApplicant::new);
         applicant.setState(request.getState());
         applicantRepository.save(applicant);
     }
 
-    public ConsultApplicant makeApplicant(ConsultApplicant consultApplicant){
-        return applicantRepository.save(consultApplicant);
+    /**
+     * @param request
+     * @return applicant : 생성된 상담신청서
+     * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
+     * 상담세션과 상담신청서 id는 동일
+     */
+    @Transactional
+    public ConsultApplicant makeApplicant(ConsultApplicantRequest request) {
+        ConsultSession session = ConsultSession.builder()
+                .counselorId(request.getCounselorId())
+                .clientId(request.getClientId())
+                .status(STATE.WAIT)
+                .build();
+
+        ConsultSession newSession = sessionRepository.save(session);
+
+        ConsultApplicant applicant = ConsultApplicant.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .tel(request.getTel())
+                .age(request.getAge())
+                .content(request.getContent())
+                .dueDate(request.getDueDate())
+                .gender(request.getGender())
+                .createdDateTime(LocalDateTime.now())
+                .turn(0)
+                .isConsult("N")
+                .sessionId(newSession.getId())
+//                .applyDateTime(LocalDateTime.now())
+                .consultType(request.getConsultType())
+                .build();
+
+        return applicantRepository.save(applicant);
     }
+
+
 }

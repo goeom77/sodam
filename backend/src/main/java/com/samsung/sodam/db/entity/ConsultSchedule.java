@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -18,7 +17,7 @@ public class ConsultSchedule {
     @Id
     private Long id;
     @Column(name = "consult_type")
-    private ConsultType consultType;
+    private CONSULT_TYPE CONSULTTYPE;
     private String tel;
     private String email;
     @Column(name = "first_day_time")

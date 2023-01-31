@@ -1,24 +1,28 @@
 package com.samsung.sodam.db.converter;
 
+import com.samsung.sodam.db.entity.STATE;
+
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+import java.util.Arrays;
 
 /**
  * 상담사
  */
-public class StateAttributeConverter implements AttributeConverter<String,Integer> {
+@Converter(autoApply = true)
+public class StateAttributeConverter implements AttributeConverter<STATE, Integer> {
+//    @Override
+//    protected STATE[] getValueList() {
+//        return STATE.values();
+//    }
+
     @Override
-    public Integer convertToDatabaseColumn(String attribute) {
-        if(attribute.equals("관리자")) return 0;
-        else if(attribute.equals("상담사")) return 1;
-        else if(attribute.equals("내담자")) return 2;
-        else throw new RuntimeException();
+    public Integer convertToDatabaseColumn(STATE attribute) {
+        return null;
     }
 
     @Override
-    public String convertToEntityAttribute(Integer dbData) {
-        if(dbData == 0) return "관리자";
-        else if(dbData == 1) return "상담사";
-        else if(dbData == 2) return "내담자";
-        else throw new RuntimeException();
+    public STATE convertToEntityAttribute(Integer dbData) {
+        return STATE.fromCode(dbData);
     }
 }

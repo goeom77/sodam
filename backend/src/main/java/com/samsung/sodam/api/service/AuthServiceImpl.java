@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService{
                 .career(request.getCareer())
                 .introduce(request.getIntroduce())
                 .major(request.getMajor())
-                .gender(Gender.find(request.getGender()))
+                .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))
                 .enterprise(e)
                 .build();
