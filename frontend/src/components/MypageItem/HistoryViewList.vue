@@ -7,7 +7,8 @@
       :key="HistoryViewarticle.id"
       :HistoryViewarticle="HistoryViewarticle"
     /> 
-    <HistoryViewListItem/> 
+    <HistoryViewListItem/>
+    <!-- 폴더  -->
   </div>
 
 </template>
@@ -20,6 +21,7 @@ export default {
   components: {
     HistoryViewListItem
   },
+
   // computed: {
   //   articles() {
   //     return this.$store.state.HistoryViewarticles

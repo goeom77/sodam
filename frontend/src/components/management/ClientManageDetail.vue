@@ -3,6 +3,7 @@
     class="mx-auto"
     max-width="344"
   >
+  <!-- 폴더 -->
     <v-card-text>
       <p class="text-h4 text--primary">
         고객 성함
