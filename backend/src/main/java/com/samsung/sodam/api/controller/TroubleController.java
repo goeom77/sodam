@@ -21,6 +21,20 @@ public class TroubleController {
         this.service = service;
     }
 
+    @GetMapping(value = "/list")
+    @ApiOperation(value="고민게시판 목록", notes="고민게시판 전체목록")
+    public ResponseEntity<Page<TroubleOneResponse>> getAllTroubleList(Pageable pageable,
+                                                                   @RequestParam(value = "searchword", required = false) String searchWord ) {
+
+        try {
+            Page<TroubleOneResponse> list = service.getAllTroubleList("id", searchWord, pageable);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     @GetMapping(value = "/list/{category}")
     @ApiOperation(value="고민게시판 목록", notes="카테고리별 고민게시판 전체목록")
     public ResponseEntity<Page<TroubleOneResponse>> getTroubleList(@PathVariable String category, Pageable pageable,

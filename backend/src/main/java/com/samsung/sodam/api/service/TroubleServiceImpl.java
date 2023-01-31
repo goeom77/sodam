@@ -29,6 +29,11 @@ public class TroubleServiceImpl implements TroubleService {
     private final TroubleCommentLikeRepository commentLikeRepository;
 
 
+    @Override
+    public Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable) {
+        return customRepository.getAllTroubleList(userId, searchWord, pageable);
+    }
+
     public Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable) {
         return customRepository.getTroubleList(userId, category, searchWord, pageable);
     }

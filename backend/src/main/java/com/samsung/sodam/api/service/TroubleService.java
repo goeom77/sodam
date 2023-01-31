@@ -9,7 +9,16 @@ import org.springframework.data.domain.Pageable;
 public interface TroubleService {
 
     /**
-     * 고민게시판 전체 목록 조회 (카테고리/검색)
+     * 고민게시판 전체 목록 조회 (검색)
+     * @param userId
+     * @param searchWord
+     * @param pageable
+     * @return
+     */
+    Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable);
+
+    /**
+     * 고민게시판 카테고리별 목록 조회 (검색)
      * @param userId
      * @param category
      * @param searchWord
