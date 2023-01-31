@@ -20,11 +20,9 @@ import EditInformation from '../views/editinformation/EditInformation.vue'
 import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
-<<<<<<< HEAD
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
-=======
 import VideoPage from '../components/video/VideoPage.vue'
->>>>>>> ac5c5529eefd8f3ec608c1861d1d574b154bc942
+
 const routes = [
   {
     path: '/',
@@ -134,19 +132,15 @@ const routes = [
     component: InquiryCreate
   },
   {
-<<<<<<< HEAD
     path: '/signupfinish',
     name: 'signupfinish',
     component: SignUpFinish
   },
-=======
+  {
     path: '/VideoPage',
     name: 'VideoPage',
     component: VideoPage
-  },
-
-  
->>>>>>> ac5c5529eefd8f3ec608c1861d1d574b154bc942
+  }
 ]
 
 const router = createRouter({
