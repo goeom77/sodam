@@ -19,7 +19,7 @@ import EditInformation from '../views/editinformation/EditInformation.vue'
 import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
-
+import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 const routes = [
   {
     path: '/',
@@ -121,6 +121,11 @@ const routes = [
     path: '/InquiryCreate',
     name: 'InquiryCreate',
     component: InquiryCreate
+  },
+  {
+    path: '/signupfinish',
+    name: 'signupfinish',
+    component: SignUpFinish
   },
 ]
 

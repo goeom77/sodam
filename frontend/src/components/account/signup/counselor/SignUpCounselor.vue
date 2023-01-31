@@ -79,12 +79,12 @@
       <v-card-actions>
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
-        <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
+        <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag">
           <v-btn color="blue darken-1" text @click="nextTo">확인</v-btn>
-        <!-- </div>
-        <div v-else> -->
+        </div>
+        <div v-else>
           <v-btn color="blue darken-1" disabled text>확인</v-btn>
-        <!-- </div> -->
+        </div>
         
         <v-btn color="blue darken-1" text @click="moveBack">취소</v-btn>
       </v-card-actions>
@@ -204,8 +204,7 @@ export default {
           tel: tel,
           gender: gender,
         }
-        console.log(payload.gender)
-        this.$store.dispatch('signupCounselor', payload)
+        this.$store.dispatch('saveCounselor', payload)
         this.$router.push({name:'signupcounselor2'})
       }
     }
