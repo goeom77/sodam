@@ -47,6 +47,7 @@ public class Counselor extends Member {
 
     @Column(length = 3)
     private Gender gender;
+
     @Column(columnDefinition = "boolean default false")
     private Boolean qualification;
 
