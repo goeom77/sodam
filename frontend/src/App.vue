@@ -35,7 +35,7 @@ const API_URl = 'http://127.0.0.1:8080'
 export default {
   name:'App',
   data: () => ({
-    projectlogo : require('@/assets/projectlogo.png')
+    projectlogo : require('@/assets/projectlogoperpect.png')
   }),
   methods: {
     logOut(){
