@@ -19,7 +19,6 @@ public enum Role {
     private final String roleName;
     private final String commonCode;
 
-
     private static final Map<String, Role> OPERATOR_MAP =
             Collections.unmodifiableMap(Stream.of(values())
                     .collect(Collectors.toMap(Role::getCommonCode, Function.identity())));
