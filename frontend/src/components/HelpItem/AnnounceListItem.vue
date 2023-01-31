@@ -2,6 +2,7 @@
   <div id="AnnounceListItem">
     <h1>여기는 각 게시글</h1>
     <div>
+      <!-- 폴더 -->
       <!-- <h5>{{ Announcearticle.id }} -->
     </div>
     <div>

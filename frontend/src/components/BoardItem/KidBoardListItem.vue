@@ -2,6 +2,7 @@
   <div id="KidBoardListItem">
     <h1>여기는 각 게시글</h1>
     <div>
+      <!-- 폴더 -->
       <!-- <h5>{{ KidBoardarticle.id }} -->
     </div>
     <div>
