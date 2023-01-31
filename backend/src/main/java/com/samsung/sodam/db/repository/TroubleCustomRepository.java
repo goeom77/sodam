@@ -31,6 +31,33 @@ public class TroubleCustomRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    public Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable) {
+
+        List<TroubleOneResponse> list = queryFactory
+                .select(new QTroubleOneResponse(
+                        troubleBoard.id,
+                        troubleBoard.category,
+                        troubleBoard.title,
+                        troubleBoard.content,
+                        troubleBoard.clientId,
+                        troubleBoard.views,
+                        troubleBoard.createdAt,
+                        troubleBoard.comments.size(),
+                        JPAExpressions
+                                .selectFrom(troubleBoard)
+                                .where(troubleBoard.clientId.eq(userId))
+                                .exists()
+                ))
+                .from(troubleBoard)
+                .where(containSearch(searchWord))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(troubleBoard.createdAt.desc())
+                .fetch();
+
+        return new PageImpl<>(list, pageable, list.size());
+    }
+
     public Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable) {
 
         List<TroubleOneResponse> list = queryFactory
