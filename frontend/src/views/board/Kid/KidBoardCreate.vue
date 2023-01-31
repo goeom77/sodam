@@ -22,8 +22,8 @@
         <form @submit.prevent="KidBoardcreateArticle">
           <div style="text-align:start; padding: 10px;">
             <label for="category">대상</label>
-            <select id="worryselect" v-model="person">
-              <option
+            <select id="worryselect" v-model="person" >
+              <option 
                 v-for="(item, index) in selectList"
                 :key="index"
                 :value="item.value"
@@ -64,8 +64,8 @@ export default {
       // KidBoardarticle: KidBoardarticle,
       // id: id,
       // person: id !== undefined ? KidBoardarticle[id].person : null, 
-      // person: id !== undefined ? KidBoardarticle[id].title : null, 
-      // person: id !== undefined ? KidBoardarticle[id].content : null, 
+      // title: id !== undefined ? KidBoardarticle[id].title : null, 
+      // content: id !== undefined ? KidBoardarticle[id].content : null, 
 
       person: null,
       title: null,
