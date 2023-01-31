@@ -52,5 +52,6 @@ public interface AuthService {
      */
     public Member getMemberByEmail(String email);
 
+    public void updatePassword(String id, String pw);
 
 }

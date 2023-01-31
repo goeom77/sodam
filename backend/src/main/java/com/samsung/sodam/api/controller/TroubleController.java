@@ -3,7 +3,7 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
-import com.samsung.sodam.api.service.TroubleRepositoryServiceImpl;
+import com.samsung.sodam.api.service.TroubleServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +15,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/trouble")
 public class TroubleController {
 
-    private final TroubleRepositoryServiceImpl service;
+    private final TroubleServiceImpl service;
 
-    public TroubleController(TroubleRepositoryServiceImpl service) {
+    public TroubleController(TroubleServiceImpl service) {
         this.service = service;
+    }
+
+    @GetMapping(value = "/list")
+    @ApiOperation(value="고민게시판 목록", notes="고민게시판 전체목록")
+    public ResponseEntity<Page<TroubleOneResponse>> getAllTroubleList(Pageable pageable,
+                                                                   @RequestParam(value = "searchword", required = false) String searchWord ) {
+
+        try {
+            Page<TroubleOneResponse> list = service.getAllTroubleList("id", searchWord, pageable);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping(value = "/list/{category}")
@@ -26,12 +40,17 @@ public class TroubleController {
     public ResponseEntity<Page<TroubleOneResponse>> getTroubleList(@PathVariable String category, Pageable pageable,
                                                                    @RequestParam(value = "searchword", required = false) String searchWord ) {
 
-        Page<TroubleOneResponse> list = service.getTroubleList(category, searchWord, pageable);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        try {
+            Page<TroubleOneResponse> list = service.getTroubleList("id", category, searchWord, pageable);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping(value = "/writing")
-    @ApiOperation(value="고민게시글 작성", notes="고민게시글 작성")
+    @ApiOperation(value="고민게시글 작성", notes="내담자만 고민게시글 작성")
     public ResponseEntity<HttpStatus> saveTrouble(@RequestBody TroubleRequest dto) {
 
         try {
@@ -49,7 +68,7 @@ public class TroubleController {
     public ResponseEntity<TroubleOneResponse> getTrouble(@PathVariable Long id) {
 
         try {
-            TroubleOneResponse troubleDetail = service.getTrouble(id);
+            TroubleOneResponse troubleDetail = service.getTrouble("kimkim2", id);
             return new ResponseEntity<>(troubleDetail, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +77,7 @@ public class TroubleController {
     }
 
     @PutMapping(value = "/{id}")
-    @ApiOperation(value="고민게시글 수정", notes="작성자만 고민게시글 수정")
+    @ApiOperation(value="고민게시글 수정", notes="작성자(내담자)만 고민게시글 수정")
     public ResponseEntity<HttpStatus> updateTrouble(@PathVariable Long id, @RequestBody TroubleRequest dto) {
 
         try {
@@ -71,7 +90,7 @@ public class TroubleController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @ApiOperation(value="고민게시글 삭제", notes="작성자만 고민게시글 삭제")
+    @ApiOperation(value="고민게시글 삭제", notes="작성자(내담자)만 고민게시글 삭제")
     public ResponseEntity<HttpStatus> deleteTrouble(@PathVariable Long id) {
 
         try {
@@ -97,25 +116,53 @@ public class TroubleController {
 
     @PostMapping(value = "/comment")
     @ApiOperation(value="고민게시글 댓글 작성", notes="상담사가 댓글 작성")
-    public ResponseEntity<HttpStatus> saveComment(@RequestBody TroubleCommentRequest dto) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> saveComment(@RequestBody TroubleCommentRequest request) {
+
+        try {
+            service.saveComment(request);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    @PutMapping(value = "/comment/{seq}")
+    @PutMapping(value = "/comment/{id}")
     @ApiOperation(value="고민게시글 댓글 수정", notes="작성자(상담사)가 댓글 수정")
-    public ResponseEntity<HttpStatus> updateComment(@RequestBody TroubleCommentRequest dto) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> updateComment(@PathVariable Long id, @RequestBody TroubleCommentRequest request) {
+
+        try {
+            service.updateComment(id, request);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    @DeleteMapping(value = "/comment/{seq}")
+    @DeleteMapping(value = "/comment/{id}")
     @ApiOperation(value="고민게시글 댓글 삭제", notes="작성자(상담사)가 댓글 삭제")
-    public ResponseEntity<HttpStatus> deleteComment() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> deleteComment(@PathVariable Long id) {
+
+        try {
+            service.deleteComment(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    @PostMapping(value = "/comment/{seq}")
-    @ApiOperation(value="고민게시글 댓글 좋아요", notes="내담자가 상담사의 댓글에 좋아요 선택")
-    public ResponseEntity<HttpStatus> commentLike() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping(value = "/comment/{id}")
+    @ApiOperation(value="고민게시글 댓글 좋아요", notes="내담자가 상담사의 댓글에 좋아요 등록 및 삭제")
+    public ResponseEntity<HttpStatus> commentLike(@PathVariable Long id, @RequestBody TroubleCommentRequest request) {
+
+        try {
+            service.commentLike(id, request);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

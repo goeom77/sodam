@@ -10,6 +10,8 @@
       <label for="tab-2">비밀번호 변경</label>
       <label for="tab-3">회원 탈퇴</label>
     </div>
+
+
     <div class="content">
       <!-- 회원 정보 수정 -->
       <div class="content-dis">
@@ -20,6 +22,7 @@
         이메일 : {{ data.email }}
         전화번호 : {{ data.number }} -->
       </div>
+      
       <div class="content-dis">
         <h5>현재 비밀번호</h5>
       <input type="text" v-model="password" placeholder="기존 비밀번호"/>
@@ -32,6 +35,8 @@
       <br>
       <!-- <v-btn @click="changePassword">변경</v-btn> -->
       </div>
+
+
       <div class="content-dis">
         <h2>탈퇴 후 공개 게시글은 삭제되지 않습니다.</h2>
         <br>

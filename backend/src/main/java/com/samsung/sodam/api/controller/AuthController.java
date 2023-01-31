@@ -9,6 +9,7 @@ import com.samsung.sodam.api.service.EmailService;
 import com.samsung.sodam.api.service.EnterpriseService;
 import com.samsung.sodam.api.service.KakaoAuthService;
 import com.samsung.sodam.db.entity.Counselor;
+import com.samsung.sodam.db.entity.Member;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -16,9 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.Random;
-
 import java.util.StringTokenizer;
 
 
@@ -127,17 +126,59 @@ public class AuthController {
             return HttpStatus.BAD_REQUEST;
         }
     }
+
+    @PostMapping(value = "/find-id")
+    private ResponseEntity<AuthCommonResponse> findId(@RequestBody AuthCommonRequest request){
+
+        System.out.println("********************************************");
+        System.out.println(request.getEmail());
+        System.out.println(request.getName());
+        AuthCommonResponse response = null;
+        try {
+            Member m = authService.getMemberByEmail(request.getEmail());
+            response = new AuthCommonResponse();
+            if(m.getName().equals(request.getName())) {
+                String maskingId = m.getId();
+                int index = maskingId.length() - 3;
+                maskingId = maskingId.substring(0, index);
+                response.setId(maskingId + "***");
+                response.setCommonCode(m.getCommonCodeId());
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            System.out.println(e.getClass() + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+
+    }
+
     @PostMapping(value = "/find-pw")
     private HttpStatus findPw(@RequestBody AuthCommonRequest request){
 
         System.out.println("********************************************");
         System.out.println(request.getEmail());
+        System.out.println(request.getId());
         try {
+            String email = request.getEmail();
             // 랜덤 비밀번호 생성
-            String newpw = RandomStringUtils.randomAlphanumeric(20);
-            System.out.println(newpw);
-            emailService.sendEmail(request.getEmail(), "소담 비밀번호 재발급","임시비밀번호", newpw);
-            return HttpStatus.OK;
+            String newPw = RandomStringUtils.randomAlphanumeric(20);
+            System.out.println(newPw);
+            Member m = authService.getMemberByEmail(email);
+
+            if(m == null) return HttpStatus.FORBIDDEN;
+
+            String id = m.getId();
+            StringTokenizer st = new StringTokenizer(request.getId(), "_");
+            String prefix = st.nextToken();
+            if((prefix != null && prefix.equals("kakao") )|| !id.equals(request.getId())) return HttpStatus.FORBIDDEN;
+            else {
+                authService.updatePassword(id, newPw);
+                emailService.sendEmail(email, "소담 비밀번호 재발급","임시비밀번호", newPw);
+                return HttpStatus.OK;
+            }
+
         }catch (Exception e){
             e.printStackTrace();
             return HttpStatus.FORBIDDEN;

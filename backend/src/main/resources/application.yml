@@ -34,6 +34,10 @@ spring:
             enable: true
           auth: true
 
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
 auth:
   kakao:
     client-id: 9e0f9a70f672fba12b71ea1b5ec10e80

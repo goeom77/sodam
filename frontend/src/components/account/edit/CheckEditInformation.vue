@@ -5,9 +5,9 @@
       <h4>고객님의 소중한 개인정보 보호를 위해 비밀번호를 다시 확입합니다.</h4>
       <br>
       <h4>비밀번호가 노출되지않도록 주의해주세요</h4>
-      <input type="text" v-model="password"  placeholder="비밀번호"/>
+      <input type="text" v-model="checkPassword"  placeholder="비밀번호"/>
       <br>
-      <v-btn @click="checkPassword">
+      <v-btn @click="checkPw">
       확인
     </v-btn>
     </div>
@@ -21,17 +21,18 @@ export default {
   name:'CheckEditInformation',
   data(){
     return{
-      password:null,
+      checkPassword:null,
+      password: this.$store.state.userSignupData.password
     }
   },
-  methods:{
+
+  checkPw:{
     checkPassword(){
-      axios({
-        method:'?'
-      })
-      .then(res=>{
+      if (this.checkPassword === this.password){
         this.$router.push({ name : EditInformation})
-      })
+      } else {
+        alert('비밀번호가 다릅니다')
+      }
     }
   }
 }

@@ -1,14 +1,14 @@
 package com.samsung.sodam.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.samsung.sodam.db.converter.CategoryConverter;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,16 +32,14 @@ public class TroubleBoard extends BaseTime {
     private String content;
 
     @Column
-    private Integer views = 0;
+    @ColumnDefault("0")
+    private Integer views;
 
     @Column
     private String clientId;
 
-    @Column
-    private Integer comments = 0;
-
-    @OneToMany(mappedBy = "troubleBoard", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<TroubleComment> troubleComment;
+    @OneToMany(mappedBy = "troubleBoard", orphanRemoval = true)
+    private List<TroubleComment> comments = new ArrayList<>();
 
     @Builder
     public TroubleBoard(String category, String title, String content, String clientId) {
@@ -49,7 +47,5 @@ public class TroubleBoard extends BaseTime {
         this.title = title;
         this.content = content;
         this.clientId = clientId;
-        this.views = 0;
-        this.comments = 0;
     }
 }

@@ -1,10 +1,12 @@
 
 import Vuex from 'vuex'
 import axios from 'axios'
-import router from '@/router'
+import createPersistedState from "vuex-persistedstate";
+
 
 const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     KidBoardarticles: [],
     HistoryViewarticles: [],
@@ -17,7 +19,8 @@ export default new Vuex.Store({
       email:null,
       gender:null,
       enterprise_id:null,
-    }
+    },
+    
   },
   getters: {
     isLogin(state) {
@@ -81,13 +84,17 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    login(context,payload){
+
+
+
+    login(context, payload){
       axios({
         method:'post',
         url:`${API_URL}/api/auth/login`,
         data:{
           ID: payload.ID,
           password: payload.password,
+          common_code: payload.common_code,
         }
       })
         .then((res)=>{
@@ -99,6 +106,11 @@ export default new Vuex.Store({
           console.log('err')
         })
     },
+
+
+
+
+
     signupClient(context, payload){
       axios({
         method:'post',

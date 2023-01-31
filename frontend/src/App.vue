@@ -1,11 +1,22 @@
 <template>
   <nav>
     <div>
-      <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
-      <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+      <div style="float: left">
+        <router-link to="/">
+          <img
+            id="logo"
+            :src="projectlogo"
+            alt="noimage"
+            style="width: 75px; height: 30px; "
+          />
+        </router-link> &nbsp;&nbsp;&nbsp;
+      </div>
+      <div style="float: left; line-height: 35px;">
+        <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+      </div>
     </div>
 
     <div id="navMypage">
@@ -23,6 +34,9 @@ document.querySelector('body').setAttribute('style',"margin: 0;")
 const API_URl = 'http://127.0.0.1:8080'
 export default {
   name:'App',
+  data: () => ({
+    projectlogo : require('@/assets/projectlogoperpect.png')
+  }),
   methods: {
     logOut(){
       console.log(this.isLogin)

@@ -55,6 +55,14 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    public void updatePassword(String id, String pw) {
+        Client c1 = clientRepository.getById(id);
+        Counselor c2 = conselorRepository.getById(id);
+        if(c1 != null) c1.setPassword(passwordEncoder.encode(pw));
+        else if(c2 != null) c2.setPassword(passwordEncoder.encode(pw));
+    }
+
+    @Override
     public Counselor counselorSignup(CounselorRequest request) {
         Enterprise e = enterpriseRepository.getReferenceById(request.getEnterpriseId());
         Counselor c = Counselor.builder()

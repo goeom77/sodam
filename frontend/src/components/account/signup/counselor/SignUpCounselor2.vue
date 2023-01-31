@@ -6,6 +6,7 @@
     <!-- 파일 저장하는거 추가해야함 -->
     <v-btn color="blue darken-1" text @click="signUpCounselor">회원가입</v-btn>
     <v-btn color="blue darken-1" text @click="moveBack">뒤로가기</v-btn>
+    <v-btn color="blue darken-1" text @click="signUpCounselortest">회원가입</v-btn>
   </div>
 </template>
 
@@ -61,6 +62,29 @@ export default {
       this.$store.dispatch('signupCounselor', payload)
       this.$router.push({name:'login'})
     },
+    signUpCounselortest(){
+      const id = this.id
+      const password = this.password
+      const name = this.name
+      const email = this.email
+      const tel = this.tel
+      const gender = this.gender
+      const enterprise_id = this.enterprise_id
+
+      const payload ={
+        id: id,
+        password: password,
+        name: name,
+        email: email,
+        tel: tel,
+        gender: gender,
+        enterprise_id: enterprise_id
+      }
+      alert('정말 회원가입할래요?')
+      this.$store.dispatch('signupCounselor', payload)
+      this.$router.push({name:'login'})
+    },
+    
 
     // 회원가입
   }
