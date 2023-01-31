@@ -1,36 +1,29 @@
 <template>
-  <div id="notice">
-    <div id="MyBoard">
-      <div id="MyBoardtitle">
+  <div id="HistoryView">
+    <div id="HistoryViewBoard">
+      <div id="HistoryViewBoardTitle">
         <h1>마이페이지</h1>
       </div>  
-      <div id="myCategory"> 
+      <div id="HistoryViewBoardCategory"> 
         <router-link to="/notice" id="NoticeCategory" class="CategoryClass" >내게 온 알림</router-link>
         <router-link to="/HistoryView" id="HistoryCategory" class="CategoryClass">상담 내역</router-link>
         <router-link to="/" id="MypostCategory" class="CategoryClass">내 글 보기</router-link>
         <router-link to="/notice" id="LikeCategory" class="CategoryClass">찜 목록</router-link>
-        <router-link to="/" id="WritereviewCategory" class="CategoryClass">후기 상담</router-link>
-        
-      </div>
-      <div>
-
+        <router-link to="/" id="WritereviewCategory" class="CategoryClass">후기 상담</router-link>   
       </div>
     </div>
-    <div>
-      
-    </div>
-    <!-- <KidBoardList/> -->
+    <HistoryViewList/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /srcz
-// import noticeList from '@/components/BoardItem/noticeList.vue'
+import HistoryViewList from '../../../components/MypageItem/HistoryViewList.vue'
 
 export default {
-  name: 'notice',
+  name: 'HistoryView',
   components: {
-    // noticeList
+    HistoryViewList
   },
   // created() {
   //   this.getKidBoardArticles()
@@ -45,7 +38,7 @@ export default {
 
 
 <style>
-#notice {
+#HistoryView {
   /* 반응형 x */
   width: 1255px;
   margin: 0 auto;
@@ -61,7 +54,7 @@ a:visited {
 }
 
 
-#MyBoard {
+#HistoryViewBoard {
   /* margin-top: 61px; */
   width: 100%;
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
@@ -76,7 +69,7 @@ a:visited {
   height: 250px;
   position: relative;
 }
-#myCategory {
+#HistoryViewBoardCategory {
   width:100%; 
   height:60px; 
   line-height: 65px;
@@ -89,14 +82,14 @@ a:visited {
   position: absolute;
   bottom: 0px;
 } 
-#MyBoardtitle {
+#HistoryViewBoardTitle {
   position: absolute;
   left: 50%; 
   bottom: 50%; 
   transform: translate(-50%);
 }
 
-#myCategory a.router-link-exact-active {
+#HistoryViewBoardCategory a.router-link-exact-active {
   background-color: #579BB1;
 }
 
