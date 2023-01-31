@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    Checkeducation
   </div>
 </template>
 
