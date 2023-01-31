@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /srcz
-import InquiryList from '@/components/HelpItem/InquiryList.vue'
+import InquiryList from '@/components/helpitem/InquiryList.vue'
 
 export default {
   name: 'inquiry',

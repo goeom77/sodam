@@ -35,6 +35,8 @@ public class CounselorRequest {
 
     private String profileImg;
 
+    private String isKakaoRegister = "false";
+
 
 
 

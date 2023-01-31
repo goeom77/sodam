@@ -26,7 +26,7 @@
 
 <script>
 // @ is an alias to /srcz
-import KidBoardList from '@/components/BoardItem/KidBoardList.vue'
+import KidBoardList from '@/components/boarditem/KidBoardList.vue'
 
 
 export default {

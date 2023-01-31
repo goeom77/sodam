@@ -1,8 +1,11 @@
 <template>
   <div id="AnnounceList">
+    <h1>여기는 리스트 목록</h1>
     <div id="AnnounceWriteButton">
       <router-link to="/announce" id="AnnounceListAll" style="color:black">전체 (5)</router-link> 
-      <router-link to="/AnnounceCreate" id="AnnounceCreateButton" class="AnnounceCreateButton" >글쓰기</router-link> 
+      <div v-if="userId < 1">
+        <router-link to="/AnnounceCreate" id="AnnounceCreateButton" class="AnnounceCreateButton" >글쓰기</router-link> 
+      </div>
     </div>
 
     <AnnounceListItem
@@ -16,7 +19,7 @@
 </template>
 
 <script>
-import AnnounceListItem from '@/components/HelpItem/AnnounceListItem.vue'
+import AnnounceListItem from '@/components/helpitem/AnnounceListItem.vue'
 
 export default {
   name: 'AnnounceList',

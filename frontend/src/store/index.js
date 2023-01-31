@@ -7,6 +7,7 @@ const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
   state: {
     KidBoardarticles: [],
+    HistoryViewarticles: [],
     token:null,
     userSignupData:{
       id:null,
@@ -27,6 +28,9 @@ export default new Vuex.Store({
   mutations: {
     GET_KIDBOARDARTICLES(state, KidBoardarticles) {
       state.KidBoardarticles = KidBoardarticles
+    },
+    GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
+      state.HistoryViewarticles = HistoryViewarticles
     },
     SAVE_TOKEN(state, token) {
       state.token = token
@@ -55,6 +59,23 @@ export default new Vuex.Store({
           // console.log(res, context)
           // console.log(res.data)
           context.commit('GET_KIDBOARDARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getHistoryViewArticles(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/backend/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_HISTORYVIEWARTICLES', res.data)
         })
         .catch((err) => {
           console.log(err)
