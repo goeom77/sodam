@@ -13,7 +13,6 @@
     </div>
     <div>
       <hr>
-      <div>seyoung</div>
       <b-textarea
         placeholder="댓글을 입력하세요"
         v-model="Commentcontext"
