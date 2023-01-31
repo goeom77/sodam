@@ -5,16 +5,22 @@ import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.api.service.AuthService;
+import com.samsung.sodam.api.service.EmailService;
 import com.samsung.sodam.api.service.EnterpriseService;
 import com.samsung.sodam.api.service.KakaoAuthService;
 import com.samsung.sodam.db.entity.Counselor;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.Random;
+
 import java.util.StringTokenizer;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,8 +30,11 @@ public class AuthController {
     private final String FALSE_STRING = "false";
 
     private final AuthService authService;
+    private final EmailService emailService;
     private final EnterpriseService enterpriseService;
     private final KakaoAuthService kakaoService;
+
+
 
     private String confirmCode;
     private Boolean isFindId;
@@ -97,12 +106,43 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/send-mail")
-    private HttpStatus sendMail(@RequestBody AuthCommonRequest request){
-        System.out.println(request.getEmail());
-        confirmCode = "000";
+    @PostMapping(value = "/send-code")
+    private HttpStatus sendConfirmMail(@RequestBody AuthCommonRequest request){
+        String email = request.getEmail();
 
-        return HttpStatus.OK;
+        try {
+            authService.validateDuplicateEmail(email);
+
+            Random r = new Random();
+            int checkNum = r.nextInt(888888) + 111111;
+            System.out.println("인증번호 : " + checkNum);
+            confirmCode = Integer.toString(checkNum);
+
+            emailService.sendEmail(request.getEmail(), "소담 이메일 인증코드","인증코드", confirmCode);
+            return HttpStatus.OK;
+        }catch (IllegalStateException e){
+            return HttpStatus.CONFLICT;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+    @PostMapping(value = "/find-pw")
+    private HttpStatus findPw(@RequestBody AuthCommonRequest request){
+
+        System.out.println("********************************************");
+        System.out.println(request.getEmail());
+        try {
+            // 랜덤 비밀번호 생성
+            String newpw = RandomStringUtils.randomAlphanumeric(20);
+            System.out.println(newpw);
+            emailService.sendEmail(request.getEmail(), "소담 비밀번호 재발급","임시비밀번호", newpw);
+            return HttpStatus.OK;
+        }catch (Exception e){
+            e.printStackTrace();
+            return HttpStatus.FORBIDDEN;
+        }
+
     }
 
     @GetMapping(value = "/confirm-mail")
