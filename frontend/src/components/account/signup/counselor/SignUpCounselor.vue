@@ -14,6 +14,7 @@
               label="Id"
               type="text"
               v-model="id"
+              :rules="user_id_rule" 
               required
               ></v-text-field>
               <v-btn @click="duplicateId(),checkDuplicate()">중복 확인</v-btn>
@@ -25,6 +26,7 @@
                 type="password"
                 v-model="password"
                 @blur="passwordValid"
+                :rules="user_pw_rule"
                 required
               ></v-text-field>
             </v-col>
@@ -37,6 +39,7 @@
               type="password"
               v-model="password2"
               @blur="passwordCheckValid"
+              :rules="user_pw_rule2"
               required
               ></v-text-field>
             </v-col>
@@ -48,6 +51,7 @@
               label="Name"
                 type="text"
                 v-model="name"
+                :rules="user_nm_rule" 
                 required
               ></v-text-field>
             </v-col>
@@ -56,15 +60,18 @@
                 label="E-mail"
                 type="text"
                 v-model="email"
+                :rules="user_email_rule" 
                 required
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 label="Tel"
-                type="text"
+                type="number"
                 v-model="tel"
+                :rules="user_tel_rule" 
                 required
+                
               ></v-text-field>
             </v-col>
           </v-row>
@@ -74,8 +81,8 @@
         <v-spacer></v-spacer>
         <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
           <v-btn color="blue darken-1" text @click="nextTo">확인</v-btn>
-        <!-- </div> -->
-        <!-- <div v-else> -->
+        <!-- </div>
+        <div v-else> -->
           <v-btn color="blue darken-1" disabled text>확인</v-btn>
         <!-- </div> -->
         
@@ -93,11 +100,37 @@ export default {
     data(){
       return{
         id:null,
+        user_id_rule: [
+        v => !!v || '아이디는 필수 입력사항입니다.',
+        v => /^[a-zA-Z0-9]*$/.test(v) || '아이디는 영문+숫자만 입력 가능합니다.',
+        v => !( v && v.length >= 15) || '아이디는 15자 이상 입력할 수 없습니다.'
+      ],
         password:null,
+        user_pw_rule: [
+        v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
+        v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
+        v => (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,16}$/.test(v)) || '대,소문자와 숫자를 조합해주십시요'
+      ],
         password2:null,
+        user_pw_rule2: [
+        v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
+        v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
+        v => v === this.password || '패스워드가 일치하지 않습니다.'
+      ],
         name:null,
+        user_nm_rule: [
+        v => !!v || '이름은 필수 입력사항입니다.',
+        v => !(v && v.length >= 30) || '이름은 30자 이상 입력할 수 없습니다.',
+        v => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || '이름에는 특수문자를 사용할 수 없습니다.'
+      ],
         email:null,
+        user_email_rule:[
+          v=> !!v || 'e-mail은 필수 입력사항입니다.'
+        ],
         tel:null,
+        user_tel_rule:[
+        v=> !! v|| '전화번호는 필수 입력사항입니다.'
+        ],
         idDuplicateFlag:true,
         // 중복 확인 여부 
         checkDuplicateFlag:0,
@@ -105,6 +138,9 @@ export default {
         passwordCheckFlag: true,
         msg:null,
         gender:'M',
+
+        // 작성 규칙
+        
       }
     },
 

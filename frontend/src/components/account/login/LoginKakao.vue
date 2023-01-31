@@ -36,7 +36,7 @@ export default {
     },
     getKakaoAccount() {
       window.Kakao.API.request({
-        url: `${API_URL}/api/auth/kakao`,
+        url: '/v2/user/me',
         success: (res) => {
           const kakao_account = res.kakao_account;
           const ninkname = kakao_account.profile.ninkname;
