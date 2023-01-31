@@ -19,6 +19,7 @@ import EditInformation from '../views/editinformation/EditInformation.vue'
 import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
+
 const routes = [
   {
     path: '/',

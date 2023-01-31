@@ -3,7 +3,8 @@
     <CheckEducation/>
     <CheckCertificate/>
     <CheckWorkExperience/>
-
+    <v-btn color="blue darken-1" text @click="nextTo">확인</v-btn>
+    <v-btn color="blue darken-1" text @click="moveBack">뒤로가기</v-btn>
   </div>
 </template>
 
@@ -29,6 +30,17 @@ export default {
       gender: null,
       enterprise_id: null,
     }
+  },
+  methods:{
+    // 뒤로가기
+    moveBack(){
+      this.$router.push({ name: 'signupCounselor' })
+    },
+    nextTo(){
+      this.$router.push({ name: ''})
+    }
+    // 회원가입
+
   }
 }
 </script>
