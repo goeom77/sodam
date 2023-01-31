@@ -41,9 +41,10 @@ export default new Vuex.Store({
         password: payload.password
       }
     },
-    SIGNUPCOUNSELOR(state,payload){
+    SAVECOUNSELOR(state,payload){
       state.userSignupData = payload
     },
+
   },
   actions: {
     getKidBoardArticles(context) {
@@ -105,7 +106,7 @@ export default new Vuex.Store({
         data: {
           id:payload.id,
           password:payload.password,
-          password2:payload.password2,
+
           name:payload.name,
           email:payload.email,
           tel:payload.tel,
@@ -116,10 +117,31 @@ export default new Vuex.Store({
           context.commit('SAVE_TOKEN',response.data.key)
         })
     },
+
+    saveCounselor(context, payload){
+      context.commit('SAVECOUNSELOR',payload)
+    },
+
     signupCounselor(context, payload){
-      console.log(payload)
-      context.commit('SIGNUPCOUNSELOR',payload)
-      
+      axios({
+        method:'post',
+        url: `${API_URL}/api/auth/signup/counselor`,
+        data:{
+          id: payload.id,
+          password: payload.password,
+          name: payload.name,
+          tel: payload.tel,
+          email: payload.email,
+          gender: payload.gender,
+          enterprise_id: payload.enterprise_id,
+        }
+      })
+      .then((res)=>{
+        console.log(res)
+        context.commit('SAVE_TOKEN',res.data.key)
+
+      })
+
     }
   },
   modules: {

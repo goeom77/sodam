@@ -149,7 +149,7 @@ export default {
       signup(){
         const id = this.id
         const password = this.password
-        const password2 = this.password2
+
         const name = this.name
         const email = this.email
         const number = this.number
@@ -157,13 +157,13 @@ export default {
         const payload = {
           id: id,
           password: password,
-          password2: password2,
+
           name: name,
           email: email,
           number: number,
         }
         console.log(payload)
-        this.$store.dispatch('signup', payload)
+        this.$store.dispatch('signupClient', payload)
         this.$router.push({name:'login'})
       }
     }
