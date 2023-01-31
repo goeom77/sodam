@@ -85,9 +85,12 @@ export default {
       logIn(){
         const ID = this.ID
         const password = this.password
+        const common_code = this.common_code
+        
         const payload = {
           ID: ID,
-          password: password
+          password: password,
+          common_code: common_code
         }
         console.log(payload)
         this.$store.dispatch('login', payload)

@@ -8,7 +8,6 @@
       :HistoryViewarticle="HistoryViewarticle"
     /> 
     <HistoryViewListItem/>
-    <!-- 폴더  -->
   </div>
 
 </template>
