@@ -13,11 +13,28 @@
     </div>
     <div>
       <hr>
-      <b-textarea
-        placeholder="댓글을 입력하세요"
-        v-model="Commentcontext"
-      ></b-textarea>
-      <b-button @click="createComment">댓글달기</b-button>
+    <KidBoardCommentForm
+      :KidBoardarticle="KidBoardarticle"
+      @get-KidBoardComments="getKidBoardComments"
+    />
+    <KidBoardCommentList
+      v-for="(KidBoardComment, index) in KidBoardComments"
+      :key="KidBoardComment.id"
+      :KidBoardComment="KidBoardComment"
+      :index="index"
+      :limit="KidBoardCommentsCurrentPage"
+      @delete-comment="getKidBoardComments"
+      @update-comment="getKidBoardComments"
+    />
+    <div v-if="KidBoardComments" style="background-color: #2d3442; display: flex; justify-content: center;">
+      <b-pagination id="comments_pagination" style="margin-bottom: 0px;"
+        v-model="KidBoardCommentsCurrentPage"
+        :total-rows="KidBoardComments.length"
+        :per-page="10"
+      >
+      </b-pagination>  
+    </div>
+
     </div>
   </div>
 
@@ -26,18 +43,28 @@
 <script>
 // @ is an alias to /srcz
 import axios from 'axios'
+import KidBoardCommentForm from '../../../components/boarditem/KidBoardCommentForm.vue'
+import KidBoardCommentList from '../../../components/boarditem/KidBoardCommentList.vue'
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'KidBoardDetail',
+  components: {
+    KidBoardCommentForm,
+    KidBoardCommentList,
+  },
   data() {
     return {
+      KidBoardComments: null,
       KidBoardarticle: null,
-      // Commentcontext: null,
+      KidBoardCommentsCurrentPage: 1,
       person: KidBoardarticle?.person,
     }
   },
+  // props: {
+  //   KidBoardarticle: 
+  // },
   created() {
     this.getKidBoardarticleDetail()
   },
@@ -83,20 +110,22 @@ export default {
 				})
 			}
     },
-    // createComment(){
-    //   data.Comment.push(
-    //       {
-    //         comment_id: data.Comment[data.Comment.length - 1].comment_id + 1,
-    //         user_id: 1,
-    //         content_id: this.contentId,
-    //         context: this.context,
-    //         created_at: '2019-03-29 14:11:11',
-    //         updated_at: null
-    //       }
-    //   )
-    //   this.reload();
-    //   console.log(data.Comment)
-    // }
+    getKidBoardComments() {
+      axios({
+        method:'get',
+        url: `${API_URL}/backend/${this.KidBoardCommentForm?.id}/`,
+        headers: { 
+            Authorization: `Token ${this.$store.state.token}`
+        }
+      })
+      .then((res) => {
+        this.KidBoardComments = res.data
+      })
+      .catch(() => {
+        this.KidBoardComments = null,
+        console.log('댓글이 없습니다.')
+      })
+    },
   }
 }
 
