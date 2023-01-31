@@ -1,26 +1,29 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class TroubleCommentLike implements Serializable {
+public class TroubleCommentLike {
 
     @Id
-    @ManyToOne
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private TroubleComment troubleComment;
 
-    @Id
     @Column(name = "client_id")
     private String clientId;
+
+    @Builder
+    public TroubleCommentLike(TroubleComment troubleComment, String clientId) {
+        this.troubleComment = troubleComment;
+        this.clientId = clientId;
+    }
+
 }
