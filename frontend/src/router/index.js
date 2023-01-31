@@ -13,12 +13,14 @@ import announce from '../views/helpdesk/announce/announce.vue'
 import inquiry from '../views/helpdesk/inquiry/inquiry.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
 import notice from '../views/my/notice/notice.vue'
+import HistoryView from '../views/my/history/HistoryView.vue'
 import write from '../views/my/write_review/write.vue'
 import CheckEditInformation from '../views/editinformation/CheckEditInformation.vue'
 import EditInformation from '../views/editinformation/EditInformation.vue'
 import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
+import VideoPage from '../components/video/VideoPage.vue'
 const routes = [
   {
     path: '/',
@@ -87,6 +89,12 @@ const routes = [
     component: notice
   },
   {
+    path: '/HistoryView',
+    name: 'HistoryView',
+    component: HistoryView
+  },
+
+  {
     path: '/write',
     name: 'write',
     component: write
@@ -121,6 +129,13 @@ const routes = [
     name: 'InquiryCreate',
     component: InquiryCreate
   },
+  {
+    path: '/VideoPage',
+    name: 'VideoPage',
+    component: VideoPage
+  },
+
+  
 ]
 
 const router = createRouter({
