@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import AnnounceListItem from '@/components/HelpItem/AnnounceListItem.vue'
+import AnnounceListItem from '@/components/helpitem/AnnounceListItem.vue'
 
 export default {
   name: 'AnnounceList',

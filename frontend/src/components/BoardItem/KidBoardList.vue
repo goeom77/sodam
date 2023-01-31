@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import KidBoardListItem from '@/components/BoardItem/KidBoardListItem.vue'
+import KidBoardListItem from '@/components/boarditem/KidBoardListItem.vue'
 
 export default {
   name: 'KidBoardList',

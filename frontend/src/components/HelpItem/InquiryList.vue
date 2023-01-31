@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import InquiryListItem from '@/components/HelpItem/InquiryListItem.vue'
+import InquiryListItem from '@/components/helpitem/InquiryListItem.vue'
 
 export default {
   name: 'InquiryList',

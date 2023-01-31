@@ -25,7 +25,7 @@
 
 <script>
 // @ is an alias to /srcz
-// import noticeList from '@/components/BoardItem/noticeList.vue'
+// import noticeList from '@/components/boarditem/noticeList.vue'
 
 export default {
   name: 'notice',
