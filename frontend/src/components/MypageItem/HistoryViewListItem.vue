@@ -29,7 +29,10 @@
         </div>
       </div>
       <div id="HistoryViewListItembox4">
-        <router-link :to="{ name: 'VideoPage', params: { id: HistoryViewarticle.id,  } }">
+        <router-link :to="{ 
+          name: 'VideoPage', 
+          params: { mySessionId: HistoryViewarticle.id, consultantId: HistoryViewarticle.consultantID } 
+        }">
           상담하기
         </router-link>
       </div>

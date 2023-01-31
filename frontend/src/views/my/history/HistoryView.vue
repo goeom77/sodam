@@ -18,7 +18,7 @@
 
 <script>
 // @ is an alias to /srcz
-import HistoryViewList from '../../../components/MypageItem/HistoryViewList.vue'
+import HistoryViewList from '../../../components/mypageitem/HistoryViewList.vue'
 
 export default {
   name: 'HistoryView',
@@ -26,11 +26,11 @@ export default {
     HistoryViewList
   },
   // created() {
-  //   this.getKidBoardArticles()
+  //   this.getHistoryViewArticles()
   // },
   // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
+  //   getHistoryViewArticles() {
+  //   this.$store.dispatch('getHistoryViewArticles')
   //   }
   // }
 }

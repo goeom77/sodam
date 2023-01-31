@@ -15,7 +15,7 @@
 
 <script>
 // @ is an alias to /srcz
-import AnnounceList from '@/components/HelpItem/AnnounceList.vue'
+import AnnounceList from '@/components/helpitem/AnnounceList.vue'
 
 export default {
   name: 'announce',
