@@ -20,8 +20,10 @@
     </div>
 
     <div id="navMypage">
-      <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
-      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn>
+      <!-- <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
+      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn> -->
+      <v-btn @click="logIn">Login</v-btn>
+      <v-btn @click="logOut">Logout</v-btn>
       <router-link to="/notice">마이 페이지</router-link>
       <router-link to="/checkeditinformation">정보 수정</router-link>
     </div>
@@ -46,6 +48,7 @@ export default {
         headers: {
           Authorization: `Token ${ this.$store.state.token}`
         }
+        
       })
       .then(
         this.$store.dispatch('logOut')

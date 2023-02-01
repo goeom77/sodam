@@ -3,6 +3,9 @@
     <CheckEducation/>
     <CheckCertificate/>
     <CheckWorkExperience/>
+
+    {{ this.userSignupData }} 
+    {{ this.enterprise_id }}
     <!-- 파일 저장하는거 추가해야함 -->
     <v-btn color="blue darken-1" text @click="signUpCounselor">회원가입</v-btn>
     <v-btn color="blue darken-1" text @click="moveBack">뒤로가기</v-btn>
@@ -25,6 +28,7 @@ export default {
   data(){
     return {
       dialog: false,
+      userSignupData: this.$store.state.userSignupData,
       id: this.$store.state.userSignupData.id,
       password: this.$store.state.userSignupData.password,
       name: this.$store.state.userSignupData.name,

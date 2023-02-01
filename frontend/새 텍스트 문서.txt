@@ -1,0 +1,9 @@
+        methods: {
+            updateValue: function (value) {
+                this.$emit('input', value);
+            }
+        }
+
+
+02.01 
+- date picker 출력 

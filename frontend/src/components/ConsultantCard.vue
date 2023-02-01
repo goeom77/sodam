@@ -1,25 +1,46 @@
+<!-- b-card와 style 사이에 들어갈 것
+:title="Consultant.title"
+:img-src="ConsultantPictureUrl"
+img-alt="No Poster"
+img-height=410
+img-top
+tag="article" -->
 <template>
-        <!-- b-card와 style 사이에 들어갈 것
-        :title="Consultant.title"
-        :img-src="ConsultantPictureUrl"
-        img-alt="No Poster"
-        img-height=410
-        img-top
-        tag="article" -->
-  <div>
-    <div>
-      <b-card
+  <v-card
+    class="mx-auto"
+    max-width="344"
+    outlined
+  >
+    <v-list-item three-line>
+      <v-list-item-content>
+        <!-- <div class="text-overline mb-4">
+          OVERLINE
+        </div> -->
+        <v-list-item-title class="text-h5 mb-1">
+          이름
+        </v-list-item-title>
 
-        style="max-width: 18rem; height: 40rem; box-shadow: 10px 10px 20px black;"
-        class="mb-2"
+        <v-list-item-subtitle>소개</v-list-item-subtitle>
+      </v-list-item-content>
+
+      <v-list-item-avatar
+        tile
+        size="80"
+        color="grey"
+      ></v-list-item-avatar>
+    </v-list-item>
+
+    <v-card-actions>
+      <v-btn
+        outlined
+        rounded
+        text
+        @click="moveTo"
       >
-        <b-card-text>
-          <p>상담사 태그 및 상담사 한마디</p>
-        </b-card-text>
-
-      </b-card>
-    </div>
-  </div>
+        Button
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -28,11 +49,16 @@ export default {
   props: {
     Consultant: Object,
   },
-  computed: {
-    // ConsultantPictureUrl() {
-    //   return 'https://' + this.Consultant.poster_path
-    // }
+  data(){
+    return{
+    }
   },
+  methods:{
+    moveTo(){
+      this.$router.push({ name: 'consultantcarditem' })
+    }
+
+  }
 }
 </script>
 

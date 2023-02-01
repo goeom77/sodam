@@ -1,6 +1,7 @@
 
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
@@ -47,6 +48,13 @@ export default new Vuex.Store({
     SAVECOUNSELOR(state,payload){
       state.userSignupData = payload
     },
+    DELETE_TOKEN(state){
+      state.token = null,
+      state.userSignupData = null
+    },
+    GETCOUNSELORINFO(state){
+      console.log(state)
+    }
 
   },
   actions: {
@@ -84,32 +92,45 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-
-
-
+    getCounselorInfo(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/api/client/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          console.log(res, context)
+          context.commit('GETCOUNSELORINFO', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     login(context, payload){
       axios({
         method:'post',
         url:`${API_URL}/api/auth/login`,
         data:{
-          ID: payload.ID,
+          id: payload.id,
           password: payload.password,
           common_code: payload.common_code,
         }
       })
         .then((res)=>{
           console.log(res)  
-          context.commit('SAVE_TOKEN', res.data.key)
+          context.commit('SAVE_TOKEN', res.data)
+        })
+        .then(res=>{
+          router.push({ name: 'home' })
+
         })
         .catch((res) =>{
           console.log(res)
           console.log('err')
         })
     },
-
-
-
-
 
     signupClient(context, payload){
       axios({
@@ -118,7 +139,6 @@ export default new Vuex.Store({
         data: {
           id:payload.id,
           password:payload.password,
-
           name:payload.name,
           email:payload.email,
           tel:payload.tel,
@@ -135,6 +155,7 @@ export default new Vuex.Store({
     },
 
     signupCounselor(context, payload){
+      console.log(payload)
       axios({
         method:'post',
         url: `${API_URL}/api/auth/signup/counselor`,
@@ -150,10 +171,15 @@ export default new Vuex.Store({
       })
       .then((res)=>{
         console.log(res)
-        context.commit('SAVE_TOKEN',res.data.key)
-
+        context.commit('SAVE_TOKEN',res)
       })
-
+      .catch((res)=>{
+        console.log(res)
+      })
+    },
+    logOut(context){
+      console.log(this.state.token)
+      context.commit('DELETE_TOKEN')
     }
   },
   modules: {
