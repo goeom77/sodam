@@ -9,6 +9,7 @@ import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounsel
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/Kid/KidBoard.vue'
+import KidBoardDetail from '../views/board/Kid/KidBoardDetail.vue'
 import announce from '../views/helpdesk/announce/announce.vue'
 import inquiry from '../views/helpdesk/inquiry/inquiry.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
@@ -22,6 +23,7 @@ import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 import VideoPage from '../components/video/VideoPage.vue'
+// import Error from '../views/Error.vue'
 
 const routes = [
   {
@@ -74,7 +76,13 @@ const routes = [
     name: 'KidBoard',
     component: KidBoard
   },
-
+  {
+    path: '/KidBoardDetail/:postId',
+    name: 'KidBoardDetail',
+    component: KidBoardDetail,
+    // props: true
+  },
+  
   {
     path: '/announce',
     name: 'announce',
@@ -140,7 +148,12 @@ const routes = [
     path: '/VideoPage',
     name: 'VideoPage',
     component: VideoPage
-  }
+  },
+  // {
+  //   path: '*',
+  //   name: 'Error',
+  //   component: Error
+  // }
 ]
 
 const router = createRouter({

@@ -1,6 +1,5 @@
 <template>
   <div id="AnnounceList">
-    <h1>여기는 리스트 목록</h1>
     <div id="AnnounceWriteButton">
       <router-link to="/announce" id="AnnounceListAll" style="color:black">전체 (5)</router-link> 
       <div v-if="userId < 1">
