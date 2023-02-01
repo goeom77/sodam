@@ -58,7 +58,7 @@
             <v-col cols="12">
               <v-text-field
                 label="E-mail"
-                type="text"
+                type="email"
                 v-model="email"
                 :rules="user_email_rule" 
                 required
