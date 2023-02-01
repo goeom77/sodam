@@ -1,11 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '@/components/account/login/LoginPage.vue'
-import FindId from '@/components/account/findid/FindId.vue'
-import FindPw from '@/components/account/findpw/FindPw.vue'
+import Login from '@/components/account/login/LoginPage.vue'
+import FindId from '@/components/account/FindId.vue'
+import FindPw from '@/components/account//FindPw.vue'
 import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
+import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
+import CalendarView from '@/components/management/CalendarView.vue'
+import KidBoard from '../views/board/Kid/KidBoard.vue'
+import announce from '../views/helpdesk/announce/announce.vue'
+import inquiry from '../views/helpdesk/inquiry/inquiry.vue'
+import ClientManage from '@/components/management/ClientManage.vue'
+import notice from '../views/my/notice/notice.vue'
+import HistoryView from '../views/my/history/HistoryView.vue'
+import write from '../views/my/write_review/write.vue'
+import CheckEditInformation from '@/components/account/edit/CheckEditInformation.vue'
+import EditInformation from '@/components/account/edit/EditInformation.vue'
+import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
+import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
+import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
+import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
+import VideoPage from '../components/video/VideoPage.vue'
+import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
 
 const routes = [
   {
@@ -16,7 +33,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: Login
   },
   {
     path:'/findId',
@@ -43,6 +60,93 @@ const routes = [
     name:'signupcounselor',
     component: SignUpCounselor
   },
+  {
+    path:'/signupcounselor2',
+    name:'signupcounselor2',
+    component: SignUpCounselor2
+  },
+  {
+    path:'/calendar',
+    name:'calendar',
+    component: CalendarView
+  },
+  {
+    path: '/KidBoard',
+    name: 'KidBoard',
+    component: KidBoard
+  },
+
+  {
+    path: '/announce',
+    name: 'announce',
+    component: announce
+  },
+  {
+    path: '/inquiry',
+    name: 'inquiry',
+    component: inquiry
+  },
+  {
+    path: '/notice',
+    name: 'notice',
+    component: notice
+  },
+  {
+    path: '/HistoryView',
+    name: 'HistoryView',
+    component: HistoryView
+  },
+
+  {
+    path: '/write',
+    name: 'write',
+    component: write
+  },
+  {
+    path: '/clientmanage',
+    name: 'clientmanage',
+    component: ClientManage
+  },
+  {
+    path: '/checkeditinformation',
+    name: 'checkeditinformation',
+    component: CheckEditInformation
+  },
+  {
+    path: '/editinformation',
+    name: 'editinformation',
+    component: EditInformation
+  },
+  {
+    path: '/KidBoardCreate',
+    name: 'KidBoardCreate',
+    component: KidBoardCreate
+  },
+  {
+    path: '/AnnounceCreate',
+    name: 'AnnounceCreate',
+    component: AnnounceCreate
+  },
+  {
+    path: '/InquiryCreate',
+    name: 'InquiryCreate',
+    component: InquiryCreate
+  },
+  {
+    path: '/signupfinish',
+    name: 'signupfinish',
+    component: SignUpFinish
+  },
+  {
+    path: '/VideoPage',
+    name: 'VideoPage',
+    component: VideoPage
+  },
+  {
+    path: '/consultantcarditem',
+    name: 'consultantcarditem',
+    component: ConsultantCardItem
+  }
 ]
 
 const router = createRouter({

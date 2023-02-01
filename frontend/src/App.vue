@@ -1,18 +1,70 @@
 <template>
   <nav>
-    <div id="navCategory">
-      <router-link to="/">홈로고</router-link> &nbsp;&nbsp;&nbsp;
-      <router-link to="/">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
-      <router-link to="/">상담관리</router-link>
+    <div>
+      <div style="float: left">
+        <router-link to="/">
+          <img
+            id="logo"
+            :src="projectlogo"
+            alt="noimage"
+            style="width: 75px; height: 30px; "
+          />
+        </router-link> &nbsp;&nbsp;&nbsp;
+      </div>
+      <div style="float: left; line-height: 35px;">
+        <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+      </div>
     </div>
+
     <div id="navMypage">
-      <router-link to="/login">Login</router-link>
-      <router-link to="/">마이 페이지</router-link>
+      <!-- <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
+      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn> -->
+      <v-btn @click="logIn">Login</v-btn>
+      <v-btn @click="logOut">Logout</v-btn>
+      <router-link to="/notice">마이 페이지</router-link>
+      <router-link to="/checkeditinformation">정보 수정</router-link>
     </div>
   </nav>
-  <router-view />
+  <router-view /> 
 </template>
+
+<script>
+document.querySelector('body').setAttribute('style',"margin: 0;")
+const API_URl = 'http://127.0.0.1:8080'
+export default {
+  name:'App',
+  data: () => ({
+    projectlogo : require('@/assets/projectlogoperpect.png')
+  }),
+  methods: {
+    logOut(){
+      console.log(this.isLogin)
+      axios({
+        method: 'post',
+        url: `${API_URl}/logout/{id}`,
+        headers: {
+          Authorization: `Token ${ this.$store.state.token}`
+        }
+        
+      })
+      .then(
+        this.$store.dispatch('logOut')
+      )
+    },
+    logIn(){
+      this.$router.push({name:'login'})
+    }
+  },
+  computed:{
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -24,17 +76,20 @@
 }
 
 nav {
+  /* 반응형 x */
+  width: 1255px;
+  margin: 0 auto;
   padding: 20px;
   display: flex;
+  background-color: #F1E7DB;
   justify-content: space-between;
   align-items: center;
   /* background-color: #F1E7DB; */
-  position: fixed;
+  position: relative;
   z-index: 3;
   top: 0;
   left: 0;
   right: 0;
-
 }
 
 nav a {
@@ -43,8 +98,10 @@ nav a {
   text-decoration-line: none;
 }
 
-nav a.router-link-exact-active {
+/* nav a.router-link-exact-active {
   color: #579BB1;
-}
+} */
+
+
 
 </style>

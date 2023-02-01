@@ -1,55 +1,85 @@
-  <template>
-    <div v-on:click="kakaoLoginBtn">카카오 연동</div>
+<template>
+  <!-- <div>
+    <a id="custom-login-btn" @click="kakaoLogin()">
+      <img
+      src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+      width="222"
+      alt="카카오 로그인 버튼"
+      />
+    </a>
+    <div @click="kakaoLogout()">로그아웃</div>
+  </div> -->
+  <!-- <div>
+    <button class="background2" @click="loginWithKakao"></button>
+  </div> -->
 
-  </template>
-  
-  <script>
-  
-  export default {
-    name: "LoginKakao",
-    methods: {
-      kakaoLoginBtn:function(){
-        window.Kakao.init('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') // Kakao Developers에서 요약 정보 -> JavaScript 키
-  
-        if (window.Kakao.Auth.getAccessToken()) {
-          window.Kakao.API.request({
-            url: '/v1/user/unlink',
-            success: function (response) {
-              console.log(response)
-            },
-            fail: function (error) {
-              console.log(error)
-            },
-          })
-          window.Kakao.Auth.setAccessToken(undefined)
-        }
-  
-  
-        window.Kakao.Auth.login({
-          success: function () {
-            window.Kakao.API.request({
-              url: '/v2/user/me',
-              data: {
-                property_keys: ["kakao_account.email"]
-              },
-              success: async function (response) {
-                console.log(response);
-              },
-              fail: function (error) {
-                console.log(error)
-              },
-            })
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      }
-    }
-  }
-  </script>
-  
-  <style scoped>
+  <a id="loginBtn" type="button" onclick="function login() {
+    const redirectUri = 'http://localhost:8080/auth/kakao/callback';
+        const appKey = '9e0f9a70f672fba12b71ea1b5ec10e80'
+            window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + appKey +
+    '&redirect_uri=' + redirectUri + '&response_type=code';}
+    login()">
+  <img class="background2"></a>
 
-    div{ width: 200px; height:40px; background-color:#fdd101; color:white; display:flex; align-items: center; justify-content: center; cursor:pointer; }
-  </style>
+
+  <!-- <a onclick="alert('alert test')">alert?</a> -->
+</template>
+
+<script>
+const API_URL = 'http://127.0.0.1:8080'
+
+export default {
+  methods: {
+    kakaoLogin() {
+      window.Kakao.Auth.login({
+        scope: "profile_nickname",
+        success: this.getKakaoAccount,
+      });
+    },
+    getKakaoAccount() {
+      window.Kakao.API.request({
+        url: '/v2/user/me',
+        success: (res) => {
+          const kakao_account = res.kakao_account;
+          const ninkname = kakao_account.profile.ninkname;
+          const email = kakao_account.email;
+          console.log("ninkname", ninkname);
+          console.log("email", email);
+
+          //로그인처리구현
+
+          alert("로그인 성공!");
+        },
+        fail: (error) => {
+          console.log(error);
+        },
+      });
+    },
+    kakaoLogout() {
+      window.Kakao.Auth.logout((res) => {
+        console.log(res);
+      });
+    },
+  },
+};
+// export default {
+//     name: "LoginKakao",
+//     methods: {
+//         loginWithKakao() {
+//           console.log('가나다라')
+//           const params = {
+//               redirectUri: "http://localhost:80",
+//           };
+//           window.Kakao.Auth.authorize(params);
+//         },
+//     },
+// };
+</script>
+
+<style>
+.background2 {
+  width:300px;
+  height:40px;
+  background-image: url(../../../assets/kakao_login_btn.png);
+}
+</style>

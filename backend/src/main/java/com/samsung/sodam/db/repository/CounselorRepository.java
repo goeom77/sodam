@@ -4,8 +4,23 @@ import com.samsung.sodam.db.entity.Counselor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CounselorRepository extends JpaRepository<Counselor,Integer> {
+import java.util.Optional;
 
-    Integer deleteByCounselorId(Integer id);
+@Repository
+public interface CounselorRepository extends JpaRepository<Counselor,String>{
+
+    // Integer deleteByCounselorId(Integer id);
+
+    // Counselor findCounselor(String email);
+
+   // Counselor saveCounselor(Counselor counselor);
+
+    boolean existsByEmail(String email);
+
+    Counselor getById(String id);
+    Optional<Counselor> findById(String id);
+
+    Counselor getByEmail(String email);
+
+//    Page<Counselor> findAll(CounselorSearchRequest request, Pageable pageable);
 }
