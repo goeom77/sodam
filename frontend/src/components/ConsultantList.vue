@@ -12,13 +12,10 @@
         <p>태그</p>
         <p>태그</p>
       </div>
-      <ConsultantCard 
-        :Consultant="Consultant" 
-        style="margin: 1rem"
-        v-for="(Consultant, index) in ConsultantList"
-        :key="index"
-      />
-
+      <div>
+        <ConsultantCard/>
+        가나다라
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +31,14 @@ export default {
   props: {
     msg: String
   },
+  methods:{
+    getCounselorInfo(){
+      this.$store.dispatch('getCounselorInfo')
+    }
+  },
+  created() { 
+    this.getCounselorInfo()
+  }
   // computed: {
   //   ConsultantList() {
   //     return this.$store.getters.getConsultantJsonData
