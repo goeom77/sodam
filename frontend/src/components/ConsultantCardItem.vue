@@ -1,6 +1,6 @@
 <template>
   <div>
-    item창 
+    
   </div>
 </template>
 
