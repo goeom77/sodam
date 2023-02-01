@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum CATEGORY implements BaseEnumCode<Integer> {
+public enum CATEGORY {
     CHILD(0, "child"),
     TEENAGER(1, "teenager"),
     ADULT(2, "adult"),
@@ -14,6 +14,6 @@ public enum CATEGORY implements BaseEnumCode<Integer> {
     ELDER(4, "elder"),
     OTHER(5, "other");
 
-    private final Integer value;
-    private final String name;
+    private final Integer code;
+    private final String value;
 }
