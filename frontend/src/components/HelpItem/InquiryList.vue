@@ -1,7 +1,7 @@
 <template>
   <div id="InquiryList">
     <div id="InquiryWriteButton">
-      <router-link to="/announce" id="InquiryListAll" style="color:black">전체 (5)</router-link> 
+      <router-link to="/Announce" id="InquiryListAll" style="color:black">전체 (5)</router-link> 
       <router-link to="/InquiryCreate" id="InquiryCreateButton" class="InquiryCreateButton" >글쓰기</router-link> 
     </div>
 

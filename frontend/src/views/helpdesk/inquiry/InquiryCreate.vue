@@ -6,7 +6,7 @@
         <h1>HELP DESK</h1>
       </div>
       <div id="InquiryCreateWrite"> 
-        <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
+        <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
         <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
       <div>
@@ -70,7 +70,7 @@ export default {
       })
         .then((res) => {
           console.log(res)
-          this.$router.push({ name: 'inquiry' })
+          this.$router.push({ name: 'Inquiry' })
         })
         .catch((err) => {
           console.log(err)
