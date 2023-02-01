@@ -80,7 +80,7 @@ export default {
         gender: gender,
         enterprise_id: enterprise_id
       }
-      alert('정말 회원가입할래요?')
+      alert('정말 회원가입할래요?');
       this.$store.dispatch('signupCounselor', payload)
       this.$router.push({name:'login'})
     },
