@@ -1,22 +1,28 @@
 <template>
   <div id="KidBoardListItem">
-    <h1>여기는 각 게시글</h1>
     <div>
-
-      <!-- <h5>{{ KidBoardarticle.id }} -->
+      <h5>{{ KidBoardarticle.postId }}</h5>
     </div>
     <div>
       <div>
-        <!-- <router-link :to="{ name: 'KidBoardDetail', params: { id: KidBoardarticle.id } }">
+        <router-link 
+          style="color:black" 
+          :to="{ 
+            name: 'KidBoardDetail', 
+            // params: { postId: KidBoardarticle.postId } 
+            params: { postId: KidBoardarticle.postId } 
+          }"
+        >
           {{ KidBoardarticle.title }}
-        </router-link> -->
+        </router-link>
+        <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
-        <!-- <p>{{ KidBoardarticle.username }}  {{ KidBoardarticle?.created_at }}</p> -->
+        <p>{{ KidBoardarticle.clientId }}  {{ KidBoardarticle?.createdAt }}</p>
       </div>
     </div>
     <div>
-      <!-- <h3>조회수, 답변 수</h3> -->
+      <h3>조회수, 답변 수</h3>
     </div>
     <hr>
 
@@ -27,9 +33,17 @@
 
 export default {
   name: 'KidBoardListItem',
-  // props: {
-  //   KidBoardarticle: Object,
-  // }
+  props: {
+    KidBoardarticle: Object,
+  },
+  methods: {
+    // clickList() {
+    //   this.$router.push({
+    //     name: "KidBoardDetail",
+    //     params: { postId: KidBoardarticle.postId },
+    //   });
+    // },
+  }
 }
 </script>
 

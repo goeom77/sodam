@@ -8,16 +8,17 @@ import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
-import KidBoard from '../views/board/Kid/KidBoard.vue'
-import announce from '../views/helpdesk/announce/announce.vue'
-import inquiry from '../views/helpdesk/inquiry/inquiry.vue'
+import KidBoard from '../views/board/kid/KidBoard.vue'
+import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
+import Announce from '../views/helpdesk/announce/Announce.vue'
+import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
-import notice from '../views/my/notice/notice.vue'
+import Notice from '../views/my/notice/Notice.vue'
 import HistoryView from '../views/my/history/HistoryView.vue'
-import write from '../views/my/write_review/write.vue'
+import Write from '../views/my/writereview/Write.vue'
 import CheckEditInformation from '@/components/account/edit/CheckEditInformation.vue'
 import EditInformation from '@/components/account/edit/EditInformation.vue'
-import KidBoardCreate from '../views/board/Kid/KidBoardCreate.vue'
+import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
@@ -66,8 +67,8 @@ const routes = [
     component: SignUpCounselor2
   },
   {
-    path:'/calendar',
-    name:'calendar',
+    path:'/Calendar',
+    name:'Calendar',
     component: CalendarView
   },
   {
@@ -75,21 +76,27 @@ const routes = [
     name: 'KidBoard',
     component: KidBoard
   },
-
   {
-    path: '/announce',
-    name: 'announce',
-    component: announce
+    path: '/KidBoardDetail/:postId',
+    name: 'KidBoardDetail',
+    component: KidBoardDetail,
+    // props: true
+  },
+  
+  {
+    path: '/Announce',
+    name: 'Announce',
+    component: Announce
   },
   {
-    path: '/inquiry',
-    name: 'inquiry',
-    component: inquiry
+    path: '/Inquiry',
+    name: 'Inquiry',
+    component: Inquiry
   },
   {
-    path: '/notice',
-    name: 'notice',
-    component: notice
+    path: '/Notice',
+    name: 'Notice',
+    component: Notice
   },
   {
     path: '/HistoryView',
@@ -98,18 +105,18 @@ const routes = [
   },
 
   {
-    path: '/write',
-    name: 'write',
-    component: write
+    path: '/Write',
+    name: 'Write',
+    component: Write
   },
   {
-    path: '/clientmanage',
-    name: 'clientmanage',
+    path: '/Clientmanage',
+    name: 'Clientmanage',
     component: ClientManage
   },
   {
-    path: '/checkeditinformation',
-    name: 'checkeditinformation',
+    path: '/Checkeditinformation',
+    name: 'Checkeditinformation',
     component: CheckEditInformation
   },
   {

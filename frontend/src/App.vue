@@ -13,19 +13,17 @@
       </div>
       <div style="float: left; line-height: 35px;">
         <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/Announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/Clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
       </div>
     </div>
 
     <div id="navMypage">
-      <!-- <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
-      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn> -->
-      <v-btn @click="logIn">Login</v-btn>
-      <v-btn @click="logOut">Logout</v-btn>
-      <router-link to="/notice">마이 페이지</router-link>
-      <router-link to="/checkeditinformation">정보 수정</router-link>
+      <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
+      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn>
+      <router-link to="/Notice">마이 페이지</router-link>
+      <router-link to="/Checkeditinformation">정보 수정</router-link>
     </div>
   </nav>
   <router-view /> 

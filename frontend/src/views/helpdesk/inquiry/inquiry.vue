@@ -1,12 +1,12 @@
 <template>
-  <div id="inquiry">
+  <div id="Inquiry">
     <div id="inquiryhelpBoard">
       <div id="inquiryhelpBoardtitle">
         <h1>HELP DESK</h1>
       </div>
       <div id="inquiryhelpCategory"> 
-        <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
-        <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
+        <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
+        <router-link to="/Inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
       <div>
 
@@ -24,7 +24,7 @@
 import InquiryList from '@/components/helpitem/InquiryList.vue'
 
 export default {
-  name: 'inquiry',
+  name: 'Inquiry',
   components: {
     InquiryList
   },
@@ -33,7 +33,7 @@ export default {
 
 
 <style>
-#inquiry {
+#Inquiry {
   /* 반응형 x */
   width: 1255px;
   margin: 0 auto;
