@@ -51,10 +51,13 @@ export default {
   },
   data(){
     return{
-      moveTo(){
-        this.$router.push({ name: 'consultantcarditem' })
-      }
     }
+  },
+  methods:{
+    moveTo(){
+      this.$router.push({ name: 'consultantcarditem' })
+    }
+
   }
 }
 </script>

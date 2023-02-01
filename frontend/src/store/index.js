@@ -139,7 +139,6 @@ export default new Vuex.Store({
         data: {
           id:payload.id,
           password:payload.password,
-
           name:payload.name,
           email:payload.email,
           tel:payload.tel,
@@ -172,7 +171,10 @@ export default new Vuex.Store({
       })
       .then((res)=>{
         console.log(res)
-        context.commit('SAVE_TOKEN',res.data.key)
+        context.commit('SAVE_TOKEN',res)
+      })
+      .catch((res)=>{
+        console.log(res)
       })
     },
     logOut(context){
