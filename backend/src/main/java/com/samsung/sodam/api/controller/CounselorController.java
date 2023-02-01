@@ -58,12 +58,14 @@ public class CounselorController {
 
     //관심 상담사 담기
     @PostMapping("/client/{clientId}/fav/{counselorId}")
+    @ApiOperation(value = "관심상담사 등록")
     public void setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.setFavCounselor(fav);
     }
 
     @DeleteMapping("/client/{clientId}/fav/{counselorId}")
+    @ApiOperation(value = "관심상담사 삭제")
     public void deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.removeFavCounselor(fav);
