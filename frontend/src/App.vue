@@ -46,6 +46,7 @@ export default {
         headers: {
           Authorization: `Token ${ this.$store.state.token}`
         }
+        
       })
       .then(
         this.$store.dispatch('logOut')

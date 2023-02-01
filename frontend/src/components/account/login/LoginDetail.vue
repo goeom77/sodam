@@ -18,9 +18,9 @@
               <form action="#" class="form" id="form1">
                 <h2 class="form__title">Login</h2>
                 <br>
-                <input type="text" v-model="ID"  placeholder="ID"/>
+                <input class="inputTage" type="text" v-model="iD"  placeholder="ID"/>
                 <br>
-                <input type="password" v-model="password" placeholder="Password"/>
+                <input class="inputTage" type="password" v-model="password" placeholder="Password"/>
                 <br>
                 <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
                 <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
@@ -76,19 +76,19 @@ export default {
     },
     data(){
       return {
-        ID: null,
+        iD: null,
         password: null,
         common_code:2,
       }
     },
     methods:{
       logIn(){
-        const ID = this.ID
+        const iD = this.iD
         const password = this.password
         const common_code = this.common_code
         
         const payload = {
-          ID: ID,
+          iD: iD,
           password: password,
           common_code: common_code
         }

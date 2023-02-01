@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,9 +36,9 @@ public class CounselorRepositoryService {
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
 
-//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
-//        return repository.searchCounselor(request, pageable);
-//    }
+    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+        return repository.findAll(pageable);
+    }
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
@@ -50,6 +51,11 @@ public class CounselorRepositoryService {
     public Page<Client> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable);
     }
+
+//    public Page<Client> getMyClients(Pageable pageable,String id) {
+//        Specification
+//        return clientRepository.findAll();
+//    }
 
     public Page<ConsultSchedule> getHistory(Integer id, Pageable pageable) {
         return scheduleRepository.getAllBySessionId(id, pageable);

@@ -23,7 +23,7 @@ import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 import VideoPage from '../components/video/VideoPage.vue'
-// import Error from '../views/Error.vue'
+import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
 
 const routes = [
   {
@@ -149,11 +149,11 @@ const routes = [
     name: 'VideoPage',
     component: VideoPage
   },
-  // {
-  //   path: '*',
-  //   name: 'Error',
-  //   component: Error
-  // }
+  {
+    path: '/consultantcarditem',
+    name: 'consultantcarditem',
+    component: ConsultantCardItem
+  }
 ]
 
 const router = createRouter({
