@@ -5,7 +5,7 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
-const API_URL = 'http://127.0.0.1:8080'
+const API_URL = 'http://127.0.0.1:8080/api'
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
@@ -31,6 +31,7 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_KIDBOARDARTICLES(state, KidBoardarticles) {
+      console.log(KidBoardarticles)
       state.KidBoardarticles = KidBoardarticles
     },
     GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
@@ -61,7 +62,7 @@ export default new Vuex.Store({
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/backend/`,
+        url: `${API_URL}/trouble/list/child`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -69,7 +70,6 @@ export default new Vuex.Store({
         .then((res) => {
           // console.log(res, context)
           // console.log(res.data)
-          context.commit('GET_KIDBOARDARTICLES', res.data)
         })
         .catch((err) => {
           console.log(err)
@@ -85,7 +85,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           // console.log(res, context)
-          // console.log(res.data)
+          console.log(res.data)
           context.commit('GET_HISTORYVIEWARTICLES', res.data)
         })
         .catch((err) => {

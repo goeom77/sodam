@@ -1,12 +1,12 @@
 <template>
-  <div id="announce">
-    <div id="announcehelpBoard">
-      <div id="announcehelpBoardtitle">
+  <div id="Announce">
+    <div id="AnnouncehelpBoard">
+      <div id="AnnouncehelpBoardtitle">
         <h1>HELP DESK</h1>
       </div>
-      <div id="announcehelpCategory"> 
-        <router-link to="/announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
-        <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
+      <div id="AnnouncehelpCategory"> 
+        <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
+        <router-link to="/Inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
       </div>
     </div>
     <AnnounceList/>
@@ -18,7 +18,7 @@
 import AnnounceList from '@/components/helpitem/AnnounceList.vue'
 
 export default {
-  name: 'announce',
+  name: 'Announce',
   components: {
     AnnounceList
   },
@@ -27,7 +27,7 @@ export default {
 
 
 <style>
-#announce {
+#Announce {
   /* 반응형 x */
   width: 1255px;
   margin: 0 auto;
@@ -44,7 +44,7 @@ a:visited {
 }
 
 
-#announcehelpBoard {
+#AnnouncehelpBoard {
   /* margin-top: 61px; */
   /* width: 100%; */
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
@@ -59,7 +59,7 @@ a:visited {
   height: 250px;
   position: relative;
 }
-#announcehelpCategory {
+#AnnouncehelpCategory {
   width:100%; 
   height:60px; 
   display: grid;
@@ -72,14 +72,14 @@ a:visited {
   position: absolute;
   bottom: 0px;
 } 
-#announcehelpBoardtitle {
+#AnnouncehelpBoardtitle {
   position: absolute;
   left: 50%; 
   bottom: 50%; 
   transform: translate(-50%);
 }
 
-#announcehelpCategory a.router-link-exact-active {
+#AnnouncehelpCategory a.router-link-exact-active {
   background-color: #579BB1;
 }
 

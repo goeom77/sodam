@@ -5,11 +5,11 @@
       <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link> 
     </div>
     <KidBoardListItem
-      v-for="KidBoardarticle in KidBoardarticles"
-      :key="KidBoardarticle.id"
+      v-for="KidBoardarticle in KidBoardarticles.content"
+      :key="KidBoardarticle"
       :KidBoardarticle="KidBoardarticle"
     /> 
-    <KidBoardListItem/>
+    <!-- <KidBoardListItem/> -->
   </div>
 
 </template>
@@ -22,11 +22,11 @@ export default {
   components: {
     KidBoardListItem
   },
-  // computed: {
-  //   articles() {
-  //     return this.$store.state.KidBoardarticles
-  //   }
-  // },
+  computed: {
+    KidBoardarticles() {
+      return this.$store.state.KidBoardarticles
+    }
+  },
 
 }
 </script>
