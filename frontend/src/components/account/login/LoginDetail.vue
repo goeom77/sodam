@@ -18,7 +18,7 @@
               <form action="#" class="form" id="form1">
                 <h2 class="form__title">Login</h2>
                 <br>
-                <input class="inputTage" type="text" v-model="ID"  placeholder="ID"/>
+                <input class="inputTage" type="text" v-model="iD"  placeholder="ID"/>
                 <br>
                 <input class="inputTage" type="password" v-model="password" placeholder="Password"/>
                 <br>
@@ -76,19 +76,19 @@ export default {
     },
     data(){
       return {
-        ID: null,
+        iD: null,
         password: null,
         common_code:2,
       }
     },
     methods:{
       logIn(){
-        const ID = this.ID
+        const iD = this.iD
         const password = this.password
         const common_code = this.common_code
         
         const payload = {
-          id: ID,
+          iD: iD,
           password: password,
           common_code: common_code
         }
