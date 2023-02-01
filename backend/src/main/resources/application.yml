@@ -13,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # ?? ?? ??
     show-sql: true   # sql ??? ????.
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   fcm:
     certification: fcm_account_key.json
