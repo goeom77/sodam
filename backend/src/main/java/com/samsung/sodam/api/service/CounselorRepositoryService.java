@@ -104,6 +104,7 @@ public class CounselorRepositoryService {
                 .gender(request.getGender())
                 .createdDateTime(LocalDateTime.now())
                 .turn(0)
+                .state(request.getState())
                 .isConsult("N")
                 .sessionId(newSession.getId())
 //                .applyDateTime(LocalDateTime.now())

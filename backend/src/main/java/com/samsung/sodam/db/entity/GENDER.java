@@ -9,6 +9,6 @@ import lombok.Getter;
 public enum GENDER implements BaseEnumCode<String> {
     MEN("여성","M"),
     WOMEN("남성","W");
-    private String name;
-    private String value;
+    private final String name;
+    private final String value;
 }

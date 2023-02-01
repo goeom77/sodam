@@ -10,6 +10,7 @@ public abstract class EntityConverter<X extends Enum<X> & BaseEnumCode<Y>, Y> im
 
     @Override
     public Y convertToDatabaseColumn(X attribute) {
+        if(attribute==null) return null;
         return attribute.getValue();
     }
 

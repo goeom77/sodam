@@ -4,23 +4,16 @@ import com.samsung.sodam.db.converter.BaseEnumCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
-
 @Getter
 @AllArgsConstructor
-public enum STATE {
+public enum STATE implements BaseEnumCode<Integer> {
     //대기, 승인, 거절, 예정, 진행중
-    WAIT(0),
-    APPROVED(1),
-    REJECT(2),
-    EXPECTED(3) ,
-    PROCEEDING(4),
-    END(5);
-
-    Integer value;
-
-    public static STATE fromCode(Integer dbData){
-        return Arrays.stream(STATE.values()).filter(v-> v.getValue().equals(dbData))
-                .findAny().orElseThrow(()-> new IllegalArgumentException(""));
-    }
+    WAIT("대기", 0),
+    APPROVED("승인", 1),
+    REJECT("거절", 2),
+    EXPECTED("예정", 3),
+    PROCEEDING("진행중", 4),
+    END("완료", 5);
+    final String name;
+    final Integer value;
 }
