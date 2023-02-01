@@ -7,7 +7,7 @@
     <!-- 예약 -->
     <div>
       <h1 @click="checkDate">상담 유형 </h1>
-      <select id="Typeselect" v-model="consultType" placeholder="선택">
+      <select id="Typeselect" v-model="consultType">
         <option 
           v-for="(item, index) in selectTypeList"
           :key="index"
@@ -41,10 +41,11 @@
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>      
       <datepicker
-        v-model="picked"
+        v-model="date"
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
+        :format="customFormatter"
       />
     </div>
   </div>
@@ -82,7 +83,7 @@ export default {
       ],
       content:null,
       counselorId:null,
-      dueDate:null,
+      date:null,
       email:null,
       gender:null,
       genderList:[
@@ -92,20 +93,21 @@ export default {
       name:null,
       state:null,
       tel:null,
-      picked: new Date()
     }
   },
   methods:{
     checkDate(){
       console.log(this.age,this.clientId,this.consultType,this.content,this.counselorId)
       console.log(this.picked,this.email,this.gender,this.name,this.state,this.tel)
+    },
+    customFormatter(date){
+      return moment(date).format('YYYY-MM-DD');
     }
   },
-  computed:{
-
-  }
 }
 </script>
+
+
 
 <style>
 
