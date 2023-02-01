@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 
 public class CounselorSpecification {
     public static Specification<Counselor> equalFilterKeyword(String keyword) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + keyword + "%"));
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("counselor_id"), "%" + keyword + "%"));
     }
 
     public static Specification<Counselor> nameLike(final String name) {
