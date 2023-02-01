@@ -36,7 +36,7 @@ export default {
       this.$store.dispatch('getCounselorInfo')
     }
   },
-  created() { 
+  created() {
     this.getCounselorInfo()
   }
   // computed: {
