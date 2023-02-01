@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <!-- <div>
     <a id="custom-login-btn" @click="kakaoLogin()">
       <img
       src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
@@ -8,19 +8,21 @@
       />
     </a>
     <div @click="kakaoLogout()">로그아웃</div>
-  </div>
+  </div> -->
   <!-- <div>
     <button class="background2" @click="loginWithKakao"></button>
   </div> -->
-<!-- 
 
   <a id="loginBtn" type="button" onclick="function login() {
     const redirectUri = 'http://localhost:8080/auth/kakao/callback';
         const appKey = '9e0f9a70f672fba12b71ea1b5ec10e80'
             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + appKey +
     '&redirect_uri=' + redirectUri + '&response_type=code';}
-login()"><img src="kakao_login_btn.png" alt="button"></a>
-<a onclick="alert('alert test')">alert?</a> -->
+    login()">
+  <img class="background2"></a>
+
+
+  <!-- <a onclick="alert('alert test')">alert?</a> -->
 </template>
 
 <script>
@@ -77,7 +79,7 @@ export default {
 <style>
 .background2 {
   width:300px;
-  height:100px;
+  height:40px;
   background-image: url(../../../assets/kakao_login_btn.png);
 }
 </style>

@@ -164,7 +164,7 @@ export default {
         }
         console.log(payload)
         this.$store.dispatch('signupClient', payload)
-        this.$router.push({name:'login'})
+        this.$router.push({name:'home'})
       }
     }
 }

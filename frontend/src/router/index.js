@@ -22,6 +22,7 @@ import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 import VideoPage from '../components/video/VideoPage.vue'
+import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
 
 const routes = [
   {
@@ -140,6 +141,11 @@ const routes = [
     path: '/VideoPage',
     name: 'VideoPage',
     component: VideoPage
+  },
+  {
+    path: '/consultantcarditem',
+    name: 'consultantcarditem',
+    component: ConsultantCardItem
   }
 ]
 
