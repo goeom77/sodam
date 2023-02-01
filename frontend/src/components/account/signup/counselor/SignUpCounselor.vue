@@ -6,9 +6,9 @@
       </v-card-title>
       <v-card-text> 
           <v-row>
-            <v-col cols="12">
-              <input type="radio" name="gender" v-model="gender" value="M">남성
-              <input type="radio" name="gender" v-model="gender" value="F">여성
+            <v-col cols="12"> 
+              <input type="radio" name="gender" v-model="gender" @click="genderToMen" checked>남성
+              <input type="radio" name="gender" v-model="gender" @click="genderToWomen">여성
 
               <v-text-field
               label="Id"
@@ -137,7 +137,7 @@ export default {
         passwordValidFlag: true,
         passwordCheckFlag: true,
         msg:null,
-        gender:'M',
+        gender:'MEN',
 
         // 작성 규칙
         
@@ -145,9 +145,16 @@ export default {
     },
 
     methods:{
+      genderToMen(){
+        this.gender = 'MEN'
+      },
+      genderToWomen(){
+        this.gender = 'WOMEN'
+      },
+
       checkDuplicate(){
       this.checkDuplicateFlag = this.checkDuplicateFlag+1
-      console.log(this.checkDuplicateFlag)
+
       },
       // 아이디 중복 검사
       duplicateId(){

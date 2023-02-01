@@ -4,7 +4,7 @@
     <CheckCertificate/>
     <CheckWorkExperience/>
 
-    {{ userSignupData }} 
+    {{ this.userSignupData }} 
     {{ this.enterprise_id }}
     <!-- 파일 저장하는거 추가해야함 -->
     <v-btn color="blue darken-1" text @click="signUpCounselor">회원가입</v-btn>
