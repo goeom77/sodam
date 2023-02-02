@@ -113,7 +113,6 @@ public class CounselorRepositoryService {
                 .state(request.getState())
                 .isConsult("N")
                 .sessionId(newSession.getId())
-//                .applyDateTime(LocalDateTime.now())
                 .consultType(request.getConsultType())
                 .build();
 

@@ -3,26 +3,26 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.ConsultApplicantRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
+import com.samsung.sodam.api.response.ClientListResponse;
+import com.samsung.sodam.api.service.ClientService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class CounselorController {
 
     private final CounselorRepositoryService service;
+    private final ClientService clientService;
 
-    public CounselorController(CounselorRepositoryService service) {
+    public CounselorController(CounselorRepositoryService service, ClientService clientService) {
         this.service = service;
+        this.clientService = clientService;
     }
 
     //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
@@ -96,12 +96,12 @@ public class CounselorController {
         return service.getAllClients(pageable);
     }
 
-//    @GetMapping("/client/{consultantId}")
-//    @ApiOperation(value = "고객 목록 조회")
-//    //고객목록
-//    public Page<Client> getClients(@PathVariable String consultantId) {
-//        return service.getMyClients(Pageable.ofSize(20),consultantId);
-//    }
+    @GetMapping("/client/{consultantId}/{keyword}")
+    @ApiOperation(value = "고객 목록 조회")
+    //고객목록
+    public Page<ClientListResponse> getClients(@PathVariable String consultantId, @PathVariable String keyword) {
+        return clientService.getMyClients(consultantId,keyword,Pageable.ofSize(20));
+    }
 
     //일정 상세 정보
 

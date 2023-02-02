@@ -35,6 +35,6 @@ public class ConsultApplicantRequest {
     @Convert(converter = GenderConverter.class)
     private GENDER gender;
     private Integer age;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime dueDate; // 희망종료날짜
 }

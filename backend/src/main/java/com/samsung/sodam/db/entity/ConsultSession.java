@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 public class ConsultSession {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
     @Column(name = "client_id")
     String clientId;

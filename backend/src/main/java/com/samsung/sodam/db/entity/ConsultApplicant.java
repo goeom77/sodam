@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsultApplicant {
-    @Id @Column(name = "session_id")
+    @Column(name = "session_id") @Id
     private Integer sessionId;
     private String name;
     private Integer age;
