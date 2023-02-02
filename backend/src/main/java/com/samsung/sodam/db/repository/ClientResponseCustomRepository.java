@@ -18,5 +18,6 @@ import static com.samsung.sodam.db.entity.QClient.client;
 import static com.samsung.sodam.db.entity.QConsultSession.consultSession;
 
 public interface ClientResponseCustomRepository {
-    public Page<ClientListResponse> getAllClientList(String userId, String searchWord, Pageable pageable);
+    public Page<ClientListResponse> getClientList(String userId, String searchWord, Pageable pageable);
+    public Page<ClientListResponse> getAllClientList(String userId, Pageable pageable);
 }
