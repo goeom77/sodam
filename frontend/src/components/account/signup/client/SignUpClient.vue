@@ -60,7 +60,16 @@
                 :rules="user_email_rule" 
                 required
               ></v-text-field>
+              <v-btn @click="CheckEmail" v-if="this.checkEmail===0">이메일 확인</v-btn>
+              <div v-else-if="this.checkEmail !=0">
+                <v-text-field
+                  label="인증 번호" type="number" v-model="this.confirm_code"
+                  required
+                ></v-text-field>
+                <v-btn @click="CheckEmailConfirm">인증</v-btn>
+              </div>
             </v-col>
+            
             <v-col cols="12">
               <v-text-field
                 label="Tel"
@@ -133,10 +142,38 @@ export default {
         passwordValidFlag: true,
         passwordCheckFlag: true,
         msg:null,
+        checkEmail:0,
+        confirm_code:null,
       }
     },
 
     methods:{
+            // 이메일 확인 
+      CheckEmail(){
+        axios({
+          method: 'post',
+          url: `${API_URL}/api/auth/send-code`,
+          data:{
+            email:this.email
+          }
+        })
+        .then(res => {
+          this.checkEmail = this.checkEmail+1
+        })
+      },
+      // 이메일 인증
+      CheckEmailConfirm(){
+        axios({
+          method:'get',
+          url:`${API_URL}/api/auth/confirm-mail?code=${this.confirm_code}`,
+          data:{
+            code: this.confirm_code
+          }
+        })
+        .then((res)=>{
+          console.log(res)
+        })
+      },
       checkDuplicate(){
       this.checkDuplicateFlag = this.checkDuplicateFlag+1
       console.log(this.checkDuplicateFlag)

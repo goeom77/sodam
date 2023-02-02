@@ -13,8 +13,10 @@
         <p>태그</p>
       </div>
       <div>
-        <ConsultantCard/>
-        가나다라
+        <ConsultantCard
+        v-for="(counselor,idx) in counselorInfo"
+        :key="idx"
+        :counselor="counselor"/>
       </div>
     </div>
   </div>
@@ -22,19 +24,30 @@
 
 <script>
 import ConsultantCard from '@/components/ConsultantCard'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8080'
 
 export default {
   name: 'ConsultantList',
   components: {
     ConsultantCard
   },
-  props: {
-    msg: String
+  data(){
+    return{
+      counselorInfo: null,
+    }
   },
   methods:{
     getCounselorInfo(){
-      this.$store.dispatch('getCounselorInfo')
-    }
+      axios({
+        method:'post',
+        url:`${API_URL}/api/counselor/`
+      })
+      .then(res=>{
+        this.counselorInfo = res.data.content
+      })
+    },
+
   },
   created() {
     this.getCounselorInfo()
@@ -51,7 +64,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

@@ -63,7 +63,15 @@
                 :rules="user_email_rule" 
                 required
               ></v-text-field>
-              <v-btn @click="CheckEmail">이메일 확인</v-btn>
+              <v-btn @click="CheckEmail" v-if="this.checkEmail===0">이메일 확인</v-btn>
+              <div v-else-if="this.checkEmail !=0">
+                <v-text-field
+                  label="인증 번호" type="number" v-model="this.confirm_code"
+                  required
+                ></v-text-field>
+                <v-btn @click="CheckEmailConfirm">인증</v-btn>
+
+              </div>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -96,6 +104,7 @@
 <script>
 const API_URL = 'http://127.0.0.1:8080'
 import axios from 'axios'
+
 export default {
     name:'SignUpClient',
     data(){
@@ -139,7 +148,8 @@ export default {
         passwordCheckFlag: true,
         msg:null,
         gender:'MEN',
-
+        checkEmail:0,
+        confirm_code:null,
         // 작성 규칙
         
       }
@@ -149,13 +159,30 @@ export default {
       // 이메일 확인 
       CheckEmail(){
         axios({
-          method: 'POST',
-          url: '/api/auth/send-code',
+          method: 'post',
+          url: `${API_URL}/api/auth/send-code`,
+          data:{
+            email:this.email
+          }
         })
         .then(res => {
-          
+          this.checkEmail = this.checkEmail+1
         })
       },
+      // 이메일 인증
+      CheckEmailConfirm(){
+        axios({
+          method:'get',
+          url:`${API_URL}/api/auth/confirm-mail?code=${this.confirm_code}`,
+          data:{
+            code: this.confirm_code
+          }
+        })
+        .then((res)=>{
+          console.log(res)
+        })
+      },
+
       genderToMen(){
         this.gender = 'MEN'
       },
