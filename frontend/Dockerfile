@@ -6,5 +6,5 @@ COPY . .
 RUN npm install --save-dev @babel/preset-env
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 7000
 CMD [ "http-server", "dist" ]
