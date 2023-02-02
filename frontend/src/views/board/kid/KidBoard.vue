@@ -34,14 +34,14 @@ export default {
   components: {
     KidBoardList,
   },
-  // created() {
-  //   this.getKidBoardArticles()
-  // },
-  // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
-  //   }
-  // }
+  created() {
+    this.getKidBoardArticles()
+  },
+  methods: {
+    getKidBoardArticles() {
+    this.$store.dispatch('getKidBoardArticles')
+    }
+  }
 
 }
 </script>

@@ -13,7 +13,7 @@ import LoginDetail from '@/components/account/login/LoginDetail.vue'
 export default {
   name:'LoginPage',
   components: {
-    LoginDetail
+    LoginDetail,
   }
 }
 </script>
