@@ -63,6 +63,7 @@
                 :rules="user_email_rule" 
                 required
               ></v-text-field>
+              <v-btn @click="CheckEmail">이메일 확인</v-btn>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -145,6 +146,16 @@ export default {
     },
 
     methods:{
+      // 이메일 확인 
+      CheckEmail(){
+        axios({
+          method: 'POST',
+          url: '/api/auth/send-code',
+        })
+        .then(res => {
+          
+        })
+      },
       genderToMen(){
         this.gender = 'MEN'
       },

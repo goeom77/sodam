@@ -4,7 +4,7 @@
   </template>
   
   <script>
-  const API_URL = 'http://127.0.0.1:80'
+  const API_URL = 'http://127.0.0.1:8080'
   
   export default {
     name: "LoginKakao",

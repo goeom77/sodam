@@ -2,18 +2,18 @@
   <div>
     <div>
       <h1>Detail</h1>
-      <p>글 번호 : {{ KidBoardarticle?.id }}</p>
-      <p>대상 : {{ KidBoardarticle?.person }}</p>
+      <p>글 번호 : {{ KidBoardarticle?.board_id }}</p>
+      <p>대상 : {{ KidBoardarticle?.category }}</p>
       <p>제목 : {{ KidBoardarticle?.title }}</p>
       <p>내용 : {{ KidBoardarticle?.content }}</p>
       <p>작성시간 : {{ KidBoardarticle?.created_at }}</p>
-      <p>수정시간 : {{ KidBoardarticle?.updated_at }}</p>
-      <button @click="KidBoardarticleUpdate">수정</button>
-      <button @click="KidBoardarticleDelete">삭제</button>
+      <p>작성자 : {{ KidBoardarticle?.clientId }}</p>
+      <!-- <button @click="KidBoardarticleUpdate">수정</button>
+      <button @click="KidBoardarticleDelete">삭제</button> -->
     </div>
     <div>
       <hr>
-    <KidBoardCommentForm
+    <!-- <KidBoardCommentForm
       :KidBoardarticle="KidBoardarticle"
       @get-KidBoardComments="getKidBoardComments"
     />
@@ -33,7 +33,7 @@
         :per-page="10"
       >
       </b-pagination>  
-    </div>
+    </div> -->
 
     </div>
   </div>
@@ -46,7 +46,7 @@ import axios from 'axios'
 import KidBoardCommentForm from '../../../components/boarditem/KidBoardCommentForm.vue'
 import KidBoardCommentList from '../../../components/boarditem/KidBoardCommentList.vue'
 
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = 'http://127.0.0.1:8080/api'
 
 export default {
   name: 'KidBoardDetail',
@@ -63,69 +63,75 @@ export default {
     }
   },
   // props: {
-  //   KidBoardarticle: 
+  //   postId: {
+  //     type: Number,
+  //     default: 0
+  //   }
   // },
   created() {
+    console.log('야옹')
     this.getKidBoardarticleDetail()
   },
   methods: {
     getKidBoardarticleDetail() {
       axios({
         method: 'get',
-        url: `${API_URL}/backend/${this.$route.params.id}`
+        url: `${API_URL}/trouble/${this.$route.params.postId}`
+        // url: `${API_URL}/trouble/${postId}`
       })
         .then((res) => {
           console.log(res)
           this.KidBoardarticle = res.data
         })
         .catch((err) => {
+          console.log('실패다옹')
           KidBoardarticle.log(err)
         })
     },
-    KidBoardarticleUpdate() {
-      this.$router.push({
-        name: 'KidBoardCreate',
-        params: {
-            contentId: this.id
-        }
-      })
-    },
-    KidBoardarticleDelete() {
-      const person = this.person
-      if (!confirm("삭제하시겠습니까?")) {
-        axios({
-        method: 'delete',
-        url: `${API_URL}/backend/${this.$route.params.id}`
-        })
-				.then((res)=>{
-					if(res.data.result) {
-						alert("삭제되었습니다.");
-						this.$router.push({ name: {person} });
-					} else {
-						alert("실행중 실패했습니다.\n다시 이용해 주세요.");
-					}
-				})
-				.catch((err)=>{
-					console.log(err);
-				})
-			}
-    },
-    getKidBoardComments() {
-      axios({
-        method:'get',
-        url: `${API_URL}/backend/${this.KidBoardCommentForm?.id}/`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
-        }
-      })
-      .then((res) => {
-        this.KidBoardComments = res.data
-      })
-      .catch(() => {
-        this.KidBoardComments = null,
-        console.log('댓글이 없습니다.')
-      })
-    },
+    // KidBoardarticleUpdate() {
+    //   this.$router.push({
+    //     name: 'KidBoardCreate',
+    //     params: {
+    //         contentId: this.id
+    //     }
+    //   })
+    // },
+    // KidBoardarticleDelete() {
+    //   const person = this.person
+    //   if (!confirm("삭제하시겠습니까?")) {
+    //     axios({
+    //     method: 'delete',
+    //     url: `${API_URL}/backend/${this.$route.params.postId}`
+    //     })
+		// 		.then((res)=>{
+		// 			if(res.data.result) {
+		// 				alert("삭제되었습니다.");
+		// 				this.$router.push({ name: {person} });
+		// 			} else {
+		// 				alert("실행중 실패했습니다.\n다시 이용해 주세요.");
+		// 			}
+		// 		})
+		// 		.catch((err)=>{
+		// 			console.log(err);
+		// 		})
+		// 	}
+    // },
+    // getKidBoardComments() {
+    //   axios({
+    //     method:'get',
+    //     url: `${API_URL}/backend/${this.KidBoardCommentForm?.id}/`,
+    //     headers: { 
+    //         Authorization: `Token ${this.$store.state.token}`
+    //     }
+    //   })
+    //   .then((res) => {
+    //     this.KidBoardComments = res.data
+    //   })
+    //   .catch(() => {
+    //     this.KidBoardComments = null,
+    //     console.log('댓글이 없습니다.')
+    //   })
+    // },
   }
 }
 

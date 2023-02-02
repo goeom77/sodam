@@ -1,14 +1,14 @@
 <template>
-  <div id="notice">
+  <div id="Notice">
     <div id="MyBoard">
       <div id="MyBoardtitle">
         <h1>마이페이지</h1>
       </div>  
       <div id="myCategory"> 
-        <router-link to="/notice" id="NoticeCategory" class="CategoryClass" >내게 온 알림</router-link>
+        <router-link to="/Notice" id="NoticeCategory" class="CategoryClass" >내게 온 알림</router-link>
         <router-link to="/HistoryView" id="HistoryCategory" class="CategoryClass">상담 내역</router-link>
         <router-link to="/" id="MypostCategory" class="CategoryClass">내 글 보기</router-link>
-        <router-link to="/notice" id="LikeCategory" class="CategoryClass">찜 목록</router-link>
+        <router-link to="/Notice" id="LikeCategory" class="CategoryClass">찜 목록</router-link>
         <router-link to="/" id="WritereviewCategory" class="CategoryClass">후기 상담</router-link>
         
       </div>
@@ -25,12 +25,12 @@
 
 <script>
 // @ is an alias to /srcz
-// import noticeList from '@/components/boarditem/noticeList.vue'
+// import NoticeList from '@/components/boarditem/NoticeList.vue'
 
 export default {
-  name: 'notice',
+  name: 'Notice',
   components: {
-    // noticeList
+    // NoticeList
   },
   // created() {
   //   this.getKidBoardArticles()
@@ -45,7 +45,7 @@ export default {
 
 
 <style>
-#notice {
+#Notice {
   /* 반응형 x */
   width: 1255px;
   margin: 0 auto;
