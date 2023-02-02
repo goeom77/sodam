@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '@/components/account/login/LoginPage.vue'
+
 import FindId from '@/components/account/FindId.vue'
 import FindPw from '@/components/account//FindPw.vue'
 import LoginKakao from '@/components/account/login/LoginKakao.vue'

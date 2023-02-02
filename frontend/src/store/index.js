@@ -5,7 +5,7 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
-const API_URL = 'http://127.0.0.1:8080/api'
+const API_URL = 'http://127.0.0.1:8080'
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
@@ -119,7 +119,7 @@ export default new Vuex.Store({
         }
       })
         .then((res)=>{
-          console.log(res)  
+          console.log(res)
           context.commit('SAVE_TOKEN', res.data)
         })
         .then(res=>{
