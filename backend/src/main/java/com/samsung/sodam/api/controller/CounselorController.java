@@ -99,7 +99,7 @@ public class CounselorController {
     @GetMapping("/client/{consultantId}/{keyword}")
     @ApiOperation(value = "고객 목록 조회")
     //고객목록
-    public Page<ClientListResponse> getClients(@PathVariable String consultantId, @PathVariable String keyword) {
+    public Page<ClientListResponse> getClients(@PathVariable String consultantId, @PathVariable(required = false) String keyword) {
         return clientService.getMyClients(consultantId,keyword,Pageable.ofSize(20));
     }
 

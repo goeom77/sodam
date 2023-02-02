@@ -18,6 +18,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Page<ClientListResponse> getMyClients(String counselorId, String name, Pageable pageable) {
-        return clientResponseCustomRepository.getAllClientList(counselorId, name, pageable);
+        if ( name.isEmpty()||name.isBlank()) return clientResponseCustomRepository.getAllClientList(counselorId, pageable);
+        else return clientResponseCustomRepository.getClientList(counselorId, name, pageable);
     }
 }
