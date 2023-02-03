@@ -1,14 +1,11 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.AllArgsConstructor;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -16,11 +13,12 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+
 public class Review {
     @Id
     @Column(name = "review_id")
+    @GeneratedValue
     Long id;
 
     @Column(length = 500)
@@ -38,4 +36,16 @@ public class Review {
 
     @Column(name = "created_at")
     LocalDateTime createdAt;
+
+    @QueryProjection
+    public Review(Long id, String contents, Double starts, Integer pastCount, String type, String clientId, String counselorId, LocalDateTime createdAt) {
+        this.id = id;
+        this.contents = contents;
+        this.starts = starts;
+        this.pastCount = pastCount;
+        this.type = type;
+        this.clientId = clientId;
+        this.counselorId = counselorId;
+        this.createdAt = createdAt;
+    }
 }
