@@ -33,7 +33,7 @@
   <script>
   import axios from 'axios'
 
-  const API_URL = "http://127.0.0.1:8000"
+  const API_URL = "http://127.0.0.1:8080"
 
   export default {
     name: 'KidBoardCommentList',
@@ -79,7 +79,7 @@
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${API_URL}/backend/${this.KidBoardComment.id}/`,
+          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
@@ -116,7 +116,7 @@
     getCommentUpdate() {
         axios({
           method: 'get',
-          url: `${API_URL}/backend/${this.KidBoardComment.id}/`,
+          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
@@ -132,7 +132,7 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `${API_URL}/backend/${this.KidBoardComment.id}/`,
+          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
           data: {
             content: this.content,
           },
