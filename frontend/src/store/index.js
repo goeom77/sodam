@@ -61,6 +61,9 @@ export default new Vuex.Store({
     GETCOUNSELORINFO(state){
       console.log(state)
     },
+    RESERVECONSULT(state){
+      console.log(state)
+    }
   },
   actions: {
     getKidBoardArticles(context) {
@@ -203,7 +206,7 @@ export default new Vuex.Store({
         }
       })
       .then((res)=>{
-        console.log(res)
+        console.log(res, payload)
         context.commit('RESERVECONSULT')
       })
     }

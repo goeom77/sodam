@@ -11,7 +11,7 @@
       
       <div class="text--primary">
         <h3>최근 상담 일자 :</h3><br>
-        <h3>또 뭐 넣지</h3>
+        <h3>{{ this.sessionInfo.clientId }}</h3>
         <h3>뭐든 넣겠찌 뭐 </h3>
       </div>
     </v-card-text>
@@ -29,7 +29,10 @@
 
 <script>
 export default {
-  name:'ClientManageDetail'
+  name:'ClientManageDetail',
+  props:{
+    sessionInfo:Object
+  }
 }
 </script>
 
