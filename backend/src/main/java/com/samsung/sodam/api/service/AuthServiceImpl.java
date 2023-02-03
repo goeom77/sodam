@@ -208,6 +208,10 @@ public class AuthServiceImpl implements AuthService{
         return response;
     }
 
+    @Override
+    public void logout(String id) {
+        refreshTokenRedisRepository.deleteById(id);
+    }
 
 
 }

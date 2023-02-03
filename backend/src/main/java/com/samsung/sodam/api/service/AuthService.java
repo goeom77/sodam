@@ -27,6 +27,7 @@ public interface AuthService {
      * @return
      * */
     AuthCommonResponse login(AuthCommonRequest request, Boolean isKakaoLogin);
+    void logout(String id);
 
     void validateDuplicateId(String id);
 

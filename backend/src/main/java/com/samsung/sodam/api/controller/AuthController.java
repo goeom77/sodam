@@ -95,6 +95,7 @@ public class AuthController {
                 if (jwtTokenProvider.validateToken(token)) {
                     System.out.println("******************************");
                     id = jwtTokenProvider.getUserId(token);
+                    authService.logout(id);
                 }
             } else {
                 log.debug("JWT Token does not begin with Bearer String");
