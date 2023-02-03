@@ -117,7 +117,7 @@ export default {
       const clientId = this.clientId
       const consultType = this.consultType
       const content = this.content
-      const counselorId = this.counselorId
+      const counselorId = this.counselorData.id
       const dueDate = this.dueDate
       const email = this.email
       const gender = this.gender
@@ -139,7 +139,6 @@ export default {
         tel: tel
       }
       this.$store.dispatch('reserveConsult', payload)
-      
     },
   },
 }
