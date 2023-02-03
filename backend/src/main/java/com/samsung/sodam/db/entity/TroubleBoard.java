@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class TroubleBoard extends BaseTime {
     private String content;
 
     @Column
-    @ColumnDefault("0")
     private Integer views;
 
     @Column
@@ -47,5 +45,6 @@ public class TroubleBoard extends BaseTime {
         this.title = title;
         this.content = content;
         this.clientId = clientId;
+        this.views = 0;
     }
 }

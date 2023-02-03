@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
+import com.samsung.sodam.api.response.TroubleResponse;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.TroubleBoard;
 import com.samsung.sodam.db.entity.TroubleComment;
@@ -30,12 +31,12 @@ public class TroubleServiceImpl implements TroubleService {
 
 
     @Override
-    public Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable) {
-        return customRepository.getAllTroubleList(userId, searchWord, pageable);
+    public Page<TroubleResponse> getAllTroubleList(String searchWord, Pageable pageable) {
+        return customRepository.getAllTroubleList(searchWord, pageable);
     }
 
-    public Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable) {
-        return customRepository.getTroubleList(userId, category, searchWord, pageable);
+    public Page<TroubleResponse> getTroubleList(String category, String searchWord, Pageable pageable) {
+        return customRepository.getTroubleList(category, searchWord, pageable);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class TroubleServiceImpl implements TroubleService {
     }
 
     @Override
-    public Page<TroubleOneResponse> getMyTroubleList(String clientId, Pageable pageable) {
+    public Page<TroubleResponse> getMyTroubleList(String clientId, Pageable pageable) {
 
         return customRepository.getMyTroubleList(clientId, pageable);
     }
