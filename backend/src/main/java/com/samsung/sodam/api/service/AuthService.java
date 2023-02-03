@@ -7,6 +7,7 @@ import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Member;
+import com.samsung.sodam.jwt.TokenDto;
 
 
 public interface AuthService {
@@ -54,4 +55,5 @@ public interface AuthService {
 
     public void updatePassword(String id, String pw);
 
+    TokenDto reissue(String refreshToken);
 }

@@ -39,4 +39,9 @@ public class TestLoginController {
         System.out.println("============================");
         return "/admin.html";
     }
+
+    @GetMapping(value = "/user/info")
+    public String info() {
+        return "/user.html";
+    }
 }
