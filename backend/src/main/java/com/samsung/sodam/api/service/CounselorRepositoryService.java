@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.ConsultApplicantRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
+import com.samsung.sodam.api.request.SetStateRequest;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,6 @@ public class CounselorRepositoryService {
     @Autowired
     SessionRepository sessionRepository;
     CounselorRepository repository;
-    ReviewRepository reviewRepository;
     ScheduleRepository scheduleRepository;
 
     ApplicantRepository applicantRepository;
@@ -44,9 +44,9 @@ public class CounselorRepositoryService {
         return repository.getById(id);
     }
 
-    public List<Review> getReviews(String id) {
-        return reviewRepository.findAllByClientId(id);
-    }
+//    public List<Review> getReviews(String id) {
+//        return reviewRepository.findAllByClientId(id);
+//    }
 
     public Page<Client> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable);
@@ -72,6 +72,10 @@ public class CounselorRepositoryService {
     public Integer makeSession(ConsultSession session) {
         ConsultSession newSession = sessionRepository.save(session);
         return newSession.getId();
+    }
+
+    public List<ConsultSession> getMySession(String counselorId){
+        return sessionRepository.findByCounselorId(counselorId);
     }
 
     public ConsultSchedule makeNewSchedule(ConsultSchedule schedule) {
@@ -117,6 +121,18 @@ public class CounselorRepositoryService {
                 .build();
 
         return applicantRepository.save(applicant);
+    }
+
+    /**
+     * @param request
+     * @return applicant : 수락/거절할 상담요청
+     * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
+     */
+    @Transactional
+    public void setApplicationState(SetStateRequest request){
+        ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
+        session.setStatus(request.getState());
+        sessionRepository.save(session);
     }
 
 
