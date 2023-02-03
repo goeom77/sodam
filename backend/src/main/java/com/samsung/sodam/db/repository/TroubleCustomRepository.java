@@ -5,10 +5,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
-import com.samsung.sodam.api.response.QTroubleCommentResponse;
-import com.samsung.sodam.api.response.QTroubleOneResponse;
-import com.samsung.sodam.api.response.TroubleCommentResponse;
-import com.samsung.sodam.api.response.TroubleOneResponse;
+import com.samsung.sodam.api.response.*;
 import com.samsung.sodam.db.entity.TroubleComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,10 +28,10 @@ public class TroubleCustomRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable) {
+    public Page<TroubleResponse> getAllTroubleList(String searchWord, Pageable pageable) {
 
-        List<TroubleOneResponse> list = queryFactory
-                .select(new QTroubleOneResponse(
+        List<TroubleResponse> list = queryFactory
+                .select(new QTroubleResponse(
                         troubleBoard.id,
                         troubleBoard.category,
                         troubleBoard.title,
@@ -42,11 +39,7 @@ public class TroubleCustomRepository {
                         troubleBoard.clientId,
                         troubleBoard.views,
                         troubleBoard.createdAt,
-                        troubleBoard.comments.size(),
-                        JPAExpressions
-                                .selectFrom(troubleBoard)
-                                .where(troubleBoard.clientId.eq(userId))
-                                .exists()
+                        troubleBoard.comments.size()
                 ))
                 .from(troubleBoard)
                 .where(containSearch(searchWord))
@@ -58,10 +51,10 @@ public class TroubleCustomRepository {
         return new PageImpl<>(list, pageable, list.size());
     }
 
-    public Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable) {
+    public Page<TroubleResponse> getTroubleList(String category, String searchWord, Pageable pageable) {
 
-        List<TroubleOneResponse> list = queryFactory
-                .select(new QTroubleOneResponse(
+        List<TroubleResponse> list = queryFactory
+                .select(new QTroubleResponse(
                         troubleBoard.id,
                         troubleBoard.category,
                         troubleBoard.title,
@@ -69,11 +62,7 @@ public class TroubleCustomRepository {
                         troubleBoard.clientId,
                         troubleBoard.views,
                         troubleBoard.createdAt,
-                        troubleBoard.comments.size(),
-                        JPAExpressions
-                                .selectFrom(troubleBoard)
-                                .where(troubleBoard.clientId.eq(userId))
-                                .exists()
+                        troubleBoard.comments.size()
                 ))
                 .from(troubleBoard)
                 .where(eqCategory(category), containSearch(searchWord))
@@ -160,9 +149,9 @@ public class TroubleCustomRepository {
                 .execute();
     }
 
-    public Page<TroubleOneResponse> getMyTroubleList(String clientId, Pageable pageable) {
-        List<TroubleOneResponse> list = queryFactory
-                .select(new QTroubleOneResponse(
+    public Page<TroubleResponse> getMyTroubleList(String clientId, Pageable pageable) {
+        List<TroubleResponse> list = queryFactory
+                .select(new QTroubleResponse(
                         troubleBoard.id,
                         troubleBoard.category,
                         troubleBoard.title,
@@ -170,11 +159,7 @@ public class TroubleCustomRepository {
                         troubleBoard.clientId,
                         troubleBoard.views,
                         troubleBoard.createdAt,
-                        troubleBoard.comments.size(),
-                        JPAExpressions
-                                .selectFrom(troubleBoard)
-                                .where(troubleBoard.clientId.eq(clientId))
-                                .exists()
+                        troubleBoard.comments.size()
                 ))
                 .from(troubleBoard)
                 .where(troubleBoard.clientId.eq(clientId))
