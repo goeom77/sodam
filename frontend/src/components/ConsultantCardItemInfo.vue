@@ -1,52 +1,67 @@
 <template>
-  <div>
-    <v-container>
-      <div class="ImageTag">
-        <v-card class="d-flex mb-6 wt-surface-variant">
-          <!-- 사진 -->
-          <div class="ma-2 pa-2 me-auto">
-            <img src="{{ counsel.profileImg }}" alt="사진 없음">
-          </div>
-        </v-card>
+  {{ counselorData }}
+  <v-container>
+    <div class="parent">
+      <div class="child1">
+        <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
       </div>
-      
-      <div class="d-flex mb-6 bg-surface-variant">
-        <v-card>
-          <div class="ma-2 pa-2">
-            <!-- 정보  -->
-            <div>
-              {{ counsel.name }}
-              {{ counsel.introduce }}
-              {{ counsel.major }}
-              {{ counsel.career }}
-              {{ counsel.qualification }}
-            </div>
-            <!-- 연락처 -->
-            <div>
-              {{ counsel.email }}
-              {{ counsel.tel }}
-            </div>
-          </div>
-        </v-card>
+      <div class="child2">
+        <span>
+          {{ counselorData.id }} 상담사
+        </span>
+        <h2>
+          {{ counselorData.introduce }}
+        </h2>
+        <h4>
+          {{ counselorData.career }}
+        </h4>
+        
+        <!-- 연락처 -->
+        <h4>
+          <!-- 이모티콘 하나 넣 -->
+          {{ counselorData.tel }}
+          {{ counselorData.email }}
+        </h4>
       </div>
-  
-  
-      </v-container>
     </div>  
+  </v-container>
   </template>
 
 <script>
 export default {
   name:'ConsultantCardItemInfo',
   props:{
-    counsel: Object
+    counselorData:Object
   }
 }
 </script>
 
 <style>
-.ImageTag{
-  width:500px;
-  height:100%
+.parent {
+    display: flex;
 }
+.child1 {
+    flex: 3;
+}
+.child2 {
+    flex: 9;
+}
+
+
+.ImageTag{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 100%;
+  height: auto;
+}
+
+.Info-body {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 1rem;
+}
+
+
 </style>

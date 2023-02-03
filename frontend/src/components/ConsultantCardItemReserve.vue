@@ -42,7 +42,6 @@
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
-        :format="customFormatter"
       />
     </div>
   </div>
@@ -51,6 +50,7 @@
 
 <script>
 import Datepicker from 'vue3-datepicker';
+import {ref} from 'vue'
 
 export default {
   name:'ConsultantCardItemReserve',
@@ -58,6 +58,7 @@ export default {
     Datepicker
   },
   data(){
+    const inputFormat = ref('yyyy-MM-dd');
     return{
       age:null,
       consultType:null,
@@ -89,6 +90,7 @@ export default {
       name:null,
       state:null,
       tel:null,
+      inputFormat:inputFormat,
     }
   },
   methods:{
@@ -96,10 +98,11 @@ export default {
       console.log(this.age,this.clientId,this.consultType,this.content,this.counselorId)
       console.log(this.date,this.email,this.gender,this.name,this.state,this.tel)
     },
-    customFormatter(date){
-      return moment(date).format('YYYY-MM-DD');
-    }
+
   },
+  // created(){
+  //   this.customFormatter()
+  // }
 }
 </script>
 

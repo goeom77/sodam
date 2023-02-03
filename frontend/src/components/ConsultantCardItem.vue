@@ -2,7 +2,7 @@
   <div>
     <div>
       <ConsultantCardItemInfo
-      :counsel="counsel"/>
+      :counselorData="this.counselorData"/>
     </div>
   </div>
     
@@ -19,13 +19,14 @@
         <v-window v-model="tab">
           <v-window-item
           value="one"
+          style="height:1500px"
           >
-          <ConsultantCardItemReserve
-          :counsel="counsel"/>
+          <ConsultantCardItemReserve/>
           </v-window-item>
 
           <v-window-item  
             value="two"
+            style="height:1500px"
           >
           <ConsultantCardItemReview/>
           </v-window-item>
@@ -38,7 +39,9 @@
 import ConsultantCardItemReserve from '@/components/ConsultantCardItemReserve.vue'
 import ConsultantCardItemReview from '@/components/ConsultantCardItemReview.vue'
 import ConsultantCardItemInfo from '@/components/ConsultantCardItemInfo.vue'
+import axios from 'axios'
 
+const API_URL = 'http://127.0.0.1:8080'
 export default {
     name:'ConsultantCardItem',
     components: {
@@ -46,20 +49,37 @@ export default {
       ConsultantCardItemReview,
       ConsultantCardItemInfo
     },
+    props:{
+      id:String
+    },
     data(){
-      const id = this.$route.params.id
       return{
-        id:id
+        tab:null,
+        counselorId:null,
+        counselorData:[],
       }
-    }
-    // data(){
-    //   const counselString = this.$route.params.dataCounselor;
-    //   const counsel = JSON.parse(counselString);
-    //   return{
-    //     counsel: counsel,
-    //     tab:null
-    //   }
-    // },
+    },
+    methods:{ 
+      changePropstoData(){
+        this.counselorId = this.id
+      },  
+      getCounselorData(){
+        axios({
+          method:'get',
+          url:`${API_URL}/api/counselor/${this.id}`,
+          data:{
+            id:this.counselorId
+          }
+        })
+        .then(res=>{
+          this.counselorData = res.data
+        })
+      }
+    },
+    created() {
+      this.changePropstoData()
+      this.getCounselorData()
+  }
 }
 </script>
 

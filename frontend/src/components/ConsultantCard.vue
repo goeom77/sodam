@@ -1,4 +1,5 @@
 <template>
+  {{ counselor }}
   <v-card
     max-width="400"
     class="mx-auto"
@@ -35,7 +36,7 @@
               outlined
               rounded
               text
-              @click="moveTo"
+              @click="moveTo(counselor.id)"
             >
               Button
             </v-btn>
@@ -47,31 +48,6 @@
 </v-container>
   </v-card>
 
-
-<!-- 
-    <v-list-item three-line>
-      <v-list-item-content>
-\
-        <v-list-item-title class="text-h5 mb-1">
-          {{ this.counselor.name}}
-        </v-list-item-title>
-
-        <v-list-item-subtitle>
-          {{ this.counselor.introduce }}
-          <br>
-          {{ this.counselor.major }}
-
-        </v-list-item-subtitle>
-      </v-list-item-content>
-
-      <v-list-item-avatar
-        tile
-        size="80"
-        color="grey"
-      ></v-list-item-avatar>
-    </v-list-item>
-
-  </v-card> -->
 </template>
 
 <script>
@@ -80,28 +56,12 @@
 
 export default {
   name: 'ConsultantCard',
-  // setup() {
-  //   const router = useRouter()
-    
-  //   const moveTo = (dataCounselor) => {
-  //     router.push({
-  //       name: 'consultantcarditem',
-  //       params: {
-  //         dataCounselor: JSON.stringify(dataCounselor)
-  //       }
-  //     })
-  //   }
-  //   return {
-  //     moveTo
-  //   }
-  // },
-
   props: {
     counselor: Object,
   },
   methods:{
     moveTo(){
-      this.$router.push({ name: 'consultantcarditem' })
+      this.$router.push({ name: 'consultantcarditem', params: {id: this.counselor.id} })
     },
 
   },  
