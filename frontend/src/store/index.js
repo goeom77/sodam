@@ -1,4 +1,3 @@
-
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '@/router'
@@ -12,6 +11,10 @@ export default new Vuex.Store({
     KidBoardarticles: [],
     HistoryViewarticles: [],
     token:null,
+    payload:{
+      id: null,
+      password: null,
+    },
     userSignupData:{
       id:null,
       password:null,
@@ -25,6 +28,9 @@ export default new Vuex.Store({
   getters: {
     isLogin(state) {
       return state.token ? true : false
+    },
+    getUserData(state) {
+      return state.userSignupData
     },
 
   },
@@ -41,7 +47,7 @@ export default new Vuex.Store({
     },
     SET_USER_DATA(state, payload) {
       state.payload = {
-        username: payload.username,
+        id: payload.id,
         password: payload.password
       }
     },
@@ -116,6 +122,7 @@ export default new Vuex.Store({
         .then((res)=>{
           console.log(res)
           context.commit('SAVE_TOKEN', res.data)
+          context.commit('SET_USER_DATA', payload)
         })
         .then(res=>{
           router.push({ name: 'home' })
@@ -172,6 +179,32 @@ export default new Vuex.Store({
 
     logOut(context){
       context.commit('DELETE_TOKEN')
+    },
+    reserveConsult(context, payload){
+      axios({
+        method:'POST',
+        url: `${API_URL}/api/consultApplicant`,
+        data:{
+          age: payload.age,
+          clientId: payload.clientId,
+          consultType: payload.consultType,
+          content: payload.content,
+          counselorId: payload.counselorId,
+          dueDate: payload.dueDate,
+          email: payload.email,
+          gender: payload.gender,
+          name: payload.name,
+          state: payload.state,
+          tel: payload.tel
+        },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+      .then((res)=>{
+        console.log(res)
+        context.commit('RESERVECONSULT')
+      })
     }
   },
   modules: {
