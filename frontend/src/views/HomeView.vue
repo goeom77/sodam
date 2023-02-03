@@ -14,7 +14,6 @@
       </div>
     </div>
     <ConsultantList/>
-
   </div>
 </template>
 

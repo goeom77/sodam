@@ -6,7 +6,6 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import "sweetalert2/dist/sweetalert2.min.css";
 
-
 loadFonts()
 
 createApp(App).use(router)

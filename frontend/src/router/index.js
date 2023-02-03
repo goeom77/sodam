@@ -74,11 +74,11 @@ const routes = [
   },
   {
     path: '/KidBoard',
-    name: 'KidBoard',
+    name: 'child',
     component: KidBoard
   },
   {
-    path: '/KidBoardDetail/:postId',
+    path: '/KidBoardDetail/:postId?',
     name: 'KidBoardDetail',
     component: KidBoardDetail,
     // props: true
@@ -126,9 +126,9 @@ const routes = [
     component: EditInformation
   },
   {
-    path: '/KidBoardCreate',
+    path: '/KidBoardCreate/:postId?',
     name: 'KidBoardCreate',
-    component: KidBoardCreate
+    component: KidBoardCreate,
   },
   {
     path: '/AnnounceCreate',
@@ -151,10 +151,11 @@ const routes = [
     component: VideoPage
   },
   {
-    path: '/consultantcarditem',
+    path: '/consultantcarditem/:id?',
     name: 'consultantcarditem',
-    component: ConsultantCardItem
-  }
+    component: ConsultantCardItem,
+    props:true
+  },
 ]
 
 const router = createRouter({

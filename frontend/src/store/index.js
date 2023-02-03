@@ -20,8 +20,7 @@ export default new Vuex.Store({
       email:null,
       gender:null,
       enterprise_id:null,
-    },
-    
+    }, 
   },
   getters: {
     isLogin(state) {
@@ -55,14 +54,13 @@ export default new Vuex.Store({
     },
     GETCOUNSELORINFO(state){
       console.log(state)
-    }
-
+    },
   },
   actions: {
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/trouble/list/child`,
+        url: `${API_URL}/api/trouble/list/child`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -70,9 +68,10 @@ export default new Vuex.Store({
         .then((res) => {
           // console.log(res, context)
           // console.log(res.data)
+          context.commit('GET_KIDBOARDARTICLES', res.data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log('게시글이 존재하지 않습니다.')
         })
     },
     getHistoryViewArticles(context) {
@@ -94,11 +93,8 @@ export default new Vuex.Store({
     },
     getCounselorInfo(context) {
       axios({
-        method: 'get',
+        method: 'post',
         url: `${API_URL}/api/client/`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        }
       })
         .then((res) => {
           console.log(res, context)
@@ -145,7 +141,6 @@ export default new Vuex.Store({
         }
       })
         .then((response)=>{
-          console.log(response)
           context.commit('SAVE_TOKEN',response.data.key)
         })
     },
@@ -155,7 +150,6 @@ export default new Vuex.Store({
     },
 
     signupCounselor(context, payload){
-      console.log(payload)
       axios({
         method:'post',
         url: `${API_URL}/api/auth/signup/counselor`,
@@ -170,15 +164,14 @@ export default new Vuex.Store({
         }
       })
       .then((res)=>{
-        console.log(res)
         context.commit('SAVE_TOKEN',res)
       })
       .catch((res)=>{
         console.log(res)
       })
     },
+
     logOut(context){
-      console.log(this.state.token)
       context.commit('DELETE_TOKEN')
     }
   },
