@@ -60,7 +60,7 @@ export default new Vuex.Store({
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/trouble/list/child`,
+        url: `${API_URL}/api/trouble/list/child`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -68,9 +68,10 @@ export default new Vuex.Store({
         .then((res) => {
           // console.log(res, context)
           // console.log(res.data)
+          context.commit('GET_KIDBOARDARTICLES', res.data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log('게시글이 존재하지 않습니다.')
         })
     },
     getHistoryViewArticles(context) {

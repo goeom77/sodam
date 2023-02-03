@@ -22,7 +22,7 @@
         <form @submit.prevent="KidBoardcreateArticle">
           <div style="text-align:start; padding: 10px;">
             <label for="category">대상</label>
-            <select id="worryselect" v-model="person" >
+            <select id="worryselect" v-model="category" >
               <option 
                 v-for="(item, index) in selectList"
                 :key="index"
@@ -41,7 +41,10 @@
           </div>
           <input type="submit" id="submitno" value="취소">
           <input type="submit" id="submityes" value="등록">
+          <!-- <button @click="postId !== undefined ? KidBoardarticleUpdate() : KidBoardcreateArticle()">{{ postId !== undefined ? "수정" : "작성" }}</button> -->
+          
         </form>
+        <button @click="KidBoardarticleUpdate">수정</button>
       </div>
     </div>
   </div>
@@ -49,43 +52,85 @@
 
 <script>
 import axios from 'axios'
-
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = 'http://127.0.0.1:8080'
 
 
 export default {
   name: 'KidBoardCreate',
-  data() {
-    // 추가
-    // const id = this.$route.params.contentId;
 
+
+
+
+
+
+
+  // setup() {
+  //   const articledata = null
+  //   const route = useRoute()
+  //   if (route.params.KidBoardarticle) {
+  //     articledata = JSON.parse(route.params.KidBoardarticle)
+  //   }
+  //   return {
+  //     articledata
+  //   }
+  // },
+
+
+
+
+
+
+
+  data() {
+    // const postId  = this.$route.params.postId;
     return {
       // 추가
-      // KidBoardarticle: KidBoardarticle,
-      // id: id,
-      // person: id !== undefined ? KidBoardarticle[id].person : null, 
-      // title: id !== undefined ? KidBoardarticle[id].title : null, 
-      // content: id !== undefined ? KidBoardarticle[id].content : null, 
+      // articledata : articledata,
+      // category: contentId !== undefined ? articledata[contentId].category : null, 
+      // title: contentId !== undefined ? articledata[contentId].title : null, 
+      // content: contentId !== undefined ? articledata[contentId].content : null, 
+      // 여기까지
+      // category: contentId !== undefined ? articledata[contentId].category : null, 
+      // title: contentId !== undefined ? articledata[contentId].title : null, 
+      // content: contentId !== undefined ? articledata[contentId].content : null, 
 
-      person: null,
+      // data: data,
+      // postId: postId,
+      // category: postId !== undefined ? data[postId].category : "", 
+      // title: postId !== undefined ? data[postId].title : "",
+      // content: postId !== undefined ? data[postId].content : "",
+
+      category : null,
       title: null,
       content: null,
+      clientId: "id",
+      
+
       selectList: [
-        { name: "아동", value: "KidBoard" },
-        { name: "청소년", value: "TeenBoard" },
-        { name: "성인", value: "AdultBoard" },
-        { name: "부부", value: "CoupleBoard" },
-        { name: "노년", value: "OldBoard" },
-        { name: "기타", value: "GuitarBoard" },
+        { name: "아동", value: "child" },
+        { name: "청소년", value: "teenager" },
+        { name: "성인", value: "adult" },
+        { name: "부부", value: "couple" },
+        { name: "노년", value: "elder" },
+        { name: "기타", value: "other" },
       ],
     }
   },
   methods: {
+
     KidBoardcreateArticle() {
-      const person = this.person
+      
+      const category  = this.category 
       const title = this.title
       const content = this.content
-      if (!person) {
+      const clientId = this.clientId
+//  ㅁㄴㅇ
+      // const contentId = this.contentId
+
+      // const data = this.data
+// ㅁㄴㅇㅁㄴ
+
+      if (!category ) {
         alert('대상을 선택해주세요')
         return
       } else if (!title) {
@@ -95,25 +140,85 @@ export default {
         alert('내용을 입력해주세요')
         return
       }
+
+        axios({
+          method: 'post',
+          url: `${API_URL}/api/trouble/writing`,
+          data: {
+            category : category ,
+            title: title,
+            content: content,
+            clientId: clientId,
+  ///ㅁㄴㅇ
+            // contentId: contentId,
+            // data: data,
+  //ㅁㄴㅇ
+
+          },
+          headers: {
+            Authorization: `Token ${this.$store.state.token}`
+          }
+        })
+          .then((res) => {
+            console.log('여긴 안에러')
+            // console.log(data)
+            // this.$router.push({ 
+            //   name: 'KidBoardDetail', 
+            //   params: { postId: this.$route.params.postId } })
+            this.$router.push({ 
+              name: category  })
+          })
+          .catch((err) => {
+            console.log('여긴 에러')
+            console.log(err)
+          })
+    },
+
+ 
+    // update() {
+    //         data[this.postId].category = this.category
+    //         data[this.postId].title = this.title
+    //         data[this.postId].content = this.content
+    //         this.$router.push({
+    //             path:"/"
+    //         })
+    //     }
+
+
+
+
+
+
+
+
+    KidBoardarticleUpdate() {
+      const category  = this.category 
+      const title = this.title
+      const content = this.content
+
       axios({
-        method: 'post',
-        url: `${API_URL}/backend/`,
+        method: 'put',
+        url: `${API_URL}/api/trouble/${this.$route.params.postId}`,
         data: {
-          person: person,
           title: title,
           content: content,
+          category: category,
         },
-        headers: {
-          Authorization: `Token ${this.$store.state.token}`
+        headers: { 
+            Authorization: `Token ${this.$store.state.token}`
         }
       })
-        .then((res) => {
-          console.log(res)
-          this.$router.push({ name: {person} })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      .then(() => {
+        console.log('됨')
+        this.$router.push({ 
+          name: 'KidBoardDetail', 
+          params: { postId: this.$route.params.postId } })
+        // this.updateStatus = false
+      })
+      .catch((err) => {
+        console.log('안됨')
+        console.log(err)
+      })
     }
   }
 }

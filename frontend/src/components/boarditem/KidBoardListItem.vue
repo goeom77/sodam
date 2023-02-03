@@ -4,12 +4,12 @@
       <h5>{{ KidBoardarticle.postId }}</h5>
     </div>
     <div>
+      
       <div>
         <router-link 
           style="color:black" 
           :to="{ 
             name: 'KidBoardDetail', 
-            // params: { postId: KidBoardarticle.postId } 
             params: { postId: KidBoardarticle.postId } 
           }"
         >
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div>
-      <h3>조회수, 답변 수</h3>
+      <h3>{{ KidBoardarticle.views }}, {{ KidBoardarticle.commentCount }}</h3>
     </div>
     <hr>
 
@@ -40,7 +40,7 @@ export default {
     // clickList() {
     //   this.$router.push({
     //     name: "KidBoardDetail",
-    //     params: { postId: KidBoardarticle.postId },
+    //     params: { postId: this.KidBoardarticle.postId },
     //   });
     // },
   }
