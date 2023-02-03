@@ -151,10 +151,11 @@ const routes = [
     component: VideoPage
   },
   {
-    path: '/consultantcarditem',
+    path: '/consultantcarditem/:id?',
     name: 'consultantcarditem',
-    component: ConsultantCardItem
-  }
+    component: ConsultantCardItem,
+    props:true
+  },
 ]
 
 const router = createRouter({

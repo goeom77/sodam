@@ -21,33 +21,37 @@
 
     <div id="navMypage">
       <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
-      <v-btn @click="logIn">Login</v-btn>
-      <v-btn @click="logOut" v-if="isLogin===true">Logout</v-btn>
-      <router-link to="/Notice">마이 페이지</router-link>
-      <router-link to="/Checkeditinformation">정보 수정</router-link>
+      <div v-if="isLogin===true">
+        <!-- <h4>{{ this.name }}님</h4> -->
+        <v-btn @click="logOut">Logout</v-btn>
+        <router-link to="/Notice">마이 페이지</router-link>
+        <router-link to="/Checkeditinformation">정보 수정</router-link>
+      </div>
     </div>
   </nav>
   <router-view /> 
 </template>
 
 <script>
+import axios from 'axios'
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const API_URl = 'http://127.0.0.1:8080'
 export default {
   name:'App',
-  data: () => ({
-    projectlogo : require('@/assets/projectlogoperpect.png')
-  }),
+  data(){
+    return{
+      projectlogo : require('@/assets/projectlogoperpect.png'),
+    }
+  },
+
   methods: {
     logOut(){
-      console.log(this.isLogin)
       axios({
-        method: 'post',
-        url: `${API_URl}/logout/{id}`,
+        method: 'get',
+        url: `${API_URl}/logout/id`,
         headers: {
-          Authorization: `Token ${ this.$store.state.token}`
+          Authorization: `Token ${ this.$store.state.token }`
         }
-        
       })
       .then(
         this.$store.dispatch('logOut')
