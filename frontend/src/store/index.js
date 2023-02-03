@@ -62,7 +62,7 @@ export default new Vuex.Store({
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/trouble/list/child`,
+        url: `${API_URL}/api/trouble/list/child`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }

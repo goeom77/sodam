@@ -3,16 +3,16 @@
       <div v-if="!this.updateStatus" id="comment_container">
         <div class="comment-detail">
       <div>
-        <router-link style="text-decoration: none; color:gray; font-size:13px;" v-if="username" :to="{name: 'ProfileView', params: {username: this.username}}">
+        <!-- <router-link style="text-decoration: none; color:gray; font-size:13px;" v-if="counselorName" :to="{name: 'ProfileView', params: {counselorName: this.counselorName}}">
         <img id="comment-img" :src="imgSrc">
-          {{ this.username }}
-          </router-link>
+          {{ this.counselorName }}
+          </router-link> -->
       ┖ {{ KidBoardComment.content }}
       </div>
       <div style="margin-top:3px;">
         
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.comment_user" @click="getCommentUpdate">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.comment_user" @click="deleteComment">삭제</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="deleteComment">삭제</a>
       </div>
     </div>
       <hr style="margin:0px;">
@@ -56,30 +56,30 @@
       index: Number,
       limit: Number,
     },
-    created() {
-      this.getUserName()
-    },
+    // created() {
+    //   this.getUserName()
+    // },
     methods: {
-      getProfileImage() {
-        axios({
-          method: 'get',
-          url: `${API_URL}/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
-          headers: { 
-            'Content-Type': 'multipart/form-data',
-                Authorization: `Token ${this.$store.state.token}`
-              },
-          })
-          .then((res) => {
-            this.profileImageUrl=`${API_URL}${res.data.profile_image}`
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      },
+      // getProfileImage() {
+      //   axios({
+      //     method: 'get',
+      //     url: `${API_URL}/api/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
+      //     headers: { 
+      //       'Content-Type': 'multipart/form-data',
+      //           Authorization: `Token ${this.$store.state.token}`
+      //         },
+      //     })
+      //     .then((res) => {
+      //       this.profileImageUrl=`${API_URL}${res.data.profile_image}`
+      //     })
+      //     .catch((err) => {
+      //       console.log(err)
+      //     })
+      // },
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
+          url: `${API_URL}/api/trouble/${this.KidBoardComment.commentId}/`,
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
@@ -94,7 +94,7 @@
       getUserName() {
         axios({
           method: 'post',
-          url: `${API_URL}/accounts/wantname/`,
+          url: `${API_URL}/api/counselor/${this.KidBoardComment.counselorId}`,
           data: {
             userid: this.KidBoardComment.comment_user
           },
@@ -106,9 +106,9 @@
           this.username = res.data.username
           this.userid = res.data.userid
         })
-        .then(() => {
-          this.getProfileImage()
-        })
+        // .then(() => {
+        //   this.getProfileImage()
+        // })
         .catch((err) => {
           console.log(err)
         })

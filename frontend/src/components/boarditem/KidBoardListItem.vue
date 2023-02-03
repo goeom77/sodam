@@ -6,7 +6,7 @@
     <div>
       
       <div>
-        <!-- <router-link 
+        <router-link 
           style="color:black" 
           :to="{ 
             name: 'KidBoardDetail', 
@@ -14,8 +14,8 @@
           }"
         >
           {{ KidBoardarticle.title }}
-        </router-link> -->
-        <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button>
+        </router-link>
+        <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
         <p>{{ KidBoardarticle.clientId }}  {{ KidBoardarticle?.createdAt }}</p>
@@ -37,12 +37,12 @@ export default {
     KidBoardarticle: Object,
   },
   methods: {
-    clickList() {
-      this.$router.push({
-        name: "KidBoardDetail",
-        params: { postId: this.KidBoardarticle.postId },
-      });
-    },
+    // clickList() {
+    //   this.$router.push({
+    //     name: "KidBoardDetail",
+    //     params: { postId: this.KidBoardarticle.postId },
+    //   });
+    // },
   }
 }
 </script>

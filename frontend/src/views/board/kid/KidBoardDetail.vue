@@ -21,7 +21,7 @@
       @get-KidBoardComments="getKidBoardComments"
     /> -->
     <KidBoardCommentList
-      v-for="(KidBoardComment, index) in commentList"
+      v-for="(KidBoardComment, index) in KidBoardarticle?.commentList"
       :key="KidBoardComment.id"
       :KidBoardComment="KidBoardComment"
       :index="index"

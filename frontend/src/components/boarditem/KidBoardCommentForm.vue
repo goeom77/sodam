@@ -44,9 +44,10 @@ export default {
             url: `${API_URL}/api/trouble/comment`,
             data: {
                 content: content,
-                boardId: this.KidBoardarticle.postId,
+                boardId: this.KidBoardarticle?.postId,
+                counselorId: 'counselor2'
             },
-            headers: { 
+            headers: {
             Authorization: `Token ${this.$store.state.token}`
         }
         })
