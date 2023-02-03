@@ -1,10 +1,10 @@
 FROM node:16.15.0 as build-stage
+RUN npm install -g http-server
 WORKDIR /var/jenkins_home/workspace/deploytest/frontend
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm install --save-dev @babel/preset-env
 RUN npm run build
-EXPOSE 7000
-CMD ["nginx", "-g","daemon off;"]
+EXPOSE 8180
+CMD [ "http-server","-p","8180", "dist" ]
 
