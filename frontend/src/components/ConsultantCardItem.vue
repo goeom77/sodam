@@ -21,7 +21,8 @@
           value="one"
           style="height:1500px"
           >
-          <ConsultantCardItemReserve/>
+          <ConsultantCardItemReserve
+          :counselorData="this.counselorData"/>
           </v-window-item>
 
           <v-window-item  
