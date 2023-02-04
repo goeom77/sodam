@@ -1,6 +1,7 @@
 package com.samsung.sodam.db.entity;
 
 import com.querydsl.core.annotations.QueryProjection;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,25 +24,31 @@ public class Review {
 
     @Column(length = 500)
     String contents;
-    Double starts;
+    @ApiModelProperty(required = true)
+    Double stars;
     @Column(name = "past_count")
-    Integer pastCount;
+    Integer pastCount=0;
 
-    String type;
+    String type="ALL";
     @Column(name = "client_id")
+    @ApiModelProperty(required = true)
     String clientId;
 
     @Column(name = "counselor_Id")
+    @ApiModelProperty(required = true)
     String counselorId;
 
     @Column(name = "created_at")
     LocalDateTime createdAt;
 
+    @ApiModelProperty(required = true)
+    String title;
+
     @QueryProjection
-    public Review(Long id, String contents, Double starts, Integer pastCount, String type, String clientId, String counselorId, LocalDateTime createdAt) {
+    public Review(Long id, String contents, Double stars, Integer pastCount, String type, String clientId, String counselorId, LocalDateTime createdAt) {
         this.id = id;
         this.contents = contents;
-        this.starts = starts;
+        this.stars = stars;
         this.pastCount = pastCount;
         this.type = type;
         this.clientId = clientId;

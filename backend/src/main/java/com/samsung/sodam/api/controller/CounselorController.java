@@ -7,6 +7,7 @@ import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -140,7 +141,7 @@ public class CounselorController {
     //내가 작성한 후기 목록 보기
     @GetMapping("/review/my")
     @ApiOperation(value = "내가 작성한 후기 목록 보기")
-    public List<Review> getReviews(String clientId) {
+    public List<Review> getReviews(@NotNull String clientId) {
         return reviewService.getMyReview(clientId);
     }
 
