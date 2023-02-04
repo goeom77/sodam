@@ -8,6 +8,7 @@ import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -106,12 +108,19 @@ public class CounselorController {
         return service.getAllClients(pageable);
     }
 
-    @GetMapping("/client/{consultantId}/{keyword}")
+    @GetMapping(value = { "/myclient/{consultantId}"})
     @ApiOperation(value = "고객 목록 조회")
     //고객목록
-    public Page<ClientListResponse> getClients(@PathVariable String consultantId, @PathVariable(required = false) String keyword) {
-        return clientService.getMyClients(consultantId, keyword, Pageable.ofSize(20));
+    public Page<ClientListResponse> getClients(@PathVariable String consultantId) {
+        return clientService.getMyClients(consultantId, Pageable.ofSize(20));
     }
+
+//    @GetMapping(value = { "/client/{consultantId}"})
+//    @ApiOperation(value = "고객 목록 조회")
+//    //고객목록
+//    public Page<ClientListResponse> getClients(@PathVariable String consultantId, @PathVariable(name = "keyword") Optional<String> keyword) {
+//        return clientService.getMyClients(consultantId, keyword.orElse(""), Pageable.ofSize(20));
+//    }
 
     //일정 상세 정보
 

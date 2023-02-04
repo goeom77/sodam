@@ -40,24 +40,24 @@ public class ClientResponseCustomRepositoryImpl implements ClientResponseCustomR
         return new PageImpl<>(list, pageable, list.size());
     }
 
-    @Override
-    public Page<ClientListResponse> getClientList(String userId, @Nullable String searchWord, Pageable pageable) {
-        List<ClientListResponse> list = queryFactory
-                .select(new QClientListResponse(
-                        client.id,
-                        client.name,
-                        client.email,
-                        client.tel
-                ))
-                .from(client).join(consultSession).on(client.id.eq(consultSession.clientId))
-                .where(consultSession.counselorId.eq(userId),client.name.like("%"+searchWord+"%"))
-                .distinct()
-                .orderBy(client.id.desc())
-                .fetch();
-
-
-        return new PageImpl<>(list, pageable, list.size());
-    }
+//    @Override
+//    public Page<ClientListResponse> getClientList(String userId, Pageable pageable) {
+//        List<ClientListResponse> list = queryFactory
+//                .select(new QClientListResponse(
+//                        client.id,
+//                        client.name,
+//                        client.email,
+//                        client.tel
+//                ))
+//                .from(client).join(consultSession).on(client.id.eq(consultSession.clientId))
+//                .where(consultSession.counselorId.eq(userId))
+//                .distinct()
+//                .orderBy(client.id.desc())
+//                .fetch();
+//
+//
+//        return new PageImpl<>(list, pageable, list.size());
+//    }
 //    private ClientListResponse getClientListResponse(String clientId) {
 //        if(clientId == null || client.id.equals("")) return null;
 //        return client.id.eq(clientId);
