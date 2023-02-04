@@ -25,6 +25,7 @@ import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
+import ConsultantCardItemReviewCreate from '@/components/ConsultantCardItemReviewCreate.vue'
 
 const routes = [
   {
@@ -154,6 +155,12 @@ const routes = [
     path: '/consultantcarditem/:id?',
     name: 'consultantcarditem',
     component: ConsultantCardItem,
+    props:true
+  },
+  {
+    path: '/consultantcarditemreviewcreate/:id?',
+    name: 'consultantcarditemreviewcreate',
+    component: ConsultantCardItemReviewCreate,
     props:true
   },
 ]

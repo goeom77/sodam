@@ -46,6 +46,7 @@
           <td>
             <v-file-input
             accept="image/*"
+            v-model="this.files"
             label="File input"
           ></v-file-input>
           </td>
@@ -66,11 +67,23 @@ export default {
       school:null,
       major:null,
       is_graduate:null,
+      files: null,
     }
   },
   methods:{
+    clearFile(){
+      if(this.files !== null){
+        this.files = null;
+      }
+    },
+    submit(){
+      const payload = {
+
+      }
+      this.$emit('Education',)
+    },
     checkData(){
-      console.log(this.degree, this.school, this.major, this.is_graduate)
+      console.log(this.degree, this.school, this.major, this.is_graduate,this.files)
     }
   }
 }

@@ -18,7 +18,9 @@
         <router-link to="/Clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
       </div>
     </div>
-
+    <div v-if="isLogin===true">
+      {{ this.$store.state.payload.id }}님 안녕하세요
+    </div>
     <div id="navMypage">
       <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
       <div v-if="isLogin===true">

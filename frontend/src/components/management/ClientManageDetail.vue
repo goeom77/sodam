@@ -3,15 +3,15 @@
     class="mx-auto"
     max-width="344"
   >
-
-    <v-card-text>
-      <p class="text-h4 text--primary">
-        고객 성함
+  <v-card-text>
+    <p class="text-h4 text--primary">
+        {{ this.client }}
+        NAME : 
+        <!-- {{this.client.clientId}} -->
       </p>
       
       <div class="text--primary">
         <h3>최근 상담 일자 :</h3><br>
-        <h3>{{ this.sessionInfo.clientId }}</h3>
         <h3>뭐든 넣겠찌 뭐 </h3>
       </div>
     </v-card-text>
@@ -31,7 +31,20 @@
 export default {
   name:'ClientManageDetail',
   props:{
-    sessionInfo:Object
+    clienData:Object
+  },
+  data(){
+    return{
+      client:null
+    }
+  },
+  methods:{
+    // propsToData(){
+    //   this.client = this.clientData
+    // }
+  },
+  created(){
+    // this.propsToData()
   }
 }
 </script>
