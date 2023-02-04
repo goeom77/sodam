@@ -44,7 +44,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review saved = data.get();
         saved.setContents(review.getContents());
         saved.setType(review.getType());
-        saved.setStarts(review.getStarts());
+        saved.setStars(review.getStars());
 
         return reviewRepository.save(saved);
     }
