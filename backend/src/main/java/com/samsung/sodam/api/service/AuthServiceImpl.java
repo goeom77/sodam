@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -83,23 +82,33 @@ public class AuthServiceImpl implements AuthService{
         refreshToken = refreshToken.substring(7);
         String id = jwtTokenProvider.getUserId(refreshToken);
 
-        //TokenDto tokenDto = jwtTokenProvider.generateTokenByRefreshToken(refreshToken);
-        RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(id).orElseThrow(() -> new NoSuchElementException("user doesn't exist"));
+        // 레디스 설치 후 주석풀기
+//        RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(id).orElseThrow(() -> new NoSuchElementException("user doesn't exist"));
+//
+//        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
+//            Long refreshExpiredTime = redisRefreshToken.getExpiration();
+//            System.out.println(refreshExpiredTime);
+//            TokenDto token = null;
+//
+//            if(refreshExpiredTime < REFRESH_TOKEN_EXPIRE_TIME / 7) {
+//                token = reissueToken(refreshToken, id, true);
+//                refreshTokenRedisRepository.save(new RefreshToken(id, token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME));
+//            }
+//            else token = reissueToken(refreshToken, id, false);
+//
+//            return token;
+//        }
+//        throw new IllegalArgumentException("토큰이 일치하지 않습니다.");
 
-        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
-            Long refreshExpiredTime = redisRefreshToken.getExpiration();
-            System.out.println(refreshExpiredTime);
-            TokenDto token = null;
 
-            if(refreshExpiredTime < REFRESH_TOKEN_EXPIRE_TIME / 7) {
-                token = reissueToken(refreshToken, id, true);
-                refreshTokenRedisRepository.save(new RefreshToken(id, token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME));
-            }
-            else token = reissueToken(refreshToken, id, false);
 
-            return token;
-        }
-        throw new IllegalArgumentException("토큰이 일치하지 않습니다.");
+        // 레디스 설치 후 주석하기
+        /*--------------------------------------------------------------*/
+        TokenDto token = null;
+        token = reissueToken(refreshToken, id, true);
+        refreshTokenRedisRepository.save(new RefreshToken(id, token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME));
+        return token;
+        /*--------------------------------------------------------------*/
     }
 
     private TokenDto reissueToken(String refreshToken, String id, Boolean isReissueAll) {
@@ -191,26 +200,16 @@ public class AuthServiceImpl implements AuthService{
 
         System.out.println(jwtTokenProvider.getUserRoleName(token.getRefreshToken()));
 
-//        final ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
-//        valueOperations.set( member.getId(), token.getRefreshToken());
-//        Boolean expire = stringRedisTemplate.expire(member.getId(), 5, TimeUnit.SECONDS);
-
-        refreshTokenRedisRepository.save(new RefreshToken(member.getId(), token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME));
-//        stringRedisTemplate.opsForValue().set(member.getId(), token.getRefreshToken());
-//        stringRedisTemplate.expire(member.getId(), REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
-
-//        redisService.setValues(member.getId(), token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME);
-//        redisService.getValues(member.getId());
-       // redisTemplate.opsForValue()
-       //         .set("RT:" + request.getId(), token.getRefreshToken(),jwtTokenProvider.getExpiration(token.getRefreshToken()), TimeUnit.MILLISECONDS);
-
+        // 레디스 설치 후 주석풀기
+        //refreshTokenRedisRepository.save(new RefreshToken(member.getId(), token.getRefreshToken(), REFRESH_TOKEN_EXPIRE_TIME));
 
         return response;
     }
 
     @Override
     public void logout(String id) {
-        refreshTokenRedisRepository.deleteById(id);
+        // 레디스 설치 후 주석풀기
+        // refreshTokenRedisRepository.deleteById(id);
     }
 
 

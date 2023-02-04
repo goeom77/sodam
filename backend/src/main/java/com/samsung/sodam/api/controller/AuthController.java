@@ -91,18 +91,13 @@ public class AuthController {
             // 유효한 토큰인지 확인
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
-                System.out.println(token);
                 if (jwtTokenProvider.validateToken(token)) {
-                    System.out.println("******************************");
                     id = jwtTokenProvider.getUserId(token);
                     authService.logout(id);
                 }
             } else {
                 log.debug("JWT Token does not begin with Bearer String");
             }
-
-            // delete refresh token
-            // delete authentication (??모름)
             return HttpStatus.OK;
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -152,10 +147,6 @@ public class AuthController {
 
     @PostMapping(value = "/find-id")
     private ResponseEntity<AuthCommonResponse> findId(@RequestBody AuthCommonRequest request){
-
-        System.out.println("********************************************");
-        System.out.println(request.getEmail());
-        System.out.println(request.getName());
         AuthCommonResponse response = null;
         try {
             Member m = authService.getMemberByEmail(request.getEmail());
@@ -180,10 +171,6 @@ public class AuthController {
 
     @PostMapping(value = "/find-pw")
     private HttpStatus findPw(@RequestBody AuthCommonRequest request){
-
-        System.out.println("********************************************");
-        System.out.println(request.getEmail());
-        System.out.println(request.getId());
         try {
             String email = request.getEmail();
             // 랜덤 비밀번호 생성
