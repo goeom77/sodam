@@ -37,12 +37,21 @@
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>      
-      <datepicker
-        v-model="date"
+      <!-- <datepicker
+        v-model="dueDate"
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
-      />
+      /> -->
+
+      <v-btn
+        outlined
+        rounded
+        text
+        @click="reserveConsult"
+      >
+        Button
+      </v-btn>
     </div>
   </div>
 </template>
@@ -50,17 +59,20 @@
 
 <script>
 import Datepicker from 'vue3-datepicker';
-import {ref} from 'vue'
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
     Datepicker
   },
+  
+  props:{
+    counselorData:Object
+  },  
   data(){
-    const inputFormat = ref('yyyy-MM-dd');
     return{
       age:null,
+      clientId: this.$store.state.payload.id,
       consultType:null,
       selectTypeList: [
         {name:'아동 청소년', value:"CHILD_TEENAGER"},
@@ -79,8 +91,8 @@ export default {
         {name:'학교 상담', value:"SCHOOL"},
       ],
       content:null,
-      counselorId:null,
-      date:null,
+      counselorId: null,
+      dueDate:"2023-02-03T04:37:27",
       email:null,
       gender:null,
       genderList:[
@@ -88,21 +100,47 @@ export default {
         {name:'여', value:"WOMEN"},
       ],
       name:null,
-      state:null,
+      state:'WAIT',
       tel:null,
-      inputFormat:inputFormat,
     }
   },
   methods:{
     checkDate(){
-      console.log(this.age,this.clientId,this.consultType,this.content,this.counselorId)
-      console.log(this.date,this.email,this.gender,this.name,this.state,this.tel)
-    },
 
+      // console.log(this.$store.state.token.[[Target]])
+      // const clientId=clientId
+      console.log(this.age,this.clientId,this.consultType,this.content,this.counselorData.id)
+      console.log(this.dueDate,this.email,this.gender,this.name,this.state,this.tel)
+    },
+    reserveConsult(){
+      const age = this.age
+      const clientId = this.clientId
+      const consultType = this.consultType
+      const content = this.content
+      const counselorId = this.counselorData.id
+      const dueDate = this.dueDate
+      const email = this.email
+      const gender = this.gender
+      const name = this.name
+      const state = this.state
+      const tel = this.tel
+
+      const payload = {
+        age: age,
+        clientId: clientId,
+        consultType: consultType,
+        content: content,
+        counselorId: counselorId,
+        dueDate: dueDate,
+        email: email,
+        gender: gender,
+        name: name,
+        state: state,
+        tel: tel
+      }
+      this.$store.dispatch('reserveConsult', payload)
+    },
   },
-  // created(){
-  //   this.customFormatter()
-  // }
 }
 </script>
 

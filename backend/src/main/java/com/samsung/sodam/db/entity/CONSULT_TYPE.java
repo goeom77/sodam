@@ -21,7 +21,8 @@ public enum CONSULT_TYPE implements BaseEnumCode<Integer> {
     SEXUAL_VIOLENCY("성폭력상담", 10),
     SUPERVISION("상담자슈퍼비전", 11),
     SPORTS("스포츠상담", 12),
-    SCHOOL("학교상담", 13);
+    SCHOOL("학교상담", 13),
+    ALL("전체", 14);
 
     String name;
     Integer value;

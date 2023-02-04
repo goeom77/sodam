@@ -1,4 +1,3 @@
-
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '@/router'
@@ -13,6 +12,10 @@ export default new Vuex.Store({
     KidBoardarticles: [],
     HistoryViewarticles: [],
     token:null,
+    payload:{
+      id: null,
+      password: null,
+    },
     userSignupData:{
       id:null,
       password:null,
@@ -26,6 +29,9 @@ export default new Vuex.Store({
   getters: {
     isLogin(state) {
       return state.token ? true : false
+    },
+    getUserData(state) {
+      return state.userSignupData
     },
 
   },
@@ -42,7 +48,7 @@ export default new Vuex.Store({
     },
     SET_USER_DATA(state, payload) {
       state.payload = {
-        username: payload.username,
+        id: payload.id,
         password: payload.password
       }
     },
@@ -56,6 +62,9 @@ export default new Vuex.Store({
     GETCOUNSELORINFO(state){
       console.log(state)
     },
+    RESERVECONSULT(state){
+      console.log(state)
+    }
   },
   actions: {
     getKidBoardArticles(context) {
@@ -118,6 +127,7 @@ export default new Vuex.Store({
         .then((res)=>{
           console.log(res)
           context.commit('SAVE_TOKEN', res.data)
+          context.commit('SET_USER_DATA', payload)
         })
         .then(res=>{
           router.push({ name: 'home' })
@@ -142,6 +152,7 @@ export default new Vuex.Store({
         }
       })
         .then((response)=>{
+          
           context.commit('SAVE_TOKEN',response.data.key)
         })
     },
@@ -151,8 +162,36 @@ export default new Vuex.Store({
     },
 
     signupCounselor(context, payload){
-      axios({
+      const formdata = new FormData()
+      formdata.append('id',payload.id)
+      formdata.append('password',payload.password)
+      formdata.append('name',payload.name)
+      formdata.append('tel',payload.name)
+      formdata.append('email',payload.email)
+      formdata.append('gender',payload.gender)
+      formdata.append('enterprise_id',payload.enterprise_id)
+
+      if (payload.certificate.length > -1){
+        for (let i=0;i<payload.certificate.length; i++){
+          const certificateForm = payload.certificate[i]
+          formdata.append(`certificates[${i}`, certificateForm)
+        }
+      }
+      if (payload.education.length > -1){
+        for (let i=0;i<payload.education.length; i++){
+          const educationForm = payload.education[i]
+          formdata.append(`educations[${i}`, educationForm)
+        }
+      }
+      if (payload.career.length > -1){
+        for (let i=0;i<payload.career.length; i++){
+          const careerForm = payload.career[i]
+          formdata.append(`careers[${i}`, careerForm)
+        }
+      }
+      return axios({
         method:'post',
+<<<<<<< HEAD
         url: `${VUE_APP_API_URL}/api/auth/signup/counselor`,
         data:{
           id: payload.id,
@@ -163,9 +202,16 @@ export default new Vuex.Store({
           gender: payload.gender,
           enterprise_id: payload.enterprise_id,
         }
+=======
+        url: `${API_URL}/api/auth/signup/counselor`,
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formdata
+>>>>>>> a88701d36a108c253c1602205c7ddfd4561c75bb
       })
       .then((res)=>{
-        context.commit('SAVE_TOKEN',res)
+        console.log(res)
       })
       .catch((res)=>{
         console.log(res)
@@ -174,6 +220,32 @@ export default new Vuex.Store({
 
     logOut(context){
       context.commit('DELETE_TOKEN')
+    },
+    reserveConsult(context, payload){
+      axios({
+        method:'POST',
+        url: `${API_URL}/api/consultApplicant`,
+        data:{
+          age: payload.age,
+          clientId: payload.clientId,
+          consultType: payload.consultType,
+          content: payload.content,
+          counselorId: payload.counselorId,
+          dueDate: payload.dueDate,
+          email: payload.email,
+          gender: payload.gender,
+          name: payload.name,
+          state: payload.state,
+          tel: payload.tel
+        },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+      .then((res)=>{
+        console.log(res, payload)
+        context.commit('RESERVECONSULT')
+      })
     }
   },
   modules: {

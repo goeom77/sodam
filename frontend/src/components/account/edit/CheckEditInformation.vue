@@ -22,7 +22,7 @@ export default {
   data(){
     return{
       checkPassword:null,
-      password: this.$store.state.userSignupData.password
+      password: this.$store.state.payload.password
     }
   },
 

@@ -21,14 +21,16 @@
           value="one"
           style="height:1500px"
           >
-          <ConsultantCardItemReserve/>
+          <ConsultantCardItemReserve
+          :counselorData="this.counselorData"/>
           </v-window-item>
 
           <v-window-item  
             value="two"
             style="height:1500px"
           >
-          <ConsultantCardItemReview/>
+          <ConsultantCardItemReview
+          :counselorData="this.counselorData"/>
           </v-window-item>
         </v-window>
       </v-card-text>

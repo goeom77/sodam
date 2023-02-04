@@ -1,5 +1,4 @@
 <template>
-  {{ counselorData }}
   <v-container>
     <div class="parent">
       <div class="child1">
