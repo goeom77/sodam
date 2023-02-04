@@ -151,6 +151,7 @@ export default new Vuex.Store({
         }
       })
         .then((response)=>{
+          
           context.commit('SAVE_TOKEN',response.data.key)
         })
     },
@@ -160,21 +161,43 @@ export default new Vuex.Store({
     },
 
     signupCounselor(context, payload){
-      axios({
+      const formdata = new FormData()
+      formdata.append('id',payload.id)
+      formdata.append('password',payload.password)
+      formdata.append('name',payload.name)
+      formdata.append('tel',payload.name)
+      formdata.append('email',payload.email)
+      formdata.append('gender',payload.gender)
+      formdata.append('enterprise_id',payload.enterprise_id)
+
+      if (payload.certificate.length > -1){
+        for (let i=0;i<payload.certificate.length; i++){
+          const certificateForm = payload.certificate[i]
+          formdata.append(`certificates[${i}`, certificateForm)
+        }
+      }
+      if (payload.education.length > -1){
+        for (let i=0;i<payload.education.length; i++){
+          const educationForm = payload.education[i]
+          formdata.append(`educations[${i}`, educationForm)
+        }
+      }
+      if (payload.career.length > -1){
+        for (let i=0;i<payload.career.length; i++){
+          const careerForm = payload.career[i]
+          formdata.append(`careers[${i}`, careerForm)
+        }
+      }
+      return axios({
         method:'post',
         url: `${API_URL}/api/auth/signup/counselor`,
-        data:{
-          id: payload.id,
-          password: payload.password,
-          name: payload.name,
-          tel: payload.tel,
-          email: payload.email,
-          gender: payload.gender,
-          enterprise_id: payload.enterprise_id,
-        }
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formdata
       })
       .then((res)=>{
-        context.commit('SAVE_TOKEN',res)
+        console.log(res)
       })
       .catch((res)=>{
         console.log(res)

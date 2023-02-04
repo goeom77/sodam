@@ -3,7 +3,9 @@
     {{ this.id }}
     {{ this.sessionInfo }}
     <client-manage-detail
-    :sessionInfo="sessionInfo"/>
+    v-for="(clientData,idx) in this.sessionInfo"
+    :key="idx"
+    :clienData="clientData"/>
 
   </div>
 </template>
@@ -28,13 +30,14 @@ export default {
     getSessionInfo(){
       axios({
         method:'get',
-        url:`${API_URL}/api/consult-session`,
+        url:`${API_URL}/api/consult-session?counselorId=${this.id}`,
         data:{
-          id: this.id
+          consultantId : this.id
         }
       })
       .then(res=>{
         this.sessionInfo = res.data
+        console.log(res)
       })
     },
   },
