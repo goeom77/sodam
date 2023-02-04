@@ -5,10 +5,11 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    
     KidBoardarticles: [],
     HistoryViewarticles: [],
     token:null,
@@ -60,7 +61,7 @@ export default new Vuex.Store({
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/api/trouble/list/child`,
+        url: `${VUE_APP_API_URL}/api/trouble/list/child`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -77,7 +78,7 @@ export default new Vuex.Store({
     getHistoryViewArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/backend/`,
+        url: `${VUE_APP_API_URL}/backend/`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -94,7 +95,7 @@ export default new Vuex.Store({
     getCounselorInfo(context) {
       axios({
         method: 'post',
-        url: `${API_URL}/api/client/`,
+        url: `${VUE_APP_API_URL}/api/client/`,
       })
         .then((res) => {
           console.log(res, context)
@@ -107,7 +108,7 @@ export default new Vuex.Store({
     login(context, payload){
       axios({
         method:'post',
-        url:`${API_URL}/api/auth/login`,
+        url:`${VUE_APP_API_URL}/api/auth/login`,
         data:{
           id: payload.id,
           password: payload.password,
@@ -131,7 +132,7 @@ export default new Vuex.Store({
     signupClient(context, payload){
       axios({
         method:'post',
-        url: `${API_URL}/api/auth/signup/client`,
+        url: `${VUE_APP_API_URL}/api/auth/signup/client`,
         data: {
           id:payload.id,
           password:payload.password,
@@ -152,7 +153,7 @@ export default new Vuex.Store({
     signupCounselor(context, payload){
       axios({
         method:'post',
-        url: `${API_URL}/api/auth/signup/counselor`,
+        url: `${VUE_APP_API_URL}/api/auth/signup/counselor`,
         data:{
           id: payload.id,
           password: payload.password,

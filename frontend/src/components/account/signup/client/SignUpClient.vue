@@ -98,7 +98,7 @@
 </template>
 
 <script>
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 import axios from 'axios'
 export default {
     name:'SignUpClient',
@@ -152,7 +152,7 @@ export default {
       CheckEmail(){
         axios({
           method: 'post',
-          url: `${API_URL}/api/auth/send-code`,
+          url: `${VUE_APP_API_URL}/api/auth/send-code`,
           data:{
             email:this.email
           }
@@ -165,7 +165,7 @@ export default {
       CheckEmailConfirm(){
         axios({
           method:'get',
-          url:`${API_URL}/api/auth/confirm-mail?code=${this.confirm_code}`,
+          url:`${VUE_APP_API_URL}/api/auth/confirm-mail?code=${this.confirm_code}`,
           data:{
             code: this.confirm_code
           }
@@ -182,7 +182,7 @@ export default {
       duplicateId(){
         axios({
           method: 'get',
-          url:`${API_URL}/api/auth/check-duplicate-id/${this.id}`
+          url:`${VUE_APP_API_URL}/api/auth/check-duplicate-id/${this.id}`
         })
         .then(res =>{
           if (res.data === 'OK'){

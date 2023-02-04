@@ -35,7 +35,7 @@
 <script>
 import axios from 'axios'
 
-const API_URL = 'http://127.0.0.1:8000'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
@@ -59,7 +59,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: `${API_URL}/backend/`,
+        url: `${VUE_APP_API_URL}/backend/`,
         data: {
           title: title,
           content: content,

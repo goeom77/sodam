@@ -2,17 +2,24 @@
     <div v-if="(limit-1)*10 <= index && index < limit * 10">
       <div v-if="!this.updateStatus" id="comment_container">
         <div class="comment-detail">
+      <!-- <div v-if=""> -->
       <div>
         <!-- <router-link style="text-decoration: none; color:gray; font-size:13px;" v-if="counselorName" :to="{name: 'ProfileView', params: {counselorName: this.counselorName}}">
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ KidBoardComment.content }}
+      ┖ {{ KidBoardComment.content }} {{ KidBoardComment.commentId }}
       </div>
+      <!-- <div v-else="">
+        <KidBoardCommentForm
+          :KidBoardComment="KidBoardComment"
+        />
+      </div> -->
       <div style="margin-top:3px;">
-        
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="deleteComment">삭제</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="updateComment">수정하기</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="deleteComment">삭제</a>
+        <!-- <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="deleteComment">삭제</a> -->
       </div>
     </div>
       <hr style="margin:0px;">
@@ -32,8 +39,9 @@
   
   <script>
   import axios from 'axios'
+  import KidBoardCommentForm from '../boarditem/KidBoardCommentForm.vue'
 
-  const API_URL = "http://127.0.0.1:8080"
+  const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
   export default {
     name: 'KidBoardCommentList',
@@ -43,8 +51,13 @@
         userid: null,
         updateStatus: false,
         content: null,
+        counselorId : null,
+        commentId : null,
         profileImageUrl: null,
       }
+    },
+    components: {
+      KidBoardCommentForm,
     },
     computed: {
       imgSrc() {
@@ -63,14 +76,14 @@
       // getProfileImage() {
       //   axios({
       //     method: 'get',
-      //     url: `${API_URL}/api/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
+      //     url: `${VUE_APP_API_URL}/api/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
       //     headers: { 
       //       'Content-Type': 'multipart/form-data',
       //           Authorization: `Token ${this.$store.state.token}`
       //         },
       //     })
       //     .then((res) => {
-      //       this.profileImageUrl=`${API_URL}${res.data.profile_image}`
+      //       this.profileImageUrl=`${VUE_APP_API_URL}${res.data.profile_image}`
       //     })
       //     .catch((err) => {
       //       console.log(err)
@@ -79,22 +92,23 @@
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${API_URL}/api/trouble/${this.KidBoardComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
         })
         .then(() => {
-          this.$emit('delete-comment')
+          // this.$emit('delete-comment')
         })
         .catch((err) => {
           console.log(err)
         })
       },
       getUserName() {
+        console.log('유저네임 들어왔냐?')
         axios({
           method: 'post',
-          url: `${API_URL}/api/counselor/${this.KidBoardComment.counselorId}`,
+          url: `${VUE_APP_API_URL}/api/counselor/${this.KidBoardComment.counselorId}`,
           data: {
             userid: this.KidBoardComment.comment_user
           },
@@ -113,38 +127,46 @@
           console.log(err)
         })
     },
-    getCommentUpdate() {
-        axios({
-          method: 'get',
-          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
-          }
-        })
-        .then((res) => {
-          this.content = res.data.content
-          this.updateStatus = true
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      },
+    // getCommentUpdate() {
+    //     axios({
+    //       method: 'get',
+    //       url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+    //       headers: { 
+    //           Authorization: `Token ${this.$store.state.token}`
+    //       }
+    //     })
+    //     .then((res) => {
+    //       console.log('댓글 불러오기 성공')
+    //       this.content = res.data.content
+    //       this.counselorId  = res.data.counselorId 
+    //       this.commentId = res.data.commentId
+    //       this.updateStatus = true
+    //     })
+    //     .catch((err) => {
+    //       console.log('댓글 불러오기 실패')
+    //       console.log(err)
+    //     })
+    //   },
       updateComment() {
         axios({
           method: 'put',
-          url: `${API_URL}/api/trouble/${this.KidBoardComment.id}/`,
+          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
           data: {
             content: this.content,
+            counselorId: this.counselorId ,
+            commentId: this.commentId 
           },
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
         })
         .then(() => {
-          this.$emit('update-comment')
+          // this.$emit('update-comment')
+          console.log('댓글 수정 성공')
           this.updateStatus = false
         })
         .catch((err) => {
+          console.log('댓글 수정 실패')
           console.log(err)
         })
       },

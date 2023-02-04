@@ -1,41 +1,67 @@
 <template>
-  <div id="KidBoardList">
+  <div id="KidBoardList" >
     <div id="WriteButton">
       <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link> 
       <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link> 
     </div>
     <KidBoardListItem
-      v-for="KidBoardarticle in KidBoardarticles.content"
-      :key="KidBoardarticle"
+      v-for="(KidBoardarticle, index) in KidBoardarticles.content"
+      :key="KidBoardarticle.postId"
       :KidBoardarticle="KidBoardarticle"
+      :index="index"
+      :limit="KidBoardListPage"
     /> 
-    <!-- <KidBoardListItem/> -->
+    <div v-if="KidBoardarticles" class="text-center">
+      <v-pagination
+        v-model="this.KidBoardListPage"
+        :length="5"
+
+      ></v-pagination>
+    </div>
+    <!-- :total-rows="KidBoardarticles.length"
+        :per-page="dataPerPage" -->
+
   </div>
 
 </template>
 
 <script>
+
+
 import KidBoardListItem from '@/components/boarditem/KidBoardListItem.vue'
+
+
 
 export default {
   name: 'KidBoardList',
+  data() {
+    return {
+      KidBoardListPage: 1,
+      dataPerPage: 10,
+    }
+  },
+
   components: {
     KidBoardListItem
   },
   computed: {
     KidBoardarticles() {
       return this.$store.state.KidBoardarticles
-    }
+    },
+    // numOfPages() {
+    //   return Math.ceil(this.$store.state.KidBoardarticles.length / this.dataPerPage);
+    // }
   },
-
+  
 }
 </script>
 
 <style>
-/* #KidBoardList {
-  text-align: end;
-} */
+#KidBoardList {
+  width: 1255px;
+}
 #WriteButton {
+  
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -67,5 +93,6 @@ export default {
 #KidBoardListAll {
   color: black;
 }
+
 
 </style>

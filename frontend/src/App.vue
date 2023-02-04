@@ -35,7 +35,7 @@
 <script>
 import axios from 'axios'
 document.querySelector('body').setAttribute('style',"margin: 0;")
-const API_URl = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'App',
   data(){
@@ -48,7 +48,7 @@ export default {
     logOut(){
       axios({
         method: 'get',
-        url: `${API_URl}/logout/id`,
+        url: `${VUE_APP_API_URL}/logout/id`,
         headers: {
           Authorization: `Token ${ this.$store.state.token }`
         }
