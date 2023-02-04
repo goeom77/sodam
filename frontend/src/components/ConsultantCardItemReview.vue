@@ -1,28 +1,43 @@
 <template>
   <div>
     <!-- {{ counselorData }} -->
-
-    {{ this.review }}
-    <button @click="moveTo">후기 작성</button>
-
+    <ConsultantCardItemReviewItem
+    v-for="(review, idx) in reviews"
+    :key="idx"
+    :idx="idx"
+    :review="review"
+    :limit="page"/>
+    <div class="text-center">
+      <v-pagination
+        v-model="page"
+        :length="6"
+      ></v-pagination>
+    </div>
+    <v-btn outlined rounded text @click="moveTo">
+      후기작성
+    </v-btn>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import ConsultantCardItemReviewItem from '@/components/ConsultantCardItemReviewItem.vue'
 const API_URL = 'http://127.0.0.1:8080'
 export default {
   name:'ConsultantCardItemReview',
+  components:{
+    ConsultantCardItemReviewItem
+  },
   props:{
     counselorData:Object
   },
   data(){
     return{
-      review:null,
+      reviews:null,
       clientId:null,
       counselorId:null,
       type:null,
+      page:1
     }
   },
   methods:{
@@ -35,12 +50,11 @@ export default {
         url: `${API_URL}/api/review/my`,
         data:{
           counselorId:this.counselorData.id,
-          review:null,
         }
       })
       .then(res=>{
         console.log(res)
-        this.review = res.content
+        this.reviews = res.data.content
       })
     }
   },
