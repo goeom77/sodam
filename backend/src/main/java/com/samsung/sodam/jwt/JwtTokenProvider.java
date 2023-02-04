@@ -1,6 +1,5 @@
 package com.samsung.sodam.jwt;
 
-import com.samsung.sodam.db.entity.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -27,16 +26,23 @@ public class JwtTokenProvider {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;            // 하루
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+    @Value("${jwt.token-validity-in-seconds}")
+    private long ACCESS_TOKEN_EXPIRE_TIME;
+
+    @Value("${jwt.refresh-token-validity-in-seconds}")
+    private long REFRESH_TOKEN_EXPIRE_TIME;
+
+    //private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 7;  // 7 min (for test)
 
     private final UserDetailsServiceImpl userDetailsService;
 
-
-    public TokenDto generateToken(String id, Role role) {
+    /**
+     * accessToken, RefreshToken 발급
+     * */
+    public TokenDto generateToken(String id, String roleName) {
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", role.getRoleName()); // 정보는 key / value 쌍으로 저장된다.
+        claims.put("role", roleName); // 정보는 key / value 쌍으로 저장된다.
 
         long now = (new Date()).getTime();
         // Access Token 생성
@@ -51,6 +57,25 @@ public class JwtTokenProvider {
         String accessTokenExpiresIn = simpleDateFormat.format(accessTokenExpiresInDate);
 
         return new TokenDto(accessToken, refreshToken, accessTokenExpiresIn);
+    }
+
+    /**
+     * accessToken만 발급
+     * */
+    public TokenDto generateAccessToken(String id, String roleName) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", roleName); // 정보는 key / value 쌍으로 저장된다.
+
+        long now = (new Date()).getTime();
+        // Access Token 생성
+        Date accessTokenExpiresInDate = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        String accessToken = doGenerateToken(claims, id, ACCESS_TOKEN_EXPIRE_TIME);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd/HH:mm:ss");
+        String accessTokenExpiresIn = simpleDateFormat.format(accessTokenExpiresInDate);
+
+        return new TokenDto(accessToken, null, accessTokenExpiresIn);
+
     }
 
     private String doGenerateToken(Map<String, Object> claims,String id, long tokenValidTime) {
@@ -71,11 +96,17 @@ public class JwtTokenProvider {
 
     // 토큰에서 회원 정보 추출
     public String getUserId(String token) {
-        // test
-//        System.out.println("jwtTokenProvider - " + token);
-//        System.out.println(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody());
-
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+
+    // Jwt 토큰을 Claim 으로 변경
+    private Claims getClaim(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    }
+
+    public String getUserRoleName(String token) {
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role");
     }
 
     // Request의 Header에서 token 값을 가져옴.
@@ -92,4 +123,14 @@ public class JwtTokenProvider {
             return false;
         }
     }
+    public Date getExpiration(String jwtToken) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            return claims.getBody().getExpiration();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 }

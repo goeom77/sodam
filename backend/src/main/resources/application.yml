@@ -55,5 +55,5 @@ jwt:
   # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용
   # base64 encode
   secret-key: and0LXRvcC1zZWNyZXQtbG9sbG9sbG9sLXNwcmluZy1zZWN1cml0eS10b29vby1oYXJkLVRULUFNMDE1MS05ODc2NTQzMjE
-  token-validity-in-seconds: 86400
-
+  token-validity-in-seconds: 1800   # 30분
+  refresh-token-validity-in-seconds: 604800
