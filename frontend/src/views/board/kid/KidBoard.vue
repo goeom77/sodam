@@ -13,14 +13,20 @@
         <router-link to="/KidBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
         <router-link to="/KidBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
       </div>
-      <div>
-
-      </div>
     </div>
     <div>
       
     </div>
-    <KidBoardList/>
+    <KidBoardList
+    
+    />
+    <!-- <div class="text-center">
+      <v-pagination
+        v-model="KidBoardListpage"
+        :total-rows="comments.length"
+        :per-page="10"
+      ></v-pagination>
+    </div> -->
   </div>
 </template>
 
@@ -34,6 +40,11 @@ export default {
   components: {
     KidBoardList,
   },
+  data () {
+      return {
+
+      }
+    },
   created() {
     this.getKidBoardArticles()
   },

@@ -5,15 +5,14 @@
   >
   <v-card-text>
     <p class="text-h4 text--primary">
-        {{ this.client }}
-        NAME : 
-        <!-- {{this.client.clientId}} -->
-      </p>
-      
-      <div class="text--primary">
-        <h3>최근 상담 일자 :</h3><br>
-        <h3>뭐든 넣겠찌 뭐 </h3>
-      </div>
+      성함 : {{ clientData.name }}
+    </p>
+    
+    <div class="text--primary">
+      <!-- 연락처 -->
+      <h3>연락처 : {{ clientData.tel }}</h3><br>
+      <h3>이메일 : {{ clientData.email }} </h3>
+    </div>
     </v-card-text>
     
     <v-card-actions>
@@ -23,6 +22,7 @@
       >
         Learn More
       </v-btn>
+      <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
     </v-card-actions>
   </v-card>
 </template>
@@ -31,7 +31,7 @@
 export default {
   name:'ClientManageDetail',
   props:{
-    clienData:Object
+    clientData:Object
   },
   data(){
     return{

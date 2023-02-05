@@ -8,7 +8,13 @@
       <p>내용 : {{ KidBoardarticle?.content }}</p>
       <p>작성시간 : {{ KidBoardarticle?.createdAt }}</p>
       <p>작성자 : {{ KidBoardarticle?.clientId }}</p>
-      <button @click="KidBoardarticleUpdate">수정</button>
+
+      <!-- 이미지 보임
+      <v-img v-for="(item, i) in imagelist" :key="i" :src="require(`../../../assets/worryimage/${item}`)"
+       contain height="150px" width="200px" style="border: 2px solid black; margin-left:100px;"/>
+       -->
+      
+       <button @click="KidBoardarticleUpdate">수정</button>
       <button @click="KidBoardarticleDelete">삭제</button>
     </div>
     <div>
@@ -26,9 +32,13 @@
       :KidBoardComment="KidBoardComment"
       :index="index"
       :limit="KidBoardCommentsCurrentPage"
-      @delete-comment="getKidBoardComments"
-      @update-comment="getKidBoardComments"
     />
+      <!-- @delete-comment="getKidBoardComments"
+      @update-comment="getKidBoardComments" -->
+
+
+
+
     <!-- <div v-if="KidBoardComments" style="background-color: #2d3442; display: flex; justify-content: center;">
       <b-pagination id="comments_pagination" style="margin-bottom: 0px;"
         v-model="KidBoardCommentsCurrentPage"
@@ -51,7 +61,7 @@ import KidBoardCommentList from '../../../components/boarditem/KidBoardCommentLi
 import {useRouter} from 'vue-router';
 
 
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'KidBoardDetail',
@@ -63,39 +73,33 @@ export default {
   },
   data() {
     const postId = this.$route.params.postId
-    // const commentCount = this.commentCount
 
     return {
-      // category : KidBoardarticle.category, 
-      // commentCount: commentCount + 1,
       postId: postId,
       KidBoardComments: null,
       KidBoardarticle: null,
       KidBoardCommentsCurrentPage: 1,
-      // person: KidBoardarticle?.person,
+            // data속성에서 추가되는 변수들
+      imagelist: [],        // 불러온 이미지들의 url을 저장하는 객체
+      imagecnt: 0,        // 불러올 이미지 개수 (db에서 받아옴)
     }
   },
-  // props: {
-  //   postId: {
-  //     type: Number,
-  //     default: 0
-  //   }
-  // },
   created() {
     this.getKidBoardarticleDetail()
-    // this.KidBoardarticlecommentCount()
   },
   methods: {
     getKidBoardarticleDetail() {
       axios({
         method: 'get',
-        url: `${API_URL}/api/trouble/${this.$route.params.postId}`
-        // url: `${API_URL}/trouble/${postId}`
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
       })
         .then((res) => {
-          // console.log(res)
           console.log(this.$route.params.postId)
           this.KidBoardarticle = res.data
+
+          // 이미지 카운트
+          // for(var i = 1; i <= res.data.imagecnt; i++){
+          //    this.imagelist.push(this.$route.params.postId + '-' + i + '.png');}
         })
         .catch((err) => {
           console.log('실패다옹')
@@ -118,7 +122,7 @@ export default {
     //   if (!confirm("삭제하시겠습니까?")) {
     //     axios({
     //     method: 'delete',
-    //     url: `${API_URL}/api/trouble/${this.$route.params.postId}`
+    //     url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
     //     })
 		// 		.then((res)=>{
     //       console.log('됨')
@@ -141,7 +145,7 @@ export default {
     KidBoardarticleDelete() {
       axios({
         method: 'delete',
-        url: `${API_URL}/api/trouble/${this.$route.params.postId}`,
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
         headers: { 
             Authorization: `Token ${this.$store.state.token}`
         }
@@ -160,7 +164,7 @@ export default {
     deleteReview() {
       axios({
         method: 'delete',
-        url: `${API_URL}/capi/trouble/${this.review?.id}/`,
+        url: `${VUE_APP_API_URL}/capi/trouble/${this.review?.id}/`,
         headers: { 
             Authorization: `Token ${this.$store.state.token}`
         }
@@ -175,7 +179,7 @@ export default {
     getReviewUpdate() {
       axios({
         method: 'get',
-        url: `${API_URL}/community/reviews/detail/${this.review?.id}/`,
+        url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
         headers: { 
             Authorization: `Token ${this.$store.state.token}`
         }
@@ -196,7 +200,7 @@ export default {
     updateReview() {
       axios({
         method: 'put',
-        url: `${API_URL}/community/reviews/detail/${this.review?.id}/`,
+        url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
         data: {
           title: this.title,
           content: this.content,

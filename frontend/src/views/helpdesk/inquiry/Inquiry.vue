@@ -2,20 +2,25 @@
   <div id="Inquiry">
     <div id="inquiryhelpBoard">
       <div id="inquiryhelpBoardtitle">
-        <h1>HELP DESK</h1>
+        <h1>고민 게시판</h1>
       </div>
+
       <div id="inquiryhelpCategory"> 
         <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
         <router-link to="/Inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
-      </div>
-      <div>
-
       </div>
     </div>
     <div>
       
     </div>
     <InquiryList/>
+    <!-- <div class="text-center">
+      <v-pagination
+        v-model="KidBoardListpage"
+        :total-rows="comments.length"
+        :per-page="10"
+      ></v-pagination>
+    </div> -->
   </div>
 </template>
 
@@ -26,8 +31,22 @@ import InquiryList from '@/components/helpitem/InquiryList.vue'
 export default {
   name: 'Inquiry',
   components: {
-    InquiryList
+    InquiryList,
   },
+  data () {
+      return {
+
+      }
+    },
+  created() {
+    this.getInquiryArticles()
+  },
+  methods: {
+    getInquiryArticles() {
+    this.$store.dispatch('getInquiryArticles')
+    }
+  }
+
 }
 </script>
 
@@ -50,30 +69,27 @@ a:visited {
 
 
 #inquiryhelpBoard {
-  /* margin-top: 61px; */
-  /* width: 100%; */
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  /* background-size: cover; */
   text-align: center;
   font-size: large;
   font-weight: 100;
   padding-top: 20px;
   height: 250px;
-  position:relative;
+  position: relative;
 }
 #inquiryhelpCategory {
   width:100%; 
+  /* width: 50vw; */
   height:60px; 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   line-height: 65px;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  background-color:rgba(96, 96, 96, 0.5);
   padding-left: 60px;
   padding-right:60px;
-  background-color:rgba(96, 96, 96, 0.5);
   position: absolute;
   bottom: 0px;
 } 
@@ -83,6 +99,7 @@ a:visited {
   bottom: 50%; 
   transform: translate(-50%);
 }
+
 
 #inquiryhelpCategory a.router-link-exact-active {
   background-color: #579BB1;

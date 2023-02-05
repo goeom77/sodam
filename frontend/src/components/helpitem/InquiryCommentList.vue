@@ -8,7 +8,7 @@
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ KidBoardComment.content }} {{ KidBoardComment.commentId }}
+      ┖ {{ InquiryComment.content }} {{ KInquiryComment.commentId }}
       </div>
       <!-- <div v-else="">
         <KidBoardCommentForm
@@ -39,7 +39,7 @@
   
   <script>
   import axios from 'axios'
-  import KidBoardCommentForm from '../boarditem/KidBoardCommentForm.vue'
+  import InquiryCommentForm from '../boarditem/InquiryCommentForm.vue'
 
   const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -57,7 +57,7 @@
       }
     },
     components: {
-      KidBoardCommentForm,
+      InquiryCommentForm,
     },
     computed: {
       imgSrc() {
@@ -65,7 +65,7 @@
       },
     },
     props: {
-      KidBoardComment: Object,
+      InquiryComment: Object,
       index: Number,
       limit: Number,
     },
@@ -92,7 +92,7 @@
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}/comment/${this.InquiryComment.commentId}/`,
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
           }
@@ -108,9 +108,9 @@
         console.log('유저네임 들어왔냐?')
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/counselor/${this.KidBoardComment.counselorId}`,
+          url: `${VUE_APP_API_URL}/api/counselor/${this.InquiryComment.counselorId}`,
           data: {
-            userid: this.KidBoardComment.comment_user
+            userid: this.InquiryComment.comment_user
           },
           headers: { 
               Authorization: `Token ${this.$store.state.token}`
@@ -150,7 +150,7 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}/comment/${this.InquiryComment.commentId}/`,
           data: {
             content: this.content,
             counselorId: this.counselorId ,

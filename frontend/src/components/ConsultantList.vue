@@ -25,7 +25,7 @@
 <script>
 import ConsultantCard from '@/components/ConsultantCard'
 import axios from 'axios'
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'ConsultantList',
@@ -41,7 +41,7 @@ export default {
     getCounselorInfo(){
       axios({
         method:'post',
-        url:`${API_URL}/api/counselor/`
+        url:`${VUE_APP_API_URL}/api/counselor/`
       })
       .then(res=>{
         this.counselorInfo = res.data.content
@@ -60,7 +60,6 @@ export default {
   // beforeMount() {
   //     this.$store.dispatch('getConsultantJson')
   // },
-
 }
 </script>
 

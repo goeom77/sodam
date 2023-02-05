@@ -1,29 +1,14 @@
 <template>
-  <div id="HistoryView">
-    <div id="HistoryViewBoard">
-      <div id="HistoryViewBoardTitle">
-        <h1>마이페이지</h1>
-      </div>  
-      <div id="HistoryViewBoardCategory"> 
-        <router-link to="/Notice" id="NoticeCategory" class="CategoryClass" >내게 온 알림</router-link>
-        <router-link to="/HistoryView" id="HistoryCategory" class="CategoryClass">상담 내역</router-link>
-        <router-link to="/" id="MypostCategory" class="CategoryClass">내 글 보기</router-link>
-        <router-link to="/Notice" id="LikeCategory" class="CategoryClass">찜 목록</router-link>
-        <router-link to="/" id="WritereviewCategory" class="CategoryClass">후기 상담</router-link>   
-      </div>
-    </div>
-    <HistoryViewList/>
-  </div>
+  histo
 </template>
 
 <script>
 // @ is an alias to /srcz
-import HistoryViewList from '../../../components/mypageitem/HistoryViewList.vue'
 
 export default {
   name: 'HistoryView',
   components: {
-    HistoryViewList
+    
   },
   // created() {
   //   this.getHistoryViewArticles()

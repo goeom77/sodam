@@ -1,53 +1,80 @@
 <template>
-  <div id="AnnounceList">
+  <div id="AnnounceList" >
     <div id="AnnounceWriteButton">
-      <router-link to="/Announce" id="AnnounceListAll" style="color:black">전체 (5)</router-link> 
-      <div v-if="userId < 1">
+      <!-- <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link>  -->
+      <div id="AnnounceListAll" @click="AnnounceListAll">전체 (5)</div>
+      <div>
         <router-link to="/AnnounceCreate" id="AnnounceCreateButton" class="AnnounceCreateButton" >글쓰기</router-link> 
       </div>
     </div>
+    <div>
+      
+    </div>
+    <div>
+      <AnnounceListItem
+        v-for="(Announcearticle, index) in Announcearticles.content"
+        :key="Announcearticle.postId"
+        :Announcearticle="Announcearticle"
+        :index="index"
+        :limit="AnnounceListPage"
+      /> 
+    </div>
 
-    <AnnounceListItem
-      v-for="Announcearticle in Announcearticles"
-      :key="Announcearticle.id"
-      :Announcearticle="Announcearticle"
-    /> 
-    <AnnounceListItem/>
+    <div v-if="Announcearticles" class="text-center">
+      <v-pagination
+        v-model="this.AnnounceListPage"
+        :length="5"
+
+      ></v-pagination>
+    </div>
+
+    <!-- :total-rows="KidBoardarticles.length"
+        :per-page="dataPerPage" -->
+
   </div>
 
 </template>
 
 <script>
+
+import axios from 'axios'
 import AnnounceListItem from '@/components/helpitem/AnnounceListItem.vue'
+
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'AnnounceList',
+  data() {
+    return {
+      AnnounceListPage: 1,
+			schVal: '',
+      contentlist: [], 
+    }
+  },
   components: {
     AnnounceListItem
   },
-  // computed: {
-  //   articles() {
-  //     return this.$store.state.Announcearticles
-  //   }
-  // },
-  // created() {
-  //   this.getAnnouncearticles()
-  // },
-  // methods: {
-  //   getAnnouncearticles() {
-  //   this.$store.dispatch('getAnnouncearticles')
-  //   }
-  // }
+  computed: {
+    Announcearticles() {
+      return this.$store.state.Announcearticles
+    },
+  },
+  methods: {
 
-
+    AnnounceListAll(){
+      this.searchfinish = false;
+      this.$router.push({ name: 'Announce' },)
+    },
+  }
 }
 </script>
 
 <style>
-/* #KidBoardList {
-  text-align: end;
-} */
+#AnnounceList {
+  width: 1255px;
+}
 #AnnounceWriteButton {
+  
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -76,8 +103,10 @@ export default {
   border-radius: 5px;
 }
 
-#AnnounceList {
+#AnnounceListAll {
   color: black;
+  
 }
+
 
 </style>

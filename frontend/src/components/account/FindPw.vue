@@ -63,7 +63,7 @@
 </template>
 
 <script>
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 import axios from 'axios'
 
 export default {
@@ -80,7 +80,7 @@ export default {
     findPw(){
       axios({
         method:'post',
-        url:`${API_URL}/api/auth/find-pw`,
+        url:`${VUE_APP_API_URL}/api/auth/find-pw`,
         data:{
           id:this.id,
           email:this.email

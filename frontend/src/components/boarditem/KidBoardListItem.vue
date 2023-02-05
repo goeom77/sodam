@@ -1,10 +1,9 @@
 <template>
-  <div id="KidBoardListItem">
-    <div>
+  <div id="KidBoardListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
+    <div style="float:left; margin-left: 60px;">
       <h5>{{ KidBoardarticle.postId }}</h5>
     </div>
-    <div>
-      
+    <div >
       <div>
         <router-link 
           style="color:black" 
@@ -21,7 +20,7 @@
         <p>{{ KidBoardarticle.clientId }}  {{ KidBoardarticle?.createdAt }}</p>
       </div>
     </div>
-    <div>
+    <div >
       <h3>{{ KidBoardarticle.views }}, {{ KidBoardarticle.commentCount }}</h3>
     </div>
     <hr>
@@ -35,6 +34,8 @@ export default {
   name: 'KidBoardListItem',
   props: {
     KidBoardarticle: Object,
+    index: Number,
+    limit: Number,
   },
   methods: {
     // clickList() {
@@ -48,5 +49,9 @@ export default {
 </script>
 
 <style>
-
+#KidBoardListItem {
+  /* width: 1255px; */
+  margin-left: 60px;
+  margin-right: 60px;
+}
 </style>

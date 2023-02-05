@@ -4,11 +4,14 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    
     KidBoardarticles: [],
+    Announcearticles: [],
+    Inquiryarticles: [],
     HistoryViewarticles: [],
     token:null,
     payload:{
@@ -39,6 +42,15 @@ export default new Vuex.Store({
       console.log(KidBoardarticles)
       state.KidBoardarticles = KidBoardarticles
     },
+    GET_ANNOUNCEARTICLES(state, Announcearticles) {
+      console.log(Announcearticles)
+      state.Announcearticles = Announcearticles
+    },
+    GET_INQUIRYARTICLES(state, Inquiryarticles) {
+      console.log(Inquiryarticles)
+      state.Inquiryarticles = Inquiryarticles
+    },
+    
     GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
       state.HistoryViewarticles = HistoryViewarticles
     },
@@ -69,7 +81,10 @@ export default new Vuex.Store({
     getKidBoardArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/api/trouble/list/child`,
+        url: `${VUE_APP_API_URL}/api/trouble/list/child`,
+        // data: {
+        //   category : category ,
+        // },
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -83,10 +98,50 @@ export default new Vuex.Store({
           console.log('게시글이 존재하지 않습니다.')
         })
     },
+    getAnnounceArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        // data: {
+        //   category : category ,
+        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_ANNOUNCEARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
+    getInquiryArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/qna`,
+        // data: {
+        //   category : category ,
+        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_INQUIRYARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
     getHistoryViewArticles(context) {
       axios({
         method: 'get',
-        url: `${API_URL}/backend/`,
+        url: `${VUE_APP_API_URL}/backend/`,
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -103,7 +158,7 @@ export default new Vuex.Store({
     getCounselorInfo(context) {
       axios({
         method: 'post',
-        url: `${API_URL}/api/client/`,
+        url: `${VUE_APP_API_URL}/api/client/`,
       })
         .then((res) => {
           console.log(res, context)
@@ -116,7 +171,7 @@ export default new Vuex.Store({
     login(context, payload){
       axios({
         method:'post',
-        url:`${API_URL}/api/auth/login`,
+        url:`${VUE_APP_API_URL}/api/auth/login`,
         data:{
           id: payload.id,
           password: payload.password,
@@ -141,7 +196,7 @@ export default new Vuex.Store({
     signupClient(context, payload){
       axios({
         method:'post',
-        url: `${API_URL}/api/auth/signup/client`,
+        url: `${VUE_APP_API_URL}/api/auth/signup/client`,
         data: {
           id:payload.id,
           password:payload.password,
@@ -190,11 +245,20 @@ export default new Vuex.Store({
       }
       return axios({
         method:'post',
-        url: `${API_URL}/api/auth/signup/counselor`,
+        url: `${VUE_APP_API_URL}/api/auth/signup/counselor`,
         headers:{
           'Content-Type': 'multipart/form-data',
         },
-        data: formdata
+        data:{
+          id: payload.id,
+          password: payload.password,
+          name: payload.name,
+          tel: payload.tel,
+          email: payload.email,
+          gender: payload.gender,
+          enterprise_id: payload.enterprise_id,
+          data: formdata,
+        }
       })
       .then((res)=>{
         console.log(res)
