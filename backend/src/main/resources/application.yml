@@ -7,7 +7,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db-sodam.cj557j0pfgbg.ap-northeast-2.rds.amazonaws.com:3306/sodam?serverTimezone=UTC&characterEncoding=UTF-8
-    username: admini
+    username: admin
     password: sodam0118
 
   jpa:
