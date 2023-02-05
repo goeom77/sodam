@@ -1,51 +1,75 @@
 <template>
-  <div id="InquiryList">
+  <div id="InquiryList" >
     <div id="InquiryWriteButton">
-      <router-link to="/Announce" id="InquiryListAll" style="color:black">전체 (5)</router-link> 
+      <!-- <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link>  -->
+      <div id="InquiryListAll" @click="InquiryListAll">전체 (5)</div>
       <router-link to="/InquiryCreate" id="InquiryCreateButton" class="InquiryCreateButton" >글쓰기</router-link> 
     </div>
+    <div>
+      
+    </div>
+    <div>
+      <InquiryListItem
+        v-for="(Inquiryarticle, index) in Inquiryarticles.content"
+        :key="Inquiryarticle.postId"
+        :Inquiryarticle="Inquiryarticle"
+        :index="index"
+        :limit="InquiryListPage"
+      /> 
+    </div>
 
-    <InquiryListItem
-      v-for="Inquiryarticle in Inquiryarticles"
-      :key="Inquiryarticle.id"
-      :Inquiryarticle="Inquiryarticle"
-    /> 
-    <InquiryListItem/>
+    <div v-if="Inquiryarticles" class="text-center">
+      <v-pagination
+        v-model="this.InquiryListPage"
+        :length="5"
+
+      ></v-pagination>
+    </div>
+    <!-- :total-rows="KidBoardarticles.length"
+        :per-page="dataPerPage" -->
+
   </div>
 
 </template>
 
 <script>
+
+import axios from 'axios'
 import InquiryListItem from '@/components/helpitem/InquiryListItem.vue'
+
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'InquiryList',
+  data() {
+    return {
+      InquiryListPage: 1,
+			schVal: '',
+      contentlist: [], 
+    }
+  },
   components: {
     InquiryListItem
   },
-  // computed: {
-  //   articles() {
-  //     return this.$store.state.Inquiryarticles
-  //   }
-  // },
-  // created() {
-  //   this.getInquiryarticles()
-  // },
-  // methods: {
-  //   getInquiryarticles() {
-  //   this.$store.dispatch('getInquiryarticles')
-  //   }
-  // }
-
-
+  computed: {
+    Inquiryarticles() {
+      return this.$store.state.Inquiryarticles
+    },
+  },
+  methods: {
+    InquiryListAll(){
+      this.$router.push({ name: 'Inquiry' },)
+    },
+  }
 }
 </script>
 
 <style>
-/* #KidBoardList {
-  text-align: end;
-} */
+#InquiryList {
+  width: 1255px;
+}
 #InquiryWriteButton {
+  
   height: 40px;
   line-height: 40px;
   margin-top: 50px;
@@ -74,8 +98,10 @@ export default {
   border-radius: 5px;
 }
 
-#AnnounceList {
+#InquiryListAll {
   color: black;
+  
 }
+
 
 </style>

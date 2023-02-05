@@ -14,7 +14,7 @@
 // @ is an alias to /srcz
 import axios from 'axios'
 
-const API_URL = 'http://127.0.0.1:8000'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'KidBoardDetail',
@@ -30,7 +30,7 @@ export default {
     getKidBoardarticleDetail() {
       axios({
         method: 'get',
-        url: `${API_URL}/backend/${this.$route.params.id}`
+        url: `${VUE_APP_API_URL}/backend/${this.$route.params.id}`
       })
         .then((res) => {
           console.log(res)

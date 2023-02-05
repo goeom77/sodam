@@ -26,7 +26,7 @@
 </template>
 
 <script>
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   methods: {

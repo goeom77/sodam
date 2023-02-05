@@ -16,21 +16,47 @@
 <script>
 import axios from 'axios'
 
-const API_URL = "http://127.0.0.1:8080"
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
     name: 'KidBoardCommentForm',
     props: {
         KidBoardarticle: Object,
+        KidBoardComment: Object,
     },
     data() {
         return {
             inputData: null,
         }
+
     },
+    // created() {
+    //   this.getKidBoardCommentDetail()
+    // },
     methods: {
-        createKidBoardComment() {
+      // getKidBoardarticleDetail() {
+      //   axios({
+      //     method: 'get',
+      //     url: `${VUE_APP_API_URL}/api/trouble/${KidBoardComment.commentId}`
+      //     // url: `${VUE_APP_API_URL}/trouble/${postId}`
+      //   })
+      //     .then((res) => {
+      //       // console.log(res)
+      //       console.log('성공이다람쥐')
+      //       this.inputData = res.data.content
+      //     })
+      //     .catch((err) => {
+      //       console.log('실패이다람쥐')
+      //       KidBoardarticle.log(err)
+      //     })
+      // },
+
+
+
+
+
+      createKidBoardComment() {
         const content = this.inputData
         // const boardId = this.KidBoardarticle?.postId
         // const counselorId = this.KidBoardarticle?.clientId
@@ -40,8 +66,8 @@ export default {
         }
         axios({
             method: 'post',
-            // url: `${API_URL}/api/trouble/comment/${this.KidBoardarticle.id}/`,
-            url: `${API_URL}/api/trouble/comment`,
+            // url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardarticle.id}/`,
+            url: `${VUE_APP_API_URL}/api/trouble/comment`,
             data: {
                 content: content,
                 boardId: this.KidBoardarticle?.postId,
