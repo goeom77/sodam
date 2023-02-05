@@ -1,9 +1,12 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.db.converter.ConsultConverter;
+import com.samsung.sodam.db.converter.ConsultListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -60,9 +63,12 @@ public class Counselor extends Member {
     @Column(length = 200)
     private String profileImg;
 
+    @Column(name = "consult_type")
+    @Convert(converter = ConsultListConverter.class)
+    private List<CONSULT_TYPE> consultTypeList;
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -77,7 +83,7 @@ public class Counselor extends Member {
         this.routine = routine;
         this.enterprise = enterprise;
         this.profileImg = profileImg;
-
         this.commonCodeId = "1";
+        this.consultTypeList = type;
     }
 }

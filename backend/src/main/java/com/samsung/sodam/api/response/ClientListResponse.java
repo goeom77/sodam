@@ -1,11 +1,14 @@
 package com.samsung.sodam.api.response;
 
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class ClientListResponse {
     String id;
     String name;
