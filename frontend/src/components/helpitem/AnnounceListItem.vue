@@ -1,23 +1,26 @@
 <template>
-  <div id="AnnounceListItem">
-    <h1>여기는 각 게시글</h1>
-    <div>
+  <div id="AnnounceListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
+    <div style="float:left; margin-left: 60px;">
+      <h5>{{ Announcearticle.id }}</h5>
+    </div>
+    <div >
+      <div>
+        <router-link 
+          style="color:black" 
+          :to="{ 
+            name: 'AnnounceDetail', 
+            params: { id: Announce.id } 
+          }"
+        >
+          {{ Announce.title }}
+        </router-link>
+        <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
+      </div>
+      <div>
+        <p>{{ Announcearticle.userType }}  {{ Announcearticle?.createdAt }}</p>
+      </div>
+    </div>
 
-      <!-- <h5>{{ Announcearticle.id }} -->
-    </div>
-    <div>
-      <div>
-        <!-- <router-link :to="{ name: 'AnnounceDetail', params: { id: Announcearticle.id } }">
-          {{ Announcearticle.title }}
-        </router-link> -->
-      </div>
-      <div>
-        <!-- <p>{{ Announcearticle.username }}  {{ Announcearticle?.created_at }}</p> -->
-      </div>
-    </div>
-    <div>
-      <!-- <h3>조회수, 답변 수</h3> -->
-    </div>
     <hr>
 
   </div>
@@ -27,12 +30,26 @@
 
 export default {
   name: 'AnnounceListItem',
-  // props: {
-  //   Announcearticle: Object,
-  // }
+  props: {
+    Announcearticle: Object,
+    index: Number,
+    limit: Number,
+  },
+  methods: {
+    // clickList() {
+    //   this.$router.push({
+    //     name: "KidBoardDetail",
+    //     params: { postId: this.KidBoardarticle.postId },
+    //   });
+    // },
+  }
 }
 </script>
 
 <style>
-
+#AnnounceListItem {
+  /* width: 1255px; */
+  margin-left: 60px;
+  margin-right: 60px;
+}
 </style>

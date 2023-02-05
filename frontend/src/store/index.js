@@ -10,6 +10,8 @@ export default new Vuex.Store({
   state: {
     
     KidBoardarticles: [],
+    Announcearticles: [],
+    Inquiryarticles: [],
     HistoryViewarticles: [],
     token:null,
     payload:{
@@ -40,6 +42,15 @@ export default new Vuex.Store({
       console.log(KidBoardarticles)
       state.KidBoardarticles = KidBoardarticles
     },
+    GET_ANNOUNCEARTICLES(state, Announcearticles) {
+      console.log(Announcearticles)
+      state.Announcearticles = Announcearticles
+    },
+    GET_INQUIRYARTICLES(state, Inquiryarticles) {
+      console.log(Inquiryarticles)
+      state.Inquiryarticles = Inquiryarticles
+    },
+    
     GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
       state.HistoryViewarticles = HistoryViewarticles
     },
@@ -71,6 +82,9 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/trouble/list/child`,
+        // data: {
+        //   category : category ,
+        // },
         headers: {
           Authorization: `Token ${context.state.token}`
         }
@@ -79,6 +93,46 @@ export default new Vuex.Store({
           // console.log(res, context)
           // console.log(res.data)
           context.commit('GET_KIDBOARDARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
+    getAnnounceArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        // data: {
+        //   category : category ,
+        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_ANNOUNCEARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
+    getInquiryArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/qna`,
+        // data: {
+        //   category : category ,
+        // },
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          // console.log(res, context)
+          // console.log(res.data)
+          context.commit('GET_INQUIRYARTICLES', res.data)
         })
         .catch((err) => {
           console.log('게시글이 존재하지 않습니다.')
@@ -191,8 +245,10 @@ export default new Vuex.Store({
       }
       return axios({
         method:'post',
-<<<<<<< HEAD
         url: `${VUE_APP_API_URL}/api/auth/signup/counselor`,
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        },
         data:{
           id: payload.id,
           password: payload.password,
@@ -201,14 +257,8 @@ export default new Vuex.Store({
           email: payload.email,
           gender: payload.gender,
           enterprise_id: payload.enterprise_id,
+          data: formdata,
         }
-=======
-        url: `${API_URL}/api/auth/signup/counselor`,
-        headers:{
-          'Content-Type': 'multipart/form-data',
-        },
-        data: formdata
->>>>>>> a88701d36a108c253c1602205c7ddfd4561c75bb
       })
       .then((res)=>{
         console.log(res)
