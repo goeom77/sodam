@@ -22,6 +22,7 @@
       >
         Learn More
       </v-btn>
+      <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
     </v-card-actions>
   </v-card>
 </template>
