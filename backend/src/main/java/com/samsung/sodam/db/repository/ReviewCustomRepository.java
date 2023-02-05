@@ -15,4 +15,6 @@ public interface ReviewCustomRepository {
     Page<Review> getAllMyReview(ReviewRequest request,Pageable pageable);
     // 내가 작성한 후기
     List<Review> getMyReview(String clientId);
+
+    List<Review> getReviewByAvg();
 }
