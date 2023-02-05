@@ -1,3 +1,4 @@
+
 package com.samsung.sodam.db.repository;
 
 import com.samsung.sodam.api.request.SetStateRequest;
@@ -12,3 +13,4 @@ public class CustomScheduleRepositoryImpl implements CustomScheduleRepository {
         return null;
     }
 }
+

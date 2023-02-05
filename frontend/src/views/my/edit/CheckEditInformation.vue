@@ -5,13 +5,13 @@
       <h4>고객님의 소중한 개인정보 보호를 위해 비밀번호를 다시 확입합니다.</h4>
       <br>
       <h4>비밀번호가 노출되지않도록 주의해주세요</h4>
-      <input type="text" v-model="checkPassword"  placeholder="비밀번호"/>
+      <input type="password" v-model="InputPassword"  placeholder="비밀번호"/>
       <br>
-      <v-btn @click="checkPw">
+      <v-btn @click="checkPassword">
       확인
     </v-btn>
     </div>
-    <router-link style="color: black;" to="/editinformation">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+    <router-link style="color:black" to="/MainEdit">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
   </div>
 </template>
 
@@ -21,15 +21,15 @@ export default {
   name:'CheckEditInformation',
   data(){
     return{
-      checkPassword:null,
+      InputPassword:null,
       password: this.$store.state.payload.password
     }
   },
 
-  checkPw:{
+  methods:{
     checkPassword(){
-      if (this.checkPassword === this.password){
-        this.$router.push({ name : EditInformation})
+      if (this.InputPassword === this.password){
+        this.$router.push({ name : 'MainEdit'})
       } else {
         alert('비밀번호가 다릅니다')
       }
@@ -39,8 +39,8 @@ export default {
 </script>
 
 <style>
-.checkForm{
 
+.checkForm{
   width : 500px;
   height: 300px;
   background-color: white;

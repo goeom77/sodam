@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import ConsultantCard from '@/components/ConsultantCard'
+import ConsultantCard from '@/components/ConsultantCard/ConsultantCard'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
