@@ -1,6 +1,6 @@
 <template>
   <div >
-    <div>{{KidBoardarticle}}</div>
+    <!-- <div>{{KidBoardarticle}}</div> -->
     <form @submit.prevent="createKidBoardComment" style="border-radius:0px; height:50px;  display:flex; justify-content: space-between; width: 100px;">
       <div>
       <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="title"  v-model.trim="inputData">
