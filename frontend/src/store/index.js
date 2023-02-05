@@ -4,7 +4,7 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 
-const VUE_APP_API_URL = "http://vue.sodamsangdam.duckdns.org"
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
