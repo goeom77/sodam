@@ -1,24 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Login from '@/components/account/login/LoginPage.vue'
-
+import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import FindId from '@/components/account/FindId.vue'
 import FindPw from '@/components/account//FindPw.vue'
-import LoginKakao from '@/components/account/login/LoginKakao.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
+import CheckEditInformation from '@/components/account/edit/CheckEditInformation.vue'
+import EditInformation from '@/components/account/edit/EditInformation.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/kid/KidBoard.vue'
 import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
 import Announce from '../views/helpdesk/announce/Announce.vue'
 import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
 import ClientManage from '@/components/management/ClientManage.vue'
-import Notice from '../views/my/notice/Notice.vue'
-import HistoryView from '../views/my/history/HistoryView.vue'
-import Write from '../views/my/writereview/Write.vue'
-import CheckEditInformation from '@/components/account/edit/CheckEditInformation.vue'
-import EditInformation from '@/components/account/edit/EditInformation.vue'
 import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
@@ -26,6 +22,11 @@ import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vu
 import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
 import ConsultantCardItemReviewCreate from '@/components/ConsultantCardItemReviewCreate.vue'
+import MyPage from '@/views/my/MyPage.vue'
+import NoticeView from '../views/my/notice/NoticeView.vue'
+import HistoryView from '../views/my/history/HistoryView.vue'
+import MyPostView from '@/views/my/mypost/MyPostView.vue'
+import LikeView from '@/views/my/like/LikeView.vue'
 
 const routes = [
   {
@@ -96,24 +97,8 @@ const routes = [
     component: Inquiry
   },
   {
-    path: '/Notice',
-    name: 'Notice',
-    component: Notice
-  },
-  {
-    path: '/HistoryView',
-    name: 'HistoryView',
-    component: HistoryView
-  },
-
-  {
-    path: '/Write',
-    name: 'Write',
-    component: Write
-  },
-  {
-    path: '/Clientmanage',
-    name: 'Clientmanage',
+    path: '/ClientManage',
+    name: 'ClientManage',
     component: ClientManage
   },
   {
@@ -162,6 +147,31 @@ const routes = [
     name: 'consultantcarditemreviewcreate',
     component: ConsultantCardItemReviewCreate,
     props:true
+  },
+  {
+    path: '/mypage',
+    name: 'mypage',
+    component: MyPage,
+  },
+  {
+    path: '/MyPostView',
+    name: 'MyPostView',
+    component: MyPostView,
+  },
+  {
+    path: '/LikeView',
+    name: 'LikeView',
+    component: LikeView,
+  },
+  {
+    path: '/NoticeView',
+    name: 'NoticeView',
+    component: NoticeView
+  },
+  {
+    path: '/HistoryView',
+    name: 'HistoryView',
+    component: HistoryView
   },
 ]
 

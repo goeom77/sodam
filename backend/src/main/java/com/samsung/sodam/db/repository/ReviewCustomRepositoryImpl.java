@@ -1,7 +1,9 @@
 package com.samsung.sodam.db.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.ReviewRequest;
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +51,12 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         return queryFactory.selectFrom(review)
                 .where(review.clientId.eq(clientId)).fetch();
     }
+
+    @Override
+    public List<Review> getReviewByAvg() {
+        return null;
+    }
+
 
     public boolean checkIsNullOrEmpty(String input) {
         return input == null || input.isEmpty() || input.isBlank();

@@ -25,8 +25,8 @@ public class ConsultSchedule {
     private String content;
 
     private STATE state; // 신청상태
-    @Column(name = "day_time")
-    private LocalDateTime dayTime; //상담일시
+    @Column(name = "date_time")
+    LocalDateTime dateTime;//상담 일시
     @Column(name = "is_consult")
     private String isConsult;
     private Integer turn; // 회차

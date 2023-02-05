@@ -53,4 +53,10 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
     }
+
+    @Override
+    public List<Review> getOrderByAvg() {
+//        reviewRepository
+        return null;
+    }
 }
