@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ClientManageDetail from '@/components/management/ClientManageDetail.vue'
+import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 import axios from 'axios'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
