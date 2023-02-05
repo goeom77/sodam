@@ -1,6 +1,5 @@
 <template>
   <div @click="checkData">후기</div>
-    {{ this.counselorId }}
     <div>
       <div id="Writebox">
         <form>
@@ -13,7 +12,6 @@
               hover
               half-increments
             ></v-rating>
-
           </div>
 
           <div style="text-align:start; padding: 10px;">
@@ -40,7 +38,7 @@
           <input type="submit" id="submitno" value="취소">
           <!-- <button @click="postId !== undefined ? KidBoardarticleUpdate() : KidBoardcreateArticle()">{{ postId !== undefined ? "수정" : "작성" }}</button> -->
         </form>
-        <button @click="ReviewUpdate">수정</button>
+        <!-- <button @click="ReviewUpdate">수정</button> -->
       </div>
     </div>
   </template>
