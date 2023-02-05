@@ -2,6 +2,7 @@ package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.ClientListResponse;
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.service.ClientService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
@@ -48,8 +49,8 @@ public class CounselorController {
     @ApiOperation(value = "상담사의 상세 정보를 조회")
     @GetMapping("counselor/{id}")
     //상담사 정보 조회
-    public Counselor getCounselorInfo(@PathVariable String id) {
-        return service.getCounselorInfo(id);
+    public CounselorListResponse getCounselorInfo(@PathVariable String id) {
+        return service.getCounselorDetail(id);
     }
 
     //상담 예약

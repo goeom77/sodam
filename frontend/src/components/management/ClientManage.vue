@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="isLogin===true">
+
     {{ this.sessionInfo }}
     <client-manage-detail
     v-for="(clientData,idx) in this.sessionInfo"
@@ -13,7 +14,7 @@
 import ClientManageDetail from '@/components/management/ClientManageDetail.vue'
 import axios from 'axios'
 
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ClientManage',
   components:{
@@ -29,9 +30,9 @@ export default {
     getSessionInfo(){
       axios({
         method:'get',
-        url:`${API_URL}/api/myclient/${this.id}`,
+        url:`${VUE_APP_API_URL}/api/consultApplicant`,
         data:{
-          consultantId : this.id
+          counselorId : this.id
         }
       })
       .then(res=>{
@@ -39,6 +40,11 @@ export default {
         console.log(res)
       })
     },
+  },
+  computed:{
+    isLogin(){
+      return this.$store.getters.isLogin
+    }
   },
   created() {
     this.getSessionInfo()

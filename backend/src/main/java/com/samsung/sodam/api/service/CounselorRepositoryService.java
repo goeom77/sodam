@@ -4,6 +4,7 @@ import com.samsung.sodam.api.request.ConsultApplicantRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
 import com.samsung.sodam.api.request.SetStateRequest;
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class CounselorRepositoryService {
     @Autowired
     SessionRepository sessionRepository;
     CounselorRepository repository;
+
+    CounselorCustomRepository counselorCustomRepository;
     ScheduleRepository scheduleRepository;
 
     ApplicantRepository applicantRepository;
@@ -42,6 +45,10 @@ public class CounselorRepositoryService {
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
+    }
+
+    public CounselorListResponse getCounselorDetail(String id) {
+        return counselorCustomRepository.getCounselorDetail(id);
     }
 
 //    public List<Review> getReviews(String id) {

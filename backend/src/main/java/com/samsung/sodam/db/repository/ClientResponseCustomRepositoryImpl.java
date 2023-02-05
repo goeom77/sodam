@@ -6,13 +6,11 @@ import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.response.QClientListResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.samsung.sodam.db.entity.QClient.client;

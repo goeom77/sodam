@@ -37,6 +37,7 @@
 import axios from 'axios'
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
 export default {
   name:'App',
   data(){
