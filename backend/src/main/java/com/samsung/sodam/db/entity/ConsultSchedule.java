@@ -1,20 +1,21 @@
 package com.samsung.sodam.db.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ConsultSchedule {
-    @Id
+    @Id @GeneratedValue
     private Long id;
     @Column(name = "consult_type")
     private CONSULT_TYPE CONSULTTYPE;

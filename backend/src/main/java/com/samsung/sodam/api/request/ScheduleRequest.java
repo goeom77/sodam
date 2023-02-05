@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.security.cert.Certificate;
+import java.time.LocalDateTime;
 
 /**
  * 상담 세션 생성 요청객체
@@ -29,4 +30,6 @@ public class ScheduleRequest {
     @Column(name = "counselor_id")
     private String counselorId;
     private STATE status;
+
+    private LocalDateTime dateTime;
 }
