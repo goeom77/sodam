@@ -1,7 +1,9 @@
 package com.samsung.sodam.db.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.response.ClientListResponse;
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.response.QClientListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import static com.samsung.sodam.db.entity.QClient.client;
 import static com.samsung.sodam.db.entity.QConsultSession.consultSession;
+import static com.samsung.sodam.db.entity.QReview.review;
 
 @Repository
 @RequiredArgsConstructor
@@ -62,4 +65,17 @@ public class ClientResponseCustomRepositoryImpl implements ClientResponseCustomR
 //        if(clientId == null || client.id.equals("")) return null;
 //        return client.id.eq(clientId);
 //    }
+
+    @Override
+    public List<CounselorListResponse> getReviewByAvg() {
+        return queryFactory.from(review).groupBy(review.counselorId).select(
+                Projections.bean(
+                        CounselorListResponse.class,
+                        review.id,
+                        review.counselorId,
+                        review.stars.avg().as("avg")
+                )
+        ).fetch();
+    }
+
 }

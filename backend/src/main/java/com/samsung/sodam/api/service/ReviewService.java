@@ -19,4 +19,6 @@ public interface ReviewService {
     Review updateReview(Long reviewId,Review review);
 
     void deleteReview(Long id);
+
+    List<Review> getOrderByAvg();
 }
