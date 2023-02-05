@@ -26,9 +26,12 @@
           {{ counselorData.consultTypeList }}
         </h4>
         
-        <h4 v-if="(this.common_code==2)">
-          좋아요
-        </h4>
+        <div>
+          <button class="buttonSize" style="color:#ea4335" @click="likeMovie">
+            <img v-if="this.likeStatus === false" src="@/assets/images/like_.png" style="width:100px">
+            <img v-else src="@/assets/images/like_check.png" style="width:100px">
+          </button>
+        </div>
       </div>
     </div>  
   </v-container>
@@ -42,7 +45,8 @@ export default {
   },
   data(){
     return{
-      common_code: this.$store.state.payload.common_code
+      common_code: this.$store.state.payload.common_code,
+      likeStatus: false
     }
   }
 }
