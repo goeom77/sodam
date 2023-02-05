@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getInquiryArticles() {
-    this.$store.dispatch('getInquirydArticles')
+    this.$store.dispatch('getInquiryArticles')
     }
   }
 
