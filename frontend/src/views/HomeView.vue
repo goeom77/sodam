@@ -6,6 +6,7 @@
         <h1>여기, 소담이 함께합니다.</h1> 
         <br>
         <br>
+        <ConsultantCardSearch/>
         <input id="searhBar"
           class="search-input"
           type="text"
@@ -21,12 +22,13 @@
 // @ is an alias to /srcz
 
 import ConsultantList from '@/components/ConsultantList.vue'
-
+import ConsultantCardSearch from '@/components/ConsultantCardSearch.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    ConsultantList
+    ConsultantList,
+    ConsultantCardSearch
   },
 
 }

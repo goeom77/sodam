@@ -15,7 +15,7 @@
         <router-link to="/KidBoard">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
         <router-link to="/Announce">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;
         <router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;
-        <router-link to="/Clientmanage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
+        <router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;
       </div>
     </div>
     <div v-if="isLogin===true">
@@ -26,7 +26,7 @@
       <div v-if="isLogin===true">
         <!-- <h4>{{ this.name }}님</h4> -->
         <v-btn @click="logOut">Logout</v-btn>
-        <router-link to="/Notice">마이 페이지</router-link>
+        <router-link to="/mypage">마이 페이지</router-link>
         <router-link to="/Checkeditinformation">정보 수정</router-link>
       </div>
     </div>
