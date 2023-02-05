@@ -21,8 +21,8 @@
 <script>
 // @ is an alias to /srcz
 
-import ConsultantList from '@/components/ConsultantList.vue'
-import ConsultantCardSearch from '@/components/ConsultantCardSearch.vue'
+import ConsultantList from '@/components/ConsultantCard/ConsultantList.vue'
+import ConsultantCardSearch from '@/components/ConsultantCard/ConsultantCardSearch.vue'
 
 export default {
   name: 'HomeView',

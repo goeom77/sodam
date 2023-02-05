@@ -8,15 +8,14 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    
     KidBoardarticles: [],
     Announcearticles: [],
     Inquiryarticles: [],
-    HistoryViewarticles: [],
     token:null,
     payload:{
       id: null,
       password: null,
+      common_code: null
     },
     userSignupData:{
       id:null,
@@ -60,7 +59,8 @@ export default new Vuex.Store({
     SET_USER_DATA(state, payload) {
       state.payload = {
         id: payload.id,
-        password: payload.password
+        password: payload.password,
+        common_code: payload.common_code
       }
     },
     SAVECOUNSELOR(state,payload){

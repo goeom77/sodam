@@ -27,7 +27,6 @@
         <!-- <h4>{{ this.name }}님</h4> -->
         <v-btn @click="logOut">Logout</v-btn>
         <router-link to="/mypage">마이 페이지</router-link>
-        <router-link to="/Checkeditinformation">정보 수정</router-link>
       </div>
     </div>
   </nav>

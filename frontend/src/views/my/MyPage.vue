@@ -17,7 +17,7 @@
               내게 온 알림
             </v-tab>
             <v-tab value="two">
-              상담 내역
+              개인정보 수정
             </v-tab>
             <v-tab value="three">
               내 글 보기
@@ -26,22 +26,22 @@
               찜 목록
             </v-tab>
           </v-tabs>
-
+          
           <v-window v-model="tab">
             <v-window-item value="one">
-              <HistoryView/>
+              <NoticeView/>
             </v-window-item>
             
             <v-window-item value="two">
-              <LikeView/>
+              <CheckEditInformation/>
             </v-window-item>
-
+            
             <v-window-item value="three">
               <MyPostView/>
             </v-window-item>
-
+            
             <v-window-item value="four">
-              <NoticeView/>
+              <LikeView/>
             </v-window-item>
           </v-window>
         </v-card>
@@ -52,7 +52,7 @@
 </template>
   
 <script>
-import HistoryView from '@/views/my/history/HistoryView.vue'
+import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
 import NoticeView from '@/views/my/notice/NoticeView.vue'
@@ -60,10 +60,10 @@ import NoticeView from '@/views/my/notice/NoticeView.vue'
   export default {
     name: 'MyPage',
     components: {
-        HistoryView,
-        LikeView,
-        MyPostView,
-        NoticeView
+      CheckEditInformation,
+      LikeView,
+      MyPostView,
+      NoticeView
     },
     data(){
       return{

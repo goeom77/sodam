@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import ConsultantCardItemReserve from '@/components/ConsultantCardItemReserve.vue'
-import ConsultantCardItemReview from '@/components/ConsultantCardItemReview.vue'
-import ConsultantCardItemInfo from '@/components/ConsultantCardItemInfo.vue'
+import ConsultantCardItemReserve from '@/components/ConsultantCard/ConsultantCardItemReserve.vue'
+import ConsultantCardItemReview from '@/components/ConsultantCard/ConsultantCardItemReview.vue'
+import ConsultantCardItemInfo from '@/components/ConsultantCard/ConsultantCardItemInfo.vue'
 import axios from 'axios'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL

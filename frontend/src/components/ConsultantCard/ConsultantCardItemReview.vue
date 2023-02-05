@@ -21,7 +21,7 @@
 
 <script>
 import axios from 'axios'
-import ConsultantCardItemReviewItem from '@/components/ConsultantCardItemReviewItem.vue'
+import ConsultantCardItemReviewItem from '@/components/ConsultantCard/ConsultantCardItemReviewItem.vue'
 const API_URL = 'http://127.0.0.1:8080'
 export default {
   name:'ConsultantCardItemReview',

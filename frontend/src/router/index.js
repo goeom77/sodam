@@ -7,8 +7,6 @@ import FindPw from '@/components/account//FindPw.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
-import CheckEditInformation from '@/components/account/edit/CheckEditInformation.vue'
-import EditInformation from '@/components/account/edit/EditInformation.vue'
 import CalendarView from '@/components/management/CalendarView.vue'
 import KidBoard from '../views/board/kid/KidBoard.vue'
 import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
@@ -18,15 +16,16 @@ import ClientManage from '@/components/management/ClientManage.vue'
 import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
-import SignUpFinish from '../components/account/signup/counselor/SignUpFinish.vue'
 import VideoPage from '../components/video/VideoPage.vue'
-import ConsultantCardItem from '@/components/ConsultantCardItem.vue'
-import ConsultantCardItemReviewCreate from '@/components/ConsultantCardItemReviewCreate.vue'
+import ConsultantCardItem from '@/components/ConsultantCard/ConsultantCardItem.vue'
+import ConsultantCardItemReviewCreate from '@/components/ConsultantCard/ConsultantCardItemReviewCreate.vue'
 import MyPage from '@/views/my/MyPage.vue'
 import NoticeView from '../views/my/notice/NoticeView.vue'
-import HistoryView from '../views/my/history/HistoryView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
+import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
+import EditInformation from '@/views/my/edit/EditInformation.vue'
+import MainEdit from '@/views/my/edit/MainEdit.vue'
 
 const routes = [
   {
@@ -102,13 +101,13 @@ const routes = [
     component: ClientManage
   },
   {
-    path: '/Checkeditinformation',
-    name: 'Checkeditinformation',
+    path: '/CheckEditInformation',
+    name: 'CheckEditInformation',
     component: CheckEditInformation
   },
   {
-    path: '/editinformation',
-    name: 'editinformation',
+    path: '/EditInformation',
+    name: 'EditInformation',
     component: EditInformation
   },
   {
@@ -125,11 +124,6 @@ const routes = [
     path: '/InquiryCreate',
     name: 'InquiryCreate',
     component: InquiryCreate
-  },
-  {
-    path: '/signupfinish',
-    name: 'signupfinish',
-    component: SignUpFinish
   },
   {
     path: '/VideoPage',
@@ -169,9 +163,9 @@ const routes = [
     component: NoticeView
   },
   {
-    path: '/HistoryView',
-    name: 'HistoryView',
-    component: HistoryView
+    path: '/MainEdit',
+    name: 'MainEdit',
+    component: MainEdit
   },
 ]
 
