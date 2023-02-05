@@ -22,7 +22,7 @@
 <script>
 import axios from 'axios'
 import ConsultantCardItemReviewItem from '@/components/ConsultantCard/ConsultantCardItemReviewItem.vue'
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ConsultantCardItemReview',
   components:{
@@ -47,7 +47,7 @@ export default {
     getReview(){
       axios({
         method:'post',
-        url: `${API_URL}/api/review/my`,
+        url: `${VUE_APP_API_URL}/api/review/my`,
         data:{
           counselorId:this.counselorData.id,
         }

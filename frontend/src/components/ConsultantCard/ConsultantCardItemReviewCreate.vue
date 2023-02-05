@@ -45,7 +45,7 @@
   
   <script>
   import axios from 'axios'
-  const API_URL = 'http://127.0.0.1:8080'
+  const VUE_APP_API_URL = process.env.VUE_APP_API_URL
   
   export default {
     name:'ConsultantCardItemReviewCreate',
@@ -94,7 +94,7 @@
         }
         axios({
           method:'post',
-          url:`${API_URL}/api/review`,
+          url:`${VUE_APP_API_URL}/api/review`,
           data: {
             clientId:this.$store.state.payload.id,
             title: this.title,
