@@ -25,8 +25,11 @@
             <v-tab value="four">
               찜 목록
             </v-tab>
+            <v-tab value="four">
+              정보 수정
+            </v-tab>
           </v-tabs>
-
+          
           <v-window v-model="tab">
             <v-window-item value="one">
               <HistoryView/>
