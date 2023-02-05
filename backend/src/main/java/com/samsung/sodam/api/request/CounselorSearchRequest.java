@@ -16,6 +16,6 @@ public class CounselorSearchRequest {
     // keyword 는 사람이름, 상담대상, 13개 카테고리
     private String keyword;
     private Gender gender;
-    private Certificate certificate;
-    private String price;
+//    private Certificate certificate;
+//    private String price;
 }

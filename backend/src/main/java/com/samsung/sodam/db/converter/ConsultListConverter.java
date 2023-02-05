@@ -20,6 +20,7 @@ public class ConsultListConverter implements AttributeConverter<List<CONSULT_TYP
 
     @Override
     public List<Integer> convertToDatabaseColumn(List<CONSULT_TYPE> attribute) {
+        if (attribute == null)return new ArrayList<>();
         return attribute.stream().map(CONSULT_TYPE::getValue).collect(Collectors.toList());
     }
 

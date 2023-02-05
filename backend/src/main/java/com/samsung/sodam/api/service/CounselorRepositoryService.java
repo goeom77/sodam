@@ -39,7 +39,11 @@ public class CounselorRepositoryService {
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
 
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//        return repository.find;
+//    }
+
+    public Page<Counselor> getAllCounselor( Pageable pageable) {
         return repository.findAll(pageable);
     }
 
@@ -72,6 +76,12 @@ public class CounselorRepositoryService {
         favoriteRepository.save(favoriteCounselor);
     }
 
+    public List<CounselorListResponse> getMyFavCounselor(String clientId) {
+//        return counselorCustomRepository.findAllByClientId(clientId);
+        return null;
+    }
+
+
     public void removeFavCounselor(FavoriteCounselor favoriteCounselor) {
         favoriteRepository.delete(favoriteCounselor);
     }
@@ -81,7 +91,7 @@ public class CounselorRepositoryService {
         return newSession.getId();
     }
 
-    public List<ConsultSession> getMySession(String counselorId){
+    public List<ConsultSession> getMySession(String counselorId) {
         return sessionRepository.findByCounselorId(counselorId);
     }
 
@@ -136,7 +146,7 @@ public class CounselorRepositoryService {
      * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
      */
     @Transactional
-    public void setApplicationState(SetStateRequest request){
+    public void setApplicationState(SetStateRequest request) {
         ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
         session.setStatus(request.getState());
         sessionRepository.save(session);

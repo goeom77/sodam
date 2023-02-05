@@ -40,10 +40,11 @@ public class CounselorController {
 //        return service.searchCounselor(request, pageable);
 //    }
 
-    //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
+    @ApiOperation(value = "모든 상담사를 조회")
     @PostMapping("counselor/")
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-        return service.searchCounselor(request, pageable);
+    public Page<Counselor> searchCounselor() {
+        Pageable pageable = Pageable.ofSize(20);
+        return service.getAllCounselor(pageable);
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")
@@ -72,6 +73,13 @@ public class CounselorController {
     public void setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.setFavCounselor(fav);
+    }
+
+    //관심 상담사 담기
+    @PostMapping("/client/{clientId}/fav")
+    @ApiOperation(value = "관심상담사 조회")
+    public List<CounselorListResponse> getMyFavCounselor(@PathVariable String clientId) {
+        return service.getMyFavCounselor(clientId);
     }
 
     @DeleteMapping("/client/{clientId}/fav/{counselorId}")
