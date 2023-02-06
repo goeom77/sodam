@@ -25,7 +25,11 @@
       <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
       <div v-if="isLogin===true">
         <!-- <h4>{{ this.name }}님</h4> -->
-        <v-btn @click="alarm">Alarm</v-btn>
+        <v-btn class="text-none" stacked style="background-color: white;">
+          <v-badge floating content="0" color="error" @click="alarm">
+            <v-icon>mdi-bell-outline</v-icon>
+          </v-badge>
+        </v-btn>
         <v-btn @click="logOut">Logout</v-btn>
         <router-link to="/mypage">마이 페이지</router-link>
       </div>

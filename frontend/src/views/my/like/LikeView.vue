@@ -1,7 +1,10 @@
 <template>
   {{ this.clientId }}
   <div v-if="this.favList">
-    <LikeViewCard/>
+    <LikeViewCard
+    v-for="(consult,idx) in favList"
+    :key="idx"
+    :consult="consult"/>
   </div>
   <div v-else>
     등록한 상담사가 없습니다
@@ -28,7 +31,7 @@ export default {
     getFavList(){
       axios({
         method:'post',
-        url: `${VUE_APP_API_URL}/api/client/${this.clientId}/fav`,
+        url: `${VUE_APP_API_URL}/api/fav/${this.clientId}`,
         data:{
           clientId: this.clientId
         },
@@ -37,8 +40,8 @@ export default {
         }
       })
       .then(res=>{
-        console.log(res)
-        this.favList = res
+        console.log(res.data)
+        this.favList = res.data
       })
     } 
   },

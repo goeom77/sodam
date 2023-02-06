@@ -48,7 +48,8 @@ export default {
         }
       })
       .then(res=>{
-        this.counselorInfo = res.data.content
+        console.log(res)
+        this.counselorInfo = res.data
       })
     },
 
