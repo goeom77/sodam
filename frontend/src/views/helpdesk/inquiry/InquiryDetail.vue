@@ -90,7 +90,10 @@ export default {
     getInquiryarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}`
+        url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}`,
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
       })
         .then((res) => {
           console.log(this.$route.params.id)
@@ -145,8 +148,8 @@ export default {
       axios({
         method: 'delete',
         url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {

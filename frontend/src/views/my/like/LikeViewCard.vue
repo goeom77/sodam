@@ -1,8 +1,6 @@
 <template>
-  <v-container>
-  
-    {{ counselor }}
-    <v-card
+    <v-container>
+  <v-card
     max-width="400"
     class="mx-auto"
   >
@@ -22,13 +20,10 @@
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>
             <v-card-title class="text-h5">
-              {{ counselor.name}}
             </v-card-title>
-            
             <v-card-subtitle>
-              {{ counselor.introduce }}
-              <br>
-              {{ counselor.major}}
+              {{consult}}
+
             </v-card-subtitle>
           </div>
 
@@ -37,9 +32,9 @@
               outlined
               rounded
               text
-              @click="moveTo(counselor.id)"
+              @click="deleteFav"
             >
-              Button
+              X
             </v-btn>
           </v-card-actions>
         </div>
@@ -48,24 +43,41 @@
   </v-row>
 </v-card>
 </v-container>
-
 </template>
 
 <script>
+import axios from 'axios'
 
-// import {useRouter} from 'vue-router';
-
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
-  name: 'ConsultantCard',
-  props: {
-    counselor: Object,
+  name:'LikeViewCard',
+  props:{
+    consult:Object
+  },
+  data(){
+    return{
+      clientId:this.$store.state.payload.id,
+      CounselorId:null,
+    }
   },
   methods:{
-    moveTo(){
-      this.$router.push({ name: 'consultantcarditem', params: {id: this.counselor.id} })
-    },
-
-  },  
+    deleteFav(){
+      axios({
+        method:'delete',
+        url: `${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${this.counselorId}`,
+        data:{
+          clientId: this.clientId,
+          counselorId: this.counselorId
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        console.log(res)
+      })
+    }
+  }
 }
 </script>
 

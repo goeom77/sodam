@@ -42,9 +42,10 @@ export default {
     getCounselorInfo(){
       axios({
         method:'post',
-        url:`${VUE_APP_API_URL}/api/counselor/`
+        url:`${VUE_APP_API_URL}/api/counselor/`,
       })
       .then(res=>{
+        console.log(res)
         this.counselorInfo = res.data.content
       })
     },

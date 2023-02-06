@@ -91,7 +91,8 @@ export default {
     getKidBoardarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
+
       })
         .then((res) => {
           console.log(this.$route.params.postId)
@@ -146,8 +147,8 @@ export default {
       axios({
         method: 'delete',
         url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
@@ -165,8 +166,8 @@ export default {
       axios({
         method: 'delete',
         url: `${VUE_APP_API_URL}/capi/trouble/${this.review?.id}/`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
@@ -180,8 +181,8 @@ export default {
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then((res) => {
@@ -206,8 +207,8 @@ export default {
           content: this.content,
           rank: this.rank,
         },
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
