@@ -1,11 +1,5 @@
 <template>
   <div id="AlarmViewList">
-    <div id="MyBoard">
-        <div id="AlarmViewListtitle">
-          <h1>알림 페이지</h1>
-        </div>  
-      </div>
-
         <v-card class="Card">
           <v-tabs
             v-model="tab"
@@ -52,8 +46,6 @@
             </v-window-item>
           </v-window>
         </v-card>
-      <div>
-    </div>
   </div>
 </template>
   
@@ -65,7 +57,7 @@ import AlarmViewListHelp from '../alarm/AlarmViewListHelp.vue'
 import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
 
   export default {
-    name: 'MyPage',
+    name: 'AlarmViewList',
     components: {
       AlarmViewListAll,
       AlarmViewListSangdam,

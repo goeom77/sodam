@@ -73,24 +73,24 @@ export default new Vuex.Store({
     },
     // 여기는 상담 알람 데이터
 
-    GET_SANGDAMALARMARTICLES(state, AlarmViewarticles) {
-      console.log(AlarmViewarticles)
-      state.AlarmViewarticles = AlarmViewarticles
+    GET_SANGDAMALARMARTICLES(state, SangdamAlarmViewarticles) {
+      console.log(SangdamAlarmViewarticles)
+      state.SangdamAlarmViewarticles = SangdamAlarmViewarticles
     },
     // 여기는 고민게시판 알람 데이터
-    GET_BOARDALARMARTICLES(state, AlarmViewarticles) {
-      console.log(AlarmViewarticles)
-      state.AlarmViewarticles = AlarmViewarticles
+    GET_BOARDALARMARTICLES(state, BoardAlarmViewarticles) {
+      console.log(BoardAlarmViewarticles)
+      state.BoardAlarmViewarticles = BoardAlarmViewarticles
     },
     // 여기는 헬프데스크 알람 데이터
-    GET_HELPALARMARTICLES(state, AlarmViewarticles) {
-      console.log(AlarmViewarticles)
-      state.AlarmViewarticles = AlarmViewarticles
+    GET_HELPALARMARTICLES(state, HelpAlarmViewarticles) {
+      console.log(HelpAlarmViewarticles)
+      state.HelpAlarmViewarticles = HelpAlarmViewarticles
     },
     // 여기는 기타 알람 데이터
-    GET_GUITARALARMARTICLES(state, AlarmViewarticles) {
-      console.log(AlarmViewarticles)
-      state.AlarmViewarticles = AlarmViewarticles
+    GET_GUITARALARMARTICLES(state, GuitarAlarmViewarticles) {
+      console.log(GuitarAlarmViewarticles)
+      state.GuitarAlarmViewarticles = GuitarAlarmViewarticles
     },
     // 여기까지 알람데이터 저장
 
@@ -184,13 +184,12 @@ export default new Vuex.Store({
     getAlarmArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification`,
         headers: {
-          Authorization: `Token ${context.state.token}`
-        }
+          Authorization: `Token ${context.state.token}`}
       })
         .then((res) => {
-
+          console.log('전체알람 인덱스')
           context.commit('GET_ALARMARTICLES', res.data)
         })
         .catch((err) => {
@@ -201,10 +200,9 @@ export default new Vuex.Store({
     getSangdamAlarmArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification?type=1`,
         headers: {
-          Authorization: `Token ${context.state.token}`
-        }
+          Authorization: `Token ${context.state.token}`}
       })
         .then((res) => {
           context.commit('GET_SANGDAMALARMARTICLES', res.data)
@@ -217,10 +215,9 @@ export default new Vuex.Store({
     getBoardAlarmArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification?type=2`,
         headers: {
-          Authorization: `Token ${context.state.token}`
-        }
+          Authorization: `Token ${context.state.token}`}
       })
         .then((res) => {
 
@@ -234,13 +231,12 @@ export default new Vuex.Store({
     getHelpAlarmArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification?type=3`,
         headers: {
-          Authorization: `Token ${context.state.token}`
-        }
+          Authorization: `Token ${context.state.token}`}
       })
         .then((res) => {
-
+          console.log('헬프알람 인덱스')
           context.commit('GET_HELPALARMARTICLES', res.data)
         })
         .catch((err) => {
@@ -251,10 +247,9 @@ export default new Vuex.Store({
     getGuitarAlarmArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification`,
         headers: {
-          Authorization: `Token ${context.state.token}`
-        }
+          Authorization: `Token ${context.state.token}`}
       })
         .then((res) => {
 
