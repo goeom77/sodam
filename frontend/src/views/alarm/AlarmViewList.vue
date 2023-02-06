@@ -19,9 +19,9 @@
             <v-tab value="four">
               HELP DESK
             </v-tab>
-            <v-tab value="five">
+            <!-- <v-tab value="five">
               기타
-            </v-tab>
+            </v-tab> -->
           </v-tabs>
           
           <v-window v-model="tab">
@@ -41,9 +41,9 @@
               <AlarmViewListHelp/>
             </v-window-item>
 
-            <v-window-item value="five">
+            <!-- <v-window-item value="five">
               <AlarmViewListGuitar/>
-            </v-window-item>
+            </v-window-item> -->
           </v-window>
         </v-card>
   </div>
@@ -54,7 +54,7 @@ import AlarmViewListAll from '../alarm/AlarmViewListAll.vue'
 import AlarmViewListSangdam from '../alarm/AlarmViewListSangdam.vue'
 import AlarmViewListBoard from '../alarm/AlarmViewListBoard.vue'
 import AlarmViewListHelp from '../alarm/AlarmViewListHelp.vue'
-import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
+// import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
 
   export default {
     name: 'AlarmViewList',
@@ -63,7 +63,7 @@ import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
       AlarmViewListSangdam,
       AlarmViewListBoard,
       AlarmViewListHelp,
-      AlarmViewListGuitar
+      // AlarmViewListGuitar
     },
     data(){
       return{
@@ -138,7 +138,7 @@ import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
 
   .Card{
     width:100%; 
-    height:500px; 
+    height:1000px; 
     /* justify-content: center; */
     /* display: grid; */
     /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */

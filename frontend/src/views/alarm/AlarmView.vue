@@ -25,8 +25,8 @@ export default {
       console.log('전체알람 알람뷰')
       this.$store.dispatch('getAlarmArticles')
       this.$store.dispatch('getSangdamAlarmArticles')
-      // this.$store.dispatch('getBoardAlarmArticles')
-      // this.$store.dispatch('getHelpAlarmArticles')
+      this.$store.dispatch('getBoardAlarmArticles')
+      this.$store.dispatch('getHelpAlarmArticles')
       // this.$store.dispatch('getGuitarAlarmArticles')
     },
     // getSangdamAlarmArticles() {

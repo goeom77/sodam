@@ -3,7 +3,7 @@
     <div>
       <AlarmViewListItem
         v-for="(AlarmViewarticle, index) in GuitarAlarmViewarticles.content"
-        :key="AlarmViewarticle.postId"
+        :key="AlarmViewarticle.id"
         :AlarmViewarticle="AlarmViewarticle"
         :index="index"
         :limit="AlarmViewListPage"
