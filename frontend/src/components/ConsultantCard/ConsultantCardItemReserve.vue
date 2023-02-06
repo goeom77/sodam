@@ -37,9 +37,9 @@
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>
-      <!-- <DateTimePicker @update-date="updateDate">
+
       
-      </DateTimePicker> -->
+      <Datepicker v-model="date" range :partial-range="false" />
 
 
       <!-- <datepicker
@@ -64,14 +64,15 @@
 
 <script>
 // import Datepicker from 'vue3-datepicker';
-import DateTimePicker from '@/components/ConsultantCard/DateTimePicker.vue'
+
 import axios from 'axios'
+
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
-    DateTimePicker
+
     // Datepicker
   },
   props:{
@@ -100,7 +101,7 @@ export default {
       ],
       content:null,
       counselorId: this.counselorData.id,
-      dueDate:'2023-02-06T01:18:08',
+      dueDate:null,
       email:null,
       gender:null,
       genderList:[
@@ -113,16 +114,13 @@ export default {
     }
   },
   methods:{
-    // updateDate:function(value){
-    //   this.dueDate = value;
-    // },
+
 
     checkDate(){
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId
       console.log(this.age,this.clientId,this.consultType,this.content,this.clientId)
       console.log(this.dueDate,this.email,this.gender,this.name,this.state,this.tel)
-      console.log(this.$store.state.token)
     },
     reserveConsult(){
       axios({
@@ -151,6 +149,7 @@ export default {
         })
     },
   },
+
 }
 </script>
 
