@@ -39,7 +39,7 @@ export default {
         }
       })
       .then(res=>{
-        // this.sessionInfo = res.data.content
+        this.sessionInfo = res.data.content
         console.log(res)
       })
     },

@@ -1,6 +1,7 @@
 <template>
   <div>
     {{ id }}
+
     <ClientManageDetailInfo
     :id="id"/>
   </div>
