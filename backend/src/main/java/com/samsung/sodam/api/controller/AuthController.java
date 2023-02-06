@@ -217,4 +217,16 @@ public class AuthController {
         }
     }
 
+    @DeleteMapping("/out/{id}")
+    public HttpStatus deleteMember(@PathVariable String id) {
+        try {
+            System.out.println(id);
+            authService.deleteMember(id);
+            return HttpStatus.OK;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
+    }
+
 }
