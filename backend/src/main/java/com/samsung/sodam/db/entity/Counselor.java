@@ -45,7 +45,6 @@ public class Counselor extends Member {
     @Column(length = 3)
     private String commonCodeId;
 
-
     @Column(length = 30)
     private String major;
 

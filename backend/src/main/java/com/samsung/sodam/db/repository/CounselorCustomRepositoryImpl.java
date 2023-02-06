@@ -26,7 +26,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         return CounselorListResponse.builder().career(c.getCareer()).major(c.getMajor())
                 .gender(c.getGender()).consultTypeList(c.getConsultTypeList()).tel(c.getTel())
                 .profileImg(c.getProfileImg()).introduce(c.getIntroduce()).email(c.getEmail())
-                .name(c.getName()).routine(c.getRoutine()).build();
+                .name(c.getName()).routine(c.getRoutine()).id(c.getId()).build();
     }
 
     public List<CounselorListResponse> getMyFavCounselor(String clientId) {
