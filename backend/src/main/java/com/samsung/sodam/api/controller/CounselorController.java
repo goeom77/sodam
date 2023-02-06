@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -54,8 +55,11 @@ public class CounselorController {
 
     @PutMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCunselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
         try {
+            System.out.println("editProfileCounselor - parameter test");
+            System.out.println(request.getConsultType());
+            System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
             return HttpStatus.OK;
         } catch(Exception e){

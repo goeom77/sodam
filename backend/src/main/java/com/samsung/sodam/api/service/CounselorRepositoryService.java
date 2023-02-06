@@ -71,6 +71,10 @@ public class CounselorRepositoryService {
             counselor.setCareer(careerStr);
         }
 
+        if(!request.getConsultType().isEmpty()){
+            counselor.setConsultTypeList(request.getConsultType());
+        }
+        System.out.println(counselor.getConsultTypeList().toString());
         System.out.println("CounselorService -- convert test");
         List<Education> list = CounselorUtil.educationStringToObject(educationStr);
         for(Education e : list){
