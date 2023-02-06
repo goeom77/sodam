@@ -120,9 +120,6 @@ export default new Vuex.Store({
         // data: {
         //   category : category ,
         // },
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
       })
         .then((res) => {
           // console.log(res, context)
@@ -140,9 +137,6 @@ export default new Vuex.Store({
         // data: {
         //   category : category ,
         // },
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
       })
         .then((res) => {
           // console.log(res, context)
@@ -160,9 +154,7 @@ export default new Vuex.Store({
         // data: {
         //   category : category ,
         // },
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
+
       })
         .then((res) => {
           // console.log(res, context)
