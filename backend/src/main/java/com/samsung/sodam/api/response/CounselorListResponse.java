@@ -1,10 +1,13 @@
 package com.samsung.sodam.api.response;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.samsung.sodam.db.converter.ConsultConverter;
+import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
+import com.samsung.sodam.db.converter.EducationListConverter;
 import com.samsung.sodam.db.converter.GenderConverter;
 import com.samsung.sodam.db.entity.CONSULT_TYPE;
+import com.samsung.sodam.db.entity.Career;
+import com.samsung.sodam.db.entity.Education;
 import com.samsung.sodam.db.entity.GENDER;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -14,7 +17,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -30,13 +32,10 @@ public class CounselorListResponse {
     private String email="";
     @ApiModelProperty(value = "상담사 아이디")
     private String id;
-    @ApiModelProperty(value = "상담사 경력")
-    private String career="";
+
     @ApiModelProperty(value = "상담사 소개글")
     private String introduce="";
 
-    @ApiModelProperty(value = "상담사 전공")
-    private String major="";
     @ApiModelProperty(value = "상담사 성별")
     @Convert(converter = GenderConverter.class)
     GENDER gender;
@@ -48,18 +47,29 @@ public class CounselorListResponse {
     @ApiModelProperty(value = "상담사 상담 분야")
     @Convert(converter = ConsultListConverter.class)
     private List<CONSULT_TYPE> consultTypeList = null;
+
+    @Column(name="education")
+    @Convert(converter = EducationListConverter.class)
+    private List<Education> education;
+
+    @Column(name="career")
+    @ApiModelProperty(value = "상담사 경력")
+    @Convert(converter = CareerListConverter.class)
+    private List<Career> career;
+
     @QueryProjection
-    public CounselorListResponse(String name, String tel, String email, String id, String career, String introduce, String major, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> type) {
-        this.id = id;
+
+    public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Education> education, List<Career> career) {
         this.name = name;
-        this.email = email;
         this.tel = tel;
-        this.career = career;
+        this.email = email;
+        this.id = id;
         this.introduce = introduce;
-        this.major = major;
         this.gender = gender;
         this.routine = routine;
         this.profileImg = profileImg;
-        this.consultTypeList = type;
+        this.consultTypeList = consultTypeList;
+        this.education = education;
+        this.career = career;
     }
 }
