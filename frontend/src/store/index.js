@@ -186,7 +186,7 @@ export default new Vuex.Store({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/my-page/notification`,
         headers: {
-          Authorization: `Token ${context.state.token}`}
+          "Authorization" : `Bearer ${this.state.token.token.access_token}`}
       })
         .then((res) => {
           console.log('전체알람 인덱스')
@@ -202,7 +202,7 @@ export default new Vuex.Store({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/my-page/notification?type=1`,
         headers: {
-          Authorization: `Token ${context.state.token}`}
+          "Authorization" : `Bearer ${this.state.token.token.access_token}`}
       })
         .then((res) => {
           context.commit('GET_SANGDAMALARMARTICLES', res.data)
@@ -217,7 +217,7 @@ export default new Vuex.Store({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/my-page/notification?type=2`,
         headers: {
-          Authorization: `Token ${context.state.token}`}
+          "Authorization" : `Bearer ${this.state.token.token.access_token}`}
       })
         .then((res) => {
 
@@ -233,7 +233,7 @@ export default new Vuex.Store({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/my-page/notification?type=3`,
         headers: {
-          Authorization: `Token ${context.state.token}`}
+          "Authorization" : `Bearer ${this.state.token.token.access_token}`}
       })
         .then((res) => {
           console.log('헬프알람 인덱스')
@@ -244,21 +244,21 @@ export default new Vuex.Store({
         })
     },
     // 알람 기타 목록
-    getGuitarAlarmArticles(context) {
-      axios({
-        method: 'get',
-        url: `${VUE_APP_API_URL}/api/my-page/notification`,
-        headers: {
-          Authorization: `Token ${context.state.token}`}
-      })
-        .then((res) => {
+    // getGuitarAlarmArticles(context) {
+    //   axios({
+    //     method: 'get',
+    //     url: `${VUE_APP_API_URL}/api/my-page/notification`,
+    //     headers: {
+    //       Authorization: `Token ${context.state.token}`}
+    //   })
+    //     .then((res) => {
 
-          context.commit('GET_GUITARALARMARTICLES', res.data)
-        })
-        .catch((err) => {
-          console.log('알림이 존재하지 않습니다.')
-        })
-    },
+    //       context.commit('GET_GUITARALARMARTICLES', res.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log('알림이 존재하지 않습니다.')
+    //     })
+    // },
     //여기까지 알람목록 엑시오스
 
 
