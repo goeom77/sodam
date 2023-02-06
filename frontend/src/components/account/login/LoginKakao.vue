@@ -14,7 +14,7 @@
   </div> -->
 
   <a id="loginBtn" type="button" onclick="function login() {
-    const redirectUri = 'http://localhost:8080/auth/kakao/callback';
+    const redirectUri = 'VUE_APP_API_URL/auth/kakao/callback';
         const appKey = '9e0f9a70f672fba12b71ea1b5ec10e80'
             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + appKey +
     '&redirect_uri=' + redirectUri + '&response_type=code';}

@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.repository;
 
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import org.springframework.stereotype.Repository;
@@ -18,8 +19,11 @@ public class ApplicantCustomRepositoryImpl implements ApplicantCustomRepository 
     }
 
     public List<ConsultApplicant> getMyApplicants(String CounselorId) {
-        return queryFactory.selectFrom(consultApplicant)
-                .join(consultSession).on(consultSession.id.eq(consultApplicant.sessionId))
-                .where(consultSession.counselorId.eq(CounselorId)).fetch();
+
+        return queryFactory.from(consultSession)
+                .groupBy(consultSession.counselorId, consultSession.clientId)
+                .select(consultApplicant)
+                .where(consultSession.id.eq(consultApplicant.sessionId), consultSession.counselorId.eq(CounselorId))
+                .fetch();
     }
 }

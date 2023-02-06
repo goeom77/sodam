@@ -22,7 +22,7 @@ public class ApplicantController {
     }
 
     @GetMapping("/consultApplicant")
-    @ApiOperation(value = "나의 고객 조회")
+    @ApiOperation(value = "나의 고객 조회(상담사용)")
     public List<ConsultApplicant> makeConsultApplicant(String counselorId) {
         return service.getMyApplicant(counselorId);
     }

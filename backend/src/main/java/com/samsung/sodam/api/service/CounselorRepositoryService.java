@@ -1,26 +1,24 @@
 package com.samsung.sodam.api.service;
 
 import com.samsung.sodam.api.request.ConsultApplicantRequest;
-import com.samsung.sodam.api.request.CounselorSearchRequest;
+import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.request.SessionStateRequest;
 import com.samsung.sodam.api.request.SetStateRequest;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
+import com.samsung.sodam.util.CounselorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 @Service
 @AllArgsConstructor
@@ -39,12 +37,52 @@ public class CounselorRepositoryService {
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
 
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//        return repository.find;
+//    }
+
+    public Page<Counselor> getAllCounselor( Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
+    }
+
+    public void editProfile(CounselorRequest request, String id){
+
+        String educationStr = null;
+        Counselor counselor = repository.getById(id);
+        // 전화번호 수정
+        if(request.getTel() != null) counselor.setTel(request.getTel());
+
+        // 학력사항 수정
+        if(request.getEducationRow()!= null) {
+            educationStr = CounselorUtil.educationObjectToString(request.getEducationRow());
+            counselor.setEducation(educationStr);
+        }
+        // 소개 수정
+        if(request.getIntroduce()!= null) {
+            counselor.setIntroduce(request.getIntroduce());
+        }
+        // 경력 수정
+        if(request.getCareerRow() != null){
+            String careerStr = CounselorUtil.careerObjectToString(request.getCareerRow());
+            counselor.setCareer(careerStr);
+        }
+
+        System.out.println("CounselorService -- convert test");
+        List<Education> list = CounselorUtil.educationStringToObject(educationStr);
+        for(Education e : list){
+            System.out.println(e);
+        }
+
+//        if(request.getEducationRow()!= null) {
+//            String education = CounselorUtill.educationObjectToString(request.getEducationRow());
+//            counselor.setIntroduce(education);
+//        }
+        //f(request.getTel() != null) counselor.setTel(request.getTel());
+        repository.save(counselor);
     }
 
     public CounselorListResponse getCounselorDetail(String id) {
@@ -72,6 +110,11 @@ public class CounselorRepositoryService {
         favoriteRepository.save(favoriteCounselor);
     }
 
+    public List<CounselorListResponse> getMyFavCounselor(String clientId) {
+        return counselorCustomRepository.getMyFavCounselor(clientId);
+    }
+
+
     public void removeFavCounselor(FavoriteCounselor favoriteCounselor) {
         favoriteRepository.delete(favoriteCounselor);
     }
@@ -81,7 +124,7 @@ public class CounselorRepositoryService {
         return newSession.getId();
     }
 
-    public List<ConsultSession> getMySession(String counselorId){
+    public List<ConsultSession> getMySession(String counselorId) {
         return sessionRepository.findByCounselorId(counselorId);
     }
 
@@ -136,7 +179,7 @@ public class CounselorRepositoryService {
      * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
      */
     @Transactional
-    public void setApplicationState(SetStateRequest request){
+    public void setApplicationState(SetStateRequest request) {
         ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
         session.setStatus(request.getState());
         sessionRepository.save(session);

@@ -1,11 +1,11 @@
 package com.samsung.sodam.db.entity;
 
-import com.samsung.sodam.db.converter.ConsultConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -35,6 +35,9 @@ public class Counselor extends Member {
     @Column(length = 300)
     private String career;
 
+    @Column(length = 300)
+    private String education;
+
     @Column(length = 150)
     private String introduce;
 
@@ -43,7 +46,6 @@ public class Counselor extends Member {
 
     @Column(length = 3)
     private String commonCodeId;
-
 
     @Column(length = 30)
     private String major;
@@ -65,16 +67,17 @@ public class Counselor extends Member {
 
     @Column(name = "consult_type")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList;
+    private List<CONSULT_TYPE> consultTypeList = null;
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String education, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.tel = tel;
         this.career = career;
+        this.education = education;
         this.introduce = introduce;
         this.refreshToken = refreshToken;
         this.major = major;

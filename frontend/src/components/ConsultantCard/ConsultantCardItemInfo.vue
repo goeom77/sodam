@@ -5,8 +5,9 @@
         <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
       </div>
       <div class="child2">
+        
         <span>
-          {{ counselorData.id }} 상담사
+          {{ counselorData.name }} 상담사
         </span>
         <h2>
           {{ counselorData.introduce }}
@@ -14,13 +15,23 @@
         <h4>
           {{ counselorData.career }}
         </h4>
-        
-        <!-- 연락처 -->
+        <!-- 이모티콘 하나 email이랑 전화 -->
         <h4>
-          <!-- 이모티콘 하나 넣 -->
-          {{ counselorData.tel }}
           {{ counselorData.email }}
         </h4>
+        <h4>
+          {{ counselorData.tel }}
+        </h4>
+        <h4>
+          {{ counselorData.consultTypeList }}
+        </h4>
+        
+        <div>
+          <button class="buttonSize" style="color:#ea4335" @click="likeMovie">
+            <img v-if="this.likeStatus === false" src="@/assets/images/like_.png" style="width:100px">
+            <img v-else src="@/assets/images/like_check.png" style="width:100px">
+          </button>
+        </div>
       </div>
     </div>  
   </v-container>
@@ -31,6 +42,12 @@ export default {
   name:'ConsultantCardItemInfo',
   props:{
     counselorData:Object
+  },
+  data(){
+    return{
+      common_code: this.$store.state.payload.common_code,
+      likeStatus: false
+    }
   }
 }
 </script>

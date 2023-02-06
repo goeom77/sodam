@@ -44,5 +44,5 @@ public class ConsultApplicantRequest {
     @ApiModelProperty(required = true)
     private Integer age;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dueDate= LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // 희망종료날짜
+    private LocalDateTime dueDate= null; // 희망종료날짜
 }

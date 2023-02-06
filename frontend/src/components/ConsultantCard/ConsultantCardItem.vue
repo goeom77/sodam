@@ -1,6 +1,7 @@
 <template>
   <div>
     {{ counselorData }}
+    
     <div>
       <ConsultantCardItemInfo
       :counselorData="this.counselorData"/>
