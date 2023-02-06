@@ -86,7 +86,10 @@ export default {
       const id  = this.id 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/qna`
+        url: `${VUE_APP_API_URL}/api/qna`,
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
         // url: `${VUE_APP_API_URL}/trouble/${postId}`
       })
         .then((res) => {
@@ -125,7 +128,7 @@ export default {
             // imagecnt: this.imagecnt
           },
           headers: {
-            Authorization: `Token ${this.$store.state.token}`
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
           .then((res) => {
@@ -182,8 +185,8 @@ export default {
           title: title,
           content: content,
         },
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {

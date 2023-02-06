@@ -37,9 +37,9 @@
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>
-      <DateTimePicker @update-date="updateDate">
+      <!-- <DateTimePicker @update-date="updateDate">
       
-      </DateTimePicker>
+      </DateTimePicker> -->
 
 
       <!-- <datepicker
@@ -65,16 +65,15 @@
 <script>
 // import Datepicker from 'vue3-datepicker';
 import DateTimePicker from '@/components/ConsultantCard/DateTimePicker.vue'
-
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
     DateTimePicker
     // Datepicker
-
   },
-  
   props:{
     counselorData:Object
   },  
@@ -100,8 +99,8 @@ export default {
         {name:'학교 상담', value:"SCHOOL"},
       ],
       content:null,
-      counselorId: null,
-      dueDate:null,
+      counselorId: this.counselorData.id,
+      dueDate:'2023-02-06T01:18:08',
       email:null,
       gender:null,
       genderList:[
@@ -114,44 +113,42 @@ export default {
     }
   },
   methods:{
-    updateDate:function(value){
-      this.dueDate = value;
-    },
+    // updateDate:function(value){
+    //   this.dueDate = value;
+    // },
 
     checkDate(){
-
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId
-      console.log(this.age,this.clientId,this.consultType,this.content,this.counselorData.id)
+      console.log(this.age,this.clientId,this.consultType,this.content,this.clientId)
       console.log(this.dueDate,this.email,this.gender,this.name,this.state,this.tel)
+      console.log(this.$store.state.token)
     },
     reserveConsult(){
-      const age = this.age
-      const clientId = this.clientId
-      const consultType = this.consultType
-      const content = this.content
-      const counselorId = this.counselorData.id
-      const dueDate = this.dueDate
-      const email = this.email
-      const gender = this.gender
-      const name = this.name
-      const state = this.state
-      const tel = this.tel
-
-      const payload = {
-        age: age,
-        clientId: clientId,
-        consultType: consultType,
-        content: content,
-        counselorId: counselorId,
-        dueDate: dueDate,
-        email: email,
-        gender: gender,
-        name: name,
-        state: state,
-        tel: tel
-      }
-      this.$store.dispatch('reserveConsult', payload)
+      axios({
+        method:'POST',
+        url: `${VUE_APP_API_URL}/api/consultApplicant`,
+        data:{
+          age: this.age,
+          clientId: this.clientId,
+          consultType: this.consultType,
+          content: this.content,
+          counselorId: this.counselorId,
+          dueDate: this.dueDate,
+          email: this.email,
+          gender: this.gender,
+          name: this.name,
+          state: this.state,
+          tel: this.tel
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+          console.log(res)
+        //   this.$router.push({name:'consultantcarditem'})
+        })
     },
   },
 }

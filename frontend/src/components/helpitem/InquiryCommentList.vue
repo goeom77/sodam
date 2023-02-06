@@ -93,8 +93,8 @@
         axios({
           method: 'delete',
           url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}/comment/${this.InquiryComment.commentId}/`,
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
@@ -112,8 +112,8 @@
           data: {
             userid: this.InquiryComment.comment_user
           },
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then((res) => {
@@ -156,8 +156,8 @@
             counselorId: this.counselorId ,
             commentId: this.commentId 
           },
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
