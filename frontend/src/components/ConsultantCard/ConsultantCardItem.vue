@@ -73,9 +73,7 @@ export default {
           data:{
             id:this.counselorId
           },
-          headers: {
-            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-          }
+
         })
         .then(res=>{
           this.counselorData = res.data

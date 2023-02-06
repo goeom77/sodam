@@ -51,9 +51,7 @@ export default {
         data:{
           counselorId:this.counselorData.id,
         },
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
+
       })
       .then(res=>{
         console.log(res)

@@ -43,13 +43,10 @@ export default {
       axios({
         method:'post',
         url:`${VUE_APP_API_URL}/api/counselor/`,
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
       })
       .then(res=>{
         console.log(res)
-        this.counselorInfo = res.data
+        this.counselorInfo = res.data.content
       })
     },
 
