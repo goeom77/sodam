@@ -1,7 +1,8 @@
 <template>
-  {{ counselor }}
   <v-container>
-  <v-card
+  
+    {{ counselor }}
+    <v-card
     max-width="400"
     class="mx-auto"
   >
