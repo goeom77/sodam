@@ -51,9 +51,7 @@ export default new Vuex.Store({
       state.Inquiryarticles = Inquiryarticles
     },
     
-    GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
-      state.HistoryViewarticles = HistoryViewarticles
-    },
+
     SAVE_TOKEN(state, token) {
       state.token = token
     },
@@ -87,7 +85,7 @@ export default new Vuex.Store({
         //   category : category ,
         // },
         headers: {
-          Authorization: `Token ${context.state.token}`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
         .then((res) => {
@@ -107,7 +105,7 @@ export default new Vuex.Store({
         //   category : category ,
         // },
         headers: {
-          Authorization: `Token ${context.state.token}`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
         .then((res) => {
@@ -127,7 +125,7 @@ export default new Vuex.Store({
         //   category : category ,
         // },
         headers: {
-          Authorization: `Token ${context.state.token}`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
         .then((res) => {
@@ -139,27 +137,14 @@ export default new Vuex.Store({
           console.log('게시글이 존재하지 않습니다.')
         })
     },
-    getHistoryViewArticles(context) {
-      axios({
-        method: 'get',
-        url: `${VUE_APP_API_URL}/backend/`,
-        headers: {
-          Authorization: `Token ${context.state.token}`
-        }
-      })
-        .then((res) => {
-          // console.log(res, context)
-          console.log(res.data)
-          context.commit('GET_HISTORYVIEWARTICLES', res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+
     getCounselorInfo(context) {
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/client/`,
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
       })
         .then((res) => {
           console.log(res, context)
@@ -177,7 +162,7 @@ export default new Vuex.Store({
           id: payload.id,
           password: payload.password,
           common_code: payload.common_code,
-        }
+        },
       })
         .then((res)=>{
           console.log(res)
@@ -204,7 +189,7 @@ export default new Vuex.Store({
           name:payload.name,
           email:payload.email,
           tel:payload.tel,
-        }
+        },
       })
         .then((response)=>{
           
@@ -290,7 +275,7 @@ export default new Vuex.Store({
           tel: payload.tel
         },
         headers: {
-          Authorization: `Token ${context.state.token}`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then((res)=>{

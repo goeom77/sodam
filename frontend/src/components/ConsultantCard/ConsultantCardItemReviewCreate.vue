@@ -105,7 +105,7 @@
             type: this.type,
           },
           headers: {
-            Authorization: `Token ${this.$store.state.token}`
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(res=>{

@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ counselorData }}
+    {{ this.counselorData }}
     
     <div>
       <ConsultantCardItemInfo
@@ -72,6 +72,9 @@ export default {
           url:`${VUE_APP_API_URL}/api/counselor/${this.id}`,
           data:{
             id:this.counselorId
+          },
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(res=>{

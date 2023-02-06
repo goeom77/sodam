@@ -26,6 +26,7 @@ import LikeView from '@/views/my/like/LikeView.vue'
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
+import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 
 const routes = [
   {
@@ -166,6 +167,12 @@ const routes = [
     path: '/MainEdit',
     name: 'MainEdit',
     component: MainEdit
+  },
+  {
+    path: '/ClientManageDetail/:id?',
+    name: 'ClientManageDetail',
+    component: ClientManageDetail,
+    props:true
   },
 ]
 
