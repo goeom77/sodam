@@ -9,15 +9,13 @@ import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -52,6 +50,18 @@ public class CounselorController {
     //상담사 정보 조회
     public CounselorListResponse getCounselorInfo(@PathVariable String id) {
         return service.getCounselorDetail(id);
+    }
+
+    @PutMapping(value = "/counselor/{id}")
+    @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
+    public HttpStatus editProfilecCunselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+        try {
+            service.editProfile(request, id);
+            return HttpStatus.OK;
+        } catch(Exception e){
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
     }
 
     //상담 예약
