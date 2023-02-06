@@ -3,6 +3,8 @@ package com.samsung.sodam.api.request;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.samsung.sodam.db.converter.GenderConverter;
+import com.samsung.sodam.db.entity.Career;
+import com.samsung.sodam.db.entity.Education;
 import com.samsung.sodam.db.entity.GENDER;
 import com.samsung.sodam.db.entity.Role;
 import lombok.AllArgsConstructor;
@@ -11,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Convert;
-import javax.persistence.Converter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,4 +42,7 @@ public class CounselorRequest {
     private int enterpriseId;
 
     private String profileImg;
+
+    private List<Education> educationRow;
+    private List<Career> careerRow;
 }
