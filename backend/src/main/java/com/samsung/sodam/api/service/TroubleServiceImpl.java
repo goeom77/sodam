@@ -4,12 +4,10 @@ import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
 import com.samsung.sodam.api.response.TroubleResponse;
-import com.samsung.sodam.db.entity.Counselor;
-import com.samsung.sodam.db.entity.TroubleBoard;
-import com.samsung.sodam.db.entity.TroubleComment;
-import com.samsung.sodam.db.entity.TroubleCommentLike;
+import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class TroubleServiceImpl implements TroubleService {
+    private final NotificationService notificationService;
 
     private final TroubleRepository repository;
     private final TroubleCustomRepository customRepository;
@@ -87,6 +86,9 @@ public class TroubleServiceImpl implements TroubleService {
                 .build();
 
         commentRepository.save(troubleComment);
+
+        notificationService.send(troubleBoard.get().getClientId(), NotificationType.TROUBLE,
+                "고민게시글에 댓글이 등록되었습니다.", "", "/api/trouble/" + troubleBoard.get().getId());
     }
 
     @Override

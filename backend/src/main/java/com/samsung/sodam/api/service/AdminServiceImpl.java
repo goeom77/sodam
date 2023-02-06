@@ -2,18 +2,21 @@ package com.samsung.sodam.api.service;
 
 import com.samsung.sodam.api.request.HelpDeskRequest;
 import com.samsung.sodam.db.entity.Notice;
+import com.samsung.sodam.db.entity.NotificationType;
 import com.samsung.sodam.db.entity.QnAAnswer;
 import com.samsung.sodam.db.entity.QnABoard;
 import com.samsung.sodam.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
+    private final NotificationService notificationService;
 
     private final NoticeRepository noticeRepository;
     private final NoticeCustomRepository noticeCustomRepository;
@@ -48,6 +51,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public void saveQnaAnswer(HelpDeskRequest request) {
         Optional<QnABoard> qnABoard = qnARepository.findById(request.getId());
 
@@ -58,6 +62,9 @@ public class AdminServiceImpl implements AdminService {
                 .build();
 
         qnAAnswerRepository.save(qnAAnswer);
+
+        notificationService.send(qnABoard.get().getWriterId(), NotificationType.QNA,
+                "문의글에 댓글이 등록되었습니다.", "", "/api/qna/" + qnABoard.get().getId());
     }
 
     @Override
