@@ -56,7 +56,7 @@ export default {
         method: 'get',
         url: `${VUE_APP_API_URL}/logout/id`,
         headers: {
-          Authorization: `Token ${ this.$store.state.token }`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(

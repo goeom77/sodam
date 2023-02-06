@@ -50,6 +50,9 @@ export default {
         url: `${VUE_APP_API_URL}/api/review/my`,
         data:{
           counselorId:this.counselorData.id,
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(res=>{

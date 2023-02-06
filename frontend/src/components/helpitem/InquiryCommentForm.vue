@@ -74,8 +74,8 @@ export default {
                 counselorId: 'counselor2'
             },
             headers: {
-            Authorization: `Token ${this.$store.state.token}`
-        }
+              Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+            }
         })
         .then(() => {
             console.log('되냐?')
@@ -178,8 +178,8 @@ export default {
                 name: 'kim'
             },
             headers: {
-            Authorization: `Token ${this.$store.state.token}`
-        }
+              Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+            }
         })
         .then(() => {
             console.log('되냐?')
