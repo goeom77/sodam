@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @DynamicInsert
-@Builder
 public class Counselor extends Member {
     @Id
     @Column(length=30)
@@ -41,9 +40,6 @@ public class Counselor extends Member {
     @Column(length = 150)
     private String introduce;
 
-    @Column(length = 200)
-    private String refreshToken;
-
     @Column(length = 3)
     private String commonCodeId;
 
@@ -52,6 +48,7 @@ public class Counselor extends Member {
 
     @Column(length = 3)
     private GENDER gender;
+
     @Column(columnDefinition = "boolean default false")
     private Boolean qualification;
 
@@ -70,7 +67,7 @@ public class Counselor extends Member {
     private List<CONSULT_TYPE> consultTypeList = null;
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String education, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
+    public Counselor(String id, String name, String password, String email, String tel, String career, String education, String introduce, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, String commonCodeId, List<CONSULT_TYPE> consultTypeList) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -79,7 +76,6 @@ public class Counselor extends Member {
         this.career = career;
         this.education = education;
         this.introduce = introduce;
-        this.refreshToken = refreshToken;
         this.major = major;
         this.gender = gender;
         this.qualification = qualification;
@@ -87,6 +83,6 @@ public class Counselor extends Member {
         this.enterprise = enterprise;
         this.profileImg = profileImg;
         this.commonCodeId = "1";
-        this.consultTypeList = type;
+        this.consultTypeList = consultTypeList != null ? consultTypeList: Collections.emptyList();
     }
 }

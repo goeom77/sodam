@@ -21,13 +21,9 @@
           <div>
             <v-card-title class="text-h5">
             </v-card-title>
-            
             <v-card-subtitle>
-              <v-btn class="text-none" stacked style="background-color: white;">
-                <v-badge floating content="0" color="error">
-                  <v-icon>mdi-bell-outline</v-icon>
-                </v-badge>
-              </v-btn>
+              {{consult}}
+
             </v-card-subtitle>
           </div>
 
@@ -55,6 +51,9 @@ import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'LikeViewCard',
+  props:{
+    consult:Object
+  },
   data(){
     return{
       clientId:this.$store.state.payload.id,
