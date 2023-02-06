@@ -47,7 +47,7 @@ public class CounselorListResponse {
     @Column(name = "consult_type")
     @ApiModelProperty(value = "상담사 상담 분야")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList = Collections.emptyList();
+    private List<CONSULT_TYPE> consultTypeList = null;
     @QueryProjection
     public CounselorListResponse(String name, String tel, String email, String id, String career, String introduce, String major, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> type) {
         this.id = id;
