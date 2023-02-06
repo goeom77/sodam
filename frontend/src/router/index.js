@@ -26,6 +26,7 @@ import LikeView from '@/views/my/like/LikeView.vue'
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
+import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
@@ -174,6 +175,12 @@ const routes = [
     component: MainEdit
   },
   {
+    path: '/ClientManageDetail/:id?',
+    name: 'ClientManageDetail',
+    component: ClientManageDetail,
+    props:true
+  },
+  {
     path: '/AlarmView',
     name: 'AlarmView',
     component: AlarmView
@@ -191,7 +198,7 @@ const routes = [
     path: '/404',
     name: 'PageNotFound',
     component: PageNotFound
-  }
+  },
 ]
 
 const router = createRouter({

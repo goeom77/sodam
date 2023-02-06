@@ -1,6 +1,3 @@
-
-
-
 <template>
   <div id="Announce">
     <div id="AnnouncehelpBoard">

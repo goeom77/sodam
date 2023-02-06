@@ -18,9 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 @Transactional
@@ -140,7 +138,7 @@ public class AuthServiceImpl implements AuthService{
                 .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))
                 .enterprise(e)
-                .consultTypeList(new ArrayList<CONSULT_TYPE>())
+                .consultTypeList(request.getConsultType())
                 .build();
         return conselorRepository.save(c);
     }

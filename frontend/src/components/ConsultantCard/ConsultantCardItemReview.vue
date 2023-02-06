@@ -50,7 +50,8 @@ export default {
         url: `${VUE_APP_API_URL}/api/review/my`,
         data:{
           counselorId:this.counselorData.id,
-        }
+        },
+
       })
       .then(res=>{
         console.log(res)
