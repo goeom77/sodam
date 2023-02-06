@@ -97,28 +97,28 @@ public class CounselorController {
 
     //상담세션 만들기
     @PostMapping("/consult-session")
-    @ApiOperation(value = "상담 세션 만들기")
+    @ApiOperation(value = "상담 세션 만들기(관리자)")
     public Integer makeSession(ConsultSession session) {
         return service.makeSession(session);
     }
 
     //상담세션 조회
     @GetMapping("/consult-session")
-    @ApiOperation(value = "나의 상담 세션 조회하기")
+    @ApiOperation(value = "나의 상담 세션 조회하기(상담사)")
     public List<ConsultSession> mySession(String counselorId) {
         return service.getMySession(counselorId);
     }
 
 
     @GetMapping("/client")
-    @ApiOperation(value = "모든 고객 목록 조회")
+    @ApiOperation(value = "모든 고객 목록 조회(관리자용)")
     //고객목록
     public Page<Client> getClients(@PathVariable Pageable pageable) {
         return service.getAllClients(pageable);
     }
 
     @GetMapping(value = { "/myclient/{consultantId}"})
-    @ApiOperation(value = "고객 목록 조회")
+    @ApiOperation(value = "고객 목록 조회(삭제예정)")
     //고객목록
     public Page<ClientListResponse> getClients(@PathVariable String consultantId) {
         return clientService.getMyClients(consultantId, Pageable.ofSize(20));
