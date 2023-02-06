@@ -97,7 +97,7 @@ nav {
   margin: 0 auto;
   padding: 20px;
   display: flex;
-  background-color: #F1E7DB;
+  background-color: white;
   justify-content: space-between;
   align-items: center;
   /* background-color: #F1E7DB; */

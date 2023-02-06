@@ -15,27 +15,33 @@ export default {
   },
   created() {
     this.getAlarmArticles()
-    this.getAlarmArticlesSangdam()
-    this.getAlarmArticlesBoard()
-    this.getAlarmArticlesHelp()
-    this.getAlarmArticlesGuitar()
+    // this.getSangdamAlarmArticles()
+    // this.getBoardAlarmArticles()
+    // this.getHelpAlarmArticles()
+    // this.getGuitarAlarmArticles()  
   },
   methods: {
     getAlarmArticles() {
-    this.$store.dispatch('getAlarmArticles')
+      console.log('전체알람 알람뷰')
+      this.$store.dispatch('getAlarmArticles')
+      this.$store.dispatch('getSangdamAlarmArticles')
+      // this.$store.dispatch('getBoardAlarmArticles')
+      // this.$store.dispatch('getHelpAlarmArticles')
+      // this.$store.dispatch('getGuitarAlarmArticles')
     },
-    getSangdamAlarmArticles() {
-    this.$store.dispatch('getSangdamAlarmArticles')
-    },
-    getBoardAlarmArticles() {
-    this.$store.dispatch('getBoardAlarmArticles')
-    },
-    getHelpAlarmArticles() {
-    this.$store.dispatch('getHelpAlarmArticles')
-    }, 
-    getGuitarAlarmArticles() {
-    this.$store.dispatch('getGuitarAlarmArticles')
-    },
+    // getSangdamAlarmArticles() {
+    //   this.$store.dispatch('getSangdamAlarmArticles')
+    // },
+    // getBoardAlarmArticles() {
+    //  this.$store.dispatch('getBoardAlarmArticles')
+    // },
+    // getHelpAlarmArticles() {
+    //   console.log('헬프알람 알람뷰')
+    //  this.$store.dispatch('getHelpAlarmArticles')
+    // }, 
+    // getGuitarAlarmArticles() {
+    //   this.$store.dispatch('getGuitarAlarmArticles')
+    // },
   }
 
 }

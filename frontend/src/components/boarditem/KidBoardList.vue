@@ -91,10 +91,7 @@ export default {
     KidBoardarticlessearch() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/list/child?searchword=schVal`,
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
+        url: `${VUE_APP_API_URL}/api/trouble/list/child?searchword=${this.schVal}`
       })
         .then((res) => {
           console.log(res)

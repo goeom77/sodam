@@ -1,7 +1,7 @@
 <template>
   <div id="AlarmViewListBoard" >
     <div>
-      <KidBoardListItem
+      <AlarmViewListItem
         v-for="(AlarmViewarticle, index) in BoardAlarmViewarticles.content"
         :key="AlarmViewarticle.postId"
         :AlarmViewarticle="AlarmViewarticle"
@@ -31,7 +31,7 @@ export default {
   name: 'AlarmViewListBoard',
   data() {
     return {
-      KidBoardListPage: 1,
+      AlarmViewListPage: 1,
       contentlist: [], 
     }
   },
