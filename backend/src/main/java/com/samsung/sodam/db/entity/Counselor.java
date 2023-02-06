@@ -1,11 +1,12 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
+import com.samsung.sodam.db.converter.EducationListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -32,19 +33,19 @@ public class Counselor extends Member {
     private String tel;
 
     @Column(length = 300)
-    private String career;
+    @Convert(converter = CareerListConverter.class)
+    private List<Career> career;
+    //private String career;
 
     @Column(length = 300)
-    private String education;
+    @Convert(converter = EducationListConverter.class)
+    private List<Education> education;
 
     @Column(length = 150)
     private String introduce;
 
     @Column(length = 3)
     private String commonCodeId;
-
-    @Column(length = 30)
-    private String major;
 
     @Column(length = 3)
     private GENDER gender;
@@ -67,7 +68,7 @@ public class Counselor extends Member {
     private List<CONSULT_TYPE> consultTypeList = null;
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String education, String introduce, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, String commonCodeId, List<CONSULT_TYPE> consultTypeList) {
+    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, List<Education> education, String introduce, String commonCodeId, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -76,13 +77,12 @@ public class Counselor extends Member {
         this.career = career;
         this.education = education;
         this.introduce = introduce;
-        this.major = major;
+        this.commonCodeId = commonCodeId;
         this.gender = gender;
         this.qualification = qualification;
         this.routine = routine;
         this.enterprise = enterprise;
         this.profileImg = profileImg;
-        this.commonCodeId = "1";
-        this.consultTypeList = consultTypeList != null ? consultTypeList: Collections.emptyList();
+        this.consultTypeList = consultTypeList;
     }
 }

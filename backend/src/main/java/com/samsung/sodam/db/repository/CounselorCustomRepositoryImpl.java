@@ -2,14 +2,12 @@ package com.samsung.sodam.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.response.CounselorListResponse;
-
 import com.samsung.sodam.db.entity.Counselor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.samsung.sodam.db.entity.QConsultSession.consultSession;
 import static com.samsung.sodam.db.entity.QCounselor.counselor;
 import static com.samsung.sodam.db.entity.QFavoriteCounselor.favoriteCounselor;
 
@@ -24,7 +22,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
     public CounselorListResponse getCounselorDetail(String id) {
         Counselor c = queryFactory.selectFrom(counselor).where(counselor.id.eq(id)).fetchOne();
         if (c == null) return null;
-        return CounselorListResponse.builder().career(c.getCareer()).major(c.getMajor())
+        return CounselorListResponse.builder().career(c.getCareer())
                 .gender(c.getGender()).consultTypeList(c.getConsultTypeList()).tel(c.getTel())
                 .profileImg(c.getProfileImg()).introduce(c.getIntroduce()).email(c.getEmail())
                 .name(c.getName()).routine(c.getRoutine()).id(c.getId()).build();
@@ -40,7 +38,6 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
                 .gender(it.getGender())
                 .id(it.getId())
                 .introduce(it.getIntroduce())
-                .major(it.getMajor())
                 .name(it.getName())
                 .profileImg(it.getProfileImg())
                 .routine(it.getRoutine())

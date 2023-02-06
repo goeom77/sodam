@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 
 public class CounselorUtil {
 
-    public static List<Education> educationStringToObject(String data){
-        List<Education> list = new ArrayList<Education>();
+    public static List<Education> educationStringToObjectList(String data){
+        List<Education> list = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(data, "#");
         StringTokenizer stInLoop;
 
@@ -34,10 +34,11 @@ public class CounselorUtil {
             sb.append(o.getIsGraduate());
             sb.append('#');
         }
-        return sb.toString();
+        String result = sb.toString();
+        return result.substring(0, result.length()-1);
     }
 
-    public static List<Career> careerStringToObject(String data){
+    public static List<Career> careerStringToObjectList(String data){
         List<Career> list = new ArrayList<Career>();
         StringTokenizer st = new StringTokenizer(data, "#");
         StringTokenizer stInLoop;
@@ -61,7 +62,8 @@ public class CounselorUtil {
             sb.append(o.getCareerPeriod());
             sb.append('#');
         }
-        return sb.toString();
+        String result = sb.toString();
+        return result.substring(0, result.length()-1);
     }
 
 }
