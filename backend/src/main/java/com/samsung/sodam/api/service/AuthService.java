@@ -57,4 +57,6 @@ public interface AuthService {
     public void updatePassword(String id, String pw);
 
     TokenDto reissue(String refreshToken);
+
+    void deleteMember(String id);
 }

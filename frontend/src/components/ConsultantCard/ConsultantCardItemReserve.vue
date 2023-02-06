@@ -36,7 +36,12 @@
       </select>
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
-      <h1>상담 기한</h1>      
+      <h1>상담 기한</h1>
+      <DateTimePicker @update-date="updateDate">
+      
+      </DateTimePicker>
+
+
       <!-- <datepicker
         v-model="dueDate"
         lang="ko"
@@ -58,12 +63,16 @@
 
 
 <script>
-import Datepicker from 'vue3-datepicker';
+// import Datepicker from 'vue3-datepicker';
+import DateTimePicker from '@/components/ConsultantCard/DateTimePicker.vue'
+
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
-    Datepicker
+    DateTimePicker
+    // Datepicker
+
   },
   
   props:{
@@ -92,7 +101,7 @@ export default {
       ],
       content:null,
       counselorId: null,
-      dueDate:"2023-02-03T04:37:27",
+      dueDate:null,
       email:null,
       gender:null,
       genderList:[
@@ -105,6 +114,10 @@ export default {
     }
   },
   methods:{
+    updateDate:function(value){
+      this.dueDate = value;
+    },
+
     checkDate(){
 
       // console.log(this.$store.state.token.[[Target]])
