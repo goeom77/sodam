@@ -77,8 +77,7 @@ public class CounselorRepositoryService {
     }
 
     public List<CounselorListResponse> getMyFavCounselor(String clientId) {
-//        return counselorCustomRepository.findAllByClientId(clientId);
-        return null;
+        return counselorCustomRepository.getMyFavCounselor(clientId);
     }
 
 

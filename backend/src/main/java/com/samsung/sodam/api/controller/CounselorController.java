@@ -63,20 +63,22 @@ public class CounselorController {
 
     //상담 예약 확정
     @PostMapping("/consult/{consult_id}")
-    public void acceptApplicant(@PathVariable String consult_id, @RequestBody SessionStateRequest request) {
+    public Integer acceptApplicant(@PathVariable String consult_id, @RequestBody SessionStateRequest request) {
         service.acceptApplicant(request);
+        return request.getSessionId();
     }
 
     //관심 상담사 담기
     @PostMapping("/client/{clientId}/fav/{counselorId}")
     @ApiOperation(value = "관심상담사 등록")
-    public void setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+    public String setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.setFavCounselor(fav);
+        return "success";
     }
 
     //관심 상담사 담기
-    @PostMapping("/client/{clientId}/fav")
+    @PostMapping("/fav/{clientId}")
     @ApiOperation(value = "관심상담사 조회")
     public List<CounselorListResponse> getMyFavCounselor(@PathVariable String clientId) {
         return service.getMyFavCounselor(clientId);
@@ -84,9 +86,10 @@ public class CounselorController {
 
     @DeleteMapping("/client/{clientId}/fav/{counselorId}")
     @ApiOperation(value = "관심상담사 삭제")
-    public void deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+    public String deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.removeFavCounselor(fav);
+        return "success";
     }
 
     //상담기록(한 세션에 대한 기록)
@@ -164,13 +167,13 @@ public class CounselorController {
     }
 
     @PostMapping("/review")
-    @ApiOperation(value = "리뷰 작성하기")
+    @ApiOperation(value = "후기 작성하기")
     public Review makeReview(@RequestBody Review review){
         return reviewService.makeReview(review);
     }
 
     @PostMapping("/review/{reviewId}")
-    @ApiOperation(value = "리뷰 수정하기")
+    @ApiOperation(value = "후기 수정하기")
     public Review updateReview(@PathVariable Long reviewId, @RequestBody Review review){
         return reviewService.updateReview(reviewId,review);
     }

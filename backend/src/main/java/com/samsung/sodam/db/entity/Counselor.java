@@ -66,7 +66,7 @@ public class Counselor extends Member {
 
     @Column(name = "consult_type")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList = Collections.emptyList();
+    private List<CONSULT_TYPE> consultTypeList = null;
 
     @Builder
     public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
