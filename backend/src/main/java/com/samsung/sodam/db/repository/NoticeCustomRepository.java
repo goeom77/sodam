@@ -68,6 +68,7 @@ public class NoticeCustomRepository {
                 .set(notice.adminId, request.getWriterId())
                 .set(notice.title, request.getTitle())
                 .set(notice.content, request.getContent())
+                .set(notice.fixed, request.isFixed())
                 .where(notice.id.eq(id))
                 .execute();
     }

@@ -19,6 +19,6 @@ public class NotiTypeConverter implements AttributeConverter<NotificationType, I
         return EnumSet.allOf(NotificationType.class).stream()
                 .filter(e->e.getCode().equals(dbData))
                 .findAny()
-                .orElseThrow(()-> new NoSuchElementException());
+                .orElse(null);
     }
 }
