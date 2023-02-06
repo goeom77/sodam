@@ -6,13 +6,6 @@ import createPersistedState from "vuex-persistedstate";
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
-
-// const state = {
-//   LoadingStatus: false
-// }
-
-
-
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
@@ -62,9 +55,7 @@ export default new Vuex.Store({
       console.log(Inquiryarticles)
       state.Inquiryarticles = Inquiryarticles
     },
-<<<<<<< HEAD
     
-=======
     GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
       state.HistoryViewarticles = HistoryViewarticles
     },
@@ -96,7 +87,6 @@ export default new Vuex.Store({
       state.AlarmViewarticles = AlarmViewarticles
     },
     // 여기까지 알람데이터 저장
->>>>>>> b4a6add48dbe4ee78fa167279be78c522416d754
 
     SAVE_TOKEN(state, token) {
       state.token = token
@@ -183,9 +173,7 @@ export default new Vuex.Store({
           console.log('게시글이 존재하지 않습니다.')
         })
     },
-<<<<<<< HEAD
 
-=======
     // 여기서부터 알람목록 엑시오스
     // 알람 전체 목록
     getAlarmArticles(context) {
@@ -292,7 +280,6 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
->>>>>>> b4a6add48dbe4ee78fa167279be78c522416d754
     getCounselorInfo(context) {
       axios({
         method: 'post',

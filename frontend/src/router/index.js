@@ -175,13 +175,12 @@ const routes = [
     component: MainEdit
   },
   {
-<<<<<<< HEAD
     path: '/ClientManageDetail/:id?',
     name: 'ClientManageDetail',
     component: ClientManageDetail,
     props:true
   },
-=======
+  {
     path: '/AlarmView',
     name: 'AlarmView',
     component: AlarmView
@@ -199,8 +198,7 @@ const routes = [
     path: '/404',
     name: 'PageNotFound',
     component: PageNotFound
-  }
->>>>>>> b4a6add48dbe4ee78fa167279be78c522416d754
+  },
 ]
 
 const router = createRouter({
