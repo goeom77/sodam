@@ -6,12 +6,24 @@ import createPersistedState from "vuex-persistedstate";
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
+
+// const state = {
+//   LoadingStatus: false
+// }
+
+
+
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     KidBoardarticles: [],
     Announcearticles: [],
     Inquiryarticles: [],
+    AlarmViewarticles: [],
+    SangdamAlarmViewarticles: [],
+    BoardAlarmViewarticles: [],
+    HelpAlarmViewarticles: [],
+    GuitarAlarmViewarticles: [],
     token:null,
     payload:{
       id: null,
@@ -50,10 +62,38 @@ export default new Vuex.Store({
       console.log(Inquiryarticles)
       state.Inquiryarticles = Inquiryarticles
     },
-    
     GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
       state.HistoryViewarticles = HistoryViewarticles
     },
+    // 여기부터 알람 데이터 저장
+    // 여기는 전체 알람 데이터
+    GET_ALARMARTICLES(state, AlarmViewarticles) {
+      console.log(AlarmViewarticles)
+      state.AlarmViewarticles = AlarmViewarticles
+    },
+    // 여기는 상담 알람 데이터
+
+    GET_SANGDAMALARMARTICLES(state, AlarmViewarticles) {
+      console.log(AlarmViewarticles)
+      state.AlarmViewarticles = AlarmViewarticles
+    },
+    // 여기는 고민게시판 알람 데이터
+    GET_BOARDALARMARTICLES(state, AlarmViewarticles) {
+      console.log(AlarmViewarticles)
+      state.AlarmViewarticles = AlarmViewarticles
+    },
+    // 여기는 헬프데스크 알람 데이터
+    GET_HELPALARMARTICLES(state, AlarmViewarticles) {
+      console.log(AlarmViewarticles)
+      state.AlarmViewarticles = AlarmViewarticles
+    },
+    // 여기는 기타 알람 데이터
+    GET_GUITARALARMARTICLES(state, AlarmViewarticles) {
+      console.log(AlarmViewarticles)
+      state.AlarmViewarticles = AlarmViewarticles
+    },
+    // 여기까지 알람데이터 저장
+
     SAVE_TOKEN(state, token) {
       state.token = token
     },
@@ -76,7 +116,7 @@ export default new Vuex.Store({
     },
     RESERVECONSULT(state){
       console.log(state)
-    }
+    },
   },
   actions: {
     getKidBoardArticles(context) {
@@ -139,6 +179,95 @@ export default new Vuex.Store({
           console.log('게시글이 존재하지 않습니다.')
         })
     },
+    // 여기서부터 알람목록 엑시오스
+    // 알람 전체 목록
+    getAlarmArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+
+          context.commit('GET_ALARMARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('알림이 존재하지 않습니다.')
+        })
+    },
+    // 알람 상담 목록
+    getSangdamAlarmArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+          context.commit('GET_SANGDAMALARMARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('알림이 존재하지 않습니다.')
+        })
+    },
+    // 알람 고민게시판 목록
+    getBoardAlarmArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+
+          context.commit('GET_BOARDALARMARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('알림이 존재하지 않습니다.')
+        })
+    },
+    // 알람 헬프데스크 목록
+    getHelpAlarmArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+
+          context.commit('GET_HELPALARMARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('알림이 존재하지 않습니다.')
+        })
+    },
+    // 알람 기타 목록
+    getGuitarAlarmArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/notice`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+        .then((res) => {
+
+          context.commit('GET_GUITARALARMARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('알림이 존재하지 않습니다.')
+        })
+    },
+    //여기까지 알람목록 엑시오스
+
+
+
     getHistoryViewArticles(context) {
       axios({
         method: 'get',
