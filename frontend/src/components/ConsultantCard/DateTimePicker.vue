@@ -1,33 +1,17 @@
 <template>
-  <div>
-    <input class="datetimepicker"/>
-  </div>
+  <Datepicker v-model="date" range :partial-range="false" />
 </template>
 
 <script>
-export default {
-  name:'DateTimePicker',
-  mounted(){
-    const self=this;
+import { ref } from 'vue';
 
-    $(this.$el).datetimepicker({
-      format:'Y-m-d H:i',
-      onChangeDateTime:function(value){
-        if (value){
-          self.$emit('update-date',value);
-        }
+export default {
+  setup() {
+      const date = ref();
+      
+      return {
+        date,
       }
-    })
-  },
-  beforeDestroy(){
-    $(this.$el)
-      .datetimepicker('hide')
-      .datetimepicker('destroy');
-  },
+  }
 }
 </script>
-
-<style>
-
-
-</style>

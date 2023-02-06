@@ -48,7 +48,7 @@ export default {
   name:'App',
   data(){
     return{
-      projectlogo : require('@/assets/projectlogoperpect.png'),
+      projectlogo : require('@/assets/images/projectlogoperpect.png'),
     }
   },
   component: {

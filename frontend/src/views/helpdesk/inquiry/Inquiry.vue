@@ -69,7 +69,7 @@ a:visited {
 
 
 #inquiryhelpBoard {
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
+  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
   background-size: 100% 100%;

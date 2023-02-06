@@ -80,6 +80,6 @@ export default {
 .background2 {
   width:300px;
   height:40px;
-  background-image: url(../../../assets/kakao_login_btn.png);
+  background-image: url(../../../assets/images/kakao_login_btn.png);
 }
 </style>

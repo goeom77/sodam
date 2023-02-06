@@ -6,11 +6,10 @@
         icon="fa-solid fa-calendar-days"
         transform="down-2.5 right-20"
         style="z-index: 1; cursor: default"
-        @click="clickCalIcon('dp1')"
+
       />
       <Datepicker
         v-model="picked"
-        :ref="inputs.dp1"
         class="datepicker"
         :locale="locale"
         :weekStartsOn="0"
@@ -28,7 +27,6 @@ import { ref, reactive, defineComponent } from 'vue';
 // vue3-datepicker
 import Datepicker from 'vue3-datepicker';
 import { ko } from 'date-fns/locale';
-import { defineRefs } from './utils/helper.js';
 
 export default defineComponent({
   name: 'App',
@@ -48,8 +46,7 @@ export default defineComponent({
       locale,
       inputFormat,
       // datepicker1,
-      inputs,
-      clickCalIcon,
+
       getCalValue,
       dp2From,
       dp2To,
