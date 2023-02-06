@@ -6,7 +6,6 @@
       :counselorData="this.counselorData"/>
     </div>
   </div>
-    
     <v-card>
       <v-tabs v-model="tab">
         <v-tab value="one">

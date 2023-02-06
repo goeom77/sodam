@@ -1,91 +1,66 @@
 <template>
-  Notice페이지
+  <div>
+    <div class="black-bg" v-if="modalopen == true" @click="close($event)">
+      <div class="white-bg">
+        <h4>상세페이지</h4>
+        <p>상세페이지내용임</p>
+        <button class="close">닫기</button>
+      </div>
+    </div>
+    <div class="card">
+      <h4 class="room-name" @click="modalopen = true"> 모달켜봅시다</h4>
+      <p>보자</p>
+      <button></button>
+    </div>
+  </div>
 </template>
 
 <script>
-// @ is an alias to /srcz
-// import NoticeList from '@/components/boarditem/NoticeList.vue'
-
 export default {
-  name: 'Notice',
-  components: {
-    // NoticeList
+  name: 'NoticeView',
+  data() {
+    return {
+      modalopen : false,
+    }
   },
-  // created() {
-  //   this.getKidBoardArticles()
-  // },
-  // methods: {
-  //   getKidBoardArticles() {
-  //   this.$store.dispatch('getKidBoardArticles')
-  //   }
-  // }
+  methods: {
+    close(event) {
+      if(event.target.classList.contains('black-bg') || 
+        event.target.classList.contains('close')) {
+          this.modalopen = false;
+      } else if (event.target.classList.contains('white-bg')){
+        this.modalopen = true;
+      }
+    }
+  }
 }
 </script>
 
-
 <style>
-#Notice {
-  /* 반응형 x */
-  width: 1255px;
-  margin: 0 auto;
+.black-bg {
+  width: 100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed; padding: 20px;
 }
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-a:visited {
-  background-color: #579BB1;
-}
-
-
-#MyBoard {
-  /* margin-top: 61px; */
-  width: 100%;
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
-  background-color: aliceblue;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  /* background-size: cover; */
-  text-align: center;
-  font-size: large;
-  font-weight: 100;
-  padding-top: 20px;
-  height: 250px;
-  position: relative;
-}
-#myCategory {
-  width:100%; 
-  height:60px; 
-  line-height: 65px;
-  /* justify-content: center; */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  background-color:rgba(96, 96, 96, 0.5);
-  padding-left: 60px;
-  padding-right:60px;
-  position: absolute;
-  bottom: 0px;
+.white-bg {
+  width: 100%; background: white;
+  border-radius: 8px;
+  padding: 20px;
 } 
-#MyBoardtitle {
-  position: absolute;
-  left: 50%; 
-  bottom: 50%; 
-  transform: translate(-50%);
+.close {
+  cursor: pointer;
+  border: none;
+  background: green;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 15px;
 }
 
-#myCategory a.router-link-exact-active {
-  background-color: #579BB1;
+.close:hover {
+  color: white;
+  font-weight: bold;
+  transform: scale(1.1);
+  transition: all 0.5s;
 }
-
-.CategoryClass {
-  float:left;
-  height:60px; 
-  font-weight: 700;
-  border: 1px solid white;
-  border-bottom: 0px;
-}
-
-
 </style>

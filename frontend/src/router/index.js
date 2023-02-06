@@ -27,11 +27,17 @@ import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
 
+import AlarmView from '../views/alarm/AlarmView.vue'
+import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
+
+import PageNotFound from '../views/PageNotFound.vue';
+
+
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/login',
@@ -167,11 +173,31 @@ const routes = [
     name: 'MainEdit',
     component: MainEdit
   },
+  {
+    path: '/AlarmView',
+    name: 'AlarmView',
+    component: AlarmView
+  },
+  {
+    path: '/AlarmViewDetail/:postId?',
+    name: 'AlarmViewDetail',
+    component: AlarmViewDetail
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
+    name: 'PageNotFound',
+    component: PageNotFound
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
 
 export default router
