@@ -28,11 +28,17 @@ import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 
+import AlarmView from '../views/alarm/AlarmView.vue'
+import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
+
+import PageNotFound from '../views/PageNotFound.vue';
+
+
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/login',
@@ -169,16 +175,38 @@ const routes = [
     component: MainEdit
   },
   {
+<<<<<<< HEAD
     path: '/ClientManageDetail/:id?',
     name: 'ClientManageDetail',
     component: ClientManageDetail,
     props:true
   },
+=======
+    path: '/AlarmView',
+    name: 'AlarmView',
+    component: AlarmView
+  },
+  {
+    path: '/AlarmViewDetail/:postId?',
+    name: 'AlarmViewDetail',
+    component: AlarmViewDetail
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
+    name: 'PageNotFound',
+    component: PageNotFound
+  }
+>>>>>>> b4a6add48dbe4ee78fa167279be78c522416d754
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
 
 export default router

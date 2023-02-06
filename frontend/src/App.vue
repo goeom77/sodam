@@ -25,6 +25,7 @@
       <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
       <div v-if="isLogin===true">
         <!-- <h4>{{ this.name }}님</h4> -->
+        <v-btn @click="alarm">Alarm</v-btn>
         <v-btn @click="logOut">Logout</v-btn>
         <router-link to="/mypage">마이 페이지</router-link>
       </div>
@@ -35,6 +36,7 @@
 
 <script>
 import axios from 'axios'
+
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -45,7 +47,9 @@ export default {
       projectlogo : require('@/assets/projectlogoperpect.png'),
     }
   },
-
+  component: {
+    // Spinner
+  },
   methods: {
     logOut(){
       axios({
@@ -61,6 +65,9 @@ export default {
     },
     logIn(){
       this.$router.push({name:'login'})
+    },
+    alarm(){
+      this.$router.push({name:'AlarmView'})
     }
   },
   computed:{
