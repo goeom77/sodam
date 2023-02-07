@@ -40,7 +40,7 @@ public class ConsultApplicantRequest {
     private String content;
     @Convert(converter = GenderConverter.class)
     @ApiModelProperty(required = true)
-    private GENDER gender;
+    private GENDER gender=GENDER.MEN;
     @ApiModelProperty(required = true)
     private Integer age;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

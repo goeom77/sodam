@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ApplicantRepository extends JpaRepository<ConsultApplicant,Integer> {
+public interface ApplicantRepository extends JpaRepository<ConsultApplicant, Integer> {
 
 }

@@ -22,4 +22,8 @@ public class ApplicantServiceImpl implements ApplicantService {
     public List<ConsultApplicant> getMyApplicant(String counselorId) {
         return customRepository.getMyApplicants(counselorId);
     }
+
+    public ConsultApplicant getApplicantById(Integer id){
+        return repository.findById(id).orElseThrow();
+    }
 }
