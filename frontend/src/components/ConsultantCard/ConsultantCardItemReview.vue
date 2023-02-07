@@ -5,7 +5,7 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :idx="idx"
-    :review="review"
+    :review="review"  
     :limit="page"/>
     <div class="text-center">
       <v-pagination
@@ -13,6 +13,7 @@
         :length="6"
       ></v-pagination>
     </div>
+
     <v-btn outlined rounded text @click="moveTo">
       후기작성
     </v-btn>
@@ -47,10 +48,11 @@ export default {
     getReview(){
       axios({
         method:'post',
-        url: `${VUE_APP_API_URL}/api/review/my`,
+        url: `${VUE_APP_API_URL}/api/review/my/counselor`,
         data:{
           counselorId:this.counselorData.id,
-        }
+          clientId:this.$store.state.payload.id,
+        },
       })
       .then(res=>{
         console.log(res)

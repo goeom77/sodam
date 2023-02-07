@@ -6,12 +6,12 @@
       <router-link to="/InquiryCreate" id="InquiryCreateButton" class="InquiryCreateButton" >글쓰기</router-link> 
     </div>
     <div>
-      
+
     </div>
     <div>
       <InquiryListItem
         v-for="(Inquiryarticle, index) in Inquiryarticles.content"
-        :key="Inquiryarticle.postId"
+        :key="Inquiryarticle.id"
         :Inquiryarticle="Inquiryarticle"
         :index="index"
         :limit="InquiryListPage"

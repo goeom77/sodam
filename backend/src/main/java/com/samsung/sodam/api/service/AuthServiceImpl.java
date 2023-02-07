@@ -132,12 +132,12 @@ public class AuthServiceImpl implements AuthService{
                 .name(request.getName())
                 .email(request.getEmail())
                 .tel(request.getTel())
-                .career(request.getCareer())
+                .career(request.getCareers())
                 .introduce(request.getIntroduce())
-                .major(request.getMajor())
                 .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))
                 .enterprise(e)
+                .consultTypeList(request.getConsultType())
                 .build();
         return conselorRepository.save(c);
     }
@@ -212,5 +212,19 @@ public class AuthServiceImpl implements AuthService{
         // refreshTokenRedisRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteMember(String id){
+        boolean existClient = clientRepository.existsById(id);
+        boolean existCounselor = conselorRepository.existsById(id);
+        if (!existClient && !existCounselor) {
+            throw new IllegalStateException("no id match");
+        }
+        else if(existClient)
+            clientRepository.deleteById(id);
+        else if(existCounselor)
+            conselorRepository.deleteById(id);
+
+
+    }
 
 }

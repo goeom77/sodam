@@ -7,18 +7,21 @@ import FindPw from '@/components/account//FindPw.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
-import CalendarView from '@/components/management/CalendarView.vue'
+import CalendarView from '@/components/management/schedule/CalendarView.vue'
 import KidBoard from '../views/board/kid/KidBoard.vue'
 import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
 import Announce from '../views/helpdesk/announce/Announce.vue'
+import AnnounceDetail from '../views/helpdesk/announce/AnnounceDetail.vue'
 import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
-import ClientManage from '@/components/management/ClientManage.vue'
+import InquiryDetail from '../views/helpdesk/inquiry/InquiryDetail.vue'
+import ClientManage from '@/components/management/client/ClientManage.vue'
 import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
 import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCard/ConsultantCardItem.vue'
 import ConsultantCardItemReviewCreate from '@/components/ConsultantCard/ConsultantCardItemReviewCreate.vue'
+import ConsultantCardItemReviewItemDetail from '@/components/ConsultantCard/ConsultantCardItemReviewItemDetail.vue'
 import MyPage from '@/views/my/MyPage.vue'
 import NoticeView from '../views/my/notice/NoticeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
@@ -26,12 +29,19 @@ import LikeView from '@/views/my/like/LikeView.vue'
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
+import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
+
+import AlarmView from '../views/alarm/AlarmView.vue'
+import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
+
+import PageNotFound from '../views/PageNotFound.vue';
+
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/login',
@@ -91,9 +101,19 @@ const routes = [
     component: Announce
   },
   {
+    path: '/AnnounceDetail/:id?',
+    name: 'AnnounceDetail',
+    component: AnnounceDetail
+  },
+  {
     path: '/Inquiry',
     name: 'Inquiry',
     component: Inquiry
+  },
+  {
+    path: '/InquiryDetail/:id?',
+    name: 'InquiryDetail',
+    component: InquiryDetail
   },
   {
     path: '/ClientManage',
@@ -143,6 +163,12 @@ const routes = [
     props:true
   },
   {
+    path: '/ConsultantCardItemReviewItemDetail/:id?',
+    name: 'ConsultantCardItemReviewItemDetail',
+    component: ConsultantCardItemReviewItemDetail,
+    props:true
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: MyPage,
@@ -167,11 +193,37 @@ const routes = [
     name: 'MainEdit',
     component: MainEdit
   },
+  {
+    path: '/ClientManageDetail/:id?',
+    name: 'ClientManageDetail',
+    component: ClientManageDetail,
+    props:true
+  },
+  {
+    path: '/AlarmView',
+    name: 'AlarmView',
+    component: AlarmView
+  },
+  {
+    path: '/AlarmViewDetail/:id?',
+    name: 'AlarmViewDetail',
+    component: AlarmViewDetail
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
+    name: 'PageNotFound',
+    component: PageNotFound
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
 
 export default router

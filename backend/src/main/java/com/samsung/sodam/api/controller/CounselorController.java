@@ -9,15 +9,14 @@ import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -40,10 +39,11 @@ public class CounselorController {
 //        return service.searchCounselor(request, pageable);
 //    }
 
-    //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
+    @ApiOperation(value = "모든 상담사를 조회")
     @PostMapping("counselor/")
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-        return service.searchCounselor(request, pageable);
+    public Page<Counselor> searchCounselor() {
+        Pageable pageable = Pageable.ofSize(20);
+        return service.getAllCounselor(pageable);
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")
@@ -51,6 +51,34 @@ public class CounselorController {
     //상담사 정보 조회
     public CounselorListResponse getCounselorInfo(@PathVariable String id) {
         return service.getCounselorDetail(id);
+    }
+
+    @PutMapping(value = "/counselor/{id}")
+    @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
+    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+        try {
+            System.out.println("editProfileCounselor - parameter test");
+            System.out.println(request.getConsultType());
+            System.out.println(Arrays.toString(request.getRoutine()));
+            service.editProfile(request, id);
+            return HttpStatus.OK;
+        } catch(Exception e){
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
+    }
+
+    @PutMapping(value = "/counselor/test")
+    @ApiOperation(value="테스트")
+    public HttpStatus setCounselorType( String clientId, @RequestBody TestRequest request) {
+        try {
+            System.out.println(request.getList().toString());
+            service.counselorTest(request, clientId);
+            return HttpStatus.OK;
+        } catch(Exception e){
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
     }
 
     //상담 예약
@@ -62,23 +90,33 @@ public class CounselorController {
 
     //상담 예약 확정
     @PostMapping("/consult/{consult_id}")
-    public void acceptApplicant(@PathVariable String consult_id, @RequestBody SessionStateRequest request) {
+    public Integer acceptApplicant(@PathVariable String consult_id, @RequestBody SessionStateRequest request) {
         service.acceptApplicant(request);
+        return request.getSessionId();
     }
 
     //관심 상담사 담기
     @PostMapping("/client/{clientId}/fav/{counselorId}")
     @ApiOperation(value = "관심상담사 등록")
-    public void setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+    public String setFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.setFavCounselor(fav);
+        return "success";
+    }
+
+    //관심 상담사 담기
+    @PostMapping("/fav/{clientId}")
+    @ApiOperation(value = "관심상담사 조회")
+    public List<CounselorListResponse> getMyFavCounselor(@PathVariable String clientId) {
+        return service.getMyFavCounselor(clientId);
     }
 
     @DeleteMapping("/client/{clientId}/fav/{counselorId}")
     @ApiOperation(value = "관심상담사 삭제")
-    public void deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
+    public String deleteFavCounselor(@PathVariable String clientId, @PathVariable String counselorId) {
         FavoriteCounselor fav = new FavoriteCounselor(clientId, counselorId);
         service.removeFavCounselor(fav);
+        return "success";
     }
 
     //상담기록(한 세션에 대한 기록)
@@ -89,28 +127,28 @@ public class CounselorController {
 
     //상담세션 만들기
     @PostMapping("/consult-session")
-    @ApiOperation(value = "상담 세션 만들기")
+    @ApiOperation(value = "상담 세션 만들기(관리자)")
     public Integer makeSession(ConsultSession session) {
         return service.makeSession(session);
     }
 
     //상담세션 조회
     @GetMapping("/consult-session")
-    @ApiOperation(value = "나의 상담 세션 조회하기")
+    @ApiOperation(value = "나의 상담 세션 조회하기(상담사)")
     public List<ConsultSession> mySession(String counselorId) {
         return service.getMySession(counselorId);
     }
 
 
     @GetMapping("/client")
-    @ApiOperation(value = "모든 고객 목록 조회")
+    @ApiOperation(value = "모든 고객 목록 조회(관리자용)")
     //고객목록
     public Page<Client> getClients(@PathVariable Pageable pageable) {
         return service.getAllClients(pageable);
     }
 
     @GetMapping(value = { "/myclient/{consultantId}"})
-    @ApiOperation(value = "고객 목록 조회")
+    @ApiOperation(value = "고객 목록 조회(삭제예정)")
     //고객목록
     public Page<ClientListResponse> getClients(@PathVariable String consultantId) {
         return clientService.getMyClients(consultantId, Pageable.ofSize(20));
@@ -141,31 +179,6 @@ public class CounselorController {
     }
 
 
-    //상담사의 후기 목록 보기
-    @PostMapping("/review/my")
-    @ApiOperation(value = "고객이 작성한 나의 후기 목록 보기")
-    public Page<Review> getAllMyReviews(@RequestBody ReviewRequest request,@PageableDefault(size=20, sort="id") Pageable pageable) {
-        return reviewService.getAllMyReviews(request,pageable);
-    }
-
-    //내가 작성한 후기 목록 보기
-    @GetMapping("/review/my")
-    @ApiOperation(value = "내가 작성한 후기 목록 보기")
-    public List<Review> getReviews(@NotNull String clientId) {
-        return reviewService.getMyReview(clientId);
-    }
-
-    @PostMapping("/review")
-    @ApiOperation(value = "리뷰 작성하기")
-    public Review makeReview(@RequestBody Review review){
-        return reviewService.makeReview(review);
-    }
-
-    @PostMapping("/review/{reviewId}")
-    @ApiOperation(value = "리뷰 수정하기")
-    public Review updateReview(@PathVariable Long reviewId, @RequestBody Review review){
-        return reviewService.updateReview(reviewId,review);
-    }
 
 
 

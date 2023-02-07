@@ -11,7 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ScheduleRepository extends JpaRepository<ConsultSchedule, Integer> {
 
-    Optional<ConsultSchedule> getConsultSchedulesBySessionId(String sessionId);
+    Optional<ConsultSchedule> getConsultSchedulesBySessionId(
+            Integer sessionId);
 
     Page<ConsultSchedule> getAllBySessionId(Integer sessionId, Pageable pageable);
 }

@@ -3,7 +3,6 @@ package com.samsung.sodam.db.repository;
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -31,4 +30,6 @@ public interface ClientRepository extends JpaRepository<Client,String> , ClientC
     Client getByEmail(String email);
 
     Member findOneById(String id);
+
+    void deleteById(String id);
 }
