@@ -22,6 +22,7 @@ import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCard/ConsultantCardItem.vue'
 import ConsultantCardItemReviewCreate from '@/components/ConsultantCard/ConsultantCardItemReviewCreate.vue'
 import ConsultantCardItemReviewItemDetail from '@/components/ConsultantCard/ConsultantCardItemReviewItemDetail.vue'
+import ConsultantCardItemReviewUpdate from '@/components/ConsultantCard/ConsultantCardItemReviewUpdate.vue'
 import MyPage from '@/views/my/MyPage.vue'
 import NoticeView from '../views/my/notice/NoticeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
@@ -166,6 +167,12 @@ const routes = [
     path: '/ConsultantCardItemReviewItemDetail/:id?',
     name: 'ConsultantCardItemReviewItemDetail',
     component: ConsultantCardItemReviewItemDetail,
+    props:true
+  },
+  {
+    path: '/ConsultantCardItemReviewUpdate/:id?',
+    name: 'ConsultantCardItemReviewUpdate',
+    component: ConsultantCardItemReviewUpdate,
     props:true
   },
   {
