@@ -48,9 +48,10 @@ export default {
     getReview(){
       axios({
         method:'post',
-        url: `${VUE_APP_API_URL}/api/review/my`,
+        url: `${VUE_APP_API_URL}/api/review/my/counselor`,
         data:{
           counselorId:this.counselorData.id,
+          clientId:this.$store.state.payload.id,
         },
       })
       .then(res=>{
