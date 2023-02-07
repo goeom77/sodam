@@ -47,7 +47,7 @@ public class HelpDeskServiceImpl implements HelpDeskService {
     }
 
     @Override
-    public void saveQnaBoard(HelpDeskRequest request) {
+    public void saveQnaBoard(String userId, HelpDeskRequest request) {
         QnABoard qnABoard = QnABoard.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
@@ -55,7 +55,7 @@ public class HelpDeskServiceImpl implements HelpDeskService {
                 .secret(request.isSecret())
                 .password(request.getPassword())
                 .role(request.getRole())
-                .writerId(request.getWriterId())
+                .writerId(userId)
                 .build();
 
         qnARepository.save(qnABoard);
