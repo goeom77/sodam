@@ -13,7 +13,7 @@
     <div>
       <AnnounceListItem
         v-for="(Announcearticle, index) in Announcearticles.content"
-        :key="Announcearticle.postId"
+        :key="Announcearticle.id"
         :Announcearticle="Announcearticle"
         :index="index"
         :limit="AnnounceListPage"

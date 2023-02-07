@@ -98,7 +98,7 @@
           }
         })
         .then(() => {
-          // this.$emit('delete-comment')
+          this.$emit('delete-comment')
         })
         .catch((err) => {
           console.log(err)
@@ -161,7 +161,7 @@
           }
         })
         .then(() => {
-          // this.$emit('update-comment')
+          this.$emit('update-comment')
           console.log('댓글 수정 성공')
           this.updateStatus = false
         })

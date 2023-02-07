@@ -86,7 +86,7 @@ export default {
       const id  = this.id 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/qna`,
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/${this.$route.params.id}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
@@ -121,7 +121,7 @@ export default {
 
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/qna`,
+          url: `${VUE_APP_API_URL}/api/help-desk/qna/writing`,
           data: {
             title: title,
             content: content,
@@ -180,7 +180,7 @@ export default {
 
       axios({
         method: 'put',
-        url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/${this.$route.params.id}`,
         data: {
           title: title,
           content: content,

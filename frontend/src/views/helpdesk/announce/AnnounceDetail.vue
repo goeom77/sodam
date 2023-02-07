@@ -6,7 +6,7 @@
       <p>제목 : {{ Announcearticle?.title }}</p>
       <p>내용 : {{ Announcearticle?.content }}</p>
       <p>작성시간 : {{ Announcearticle?.createdAt }}</p>
-      <p>작성자 : {{ Announcearticle?.userType }}</p>
+      <p>작성자 : 관리자</p>
 
       <!-- 이미지 보임
       <v-img v-for="(item, i) in imagelist" :key="i" :src="require(`../../../assets/worryimage/${item}`)"
@@ -59,21 +59,19 @@ export default {
     getAnnouncedarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice/${this.$route.params.id}`,
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-        }
-      })
+        url: `${VUE_APP_API_URL}/api/help-desk/notice/${this.$route.params.id}`,
+
+        })
         .then((res) => {
-          console.log(this.$route.params.id)
-          this.Announcedarticle = res.data
+          console.log('왔다!')
+          this.Announcearticle = res.data
 
           // 이미지 카운트
           // for(var i = 1; i <= res.data.imagecnt; i++){
           //    this.imagelist.push(this.$route.params.postId + '-' + i + '.png');}
         })
         .catch((err) => {
-          console.log('실패다옹')
+          console.log('안왔다')
           Announcedarticle.log(err)
         })
     },

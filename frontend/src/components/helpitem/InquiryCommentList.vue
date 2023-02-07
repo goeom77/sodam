@@ -8,7 +8,7 @@
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ InquiryComment.content }} {{ KInquiryComment.commentId }}
+      ┖ {{ InquiryComment.content }} {{ InquiryComment.commentId }}
       </div>
       <!-- <div v-else="">
         <KidBoardCommentForm
@@ -39,12 +39,12 @@
   
   <script>
   import axios from 'axios'
-  import InquiryCommentForm from '../boarditem/InquiryCommentForm.vue'
+  import InquiryCommentForm from '../helpitem/InquiryCommentForm.vue'
 
   const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
   export default {
-    name: 'KidBoardCommentList',
+    name: 'InquiryCommentList',
     data() {
       return{
         username: null,

@@ -1,6 +1,6 @@
 <template>
   <div id="AlarmViewListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
-    <div v-if="read === true" style="float:left; margin-left: 60px;">
+    <div v-if="AlarmViewarticle.read === true" style="float:left; margin-left: 60px;">
       <h5>확인</h5>
     </div>
     <div v-else  style="float:left; margin-left: 60px;">
@@ -11,7 +11,6 @@
         <button @click="AlarmViewDetail">
 
           {{ AlarmViewarticle.title }}
-          {{ AlarmViewarticle}}
         </button>
         <!-- <button style="color:black" @click="clickList">{{ AlarmViewarticle.title }}</button> -->
       </div>
@@ -41,27 +40,40 @@ export default {
   },
   data() {
     return {
-      read: false,
+      // read: false,
     }
   },
   methods: {
     AlarmViewDetail() {
-      this.read = true
-      
-      return this.$swal(this.AlarmViewarticle.title);
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/my-page/notification/${this.AlarmViewarticle.id}`,
+        headers: { 
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(() => {
+        this.$swal(this.AlarmViewarticle.content);
+        this.$emit('refresh-alarm')
+        // this.read=true
+      })
+      .catch((err) => {
+        console.log('안됨')
+      })
     },
     
     AlarmViewarticleDelete() {
       axios({
         method: 'delete',
-        url: `${VUE_APP_API_URL}/api/my-page/notification/${this.AlarmViewarticle?.id}`,
+        url: `${VUE_APP_API_URL}/api/my-page/notification/${this.AlarmViewarticle.id}`,
         headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
         console.log('됨')
-        this.$router.push({ name: 'AlarmView' });
+        this.$emit('delete-alarm')
+        // this.$router.push({ name: 'AlarmViewList' });
       })
       .catch((err) => {
         console.log('안됨')

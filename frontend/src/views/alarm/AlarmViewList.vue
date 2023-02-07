@@ -19,9 +19,6 @@
             <v-tab value="four">
               HELP DESK
             </v-tab>
-            <!-- <v-tab value="five">
-              기타
-            </v-tab> -->
           </v-tabs>
           
           <v-window v-model="tab">
@@ -40,10 +37,6 @@
             <v-window-item value="four">
               <AlarmViewListHelp/>
             </v-window-item>
-
-            <!-- <v-window-item value="five">
-              <AlarmViewListGuitar/>
-            </v-window-item> -->
           </v-window>
         </v-card>
   </div>
@@ -54,7 +47,6 @@ import AlarmViewListAll from '../alarm/AlarmViewListAll.vue'
 import AlarmViewListSangdam from '../alarm/AlarmViewListSangdam.vue'
 import AlarmViewListBoard from '../alarm/AlarmViewListBoard.vue'
 import AlarmViewListHelp from '../alarm/AlarmViewListHelp.vue'
-// import AlarmViewListGuitar from '../alarm/AlarmViewListGuitar.vue'
 
   export default {
     name: 'AlarmViewList',
@@ -63,13 +55,13 @@ import AlarmViewListHelp from '../alarm/AlarmViewListHelp.vue'
       AlarmViewListSangdam,
       AlarmViewListBoard,
       AlarmViewListHelp,
-      // AlarmViewListGuitar
     },
     data(){
       return{
         tab:null
       }
-    }
+    },
+
   }
   </script>
   

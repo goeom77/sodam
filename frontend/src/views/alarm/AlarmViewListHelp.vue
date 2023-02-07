@@ -7,6 +7,8 @@
         :AlarmViewarticle="AlarmViewarticle"
         :index="index"
         :limit="AlarmViewListPage"
+        @delete-alarm="getHelpAlarmArticles"
+        @refresh-alarm="getHelpAlarmArticles"
       /> 
     </div>
 
@@ -32,19 +34,43 @@ export default {
   data() {
     return {
       AlarmViewListPage: 1,
-      contentlist: [], 
+      HelpAlarmViewarticles: [], 
     }
   },
   components: {
     AlarmViewListItem
   },
-  computed: {
-    HelpAlarmViewarticles() {
-      return this.$store.state.HelpAlarmViewarticles
-    },
+  // computed: {
+  //   HelpAlarmViewarticles() {
+  //     return this.$store.state.HelpAlarmViewarticles
+  //   },
+  // },
+  created() {
+    this.getHelpAlarmArticles()
+    // this.getBoardAlarmArticles()
+    // this.getHelpAlarmArticles()
+    // this.getGuitarAlarmArticles()  
   },
   methods: {
-
+    // getHelpAlarmArticles() {
+    //   console.log('헬프알람 알람뷰')
+    //   this.$store.dispatch('getHelpAlarmArticles')
+    // },
+    getHelpAlarmArticles() {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/my-page/notification?type=3`,
+        headers: {
+          "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
+      })
+        .then((res) => {
+          console.log('이거 되라 제발')
+          this.HelpAlarmViewarticles = res.data
+        })
+        .catch((err) => {
+          console.log('어림도 없지')
+        })
+    },
   }
 }
 </script>

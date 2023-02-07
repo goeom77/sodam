@@ -137,6 +137,7 @@ export default new Vuex.Store({
           console.log('게시글이 존재하지 않습니다.')
         })
     },
+    // HELP DESK - 공지사항
     getAnnounceArticles(context) {
       axios({
         method: 'get',
@@ -157,7 +158,7 @@ export default new Vuex.Store({
     getInquiryArticles(context) {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/qna`,
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/list`,
         // data: {
         //   category : category ,
         // },
