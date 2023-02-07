@@ -15,7 +15,7 @@ public interface HelpDeskService {
     Page<QnABoardResponse> getAllQnaBoard(String userId, String searchWord, Pageable pageable);
     Page<QnABoardResponse> getMyQnaBoard(String userId, Pageable pageable);
     QnAOneBoardResponse getOneQnaBoard(String userId, Long id);
-    void saveQnaBoard(HelpDeskRequest request);
+    void saveQnaBoard(String userId, HelpDeskRequest request);
     void updateQnaBoard(Long id, HelpDeskRequest request);
     void deleteQnaBoard(Long id);
 
