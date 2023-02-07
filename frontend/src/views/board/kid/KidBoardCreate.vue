@@ -157,7 +157,7 @@ export default {
             title: title,
             content: content,
             clientId: clientId,
-            imagecnt: this.imagecnt
+            // imagecnt: this.imagecnt
           },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`

@@ -104,9 +104,9 @@ public class HelpDeskController {
 
     @PostMapping(value = "/qna/writing")
     @ApiOperation(value = "문의글 작성", notes = "상담사, 내담자 문의글 등록")
-    public ResponseEntity<HttpStatus> saveQnaBoard(@RequestBody HelpDeskRequest request) {
+    public ResponseEntity<HttpStatus> saveQnaBoard(@RequestBody HelpDeskRequest request, @AuthenticationPrincipal UserDetails user) {
         try {
-            service.saveQnaBoard(request);
+            service.saveQnaBoard(user.getUsername(), request);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

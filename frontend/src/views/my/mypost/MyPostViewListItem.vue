@@ -1,11 +1,12 @@
 <template>
-  <div id="MyPostViewListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
+  <div id="MyPostViewListItem" v-if="index < 3">
     <div style="float:left; margin-left: 60px;">
       <h5>내 게시글</h5>
     </div>
     <div >
       <div>
         <router-link 
+          v-if="check === 0"
           style="color:black" 
           :to="{ 
             name: 'KidBoardDetail', 
@@ -14,13 +15,27 @@
         >
           {{ MyPostarticle.title }}
         </router-link>
-        <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
+        <router-link 
+          v-if="check === 1"
+          style="color:black" 
+          :to="{ 
+            name: 'InquiryDetail', 
+            params: { id: MyPostarticle.id } 
+          }"
+        >
+          {{ MyPostarticle.title }}
+        </router-link>
+      </div>
+      <div v-if="check === 0">
         <p>{{ MyPostarticle.clientId }}  {{ MyPostarticle?.createdAt }}</p>
       </div>
+      <div v-if="check === 1">
+        <p>{{ MyPostarticle.writerId }}  {{ MyPostarticle?.createdAt }}</p>
+      </div>
     </div>
-    <div >
+    <div v-if="check === 0">
       <h3>{{ MyPostarticle.views }}, {{ MyPostarticle.commentCount }}</h3>
     </div>
     <hr>
@@ -33,9 +48,10 @@
 export default {
   name: 'KidBoardListItem',
   props: {
-    KidBoardarticle: Object,
+    MyPostarticle: Object,
     index: Number,
     limit: Number,
+    check: Number,
   },
   methods: {
     // clickList() {
