@@ -12,7 +12,6 @@ import KidBoard from '../views/board/kid/KidBoard.vue'
 import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
 import Announce from '../views/helpdesk/announce/Announce.vue'
 import AnnounceDetail from '../views/helpdesk/announce/AnnounceDetail.vue'
-
 import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
 import InquiryDetail from '../views/helpdesk/inquiry/InquiryDetail.vue'
 import ClientManage from '@/components/management/client/ClientManage.vue'

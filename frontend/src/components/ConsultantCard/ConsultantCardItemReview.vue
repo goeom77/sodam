@@ -5,7 +5,7 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :idx="idx"
-    :review="review"
+    :review="review"  
     :limit="page"/>
     <div class="text-center">
       <v-pagination
@@ -13,6 +13,7 @@
         :length="6"
       ></v-pagination>
     </div>
+
     <v-btn outlined rounded text @click="moveTo">
       후기작성
     </v-btn>
@@ -51,7 +52,6 @@ export default {
         data:{
           counselorId:this.counselorData.id,
         },
-
       })
       .then(res=>{
         console.log(res)

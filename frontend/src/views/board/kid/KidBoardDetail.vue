@@ -94,8 +94,8 @@ export default {
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
-
       })
+      
         .then((res) => {
           console.log(this.$route.params.postId)
           this.KidBoardarticle = res.data
