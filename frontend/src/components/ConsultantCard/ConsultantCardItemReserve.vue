@@ -3,7 +3,7 @@
     <!-- 예약 -->
     <div>
 
-      <h1 @click="checkDate">상담 유형 </h1>
+      <h1 @click="checkDate(dueDate)">상담 유형 </h1>
       <select id="Typeselect" v-model="consultType">
         <option 
           v-for="(item, index) in selectTypeList"
@@ -39,12 +39,14 @@
       <h1>상담 기한</h1>
 
 
+
+
+
       <datepicker
         v-model="dueDate"
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
-        @click="dateFormat(this.duedate)"
       />
 
       <v-btn
@@ -112,15 +114,15 @@ export default {
     }
   },
   methods:{
-    updateDate(){
-      this.date=value;
-    },
+    // updateDate(){
+    //   this.date=value;
+    // },
     dateFormat(dueDate){
-      const month = dueDate.getMonth() + 1;
-      const day = dueDate.getDate();
-      const hour = dueDate.getHours();
-      const minute = dueDate.getMinutes();
-      const second = dueDate.getSeconds();
+      let month = dueDate.getMonth() + 1;
+      let day = dueDate.getDate();
+      let hour = dueDate.getHours();
+      let minute = dueDate.getMinutes();
+      let second = dueDate.getSeconds();
 
       month = month >= 10 ? month : '0' + month;
       day = day >= 10 ? day : '0' + day;
@@ -130,11 +132,11 @@ export default {
 
       return dueDate.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
     },
-    checkDate(){
+    checkDate(dueDate){
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId
       console.log(this.age,this.clientId,this.consultType,this.content,this.clientId)
-      console.log(this.dueDate,this.email,this.gender,this.name,this.state,this.tel)
+      console.log(this.dateFormat(dueDate),this.email,this.gender,this.name,this.state,this.tel)
     },
     reserveConsult(){
       axios({

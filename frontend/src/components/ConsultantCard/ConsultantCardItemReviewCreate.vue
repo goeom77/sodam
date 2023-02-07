@@ -34,8 +34,9 @@
             <label for="content">내용</label>
             <textarea id="content" v-model="content"></textarea>
           </div>
-          <input type="submit" id="submityes" @click='ReviewCreate' value="등록">
-          <input type="submit" id="submitno" value="취소">
+          <v-btn outlined rounded text @click="ReviewCreate">등록</v-btn>
+          <v-btn outlined rounded text @click="backTo">취소</v-btn>
+
           <!-- <button @click="postId !== undefined ? KidBoardarticleUpdate() : KidBoardcreateArticle()">{{ postId !== undefined ? "수정" : "작성" }}</button> -->
         </form>
         <!-- <button @click="ReviewUpdate">수정</button> -->
@@ -110,8 +111,11 @@
         })
         .then(res=>{
           console.log(res)
-        //   this.$router.push({name:'consultantcarditem'})
+          this.$router.push({name:'consultantcarditem', params: {id: this.counselor.id} })
         })
+      },
+      backTo(){
+        this.$router.go(-1);
       },
       changePropstoData(){
         this.counselorId = this.id
