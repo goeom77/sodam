@@ -132,7 +132,7 @@ public class AuthServiceImpl implements AuthService{
                 .name(request.getName())
                 .email(request.getEmail())
                 .tel(request.getTel())
-                //.career(request.getCareer())
+                .career(request.getCareers())
                 .introduce(request.getIntroduce())
                 .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))

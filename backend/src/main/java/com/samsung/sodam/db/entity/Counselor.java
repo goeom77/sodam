@@ -2,7 +2,6 @@ package com.samsung.sodam.db.entity;
 
 import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
-import com.samsung.sodam.db.converter.EducationListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -37,9 +36,6 @@ public class Counselor extends Member {
     private List<Career> career;
     //private String career;
 
-    @Column(length = 300)
-    @Convert(converter = EducationListConverter.class)
-    private List<Education> education;
 
     @Column(length = 150)
     private String introduce;
@@ -67,15 +63,15 @@ public class Counselor extends Member {
     @Convert(converter = ConsultListConverter.class)
     private List<CONSULT_TYPE> consultTypeList = null;
 
+
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, List<Education> education, String introduce, String commonCodeId, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
+    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, String commonCodeId, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.tel = tel;
         this.career = career;
-        this.education = education;
         this.introduce = introduce;
         this.commonCodeId = commonCodeId;
         this.gender = gender;

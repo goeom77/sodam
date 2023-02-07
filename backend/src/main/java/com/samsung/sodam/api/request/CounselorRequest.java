@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import com.samsung.sodam.db.converter.GenderConverter;
-import com.samsung.sodam.db.entity.*;
+import com.samsung.sodam.db.entity.CONSULT_TYPE;
+import com.samsung.sodam.db.entity.Career;
+import com.samsung.sodam.db.entity.GENDER;
+import com.samsung.sodam.db.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,15 +41,19 @@ public class CounselorRequest {
     private Role role = Role.COUNSELOR;
 
     private int enterpriseId;
+    private String enterprisestr;
 
     private String profileImg;
 
-    private List<Education> educationRow;
-    private List<Career> careerRow;
+//    private List<Education> educationRow;
+    private List<Career> careers;
 
     //private List<String> consultType;
     //private Integer[] consultType;
 
     @Convert(converter = ConsultListConverter.class)
     private ArrayList<CONSULT_TYPE> consultType;
+
+
+    ArrayList<CertRequest> certificateList;
 }
