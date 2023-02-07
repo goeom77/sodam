@@ -36,7 +36,7 @@ export default {
   },
   methods:{
     goDetail(){
-      this.$router.push({name:'ConsultantCardItemReviewItemDetail' })
+      this.$router.push({name:'ConsultantCardItemReviewItemDetail', params:{id: this.review.id}})
     },
     reviewUpdate(){
       const clientId = review.clientId
