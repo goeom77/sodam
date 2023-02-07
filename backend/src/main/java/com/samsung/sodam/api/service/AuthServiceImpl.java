@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -140,7 +141,7 @@ public class AuthServiceImpl implements AuthService{
                 .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))
                 .enterprise(e)
-                .consultTypeList(new ArrayList<CONSULT_TYPE>())
+                .consultTypeList(new HashSet<>())
                 .build();
         return conselorRepository.save(c);
     }

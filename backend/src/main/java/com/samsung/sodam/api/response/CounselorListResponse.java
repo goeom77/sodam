@@ -12,10 +12,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -46,10 +46,11 @@ public class CounselorListResponse {
     private String profileImg="";
     @Column(name = "consult_type")
     @ApiModelProperty(value = "상담사 상담 분야")
-    @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList = null;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<CONSULT_TYPE> consultTypeList = null;
     @QueryProjection
-    public CounselorListResponse(String name, String tel, String email, String id, String career, String introduce, String major, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> type) {
+    public CounselorListResponse(String name, String tel, String email, String id, String career, String introduce, String major, GENDER gender, String routine, String profileImg, Set<CONSULT_TYPE> type) {
         this.id = id;
         this.name = name;
         this.email = email;

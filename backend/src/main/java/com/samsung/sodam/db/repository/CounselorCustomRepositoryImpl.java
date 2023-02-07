@@ -1,11 +1,15 @@
 package com.samsung.sodam.db.repository;
 
+import com.google.gson.Gson;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samsung.sodam.api.request.TestRequest;
 import com.samsung.sodam.api.response.CounselorListResponse;
 
+import com.samsung.sodam.db.entity.CONSULT_TYPE;
 import com.samsung.sodam.db.entity.Counselor;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,5 +50,21 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
                 .routine(it.getRoutine())
                 .tel(it.getTel()).build()).collect(Collectors.toList());
 
+    }
+
+    @Transactional
+    public Long updateType(TestRequest request, String clientId){
+        System.out.println(request.getList());
+        return queryFactory.update(counselor)
+                .where(counselor.id.eq(clientId))
+                .set(counselor.consultTypeList,request.getList())
+                .execute();
+    }
+
+    public String convertToDatabaseColumn(List<CONSULT_TYPE> attribute) {
+        if (attribute == null || attribute.isEmpty()) return null;
+        List<Integer> list = attribute.stream().map(CONSULT_TYPE::getValue).collect(Collectors.toList());
+        System.out.println("toJson:: "+list.toString());
+        return new Gson().toJson(list);
     }
 }

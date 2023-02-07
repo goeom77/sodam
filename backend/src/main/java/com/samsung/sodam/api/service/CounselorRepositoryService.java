@@ -1,9 +1,6 @@
 package com.samsung.sodam.api.service;
 
-import com.samsung.sodam.api.request.ConsultApplicantRequest;
-import com.samsung.sodam.api.request.CounselorRequest;
-import com.samsung.sodam.api.request.SessionStateRequest;
-import com.samsung.sodam.api.request.SetStateRequest;
+import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
@@ -47,6 +44,11 @@ public class CounselorRepositoryService {
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
+    }
+    public Long counselorTest(TestRequest request, String id) {
+        System.out.println("service :: "+request.getList().toString());
+        System.out.println("service :: "+request.getList().getClass());
+        return counselorCustomRepository.updateType(request,id);
     }
 
     public void editProfile(CounselorRequest request, String id){

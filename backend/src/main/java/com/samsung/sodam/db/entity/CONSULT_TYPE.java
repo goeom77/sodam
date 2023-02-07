@@ -1,8 +1,12 @@
 package com.samsung.sodam.db.entity;
 
 import com.samsung.sodam.db.converter.BaseEnumCode;
+import com.samsung.sodam.db.converter.ConsultConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.persistence.Convert;
+import javax.persistence.Enumerated;
 
 @Getter
 @AllArgsConstructor
