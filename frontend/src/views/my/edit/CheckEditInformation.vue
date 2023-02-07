@@ -22,7 +22,7 @@ export default {
   data(){
     return{
       InputPassword:null,
-      password: this.$store.state.payload.password
+      password: this.$store.state.payload.password,
     }
   },
 

@@ -20,10 +20,10 @@ public class ApplicantCustomRepositoryImpl implements ApplicantCustomRepository 
 
     public List<ConsultApplicant> getMyApplicants(String CounselorId) {
 
-        return queryFactory.from(consultSession)
-                .groupBy(consultSession.counselorId, consultSession.clientId)
+        return queryFactory
+                .from(consultApplicant).join(consultSession).on(consultSession.id.eq(consultApplicant.sessionId))
+                .where(consultSession.counselorId.eq(CounselorId))
                 .select(consultApplicant)
-                .where(consultSession.id.eq(consultApplicant.sessionId), consultSession.counselorId.eq(CounselorId))
                 .fetch();
     }
 }

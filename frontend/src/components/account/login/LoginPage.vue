@@ -32,7 +32,7 @@ export default {
   float:left; 
   width: 800px;
   height: 608px;
-  background-image: url(../../../assets/loginImage.png);
+  background-image: url(../../../assets/images/loginImage.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

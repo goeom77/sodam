@@ -2,7 +2,7 @@
   <div v-if="isLogin===true">
     {{ this.id }}
     {{ this.sessionInfo }}
-    <client-manage-detail
+    <ClientManageCard
     v-for="(clientData,idx) in this.sessionInfo"
     :key="idx"
     :clientData="clientData"/>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
+import ClientManageCard from '@/components/management/client/ClientManageCard.vue'
 import axios from 'axios'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ClientManage',
   components:{
-    ClientManageDetail
+    ClientManageCard
   },
   data(){
     return{
@@ -30,7 +30,8 @@ export default {
     getSessionInfo(){
       axios({
         method:'get',
-        url:`${VUE_APP_API_URL}/api/consultApplicant?counselorId=${this.id}`,
+        url:`${VUE_APP_API_URL}/api/consultApplicant`,
+        // url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
         data:{
           counselorId : this.id
         }

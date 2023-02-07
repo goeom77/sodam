@@ -14,6 +14,6 @@ import java.util.Optional;
 public interface CounselorCustomRepository{
     CounselorListResponse getCounselorDetail(String id);
     public List<CounselorListResponse> getMyFavCounselor(String clientId);
-
-    public Long updateType(TestRequest request, String clientId);
+//
+//    public Long updateType(TestRequest request, String clientId);
 }

@@ -111,8 +111,11 @@ export default {
       const postId  = this.postId 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
-        // url: `${VUE_APP_API_URL}/trouble/${postId}`
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
+        // url: `${VUE_APP_API_URL}/trouble/${postId}`,
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
       })
         .then((res) => {
           // console.log(res)
@@ -157,7 +160,7 @@ export default {
             imagecnt: this.imagecnt
           },
           headers: {
-            Authorization: `Token ${this.$store.state.token}`
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
           .then((res) => {
@@ -216,8 +219,8 @@ export default {
           content: content,
           category: category,
         },
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
@@ -253,7 +256,7 @@ a {
 }
 
 #KidBoardCreateBoard {
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/hand.png');
+  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
   background-size: 100% 100%;

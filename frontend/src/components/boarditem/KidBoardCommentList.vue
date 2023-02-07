@@ -93,12 +93,12 @@
         axios({
           method: 'delete',
           url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
-          // this.$emit('delete-comment')
+          this.$emit('delete-comment')
         })
         .catch((err) => {
           console.log(err)
@@ -112,8 +112,8 @@
           data: {
             userid: this.KidBoardComment.comment_user
           },
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then((res) => {
@@ -156,12 +156,12 @@
             counselorId: this.counselorId ,
             commentId: this.commentId 
           },
-          headers: { 
-              Authorization: `Token ${this.$store.state.token}`
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
-          // this.$emit('update-comment')
+          this.$emit('update-comment')
           console.log('댓글 수정 성공')
           this.updateStatus = false
         })

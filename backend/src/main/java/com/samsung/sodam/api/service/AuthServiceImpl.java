@@ -18,10 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @Transactional
@@ -135,13 +132,12 @@ public class AuthServiceImpl implements AuthService{
                 .name(request.getName())
                 .email(request.getEmail())
                 .tel(request.getTel())
-                .career(request.getCareer())
+                //.career(request.getCareer())
                 .introduce(request.getIntroduce())
-                .major(request.getMajor())
                 .gender(request.getGender())
                 .routine(Arrays.toString(request.getRoutine()))
                 .enterprise(e)
-                .consultTypeList(new HashSet<>())
+                .consultTypeList(request.getConsultType())
                 .build();
         return conselorRepository.save(c);
     }

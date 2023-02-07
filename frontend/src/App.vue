@@ -25,6 +25,11 @@
       <v-btn @click="logIn" v-if="isLogin===false">Login</v-btn>
       <div v-if="isLogin===true">
         <!-- <h4>{{ this.name }}님</h4> -->
+        <v-btn class="text-none" stacked style="background-color: white;">
+          <v-badge floating :content="newNotiCount" color="error" @click="alarm">
+            <v-icon>mdi-bell-outline</v-icon>
+          </v-badge>
+        </v-btn>
         <v-btn @click="logOut">Logout</v-btn>
         <router-link to="/mypage">마이 페이지</router-link>
       </div>
@@ -35,6 +40,8 @@
 
 <script>
 import axios from 'axios'
+import { EventSourcePolyfill } from "event-source-polyfill";
+
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -42,17 +49,20 @@ export default {
   name:'App',
   data(){
     return{
-      projectlogo : require('@/assets/projectlogoperpect.png'),
+      projectlogo : require('../src/assets/images/projectlogoperpect.png'),
+      newNotiCount : this.$store.state.newNotiCount
     }
   },
-
+  component: {
+    // Spinner
+  },
   methods: {
     logOut(){
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/logout/id`,
         headers: {
-          Authorization: `Token ${ this.$store.state.token }`
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(
@@ -61,11 +71,71 @@ export default {
     },
     logIn(){
       this.$router.push({name:'login'})
+    },
+    alarm(){
+      this.$router.push({name:'AlarmView'})
+    },
+    initNotiListener() {
+      const eventSource = new EventSourcePolyfill(`${VUE_APP_API_URL}/api/subscription`, {
+        headers: {
+          "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`
+        },
+        withCredentials : true
+      });
+
+      eventSource.onerror = event => {
+        console.log(event);
+      }
+
+      eventSource.addEventListener('noti', event => {
+        // 새로운 알림 수 + 1
+        this.$store.dispatch('countNoti');
+        
+        const data = JSON.parse(event.data);
+
+        (async () => {
+          // 브라우저 알림
+          const showNotification = () => {
+              
+              const notification = new Notification(data.title, {
+                  body: data.content
+              });
+              
+              setTimeout(() => {
+                  notification.close();
+              }, 10 * 1000);
+              
+              notification.addEventListener('click', () => {
+                  window.open(data.url, '_blank');
+              });
+          }
+
+          // 브라우저 알림 허용 권한
+          let granted = false;
+
+          if (Notification.permission === 'granted') {
+              granted = true;
+          } else if (Notification.permission !== 'denied') {
+              let permission = await Notification.requestPermission();
+              granted = permission === 'granted';
+          }
+
+          // 알림 보여주기
+          if (granted) {
+              showNotification();
+          }
+        })();
+      })
     }
   },
   computed:{
     isLogin(){
       return this.$store.getters.isLogin
+    }
+  },
+  mounted() {
+    if(this.isLogin) {
+      this.initNotiListener();
     }
   }
 }
@@ -86,7 +156,7 @@ nav {
   margin: 0 auto;
   padding: 20px;
   display: flex;
-  background-color: #F1E7DB;
+  background-color: white;
   justify-content: space-between;
   align-items: center;
   /* background-color: #F1E7DB; */

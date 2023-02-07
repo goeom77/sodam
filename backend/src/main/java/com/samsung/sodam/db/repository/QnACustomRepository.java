@@ -65,6 +65,30 @@ public class QnACustomRepository {
         fixedQna.addAll(list);
         return new PageImpl<>(fixedQna, pageable, fixedQna.size());
     }
+
+    public Page<QnABoardResponse> getMyQnaBoard(String userId, Pageable pageable) {
+        List<QnABoardResponse> list = queryFactory
+                .select(new QQnABoardResponse(
+                        qnABoard.id,
+                        qnABoard.title,
+                        qnABoard.writerId,
+                        qnABoard.fixed,
+                        qnABoard.secret,
+                        qnABoard.createdAt,
+                        qnABoard.qnAAnswers.size(),
+                        JPAExpressions
+                                .selectFrom(qnABoard)
+                                .where(qnABoard.writerId.eq(userId))
+                                .exists()
+                ))
+                .from(qnABoard)
+                .where(qnABoard.writerId.eq(userId))
+                .orderBy(qnABoard.createdAt.desc())
+                .fetch();
+
+        return new PageImpl<>(list, pageable, list.size());
+    }
+
     private BooleanExpression containSearch(String searchWord) {
         return searchWord != null ? qnABoard.title.contains(searchWord) : null;
     }
