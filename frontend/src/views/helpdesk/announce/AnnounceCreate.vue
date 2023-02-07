@@ -123,7 +123,7 @@ export default {
 
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/admin/notice`,
+          url: `${VUE_APP_API_URL}/api/admin/notice/writing`,
           data: {
             title: title,
             content: content,

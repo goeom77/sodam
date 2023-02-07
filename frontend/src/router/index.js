@@ -11,7 +11,10 @@ import CalendarView from '@/components/management/schedule/CalendarView.vue'
 import KidBoard from '../views/board/kid/KidBoard.vue'
 import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
 import Announce from '../views/helpdesk/announce/Announce.vue'
+import AnnounceDetail from '../views/helpdesk/announce/AnnounceDetail.vue'
+
 import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
+import InquiryDetail from '../views/helpdesk/inquiry/InquiryDetail.vue'
 import ClientManage from '@/components/management/client/ClientManage.vue'
 import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
 import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
@@ -98,9 +101,19 @@ const routes = [
     component: Announce
   },
   {
+    path: '/AnnounceDetail/:id?',
+    name: 'AnnounceDetail',
+    component: AnnounceDetail
+  },
+  {
     path: '/Inquiry',
     name: 'Inquiry',
     component: Inquiry
+  },
+  {
+    path: '/InquiryDetail/:id?',
+    name: 'InquiryDetail',
+    component: InquiryDetail
   },
   {
     path: '/ClientManage',
@@ -186,7 +199,7 @@ const routes = [
     component: AlarmView
   },
   {
-    path: '/AlarmViewDetail/:postId?',
+    path: '/AlarmViewDetail/:id?',
     name: 'AlarmViewDetail',
     component: AlarmViewDetail
   },

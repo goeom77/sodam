@@ -79,7 +79,7 @@ export default {
         })
         .then(() => {
             console.log('되냐?')
-            // this.$emit('get-comment')
+            this.$emit('get-comment')
             this.inputData=null
         })
         .catch((err) => {
