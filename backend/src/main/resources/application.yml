@@ -37,6 +37,15 @@ spring:
     serialization:
       fail-on-empty-beans: false
 
+  cloud:
+    gcp:
+      storage:
+        bucket: stt-bucket-binu
+      project-id: speachtotext-374807
+      credentials:
+        location: classpath:credentials/gcp-key.json
+
+
 auth:
   kakao:
     client-id: 9e0f9a70f672fba12b71ea1b5ec10e80

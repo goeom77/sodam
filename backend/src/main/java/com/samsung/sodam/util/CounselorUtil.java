@@ -20,7 +20,7 @@ public class CounselorUtil {
                     .degree(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
                     .school(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
                     .major(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
-                    .isGraduate(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
+                    .is_graduate(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
                     .build());
         }
         return list;
@@ -31,7 +31,7 @@ public class CounselorUtil {
             sb.append(o.getDegree()).append('^');
             sb.append(o.getSchool()).append('^');
             sb.append(o.getMajor()).append('^');
-            sb.append(o.getIsGraduate());
+            sb.append(o.getIs_graduate());
             sb.append('#');
         }
         String result = sb.toString();
@@ -46,9 +46,9 @@ public class CounselorUtil {
         while(st.hasMoreTokens()){
             stInLoop = new StringTokenizer(st.nextToken(), "^");
             list.add(Career.builder()
-                    .careerName(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
-                    .careerContent(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
-                    .careerPeriod(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
+                    .name(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
+                    .content(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
+                    .period(stInLoop.hasMoreTokens()?stInLoop.nextToken():"")
                     .build());
         }
         return list;
@@ -57,9 +57,9 @@ public class CounselorUtil {
     public static String careerObjectToString(List<Career> list){
         StringBuilder sb = new StringBuilder();
         for(Career o : list){
-            sb.append(o.getCareerName()).append('^');
-            sb.append(o.getCareerContent()).append('^');
-            sb.append(o.getCareerPeriod());
+            sb.append(o.getName()).append('^');
+            sb.append(o.getContent()).append('^');
+            sb.append(o.getPeriod());
             sb.append('#');
         }
         String result = sb.toString();
