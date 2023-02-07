@@ -38,16 +38,14 @@
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>
 
-      
-      <Datepicker v-model="date" range :partial-range="false" />
 
-
-      <!-- <datepicker
+      <datepicker
         v-model="dueDate"
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
-      /> -->
+        @click="dateFormat(this.duedate)"
+      />
 
       <v-btn
         outlined
@@ -66,14 +64,14 @@
 // import Datepicker from 'vue3-datepicker';
 
 import axios from 'axios'
-
+import Datepicker from 'vue3-datepicker'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
-
-    // Datepicker
+    // DateTimePicker
+    Datepicker
   },
   props:{
     counselorData:Object
@@ -114,8 +112,24 @@ export default {
     }
   },
   methods:{
+    updateDate(){
+      this.date=value;
+    },
+    dateFormat(dueDate){
+      const month = dueDate.getMonth() + 1;
+      const day = dueDate.getDate();
+      const hour = dueDate.getHours();
+      const minute = dueDate.getMinutes();
+      const second = dueDate.getSeconds();
 
+      month = month >= 10 ? month : '0' + month;
+      day = day >= 10 ? day : '0' + day;
+      hour = hour >= 10 ? hour : '0' + hour;
+      minute = minute >= 10 ? minute : '0' + minute;
+      second = second >= 10 ? second : '0' + second;
 
+      return dueDate.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+    },
     checkDate(){
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId

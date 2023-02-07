@@ -1,12 +1,10 @@
 <template>
   <div style="width: 100%">
-    <p>1. Basic usage</p>
     <div class="date">
       <font-awesome-icon
         icon="fa-solid fa-calendar-days"
         transform="down-2.5 right-20"
         style="z-index: 1; cursor: default"
-
       />
       <Datepicker
         v-model="picked"
@@ -38,8 +36,6 @@ export default defineComponent({
     const picked = ref(new Date());
     const locale = reactive(ko);
     const inputFormat = ref('yyyy-MM-dd');
-
-    
 
     return {
       picked,

@@ -6,8 +6,8 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import VueSweetAlert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+// import Datepicker from '@vuepic/vue-datepicker';
+// import '@vuepic/vue-datepicker/dist/main.css'
 
 loadFonts()
 
@@ -16,7 +16,6 @@ createApp(App).use(router)
   .use(store)
   .use(vuetify)
   .use(VueSweetAlert2)
-  .use(Datepicker)
   .mount('#app')
 
   window.Kakao.init('46ea2a430e00975ef0166ed7e47277e9');
