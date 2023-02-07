@@ -9,6 +9,8 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    Boardarticles: [],
+    BoardMyarticles: [],
     KidBoardarticles: [],
     Announcearticles: [],
     Inquiryarticles: [],
@@ -43,6 +45,14 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    GET_BOARDARTICLES(state, Boardarticles) {
+      console.log(Boardarticles)
+      state.Boardarticles = Boardarticles
+    },
+    GET_BOARDMYARTICLES(state, BoardMyarticles) {
+      console.log(BoardMyarticles)
+      state.BoardMyarticles = BoardMyarticles
+    },
     GET_KIDBOARDARTICLES(state, KidBoardarticles) {
       console.log(KidBoardarticles)
       state.KidBoardarticles = KidBoardarticles
@@ -113,17 +123,39 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // 고민게시판 전체 불러오기
+    getBoardArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/trouble/list`,
+      })
+        .then((res) => {
+          context.commit('GET_BOARDARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
+    // 고민게시판 전체 불러오기 (내 글)
+    getBoardMyArticles(context) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/trouble/my-trouble`,
+      })
+        .then((res) => {
+          context.commit('GET_BOARDMYARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log('게시글이 존재하지 않습니다.')
+        })
+    },
+    // 고민게시판 아동 불러오기
     getKidBoardArticles(context) {
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/trouble/list/child`,
-        // data: {
-        //   category : category ,
-        // },
       })
         .then((res) => {
-          // console.log(res, context)
-          // console.log(res.data)
           context.commit('GET_KIDBOARDARTICLES', res.data)
         })
         .catch((err) => {
