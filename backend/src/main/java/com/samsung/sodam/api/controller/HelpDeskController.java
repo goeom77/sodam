@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,14 +54,31 @@ public class HelpDeskController {
 
     @GetMapping(value = "/qna/list")
     @ApiOperation(value = "문의글 전체 목록", notes = "문의사항 전체 목록 및 검색")
-    public ResponseEntity<Page<QnABoardResponse>> getAllQnaBoard(Pageable pageable,
+    public ResponseEntity<Page<QnABoardResponse>> getAllQnaBoard(Pageable pageable, @AuthenticationPrincipal UserDetails user,
                                                            @RequestParam(name = "searchword", required = false) String searchWord) {
         try {
-//            String userId = "";
-//            if(user != null)
-//                userId = user.getUsername();
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
 
-            Page<QnABoardResponse> list = service.getAllQnaBoard("id", searchWord, pageable);
+            Page<QnABoardResponse> list = service.getAllQnaBoard(userId, searchWord, pageable);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping(value="/my-qna")
+    @ApiOperation(value="문의게시글 내글보기", notes="내가 작성한 문의게시글 목록")
+    public ResponseEntity<Page<QnABoardResponse>> getMyTroubleList(Pageable pageable, @AuthenticationPrincipal UserDetails user) {
+
+        try {
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
+
+            Page<QnABoardResponse> list = service.getMyQnaBoard(userId, pageable);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,13 +88,13 @@ public class HelpDeskController {
 
     @GetMapping(value = "/qna/{id}")
     @ApiOperation(value = "문의글 상세보기", notes = "문의글 상세정보와 댓글")
-    public ResponseEntity<QnAOneBoardResponse> getOneQnaBoard(@PathVariable Long id) {
+    public ResponseEntity<QnAOneBoardResponse> getOneQnaBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetails user) {
         try {
-//            String userId = "";
-//            if(user != null)
-//                userId = user.getUsername();
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
 
-            QnAOneBoardResponse list = service.getOneQnaBoard("id", id);
+            QnAOneBoardResponse list = service.getOneQnaBoard(userId, id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

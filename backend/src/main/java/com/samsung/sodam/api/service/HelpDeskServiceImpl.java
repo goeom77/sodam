@@ -37,6 +37,11 @@ public class HelpDeskServiceImpl implements HelpDeskService {
     }
 
     @Override
+    public Page<QnABoardResponse> getMyQnaBoard(String userId, Pageable pageable) {
+        return qnACustomRepository.getMyQnaBoard(userId, pageable);
+    }
+
+    @Override
     public QnAOneBoardResponse getOneQnaBoard(String userId, Long id) {
         return qnACustomRepository.getOneQnaBoard(userId, id);
     }
