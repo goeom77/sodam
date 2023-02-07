@@ -1,32 +1,30 @@
 <template>
   <div id="MyPostViewList" >
-    <div id="WriteButton">
-      <!-- <router-link to="/KidBoard" id="KidBoardListAll">전체 (5)</router-link>  -->
-      <div id="MyPostViewListAll" @click="MyPostViewListAll">전체 (5)</div>
-      <!-- <router-link to="/KidBoardCreate" id="KidBoardCreateButton" class="KidBoardCreateButton" >글쓰기</router-link>  -->
-    </div>
     <div>
-      
-    </div>
-    <div>
-      <MyPostViewListItem
-        v-for="(MyPostarticle, index) in MyPostarticles.content"
-        :key="MyPostarticle.postId"
-        :MyPostarticle="MyPostarticle"
-        :index="index"
-        :limit="MyPostListPage"
-      /> 
-    </div>
-
-    <div v-if="MyPostarticles" class="text-center">
-      <v-pagination
-        v-model="this.MyPostListPage"
-        :length="5"
-
-      ></v-pagination>
+      <div>
+        <h2>여긴 고민게시판 내 글</h2>
+        <MyPostViewListItem
+          v-for="(MyPostarticle, index) in MyBoardarticles.content"
+          :key="MyPostarticle.postId"
+          :MyPostarticle="MyPostarticle"
+          :index="index"
+          :limit="MyPostListPage"
+          :check=0
+        /> 
+      </div>
+      <div>
+        <h2>여긴 1:1 문의 내 글</h2>
+        <MyPostViewListItem
+          v-for="(MyPostarticle, index) in MyInquiryarticles.content"
+          :key="MyPostarticle.id"
+          :MyPostarticle="MyPostarticle"
+          :index="index"
+          :limit="MyPostListPage"
+          :check=1
+        /> 
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -37,24 +35,51 @@ import MyPostViewListItem from '../mypost/MyPostViewListItem.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
-  name: 'KidBoardList',
+  name: 'MyPostViewList',
   data() {
     return {
+      MyBoardarticles: [], 
+      MyInquiryarticles: [],
       MyPostListPage: 1,
-      contentlist: [], 
     }
   },
   components: {
     MyPostViewListItem
   },
-  computed: {
-    MyPostarticles() {
-      return this.$store.state.MyPostarticles
-    },
+  created() {
+    this.getMyBoardarticless()
+    this.getMyInquiryarticles()  
   },
   methods: {
-    MyPostViewListAll(){
-      this.$router.push({ name: 'MyPostView' },)
+    getMyBoardarticless() {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/trouble/my-trouble`,
+        headers: {
+          "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
+      })
+        .then((res) => {
+          console.log('이거 되라 게시글')
+          this.MyBoardarticles = res.data
+        })
+        .catch((err) => {
+          console.log('어림도 없지 게시글')
+        })
+    },
+    getMyInquiryarticles() {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/help-desk/my-qna`,
+        headers: {
+          "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
+      })
+        .then((res) => {
+          console.log('이거 되라 문의')
+          this.MyInquiryarticles = res.data
+        })
+        .catch((err) => {
+          console.log('어림도 없지 문의')
+        })
     },
   }
 }

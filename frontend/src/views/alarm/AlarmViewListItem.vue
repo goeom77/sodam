@@ -1,5 +1,5 @@
 <template>
-  <div id="AlarmViewListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
+  <div id="AlarmViewListItem"  v-if="(limit-1)*10 <= index && index < limit * 10">
     <div v-if="AlarmViewarticle.read === true" style="float:left; margin-left: 60px;">
       <h5>확인</h5>
     </div>

@@ -17,6 +17,7 @@
     <div>
       
     </div>
+
     <KidBoardList
     
     />
@@ -46,12 +47,12 @@ export default {
       }
     },
   created() {
-    this.getKidBoardArticles()
+    // this.getKidBoardArticles()
   },
   methods: {
-    getKidBoardArticles() {
-    this.$store.dispatch('getKidBoardArticles')
-    }
+    // getKidBoardArticles() {
+    // this.$store.dispatch('getKidBoardArticles')
+    // }
   }
 
 }
@@ -119,5 +120,17 @@ a:visited {
   border: 1px solid white;
   border-bottom: 0px;
 }
-
+.KidBoardCreateButton {
+  float:left;
+  height: 30px;
+  line-height: 25px;
+  font-weight: 700;
+  border: 1px solid white;
+  /* border-bottom: 0px; */
+  background-color: #579BB1;
+  padding: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
 </style>
