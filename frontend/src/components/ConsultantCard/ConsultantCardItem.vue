@@ -35,7 +35,7 @@
           </v-window-item>
         </v-window>
       </v-card-text>
-    </v-card>     
+    </v-card>
 </template>
 
 <script>

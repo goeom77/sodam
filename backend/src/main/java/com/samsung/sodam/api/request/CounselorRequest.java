@@ -29,7 +29,6 @@ public class CounselorRequest {
     private String tel;
     private String email;
 
-    private String career;
 
     private String introduce;
     private String major;

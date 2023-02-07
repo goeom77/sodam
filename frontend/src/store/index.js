@@ -9,8 +9,7 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    Boardarticles: [],
-    BoardMyarticles: [],
+    newNotiCount: 0,
     KidBoardarticles: [],
     Announcearticles: [],
     Inquiryarticles: [],
@@ -121,6 +120,12 @@ export default new Vuex.Store({
     RESERVECONSULT(state){
       console.log(state)
     },
+    COUNT_NOTI(state) {
+      state.newNotiCount += 1;
+    },
+    DISCOUNT_NOTI(state) {
+      state.newNotiCount -= 1;
+    }
   },
   actions: {
     // 고민게시판 전체 불러오기
@@ -187,7 +192,6 @@ export default new Vuex.Store({
         // data: {
         //   category : category ,
         // },
-
       })
         .then((res) => {
           // console.log(res, context)
@@ -444,7 +448,13 @@ export default new Vuex.Store({
         console.log(res, payload)
         context.commit('RESERVECONSULT')
       })
-    }
+    },
+    countNoti(context){
+      context.commit('COUNT_NOTI');
+    },
+    discountNoti(context){
+      context.commit('DISCOUNT_NOTI');
+    },
   },
   modules: {
   }

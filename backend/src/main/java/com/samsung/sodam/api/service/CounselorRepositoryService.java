@@ -1,13 +1,9 @@
 package com.samsung.sodam.api.service;
 
-import com.samsung.sodam.api.request.ConsultApplicantRequest;
-import com.samsung.sodam.api.request.CounselorRequest;
-import com.samsung.sodam.api.request.SessionStateRequest;
-import com.samsung.sodam.api.request.SetStateRequest;
+import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
-import com.samsung.sodam.util.CounselorUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,18 +44,22 @@ public class CounselorRepositoryService {
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
     }
+    public Long counselorTest(TestRequest request, String id) {
+//        System.out.println("service :: "+request.getList().toString());
+//        System.out.println("service :: "+request.getList().getClass());
+//        return counselorCustomRepository.updateType(request,id);
+        return null;
+    }
 
     public void editProfile(CounselorRequest request, String id){
 
-        String educationStr = null;
         Counselor counselor = repository.getById(id);
         // 전화번호 수정
         if(request.getTel() != null) counselor.setTel(request.getTel());
 
         // 학력사항 수정
         if(request.getEducationRow()!= null) {
-            educationStr = CounselorUtil.educationObjectToString(request.getEducationRow());
-            counselor.setEducation(educationStr);
+            counselor.setEducation(request.getEducationRow());
         }
         // 소개 수정
         if(request.getIntroduce()!= null) {
@@ -67,25 +67,19 @@ public class CounselorRepositoryService {
         }
         // 경력 수정
         if(request.getCareerRow() != null){
-            String careerStr = CounselorUtil.careerObjectToString(request.getCareerRow());
-            counselor.setCareer(careerStr);
+            counselor.setCareer(request.getCareerRow());
         }
+
+//        if(request.getCareerRow() != null){
+//            String careerStr = CounselorUtil.careerObjectToString(request.getCareerRow());
+//            counselor.setCareer(careerStr);
+//        }
 
         if(!request.getConsultType().isEmpty()){
             counselor.setConsultTypeList(request.getConsultType());
         }
         System.out.println(counselor.getConsultTypeList().toString());
-        System.out.println("CounselorService -- convert test");
-        List<Education> list = CounselorUtil.educationStringToObject(educationStr);
-        for(Education e : list){
-            System.out.println(e);
-        }
 
-//        if(request.getEducationRow()!= null) {
-//            String education = CounselorUtill.educationObjectToString(request.getEducationRow());
-//            counselor.setIntroduce(education);
-//        }
-        //f(request.getTel() != null) counselor.setTel(request.getTel());
         repository.save(counselor);
     }
 

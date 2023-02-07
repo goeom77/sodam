@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'DeleteAccount',
   data(){
@@ -23,6 +25,7 @@ export default {
     OutMember(){
       axios({
         method:'delete',
+        url: `${VUE_APP_API_URL}/api/auth/out/${this.id}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         },

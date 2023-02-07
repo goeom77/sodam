@@ -68,6 +68,19 @@ public class CounselorController {
         }
     }
 
+    @PutMapping(value = "/counselor/test")
+    @ApiOperation(value="테스트")
+    public HttpStatus setCounselorType( String clientId, @RequestBody TestRequest request) {
+        try {
+            System.out.println(request.getList().toString());
+            service.counselorTest(request, clientId);
+            return HttpStatus.OK;
+        } catch(Exception e){
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
+    }
+
     //상담 예약
     @PostMapping("/consult")
     @ApiOperation(value = "상담 예약")

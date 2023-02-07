@@ -44,7 +44,7 @@ export default {
     getAlarmViewarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
+        url: `${VUE_APP_API_URL}/api/my-page/notification/${this.$route.params.postId}`
       })
         .then((res) => {
           console.log(this.$route.params.postId)

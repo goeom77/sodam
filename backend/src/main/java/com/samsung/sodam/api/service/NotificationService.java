@@ -1,6 +1,6 @@
 package com.samsung.sodam.api.service;
 
-import com.samsung.sodam.api.response.NotificationResponse;
+import com.google.gson.Gson;
 import com.samsung.sodam.db.repository.EmitterRepository;
 import com.samsung.sodam.db.entity.Notification;
 import com.samsung.sodam.db.entity.NotificationType;
@@ -28,8 +28,9 @@ public class NotificationService {
         emitter.onTimeout(() -> emitterRepository.deleteById(emitterId));
 
         // 503 에러를 방지하기 위한 더미 이벤트 전송
+        Gson gson = new Gson();
         String eventId = makeTimeIncludeId(userId);
-        sendNotification(emitter, eventId, emitterId, "EventStream Created. [userId= " + userId + "]");
+        sendNotification("dummy", emitter, eventId, emitterId, gson.toJson("Its dummy event, " + userId));
 
         // 클라이언트가 미수신한 event 목록이 존재할 경우 전송하여 event 유실을 예방
         if (hasLostData(lastEventId)) {
@@ -43,10 +44,11 @@ public class NotificationService {
         return userId + "_" + System.currentTimeMillis();
     }
 
-    private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {
+    private void sendNotification(String type, SseEmitter emitter, String eventId, String emitterId, Object data) {
         try {
             emitter.send(SseEmitter.event()
                     .id(eventId)
+                    .name(type)
                     .data(data, MediaType.APPLICATION_JSON)
             );
         } catch (IOException e) {
@@ -62,7 +64,7 @@ public class NotificationService {
         Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByUserId(String.valueOf(userId));
         eventCaches.entrySet().stream()
                 .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-                .forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));
+                .forEach(entry -> sendNotification("noti", emitter, entry.getKey(), emitterId, entry.getValue()));
     }
 
     public void send(String userId, NotificationType notificationType, String title, String content, String url) {
@@ -74,10 +76,11 @@ public class NotificationService {
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
-                    sendNotification(emitter, eventId, key, notification);
+                    Gson gson = new Gson();
+                    String result = gson.toJson(notification);
+                    sendNotification("noti", emitter, eventId, key, result);
                 }
         );
-//        new NotificationResponse().create(notification)
     }
 
     private Notification createNotification(String userId, NotificationType notificationType, String title, String content, String url) {

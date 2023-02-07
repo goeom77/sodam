@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.repository;
 
+import com.querydsl.core.types.Order;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.ReviewRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.samsung.sodam.db.entity.QReview.review;
 
@@ -54,6 +56,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
     @Override
     public List<Review> getReviewByAvg() {
+//        return queryFactory.select(review,review.stars.avg().as("average")).from(review).groupBy(review.counselorId).fetch();
+//
         return null;
     }
 

@@ -23,23 +23,21 @@ export default {
   data(){
     return{
       sessionInfo: null,
+      id: this.$store.state.payload.id
     }
   },
   methods:{
     getSessionInfo(){
       axios({
         method:'get',
-        // url:`${VUE_APP_API_URL}/api/consultApplicant?counselorId=${this.id}`,
-        url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
+        url:`${VUE_APP_API_URL}/api/consultApplicant`,
+        // url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
         data:{
           counselorId : this.id
-        },
-        headers: {
-          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(res=>{
-        this.sessionInfo = res.data.content
+        this.sessionInfo = res.data
         console.log(res)
       })
     },

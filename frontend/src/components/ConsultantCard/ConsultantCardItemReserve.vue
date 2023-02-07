@@ -3,7 +3,7 @@
     <!-- 예약 -->
     <div>
 
-      <h1 @click="checkDate">상담 유형 </h1>
+      <h1 @click="checkDate(dueDate)">상담 유형 </h1>
       <select id="Typeselect" v-model="consultType">
         <option 
           v-for="(item, index) in selectTypeList"
@@ -37,17 +37,17 @@
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>
-      <!-- <DateTimePicker @update-date="updateDate">
-      
-      </DateTimePicker> -->
 
 
-      <!-- <datepicker
+
+
+
+      <datepicker
         v-model="dueDate"
         lang="ko"
         :lowerLimit="new Date()"
         :clearable="false"
-      /> -->
+      />
 
       <v-btn
         outlined
@@ -64,15 +64,16 @@
 
 <script>
 // import Datepicker from 'vue3-datepicker';
-import DateTimePicker from '@/components/ConsultantCard/DateTimePicker.vue'
+
 import axios from 'axios'
+import Datepicker from 'vue3-datepicker'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'ConsultantCardItemReserve',
   components:{
-    DateTimePicker
-    // Datepicker
+    // DateTimePicker
+    Datepicker
   },
   props:{
     counselorData:Object
@@ -100,7 +101,7 @@ export default {
       ],
       content:null,
       counselorId: this.counselorData.id,
-      dueDate:'2023-02-06T01:18:08',
+      dueDate:null,
       email:null,
       gender:null,
       genderList:[
@@ -113,16 +114,29 @@ export default {
     }
   },
   methods:{
-    // updateDate:function(value){
-    //   this.dueDate = value;
+    // updateDate(){
+    //   this.date=value;
     // },
+    dateFormat(dueDate){
+      let month = dueDate.getMonth() + 1;
+      let day = dueDate.getDate();
+      let hour = dueDate.getHours();
+      let minute = dueDate.getMinutes();
+      let second = dueDate.getSeconds();
 
-    checkDate(){
+      month = month >= 10 ? month : '0' + month;
+      day = day >= 10 ? day : '0' + day;
+      hour = hour >= 10 ? hour : '0' + hour;
+      minute = minute >= 10 ? minute : '0' + minute;
+      second = second >= 10 ? second : '0' + second;
+
+      return dueDate.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+    },
+    checkDate(dueDate){
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId
       console.log(this.age,this.clientId,this.consultType,this.content,this.clientId)
-      console.log(this.dueDate,this.email,this.gender,this.name,this.state,this.tel)
-      console.log(this.$store.state.token)
+      console.log(this.dateFormat(dueDate),this.email,this.gender,this.name,this.state,this.tel)
     },
     reserveConsult(){
       axios({
@@ -151,6 +165,7 @@ export default {
         })
     },
   },
+
 }
 </script>
 

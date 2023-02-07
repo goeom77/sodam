@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                .authorizeRequests()
 
                .antMatchers("/user/**", "/api/report","/api/trouble/comment").authenticated()
-               .antMatchers( "/api/trouble/writing", "/api/trouble/writing").hasRole("CLIENT")
+               .antMatchers( "/api/trouble/writing").hasRole("CLIENT")
                .antMatchers("/admin/**").hasRole("ADMIN")
                .anyRequest().permitAll()
                .and()
