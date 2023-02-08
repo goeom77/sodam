@@ -173,7 +173,12 @@ public class CounselorRepositoryService {
     public void setApplicationState(SetStateRequest request) {
         ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
         session.setStatus(request.getState());
-        sessionRepository.save(session);
+        sessionRepository.flush();
+
+        ConsultApplicant applicant = applicantRepository.getReferenceById(request.getSessionId());
+        applicant.setState(request.getState());
+        applicantRepository.flush();
+
     }
 
 
