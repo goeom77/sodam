@@ -63,4 +63,16 @@ public class MyPageController {
         }
     }
 
+    @GetMapping(value = "/unread-noti")
+    @ApiOperation(value = "미확인 알림 갯수 조회", notes = "로그인한 유저가 미확인 알림 갯수를 조회")
+    public ResponseEntity<Integer> unreadNotiCount(@AuthenticationPrincipal UserDetails user) {
+        try {
+            Integer count = service.unreadNotiCount(user.getUsername());
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 }
