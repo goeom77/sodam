@@ -39,11 +39,11 @@ public class ClientServiceImpl implements ClientService {
     public void editProfile(ClientRequest request, String id){
         Client c = clientRepository.getById(id);
         if(request.getTel() != null)  c.setTel(request.getTel());
-        if(request.getEmail() != null)  {
+        if(request.getEmail() != null && !request.getEmail().equals(c.getEmail()))  {
             authService.validateDuplicateEmail(request.getEmail());
             c.setEmail(request.getEmail());
         }
-
+        clientRepository.save(c);
     }
 
 
