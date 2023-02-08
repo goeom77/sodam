@@ -69,8 +69,9 @@ export default {
     MyInquiryPostViewListItem,
   },
   created() {
-    this.getMyBoardarticless()
     this.getMyInquiryarticles()  
+    this.getMyBoardarticless()
+
   },
   methods: {
     getMyBoardarticless() {
@@ -91,7 +92,7 @@ export default {
     getMyInquiryarticles() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/help-desk/my-qna`,
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/list`,
         headers: {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })

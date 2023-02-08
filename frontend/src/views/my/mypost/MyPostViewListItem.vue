@@ -14,7 +14,8 @@
               params: { postId: MyPostarticle.postId } 
             }"
           >
-            {{ MyPostarticle.title }}
+            <!-- {{ MyPostarticle.title }} -->
+            {{ MyPostarticle }}
           </router-link>
         </div>
         <div>
