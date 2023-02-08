@@ -30,7 +30,7 @@ export default {
     getSessionInfo(){
       axios({
         method:'get',
-        url:`${VUE_APP_API_URL}/api/consultApplicant`,
+        url:`${VUE_APP_API_URL}/api/consultApplicant?counselorId=${this.id}`,
         // url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
         data:{
           counselorId : this.id

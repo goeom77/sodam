@@ -1,7 +1,7 @@
 <template>
   <div @click="checkData">후기</div>
     <div>
-      <div id="Writebox">
+      <div id="Writebox" v-if="this.reviewData">
         <form>
           <div style="text-align:start; padding: 10px;">
           </div>
