@@ -13,5 +13,6 @@ public interface MyPageService {
     Page<MyNotiResponse> getAllMyNoti(String userId, NotificationType type, Pageable pageable);
     MyOneNotiResponse getOneMyNoti(Long id);
     void deleteOneMyNoti(Long id);
+    Integer unreadNotiCount(String userId);
 
 }

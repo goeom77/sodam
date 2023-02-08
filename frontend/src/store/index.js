@@ -41,7 +41,9 @@ export default new Vuex.Store({
     getUserData(state) {
       return state.userSignupData
     },
-
+    getNotiCount(state) {
+      return state.newNotiCount;
+    }
   },
   mutations: {
     GET_BOARDARTICLES(state, Boardarticles) {
@@ -119,6 +121,9 @@ export default new Vuex.Store({
     },
     RESERVECONSULT(state){
       console.log(state)
+    },
+    UNREAD_NOTI_COUNT(state, payload) {
+      state.newNotiCount = payload;
     },
     COUNT_NOTI(state) {
       state.newNotiCount += 1;
@@ -375,25 +380,38 @@ export default new Vuex.Store({
       formdata.append('tel',payload.name)
       formdata.append('email',payload.email)
       formdata.append('gender',payload.gender)
-      formdata.append('enterprise_id',payload.enterprise_id)
-
+      formdata.append('enterprisestr',payload.enterprise_id)
+      console.log('payload - certificate start')
       if (payload.certificate.length > -1){
         for (let i=0;i<payload.certificate.length; i++){
           const certificateForm = payload.certificate[i]
-          formdata.append(`certificates[${i}`, certificateForm)
+          formdata.append(`certificates[${i}].name`, certificateForm.certificate_name)
+          formdata.append(`certificates[${i}].serial_num`, certificateForm.certificate_number)
+          formdata.append(`certificates[${i}].agency`, certificateForm.certificate_agency)
+          formdata.append(`certificates[${i}].file`, certificateForm.certificate_file[0])
         }
       }
       if (payload.education.length > -1){
         for (let i=0;i<payload.education.length; i++){
           const educationForm = payload.education[i]
-          formdata.append(`educations[${i}`, educationForm)
+          formdata.append(`educations[${i}].degree`, educationForm.degree)
+          formdata.append(`educations[${i}].school`, educationForm.school)
+          formdata.append(`educations[${i}].major`, educationForm.major)
+          formdata.append(`educations[${i}].is_graduate`, educationForm.is_graduate)
+          formdata.append(`educations[${i}].file`, educationForm.education_file[0])
         }
       }
       if (payload.career.length > -1){
         for (let i=0;i<payload.career.length; i++){
           const careerForm = payload.career[i]
-          formdata.append(`careers[${i}`, careerForm)
+          formdata.append(`careers[${i}].name`, careerForm.career_name)
+          formdata.append(`careers[${i}].content`, careerForm.career_content)
+          formdata.append(`careers[${i}].period`, careerForm.career_period)
         }
+      }
+      // form 객체 확인 key-value
+      for (var pair of formdata.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
       }
       return axios({
         method:'post',
@@ -401,16 +419,10 @@ export default new Vuex.Store({
         headers:{
           'Content-Type': 'multipart/form-data',
         },
-        data:{
-          id: payload.id,
-          password: payload.password,
-          name: payload.name,
-          tel: payload.tel,
-          email: payload.email,
-          gender: payload.gender,
-          enterprise_id: payload.enterprise_id,
-          data: formdata,
-        }
+        data: formdata,
+        dataType:'json',
+        processData:false,
+        contentType:false,
       })
       .then((res)=>{
         console.log(res)
@@ -447,6 +459,18 @@ export default new Vuex.Store({
       .then((res)=>{
         console.log(res, payload)
         context.commit('RESERVECONSULT')
+      })
+    },
+    unreadNotiCount(context) {
+      axios({
+        method:'GET',
+        url: `${VUE_APP_API_URL}/api/my-page/unread-noti`,
+        headers: {
+          Authorization : `Bearer ${this.state.token.token.access_token}`
+        }
+      })
+      .then((res)=>{
+        context.commit('UNREAD_NOTI_COUNT', res.data);
       })
     },
     countNoti(context){

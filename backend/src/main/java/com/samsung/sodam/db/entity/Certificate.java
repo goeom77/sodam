@@ -11,22 +11,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Education {
+public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 50)
-    private String degree;  // 학위
-
-    @Column(length = 50)
-    private String school;  // 학교
-
-    @Column(length = 100)
-    private String major;  // 전공
+    @Column(length = 30)
+    private String name;  // 자격증 이름
 
     @Column(length = 30)
-    private String is_graduate; // 학업 상태 (재학, 졸업, 수료)
+    private String serial_num;  // 일련번호
+
+    @Column(length = 30)
+    private String agency;  // 기업명
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photo", referencedColumnName = "id")

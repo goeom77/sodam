@@ -51,29 +51,22 @@ public class CounselorRepositoryService {
         return null;
     }
 
+
+    // 파일 제외 수정임
     public void editProfile(CounselorRequest request, String id){
 
         Counselor counselor = repository.getById(id);
         // 전화번호 수정
         if(request.getTel() != null) counselor.setTel(request.getTel());
 
-        // 학력사항 수정
-        if(request.getEducationRow()!= null) {
-            counselor.setEducation(request.getEducationRow());
-        }
         // 소개 수정
         if(request.getIntroduce()!= null) {
             counselor.setIntroduce(request.getIntroduce());
         }
         // 경력 수정
-        if(request.getCareerRow() != null){
-            counselor.setCareer(request.getCareerRow());
+        if(request.getCareers() != null){
+            counselor.setCareer(request.getCareers());
         }
-
-//        if(request.getCareerRow() != null){
-//            String careerStr = CounselorUtil.careerObjectToString(request.getCareerRow());
-//            counselor.setCareer(careerStr);
-//        }
 
         if(!request.getConsultType().isEmpty()){
             counselor.setConsultTypeList(request.getConsultType());

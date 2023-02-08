@@ -70,11 +70,11 @@ public class TroubleController {
     public ResponseEntity<TroubleOneResponse> getTrouble(@PathVariable Long id, @AuthenticationPrincipal UserDetails user) {
 
         try {
-//            String userId = "";
-//            if(user != null)
-//                userId = user.getUsername();
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
 
-            TroubleOneResponse troubleDetail = service.getTrouble("id", id);
+            TroubleOneResponse troubleDetail = service.getTrouble(userId, id);
             return new ResponseEntity<>(troubleDetail, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,11 +112,11 @@ public class TroubleController {
     public ResponseEntity<Page<TroubleResponse>> getMyTroubleList(Pageable pageable, @AuthenticationPrincipal UserDetails user) {
 
         try {
-//            String userId = "";
-//            if(user != null)
-//                userId = user.getUsername();
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
 
-            Page<TroubleResponse> list = service.getMyTroubleList("id", pageable);
+            Page<TroubleResponse> list = service.getMyTroubleList(userId, pageable);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

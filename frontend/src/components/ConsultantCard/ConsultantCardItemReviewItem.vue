@@ -17,8 +17,7 @@
         <div>{{review.contents}}</div>
       </v-card-text>
       <v-btn outlined rounded text @click="goDetail">자세히 보기</v-btn>
-      <v-btn outlined rounded text @click="reviewUpdate">수정</v-btn>
-      <v-btn outlined rounded text @click="ReviewDelete">삭제</v-btn>
+
       
     </v-card>
   </div>
@@ -36,7 +35,7 @@ export default {
   },
   methods:{
     goDetail(){
-      this.$router.push({name:'ConsultantCardItemReviewItemDetail' })
+      this.$router.push({name:'ConsultantCardItemReviewItemDetail', params:{id: this.review.id}})
     },
     reviewUpdate(){
       const clientId = review.clientId
@@ -53,9 +52,6 @@ export default {
         url:`${VUE_APP_API_URL}/api/review/${reviewId}`
       })
     },
-    ReviewDelete(){
-
-    }
   }
 }
 </script>

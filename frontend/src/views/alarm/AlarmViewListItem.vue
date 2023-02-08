@@ -54,6 +54,11 @@ export default {
       })
       .then(() => {
         this.$swal(this.AlarmViewarticle.content);
+        
+        // 읽지 않은 알림이었다면, 알림수 - 1
+        if(!this.AlarmViewarticle.read) {
+          this.$store.dispatch("discountNoti");
+        }
         this.$emit('refresh-alarm')
         // this.read=true
       })
