@@ -35,7 +35,7 @@ export default {
         data:{
           counselorId: this.counselorId
         }
-      })
+      })  
       .then(res=>{
         const total = res.data
         const result = total.filter(index => index.email === this.id);
