@@ -1,5 +1,6 @@
 package com.samsung.sodam.api.service;
 
+import com.samsung.sodam.api.request.ClientRequest;
 import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.db.entity.Client;
 import com.samsung.sodam.db.repository.ClientRepository;
@@ -13,9 +14,12 @@ public class ClientServiceImpl implements ClientService {
     final ClientRepository clientRepository;
     final ClientResponseCustomRepository clientResponseCustomRepository;
 
-    public ClientServiceImpl(ClientRepository clientRepository, ClientResponseCustomRepository clientResponseCustomRepository) {
+    final AuthService authService;
+
+    public ClientServiceImpl(ClientRepository clientRepository, ClientResponseCustomRepository clientResponseCustomRepository, AuthService authService) {
         this.clientRepository = clientRepository;
         this.clientResponseCustomRepository = clientResponseCustomRepository;
+        this.authService = authService;
     }
 
     @Override
@@ -24,9 +28,23 @@ public class ClientServiceImpl implements ClientService {
         return clientResponseCustomRepository.getAllClientList(counselorId, pageable);
     }
 
+    @Override
     public Client getClientDetail(String id){
         Client c = clientRepository.getById(id);
         c.setRoleByCommonCode();
         return c;
     }
+
+    @Override
+    public void editProfile(ClientRequest request, String id){
+        Client c = clientRepository.getById(id);
+        if(request.getTel() != null)  c.setTel(request.getTel());
+        if(request.getEmail() != null)  {
+            authService.validateDuplicateEmail(request.getEmail());
+            c.setEmail(request.getEmail());
+        }
+
+    }
+
+
 }

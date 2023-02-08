@@ -131,7 +131,7 @@ public class AuthController {
         String email = request.getEmail();
 
         try {
-            authService.validateDuplicateEmail(email);
+            authService.validateDuplicateEmail(email);  // 이메일 중복 확인
 
             Random r = new Random();
             int checkNum = r.nextInt(888888) + 111111;

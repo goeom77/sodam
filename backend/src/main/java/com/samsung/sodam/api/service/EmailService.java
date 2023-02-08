@@ -13,8 +13,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailService {
     private final JavaMailSender sender;
 
-//    @Value("${spring.mail.username}")
-//    private String senderEmail;
+    final AuthService authService;
 
     public void sendEmail(String email, String title, String subTitle, String code) throws MessagingException {
         MimeMessage message = sender.createMimeMessage();
