@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="this.reviewData">
     {{ this.reviewData }}
     <br>
     상담 분야 : {{ this.reviewData.type }}

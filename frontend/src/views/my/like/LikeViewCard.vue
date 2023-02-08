@@ -22,7 +22,7 @@
             <v-card-title class="text-h5">
             </v-card-title>
             <v-card-subtitle>
-              {{consult}}
+              {{ consult }}
 
             </v-card-subtitle>
           </div>
