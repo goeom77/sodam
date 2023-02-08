@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +42,7 @@ public class Counselor extends Member {
     private String introduce;
 
     @Column(length = 3)
-    private String commonCodeId;
+    private String commonCodeId = "1";
 
     @Column(length = 3)
     private GENDER gender;
@@ -63,9 +64,16 @@ public class Counselor extends Member {
     @Convert(converter = ConsultListConverter.class)
     private List<CONSULT_TYPE> consultTypeList = null;
 
+    @OneToMany(mappedBy = "counselor")
+//    @JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+    private List<Certificate> cert = new ArrayList<>();
+
+    @OneToMany(mappedBy = "counselor")
+    //@JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+    private List<Education> edu = new ArrayList<>();
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, String commonCodeId, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
+    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -73,7 +81,6 @@ public class Counselor extends Member {
         this.tel = tel;
         this.career = career;
         this.introduce = introduce;
-        this.commonCodeId = commonCodeId;
         this.gender = gender;
         this.qualification = qualification;
         this.routine = routine;
