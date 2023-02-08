@@ -55,13 +55,11 @@ public class AuthController {
     @PostMapping(value = "/signup/counselor")
     @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
     public ResponseEntity<String> counselorSignup(CounselorSignupRequest request) {
-        System.out.println("counselorSignup - 들어는 왓다");
         try {
             int enterpriseIdInt =  Integer.parseInt(request.getEnterprisestr());
             enterpriseService.existByEnterpriseId(enterpriseIdInt);
             request.setEnterpriseId(enterpriseIdInt);
 
-            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
             Counselor c = null;
             StringTokenizer st = new StringTokenizer(request.getId(), "_");
             String prefix = st.nextToken();
@@ -70,7 +68,7 @@ public class AuthController {
             }
             else
                 c = authService.counselorSignup(request);
-            
+
             // 상담사 프로필에 들어가는 정보들 저장
             counselorProfileService.uploadAssociateProfileTable(request);
             

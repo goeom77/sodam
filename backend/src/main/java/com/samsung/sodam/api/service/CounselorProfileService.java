@@ -3,14 +3,12 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.CertRequest;
 import com.samsung.sodam.api.request.CounselorSignupRequest;
 import com.samsung.sodam.api.request.EduRequest;
+import com.samsung.sodam.api.response.CounselorDetailResponse;
 import com.samsung.sodam.db.entity.Certificate;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Education;
 import com.samsung.sodam.db.entity.ProfilePhoto;
-import com.samsung.sodam.db.repository.CertificateRepository;
-import com.samsung.sodam.db.repository.CounselorRepository;
-import com.samsung.sodam.db.repository.EducationRepository;
-import com.samsung.sodam.db.repository.profilePhotoRepository;
+import com.samsung.sodam.db.repository.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,11 +24,15 @@ import java.util.ArrayList;
 @Getter
 public class CounselorProfileService {
     private final CounselorRepository conselorRepository;
+    private final CounselorCustomRepository counselorCustomRepository;
     private final CertificateRepository certRepository;
     private final EducationRepository eduRepository;
     private final profilePhotoRepository profilePhotoRepository;
     private final FileGCSService fileService;
 
+    public CounselorDetailResponse getCounselorDetailAll(String id){
+        return counselorCustomRepository.getCounselorDetailAll(id);
+    }
 
     public void uploadAssociateProfileTable(CounselorSignupRequest request) throws IOException {
         Counselor counselor = conselorRepository.getById(request.getId());

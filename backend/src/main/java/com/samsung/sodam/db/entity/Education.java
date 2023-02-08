@@ -28,12 +28,12 @@ public class Education {
     @Column(length = 30)
     private String is_graduate; // 학업 상태 (재학, 졸업, 수료)
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "photo", referencedColumnName = "id")
     private ProfilePhoto photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "counselor_id", referencedColumnName = "id")
+    @JoinColumn( name = "counselor_id")
     private Counselor counselor;
 
 }
