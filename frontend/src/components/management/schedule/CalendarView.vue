@@ -13,6 +13,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'CalendarView',
@@ -69,6 +71,11 @@ export default {
     handleEvents(events) {
       this.currentEvents = events
     },
+    checkData(){
+      axios({
+        // ...
+      })
+    }
   }
 
 }
