@@ -267,9 +267,26 @@ export default {
         education: education,
         career: career,
       }
+      console.log(career)
+      if(career.length == 0 || (career != null && this.career_row[0].career_name != null ))
+        career == null
       
+      let isDataExistAllRow = true;
+      education.forEach(el => {
+        if(!el.degree || !el.education_file||!el.is_graduate || !el.major || !el.school) isDataExistAllRow = false;
+      });
+      if(isDataExistAllRow)
+        certificate.forEach(el => {
+          if(el.certificate_file == null) isDataExistAllRow = false;
+        })
+
+      if(!isDataExistAllRow){
+        this.$swal("학력, 자격증 모든 빈칸을 채워주세요");
+      }
+      else{
       this.$store.dispatch('signupCounselor', payload)
       this.$router.push({name:'login'})
+      }
     },
     // 행 삭제
     removeEducationRow(row1){
