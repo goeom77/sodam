@@ -58,4 +58,10 @@ public class ReviewController {
     public Review updateReview(@PathVariable Long reviewId, @RequestBody Review review){
         return reviewService.updateReview(reviewId,review);
     }
+
+    @DeleteMapping("review")
+    @ApiOperation("리뷰 삭제")
+    public void deleteReview(Long reviewId){
+        reviewService.deleteReview(reviewId);
+    }
 }

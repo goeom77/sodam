@@ -22,18 +22,16 @@ import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCard/ConsultantCardItem.vue'
 import ConsultantCardItemReviewCreate from '@/components/ConsultantCard/ConsultantCardItemReviewCreate.vue'
 import ConsultantCardItemReviewItemDetail from '@/components/ConsultantCard/ConsultantCardItemReviewItemDetail.vue'
+import ConsultantCardItemReviewUpdate from '@/components/ConsultantCard/ConsultantCardItemReviewUpdate.vue'
 import MyPage from '@/views/my/MyPage.vue'
-import NoticeView from '../views/my/notice/NoticeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import EditInformation from '@/views/my/edit/EditInformation.vue'
 import MainEdit from '@/views/my/edit/MainEdit.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
-
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
-
 import PageNotFound from '../views/PageNotFound.vue';
 
 
@@ -85,7 +83,7 @@ const routes = [
   },
   {
     path: '/KidBoard',
-    name: 'child',
+    name: 'KidBoard',
     component: KidBoard
   },
   {
@@ -169,6 +167,12 @@ const routes = [
     props:true
   },
   {
+    path: '/ConsultantCardItemReviewUpdate/:id?',
+    name: 'ConsultantCardItemReviewUpdate',
+    component: ConsultantCardItemReviewUpdate,
+    props:true
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: MyPage,
@@ -182,11 +186,6 @@ const routes = [
     path: '/LikeView',
     name: 'LikeView',
     component: LikeView,
-  },
-  {
-    path: '/NoticeView',
-    name: 'NoticeView',
-    component: NoticeView
   },
   {
     path: '/MainEdit',

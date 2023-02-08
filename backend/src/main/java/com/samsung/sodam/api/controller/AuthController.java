@@ -55,13 +55,11 @@ public class AuthController {
     @PostMapping(value = "/signup/counselor")
     @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
     public ResponseEntity<String> counselorSignup(CounselorSignupRequest request) {
-        System.out.println("counselorSignup - 들어는 왓다");
         try {
             int enterpriseIdInt =  Integer.parseInt(request.getEnterprisestr());
             enterpriseService.existByEnterpriseId(enterpriseIdInt);
             request.setEnterpriseId(enterpriseIdInt);
 
-            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
             Counselor c = null;
             StringTokenizer st = new StringTokenizer(request.getId(), "_");
             String prefix = st.nextToken();
@@ -70,7 +68,7 @@ public class AuthController {
             }
             else
                 c = authService.counselorSignup(request);
-            
+
             // 상담사 프로필에 들어가는 정보들 저장
             counselorProfileService.uploadAssociateProfileTable(request);
             
@@ -131,7 +129,7 @@ public class AuthController {
         String email = request.getEmail();
 
         try {
-            authService.validateDuplicateEmail(email);
+            authService.validateDuplicateEmail(email);  // 이메일 중복 확인
 
             Random r = new Random();
             int checkNum = r.nextInt(888888) + 111111;
@@ -145,6 +143,28 @@ public class AuthController {
         }catch (Exception e){
             System.out.println(e.getMessage());
             return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    @PostMapping(value = "/update-pw")
+    private ResponseEntity<String> updatePW(@RequestBody AuthCommonRequest request, HttpServletRequest httpRequest){
+        String id = null;
+        String token = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            if (!jwtTokenProvider.validateToken(token)) {
+                return new ResponseEntity<>("재로그인해주쇼", HttpStatus.UNAUTHORIZED);
+            }
+        }
+        try {
+            id = jwtTokenProvider.getUserId(token);
+            authService.confirmPassword(id, request.getPassword());
+            authService.updatePassword(id, request.getNewPassword());
+            return new ResponseEntity<>(null,  HttpStatus.OK);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 

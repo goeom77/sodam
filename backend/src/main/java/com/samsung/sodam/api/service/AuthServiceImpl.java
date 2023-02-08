@@ -70,11 +70,23 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    public Member getMemberById(String id) {
+        Client client = clientRepository.getById(id);
+        Counselor counselor = conselorRepository.getById(id);
+        Member m = null;
+        if(client != null) m = client;
+        else if(counselor != null) m = counselor;
+        return m;
+    }
+
+
+    @Override
     public void updatePassword(String id, String pw) {
         Client c1 = clientRepository.getById(id);
         Counselor c2 = conselorRepository.getById(id);
         if(c1 != null) c1.setPassword(passwordEncoder.encode(pw));
         else if(c2 != null) c2.setPassword(passwordEncoder.encode(pw));
+        else throw new IllegalArgumentException("없는 아이디");
     }
 
     @Override
@@ -223,8 +235,13 @@ public class AuthServiceImpl implements AuthService{
             clientRepository.deleteById(id);
         else if(existCounselor)
             conselorRepository.deleteById(id);
-
-
     }
 
+    @Override
+    public void confirmPassword(String id, String password) {
+        Member m = getMemberById(id);
+        if(!passwordEncoder.matches(password, m.getPassword())) {
+                throw new IllegalArgumentException("비밀번호 틀림");
+        }
+    }
 }

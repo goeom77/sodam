@@ -1,11 +1,12 @@
 <template>
+  
   <v-card
     class="mx-auto"
     max-width="344"
   >
   <v-card-text>
     {{ clientData }}
-    {{ id }}
+
     <p class="text-h4 text--primary">
       성함 : {{ clientData.name }}
     </p>
@@ -24,6 +25,7 @@
         @click="moveTo"
       >
       자세히보기
+      
       </v-btn>
     </v-card-actions>
     <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
@@ -43,7 +45,7 @@ export default {
   },
   methods:{
     moveTo(){
-      this.$router.push({ name: 'ClientManageDetail', params: {id: this.clientData.id }  })
+      this.$router.push({ name: 'ClientManageDetail', params: {id: this.clientData.email }  })
     }
     // propsToData(){
     //   this.client = this.clientData

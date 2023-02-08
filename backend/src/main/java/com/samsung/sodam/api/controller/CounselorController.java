@@ -175,7 +175,7 @@ public class CounselorController {
     @PostMapping("/consult-session/{consult_id}")
     @ApiOperation(value = "고객이 상담신청서를 작성한 경우 상담 요청 상태 변경")
     public void setApplicantSessionState(@RequestBody SetStateRequest request, @PathVariable String consult_id) {
-        service.setApplicationState(request);
+        service.setApplicationState(request,consult_id);
     }
 
 

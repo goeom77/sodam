@@ -25,12 +25,13 @@ public class Certificate {
     @Column(length = 30)
     private String agency;  // 기업명
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "photo", referencedColumnName = "id")
     private ProfilePhoto photo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "counselor_id", referencedColumnName = "id")
+    @JoinColumn(name = "counselor_id")
     private Counselor counselor;
+
 
 }

@@ -84,33 +84,6 @@ export default {
       })
     },
 
- 
-
-    // KidBoardarticleDelete() {
-    //   const category = this.category
-    //   if (!confirm("삭제하시겠습니까?")) {
-    //     axios({
-    //     method: 'delete',
-    //     url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
-    //     })
-		// 		.then((res)=>{
-    //       console.log('됨')
-		// 			if(res.data.result) {
-		// 				alert("삭제되었습니다.");
-		// 				this.$router.push({ name: category });
-		// 			} else {
-		// 				alert("실행중 실패했습니다.\n다시 이용해 주세요.");
-    //         this.$router.push({ name: category });
-		// 			}
-		// 		})
-		// 		.catch((err)=>{
-    //       console.log('안됨')
-		// 			console.log(err);
-		// 		})
-		// 	}
-    // },
-
-
     AnnouncearticleDelete() {
       axios({
         method: 'delete',

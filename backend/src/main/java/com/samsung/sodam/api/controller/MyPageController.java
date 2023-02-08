@@ -1,7 +1,9 @@
 package com.samsung.sodam.api.controller;
 
+import com.samsung.sodam.api.response.CounselorDetailResponse;
 import com.samsung.sodam.api.response.MyNotiResponse;
 import com.samsung.sodam.api.response.MyOneNotiResponse;
+import com.samsung.sodam.api.service.CounselorProfileService;
 import com.samsung.sodam.api.service.MyPageServiceImpl;
 import com.samsung.sodam.db.converter.NotiTypeConverter;
 import com.samsung.sodam.db.entity.NotificationType;
@@ -19,9 +21,23 @@ import org.springframework.web.bind.annotation.*;
 public class MyPageController {
 
     private final MyPageServiceImpl service;
+    private final CounselorProfileService counselorProfileService;
 
-    public MyPageController(MyPageServiceImpl service) {
+    public MyPageController(MyPageServiceImpl service, CounselorProfileService counselorProfileService) {
         this.service = service;
+        this.counselorProfileService = counselorProfileService;
+    }
+
+    @ApiOperation(value = "상담사 상세 정보를 조회 - 상담사 본인이 조회")
+    @GetMapping("/counselor/{id}")
+    //상담사 정보 조회
+    public ResponseEntity<CounselorDetailResponse> getCounselorInfo(@PathVariable String id) {
+        try {
+            return new ResponseEntity<>(counselorProfileService.getCounselorDetailAll(id), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(value = "/notification")
@@ -58,6 +74,18 @@ public class MyPageController {
             service.deleteOneMyNoti(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch(Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping(value = "/unread-noti")
+    @ApiOperation(value = "미확인 알림 갯수 조회", notes = "로그인한 유저가 미확인 알림 갯수를 조회")
+    public ResponseEntity<Integer> unreadNotiCount(@AuthenticationPrincipal UserDetails user) {
+        try {
+            Integer count = service.unreadNotiCount(user.getUsername());
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

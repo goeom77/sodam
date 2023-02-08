@@ -6,12 +6,13 @@
       </div>
 
       <div id="worryCategory"> 
-        <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
-        <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
-        <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
-        <router-link to="/KidBoard" id="CoupleCategory" class="CategoryClass">부부 상담</router-link>
-        <router-link to="/KidBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
-        <router-link to="/KidBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
+        <router-link to="/AllBoard" id="AllCategory" class="CategoryClass" >전체 상담</router-link> 
+        <router-link to="/KidBoard" id="KidCategory" class="CategoryClass">아동 상담</router-link>
+        <router-link to="/TeenBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
+        <router-link to="/AdultBoard" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
+        <router-link to="/CoupleBoard" id="CoupleCategory" class="CategoryClass">부부 상담</router-link>
+        <router-link to="/OldBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
+        <router-link to="/GuitarBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
       </div>
     </div>
     <div>
@@ -46,14 +47,6 @@ export default {
 
       }
     },
-  created() {
-    // this.getKidBoardArticles()
-  },
-  methods: {
-    // getKidBoardArticles() {
-    // this.$store.dispatch('getKidBoardArticles')
-    // }
-  }
 
 }
 </script>

@@ -26,4 +26,13 @@ public class ApplicantCustomRepositoryImpl implements ApplicantCustomRepository 
                 .select(consultApplicant)
                 .fetch();
     }
+
+    @Override
+    public ConsultApplicant getApplicants(String CounselorId, Integer sessionId) {
+        return queryFactory
+                .from(consultApplicant).join(consultSession).on(consultSession.id.eq(consultApplicant.sessionId))
+                .where(consultSession.counselorId.eq(CounselorId),consultSession.id.eq(sessionId))
+                .select(consultApplicant)
+                .fetchOne();
+    }
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLogin===true">
-    {{ this.id }}
+
     {{ this.sessionInfo }}
     <ClientManageCard
     v-for="(clientData,idx) in this.sessionInfo"
@@ -30,14 +30,14 @@ export default {
     getSessionInfo(){
       axios({
         method:'get',
-        url:`${VUE_APP_API_URL}/api/consultApplicant`,
-        // url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
+        url:`${VUE_APP_API_URL}/api/myclient/${this.id}`,
+        // url:`${VUE_APP_API_URL}/api/consult-session?counselorId=${this.id}`,
         data:{
           counselorId : this.id
         }
       })
       .then(res=>{
-        this.sessionInfo = res.data
+        this.sessionInfo = res.data.content
         console.log(res)
       })
     },
