@@ -20,16 +20,16 @@ public class ConsultApplicant {
     private String name;
     private Integer age;
     @Convert(converter = ConsultConverter.class)
-    private CONSULT_TYPE consultType;
+    private CONSULT_TYPE consultType = CONSULT_TYPE.ALL;
     private String tel;
     private String email;
     @Column(name = "create_date_time")
     private LocalDateTime createdDateTime; //신청일시
     private String content;
     @Convert(converter = GenderConverter.class)
-    private GENDER gender;
+    private GENDER gender = GENDER.MEN;
     @Convert(converter = StateAttributeConverter.class)
-    private STATE state; // 신청상태
+    private STATE state = STATE.WAIT; // 신청상태
     @Column(name = "is_consult")
     private String isConsult;
     private Integer turn; // 회차

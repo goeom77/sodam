@@ -1,7 +1,7 @@
 <template>
   <div id="KidBoardListItem" v-if="(limit-1)*10 <= index && index < limit * 10">
     <div style="float:left; margin-left: 60px;">
-      <h5>{{ KidBoardarticle.postId }}</h5>
+      <h5>{{ Boardarticle.postId }}</h5>
     </div>
     <div >
       <div>
@@ -9,19 +9,19 @@
           style="color:black" 
           :to="{ 
             name: 'KidBoardDetail', 
-            params: { postId: KidBoardarticle.postId } 
+            params: { postId: Boardarticle.postId } 
           }"
         >
-          {{ KidBoardarticle.title }}
+          {{ Boardarticle.title }}
         </router-link>
         <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
-        <p>{{ KidBoardarticle.clientId }}  {{ KidBoardarticle?.createdAt }}</p>
+        <p>{{ Boardarticle.clientId }}  {{ Boardarticle?.createdAt }}</p>
       </div>
     </div>
     <div >
-      <h3>{{ KidBoardarticle.views }}, {{ KidBoardarticle.commentCount }}</h3>
+      <h3>{{ Boardarticle.views }}, {{ Boardarticle.commentCount }}</h3>
     </div>
     <hr>
 
@@ -33,7 +33,7 @@
 export default {
   name: 'KidBoardListItem',
   props: {
-    KidBoardarticle: Object,
+    Boardarticle: Object,
     index: Number,
     limit: Number,
   },

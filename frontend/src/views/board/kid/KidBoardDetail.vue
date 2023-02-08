@@ -21,6 +21,7 @@
       <hr>
     <KidBoardCommentForm
       :KidBoardarticle="KidBoardarticle"
+      @get-comment="getKidBoardarticleDetail"
     />
     <!-- <KidBoardCommentForm
       :KidBoardarticle="KidBoardarticle"
@@ -32,9 +33,10 @@
       :KidBoardComment="KidBoardComment"
       :index="index"
       :limit="KidBoardCommentsCurrentPage"
+      @delete-comment="getKidBoardarticleDetail"
+      @update-comment="getKidBoardarticleDetail"
     />
-      <!-- @delete-comment="getKidBoardComments"
-      @update-comment="getKidBoardComments" -->
+
 
 
 
@@ -91,8 +93,9 @@ export default {
     getKidBoardarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
       })
+      
         .then((res) => {
           console.log(this.$route.params.postId)
           this.KidBoardarticle = res.data
@@ -114,40 +117,12 @@ export default {
         }
       })
     },
-
- 
-
-    // KidBoardarticleDelete() {
-    //   const category = this.category
-    //   if (!confirm("삭제하시겠습니까?")) {
-    //     axios({
-    //     method: 'delete',
-    //     url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`
-    //     })
-		// 		.then((res)=>{
-    //       console.log('됨')
-		// 			if(res.data.result) {
-		// 				alert("삭제되었습니다.");
-		// 				this.$router.push({ name: category });
-		// 			} else {
-		// 				alert("실행중 실패했습니다.\n다시 이용해 주세요.");
-    //         this.$router.push({ name: category });
-		// 			}
-		// 		})
-		// 		.catch((err)=>{
-    //       console.log('안됨')
-		// 			console.log(err);
-		// 		})
-		// 	}
-    // },
-
-
     KidBoardarticleDelete() {
       axios({
         method: 'delete',
         url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(() => {
@@ -161,63 +136,63 @@ export default {
     },
 
 
-    deleteReview() {
-      axios({
-        method: 'delete',
-        url: `${VUE_APP_API_URL}/capi/trouble/${this.review?.id}/`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
-        }
-      })
-      .then(() => {
-        this.$emit('delete-review')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
-    getReviewUpdate() {
-      axios({
-        method: 'get',
-        url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
-        }
-      })
-      .then((res) => {
-        this.title = res.data.title
-        this.content = res.data.content
-        this.rank = res.data.rank
-        this.updateStatus = true
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
-    setRating(rating) {
-        this.rank = rating
-    },
-    updateReview() {
-      axios({
-        method: 'put',
-        url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
-        data: {
-          title: this.title,
-          content: this.content,
-          rank: this.rank,
-        },
-        headers: { 
-            Authorization: `Token ${this.$store.state.token}`
-        }
-      })
-      .then(() => {
-        this.$emit('update-review')
-        this.updateStatus = false
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
+    // deleteReview() {
+    //   axios({
+    //     method: 'delete',
+    //     url: `${VUE_APP_API_URL}/capi/trouble/${this.review?.id}/`,
+    //     headers: {
+    //       Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+    //     }
+    //   })
+    //   .then(() => {
+    //     this.$emit('delete-review')
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
+    // getReviewUpdate() {
+    //   axios({
+    //     method: 'get',
+    //     url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
+    //     headers: {
+    //       Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+    //     }
+    //   })
+    //   .then((res) => {
+    //     this.title = res.data.title
+    //     this.content = res.data.content
+    //     this.rank = res.data.rank
+    //     this.updateStatus = true
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
+    // setRating(rating) {
+    //     this.rank = rating
+    // },
+    // updateReview() {
+    //   axios({
+    //     method: 'put',
+    //     url: `${VUE_APP_API_URL}/community/reviews/detail/${this.review?.id}/`,
+    //     data: {
+    //       title: this.title,
+    //       content: this.content,
+    //       rank: this.rank,
+    //     },
+    //     headers: {
+    //       Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+    //     }
+    //   })
+    //   .then(() => {
+    //     this.$emit('update-review')
+    //     this.updateStatus = false
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // }
   
 
   }

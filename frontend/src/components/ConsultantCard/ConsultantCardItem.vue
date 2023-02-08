@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ counselorData }}
+    {{ this.counselorData }}
     
     <div>
       <ConsultantCardItemInfo
@@ -35,7 +35,7 @@
           </v-window-item>
         </v-window>
       </v-card-text>
-    </v-card>     
+    </v-card>
 </template>
 
 <script>
@@ -72,7 +72,8 @@ export default {
           url:`${VUE_APP_API_URL}/api/counselor/${this.id}`,
           data:{
             id:this.counselorId
-          }
+          },
+
         })
         .then(res=>{
           this.counselorData = res.data

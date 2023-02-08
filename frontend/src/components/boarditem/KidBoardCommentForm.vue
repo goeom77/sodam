@@ -74,12 +74,12 @@ export default {
                 counselorId: 'counselor2'
             },
             headers: {
-            Authorization: `Token ${this.$store.state.token}`
-        }
+              Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+            }
         })
         .then(() => {
             console.log('되냐?')
-            // this.$emit('get-comment')
+            this.$emit('get-comment')
             this.inputData=null
         })
         .catch((err) => {

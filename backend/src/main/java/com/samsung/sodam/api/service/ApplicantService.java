@@ -7,5 +7,5 @@ import java.util.List;
 public interface ApplicantService {
 
     public List<ConsultApplicant> getMyApplicant(String counselorId);
-
+    public ConsultApplicant getApplicantById(Integer id);
 }

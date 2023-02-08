@@ -9,15 +9,15 @@
           style="color:black" 
           :to="{ 
             name: 'AnnounceDetail', 
-            params: { id: Announce.id } 
+            params: { id: Announcearticle.id } 
           }"
         >
-          {{ Announce.title }}
+          {{ Announcearticle.title }}
         </router-link>
         <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
-        <p>{{ Announcearticle.userType }}  {{ Announcearticle?.createdAt }}</p>
+        <p>관리자  {{ Announcearticle?.createdAt }}</p>
       </div>
     </div>
 

@@ -17,7 +17,7 @@
         <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
-        <p>{{ Inquiryarticle.clientId }}  {{ KidBoardarticle?.createdAt }}</p>
+        <p>{{ Inquiryarticle.writerId }}  {{ Inquiryarticle?.createdAt }}</p>
       </div>
     </div>
     <hr>

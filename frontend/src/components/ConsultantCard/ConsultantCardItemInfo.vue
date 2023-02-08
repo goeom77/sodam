@@ -26,15 +26,21 @@
           {{ counselorData.consultTypeList }}
         </h4>
         
-        <h4 v-if="(this.common_code==2)">
-          좋아요
-        </h4>
+        <div>
+          <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
+            관심 상담사 등록 
+          </button>
+        </div>
       </div>
     </div>  
   </v-container>
   </template>
 
 <script>
+import axios from 'axios'
+
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
 export default {
   name:'ConsultantCardItemInfo',
   props:{
@@ -42,7 +48,26 @@ export default {
   },
   data(){
     return{
-      common_code: this.$store.state.payload.common_code
+      common_code: this.$store.state.payload.common_code,
+      clientId:this.$store.state.payload.id,
+    }
+  },
+  methods:{
+    likeCounselor(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${this.counselorData.id}`,
+        data:{
+          clientId:this.clientId,
+          counselorId : this.counselorData.id
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        console.log(res)
+      })
     }
   }
 }

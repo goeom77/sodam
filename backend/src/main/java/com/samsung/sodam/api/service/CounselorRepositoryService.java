@@ -1,9 +1,6 @@
 package com.samsung.sodam.api.service;
 
-import com.samsung.sodam.api.request.ConsultApplicantRequest;
-import com.samsung.sodam.api.request.CounselorSearchRequest;
-import com.samsung.sodam.api.request.SessionStateRequest;
-import com.samsung.sodam.api.request.SetStateRequest;
+import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
@@ -13,14 +10,11 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 @Service
 @AllArgsConstructor
@@ -39,12 +33,47 @@ public class CounselorRepositoryService {
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
 
-    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
+//        return repository.find;
+//    }
+
+    public Page<Counselor> getAllCounselor( Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
+    }
+    public Long counselorTest(TestRequest request, String id) {
+//        System.out.println("service :: "+request.getList().toString());
+//        System.out.println("service :: "+request.getList().getClass());
+//        return counselorCustomRepository.updateType(request,id);
+        return null;
+    }
+
+
+    // 파일 제외 수정임
+    public void editProfile(CounselorRequest request, String id){
+
+        Counselor counselor = repository.getById(id);
+        // 전화번호 수정
+        if(request.getTel() != null) counselor.setTel(request.getTel());
+
+        // 소개 수정
+        if(request.getIntroduce()!= null) {
+            counselor.setIntroduce(request.getIntroduce());
+        }
+        // 경력 수정
+        if(request.getCareers() != null){
+            counselor.setCareer(request.getCareers());
+        }
+
+        if(!request.getConsultType().isEmpty()){
+            counselor.setConsultTypeList(request.getConsultType());
+        }
+        System.out.println(counselor.getConsultTypeList().toString());
+
+        repository.save(counselor);
     }
 
     public CounselorListResponse getCounselorDetail(String id) {
@@ -72,6 +101,11 @@ public class CounselorRepositoryService {
         favoriteRepository.save(favoriteCounselor);
     }
 
+    public List<CounselorListResponse> getMyFavCounselor(String clientId) {
+        return counselorCustomRepository.getMyFavCounselor(clientId);
+    }
+
+
     public void removeFavCounselor(FavoriteCounselor favoriteCounselor) {
         favoriteRepository.delete(favoriteCounselor);
     }
@@ -81,7 +115,7 @@ public class CounselorRepositoryService {
         return newSession.getId();
     }
 
-    public List<ConsultSession> getMySession(String counselorId){
+    public List<ConsultSession> getMySession(String counselorId) {
         return sessionRepository.findByCounselorId(counselorId);
     }
 
@@ -136,7 +170,7 @@ public class CounselorRepositoryService {
      * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
      */
     @Transactional
-    public void setApplicationState(SetStateRequest request){
+    public void setApplicationState(SetStateRequest request) {
         ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
         session.setStatus(request.getState());
         sessionRepository.save(session);

@@ -18,14 +18,14 @@ public class ConsultSchedule {
     @Id @GeneratedValue
     private Long id;
     @Column(name = "consult_type")
-    private CONSULT_TYPE CONSULTTYPE;
+    private CONSULT_TYPE CONSULTTYPE = CONSULT_TYPE.ALL;
     private String tel;
     private String email;
     @Column(name = "first_day_time")
     private LocalDateTime firstDayTime; //신청일시
     private String content;
 
-    private STATE state; // 신청상태
+    private STATE state =STATE.WAIT; // 신청상태
     @Column(name = "date_time")
     LocalDateTime dateTime;//상담 일시
     @Column(name = "is_consult")

@@ -4,6 +4,8 @@
     max-width="344"
   >
   <v-card-text>
+    {{ clientData }}
+    {{ id }}
     <p class="text-h4 text--primary">
       성함 : {{ clientData.name }}
     </p>
@@ -19,19 +21,20 @@
       <v-btn
         text
         color="deep-purple accent-4"
+        @click="moveTo"
       >
-        Learn More
+      자세히보기
       </v-btn>
-      <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
     </v-card-actions>
+    <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
   </v-card>
 </template>
 
 <script>
 export default {
-  name:'ClientManageDetail',
+  name:'ClientManageCard',
   props:{
-    clientData:Object
+    clientData:Object,
   },
   data(){
     return{
@@ -39,6 +42,9 @@ export default {
     }
   },
   methods:{
+    moveTo(){
+      this.$router.push({ name: 'ClientManageDetail', params: {id: this.clientData.id }  })
+    }
     // propsToData(){
     //   this.client = this.clientData
     // }

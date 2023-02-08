@@ -2,12 +2,9 @@ package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
-import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.request.CounselorSignupRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
-import com.samsung.sodam.api.service.AuthService;
-import com.samsung.sodam.api.service.EmailService;
-import com.samsung.sodam.api.service.EnterpriseService;
-import com.samsung.sodam.api.service.KakaoAuthService;
+import com.samsung.sodam.api.service.*;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Member;
 import com.samsung.sodam.jwt.JwtTokenProvider;
@@ -38,6 +35,7 @@ public class AuthController {
     private final EmailService emailService;
     private final EnterpriseService enterpriseService;
     private final KakaoAuthService kakaoService;
+    private final CounselorProfileService counselorProfileService;
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -56,11 +54,14 @@ public class AuthController {
     }
     @PostMapping(value = "/signup/counselor")
     @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
-    public ResponseEntity<String> counselorSignup(@RequestBody CounselorRequest request) {
-        try{
-            enterpriseService.existByEnterpriseId(request.getEnterpriseId());
-            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
+    public ResponseEntity<String> counselorSignup(CounselorSignupRequest request) {
+        System.out.println("counselorSignup - 들어는 왓다");
+        try {
+            int enterpriseIdInt =  Integer.parseInt(request.getEnterprisestr());
+            enterpriseService.existByEnterpriseId(enterpriseIdInt);
+            request.setEnterpriseId(enterpriseIdInt);
 
+            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
             Counselor c = null;
             StringTokenizer st = new StringTokenizer(request.getId(), "_");
             String prefix = st.nextToken();
@@ -69,8 +70,10 @@ public class AuthController {
             }
             else
                 c = authService.counselorSignup(request);
-
-            System.out.println(c.toString());
+            
+            // 상담사 프로필에 들어가는 정보들 저장
+            counselorProfileService.uploadAssociateProfileTable(request);
+            
             return new ResponseEntity<String>(c.getId(), HttpStatus.OK);
         } catch (IllegalStateException e){
             e.printStackTrace();
@@ -214,6 +217,18 @@ public class AuthController {
         } catch (Exception e) {
             log.warn(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @DeleteMapping("/out/{id}")
+    public HttpStatus deleteMember(@PathVariable String id) {
+        try {
+            System.out.println(id);
+            authService.deleteMember(id);
+            return HttpStatus.OK;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
         }
     }
 

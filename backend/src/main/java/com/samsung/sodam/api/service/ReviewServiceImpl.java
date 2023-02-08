@@ -15,10 +15,15 @@ import java.util.Optional;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
+    final
     ReviewCustomRepository reviewCustomRepository;
-    @Autowired
+    final
     ReviewRepository reviewRepository;
+
+    public ReviewServiceImpl(ReviewCustomRepository reviewCustomRepository, ReviewRepository reviewRepository) {
+        this.reviewCustomRepository = reviewCustomRepository;
+        this.reviewRepository = reviewRepository;
+    }
 
     //고객들이 적은 나의 리뷰를 확인
     @Override
@@ -56,7 +61,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getOrderByAvg() {
-//        reviewRepository
+        reviewCustomRepository.getReviewByAvg();
         return null;
+    }
+
+    @Override
+    public Review getReviewById(Long id) {
+        return reviewRepository.findById(id).orElseThrow();
     }
 }

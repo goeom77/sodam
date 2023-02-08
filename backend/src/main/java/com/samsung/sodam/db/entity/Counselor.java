@@ -1,6 +1,6 @@
 package com.samsung.sodam.db.entity;
 
-import com.samsung.sodam.db.converter.ConsultConverter;
+import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @DynamicInsert
-@Builder
 public class Counselor extends Member {
     @Id
     @Column(length=30)
@@ -33,23 +32,20 @@ public class Counselor extends Member {
     private String tel;
 
     @Column(length = 300)
-    private String career;
+    @Convert(converter = CareerListConverter.class)
+    private List<Career> career;
+    //private String career;
+
 
     @Column(length = 150)
     private String introduce;
 
-    @Column(length = 200)
-    private String refreshToken;
-
     @Column(length = 3)
     private String commonCodeId;
 
-
-    @Column(length = 30)
-    private String major;
-
     @Column(length = 3)
     private GENDER gender;
+
     @Column(columnDefinition = "boolean default false")
     private Boolean qualification;
 
@@ -65,10 +61,11 @@ public class Counselor extends Member {
 
     @Column(name = "consult_type")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList;
+    private List<CONSULT_TYPE> consultTypeList = null;
+
 
     @Builder
-    public Counselor(String id, String name, String password, String email, String tel, String career, String introduce, String refreshToken, String commonCodeId, String major, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg,List<CONSULT_TYPE> type) {
+    public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, String commonCodeId, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -76,14 +73,12 @@ public class Counselor extends Member {
         this.tel = tel;
         this.career = career;
         this.introduce = introduce;
-        this.refreshToken = refreshToken;
-        this.major = major;
+        this.commonCodeId = commonCodeId;
         this.gender = gender;
         this.qualification = qualification;
         this.routine = routine;
         this.enterprise = enterprise;
         this.profileImg = profileImg;
-        this.commonCodeId = "1";
-        this.consultTypeList = type;
+        this.consultTypeList = consultTypeList;
     }
 }

@@ -21,4 +21,6 @@ public interface ReviewService {
     void deleteReview(Long id);
 
     List<Review> getOrderByAvg();
+
+    Review getReviewById(Long id);
 }
