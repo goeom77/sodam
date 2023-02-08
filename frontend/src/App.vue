@@ -44,13 +44,14 @@ import { EventSourcePolyfill } from "event-source-polyfill";
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+const LOCAL_URL = process.env.LOCAL_URL
 
 export default {
   name:'App',
   data(){
     return{
       projectlogo : require('../src/assets/images/projectlogoperpect.png'),
-      newNotiCount : this.$store.state.newNotiCount
+      newNotiCount : this.$store.state.newNotiCount,
     }
   },
   component: {
@@ -83,8 +84,17 @@ export default {
         withCredentials : true
       });
 
-      eventSource.onerror = event => {
-        console.log(event);
+      // 알림 권한 설정
+      let granted = false;
+      if (Notification.permission === 'granted') {
+          granted = true;
+      } else if (Notification.permission !== 'denied') {
+          Notification.requestPermission()
+                      .then((permission) => granted = permission === 'granted')          
+      }
+
+      eventSource.onopen = e => {
+        console.log(e);
       }
 
       eventSource.addEventListener('noti', event => {
@@ -92,50 +102,56 @@ export default {
         this.$store.dispatch('countNoti');
         
         const data = JSON.parse(event.data);
+        
+        // 브라우저 알림
+        const showNotification = () => {
+            const notification = new Notification("소담", {
+                body: data.title,
+                icon: require('../src/assets/images/faviconalarm.png')
+            });
+            
+            notification.addEventListener('click', () => {
+                window.open("http://localhost:8180/AlarmView", '_self');
+            });
+        }
 
-        (async () => {
-          // 브라우저 알림
-          const showNotification = () => {
-              
-              const notification = new Notification(data.title, {
-                  body: data.content
-              });
-              
-              setTimeout(() => {
-                  notification.close();
-              }, 10 * 1000);
-              
-              notification.addEventListener('click', () => {
-                  window.open(data.url, '_blank');
-              });
-          }
+        // 알림 보여주기
+        if (granted) {
+            showNotification();
+        }
+      });
 
-          // 브라우저 알림 허용 권한
-          let granted = false;
-
-          if (Notification.permission === 'granted') {
-              granted = true;
-          } else if (Notification.permission !== 'denied') {
-              let permission = await Notification.requestPermission();
-              granted = permission === 'granted';
-          }
-
-          // 알림 보여주기
-          if (granted) {
-              showNotification();
-          }
-        })();
-      })
+      eventSource.onerror = event => {
+        console.log(event.data);
+      }
+      
     }
   },
   computed:{
     isLogin(){
       return this.$store.getters.isLogin
+    },
+    checkNotiCount() {
+      return this.$store.getters.getNotiCount
+    }
+  },
+  watch: {
+    checkNotiCount(count) {
+      this.newNotiCount = count;
     }
   },
   mounted() {
-    if(this.isLogin) {
+    console.log("mounted");
+    console.log(VUE_APP_API_URL, LOCAL_URL)
+    if(this.$store.getters.isLogin) {
       this.initNotiListener();
+    }
+  },
+  beforeUpdate() {
+    console.log("beforeUpdate")
+    if(this.$store.getters.isLogin) {
+      this.initNotiListener();
+      this.$store.dispatch('unreadNotiCount');
     }
   }
 }

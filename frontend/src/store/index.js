@@ -41,7 +41,9 @@ export default new Vuex.Store({
     getUserData(state) {
       return state.userSignupData
     },
-
+    getNotiCount(state) {
+      return state.newNotiCount;
+    }
   },
   mutations: {
     GET_BOARDARTICLES(state, Boardarticles) {
@@ -119,6 +121,9 @@ export default new Vuex.Store({
     },
     RESERVECONSULT(state){
       console.log(state)
+    },
+    UNREAD_NOTI_COUNT(state, payload) {
+      state.newNotiCount = payload;
     },
     COUNT_NOTI(state) {
       state.newNotiCount += 1;
@@ -454,6 +459,18 @@ export default new Vuex.Store({
       .then((res)=>{
         console.log(res, payload)
         context.commit('RESERVECONSULT')
+      })
+    },
+    unreadNotiCount(context) {
+      axios({
+        method:'GET',
+        url: `${VUE_APP_API_URL}/api/my-page/unread-noti`,
+        headers: {
+          Authorization : `Bearer ${this.state.token.token.access_token}`
+        }
+      })
+      .then((res)=>{
+        context.commit('UNREAD_NOTI_COUNT', res.data);
       })
     },
     countNoti(context){
