@@ -148,6 +148,28 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/update-pw")
+    private ResponseEntity<String> updatePW(@RequestBody AuthCommonRequest request, HttpServletRequest httpRequest){
+        String id = null;
+        String token = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            if (!jwtTokenProvider.validateToken(token)) {
+                return new ResponseEntity<>("재로그인해주쇼", HttpStatus.UNAUTHORIZED);
+            }
+        }
+        try {
+            id = jwtTokenProvider.getUserId(token);
+            authService.confirmPassword(id, request.getPassword());
+            authService.updatePassword(id, request.getNewPassword());
+            return new ResponseEntity<>(null,  HttpStatus.OK);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PostMapping(value = "/find-id")
     private ResponseEntity<AuthCommonResponse> findId(@RequestBody AuthCommonRequest request){
         AuthCommonResponse response = null;
