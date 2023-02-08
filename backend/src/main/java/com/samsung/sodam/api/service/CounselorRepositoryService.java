@@ -33,6 +33,8 @@ public class CounselorRepositoryService {
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
 
+    final AuthService authService;
+
 //    public Page<Counselor> searchCounselor(CounselorSearchRequest request, Pageable pageable) {
 //        return repository.find;
 //    }
@@ -58,6 +60,12 @@ public class CounselorRepositoryService {
         Counselor counselor = repository.getById(id);
         // 전화번호 수정
         if(request.getTel() != null) counselor.setTel(request.getTel());
+
+        // 이메일 수정
+        if(request.getEmail() != null) {
+            authService.validateDuplicateEmail(request.getEmail());
+            counselor.setEmail(request.getEmail());
+        }
 
         // 소개 수정
         if(request.getIntroduce()!= null) {
