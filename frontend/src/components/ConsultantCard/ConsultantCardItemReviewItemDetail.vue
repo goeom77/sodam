@@ -55,7 +55,19 @@ export default {
         this.$router.push({ name: 'ConsultantCardItemReviewUpdate', params: {id: this.id}  })
       },
       ReviewDelete(){
-
+        axios({
+          method:'delete',
+          url:`${VUE_APP_API_URL}/api/review/review?reviewId=${this.id}`,
+          data: {
+            reviewId: this.id,
+          },
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+          }
+        })
+        .then(res=>{
+          this.$router.go(-1);
+        })
       }
     },
     created(){

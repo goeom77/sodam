@@ -1,7 +1,6 @@
 <template>
   <div>
     {{ id }}
-
     <ClientManageDetailInfo
     :id="id"/>
   </div>
@@ -16,7 +15,8 @@ export default {
     ClientManageDetailInfo
   },
   props:{
-    id:Object
+    // id = clientData.email임
+    id:String
   },
   data(){
     return{

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- 예약 -->
+    {{ this.counselorData }}
     <div>
-
       <h1 @click="checkDate(dueDate)">상담 유형 </h1>
       <select id="Typeselect" v-model="consultType">
         <option 
@@ -19,8 +19,8 @@
       <h1>연락처</h1>
       <input type="number" name="name" v-model="tel">
       
-      <h1>이메일</h1>
-      <input type="email" name="name" v-model="email">
+      <h1>Email</h1>
+      <input type="Email" name="email" v-model="email">
       
       <h1>나이</h1>
       <input type="number" name="name" min="0" max="150" v-model="age">
@@ -37,10 +37,6 @@
       <h1>고민 내용</h1>
       <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
       <h1>상담 기한</h1>
-
-
-
-
 
       <datepicker
         v-model="dueDate"
@@ -135,7 +131,7 @@ export default {
     checkDate(dueDate){
       // console.log(this.$store.state.token.[[Target]])
       // const clientId=clientId
-      console.log(this.age,this.clientId,this.consultType,this.content,this.clientId)
+      console.log(this.age,this.clientId,this.consultType,this.content,this.counselorData.id)
       console.log(this.dateFormat(dueDate),this.email,this.gender,this.name,this.state,this.tel)
     },
     reserveConsult(){
@@ -147,7 +143,7 @@ export default {
           clientId: this.clientId,
           consultType: this.consultType,
           content: this.content,
-          counselorId: this.counselorId,
+          counselorId: this.counselorData.id,
           dueDate: this.dueDate,
           email: this.email,
           gender: this.gender,
