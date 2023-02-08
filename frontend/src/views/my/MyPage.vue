@@ -14,34 +14,34 @@
             grow
           >
             <v-tab value="one">
-              내게 온 알림
-            </v-tab>
-            <v-tab value="two">
               개인정보 수정
             </v-tab>
-            <v-tab value="three">
+            <v-tab value="two">
               내 글 보기
             </v-tab>
-            <v-tab value="four">
+            <v-tab value="three">
               찜 목록
+            </v-tab>
+            <v-tab value="four">
+              상담 진행
             </v-tab>
           </v-tabs>
           
           <v-window v-model="tab">
             <v-window-item value="one">
-              <NoticeView/>
-            </v-window-item>
-            
-            <v-window-item value="two">
               <CheckEditInformation/>
             </v-window-item>
             
-            <v-window-item value="three">
+            <v-window-item value="two">
               <MyPostView/>
             </v-window-item>
             
-            <v-window-item value="four">
+            <v-window-item value="three">
               <LikeView/>
+            </v-window-item>
+
+            <v-window-item value="four">
+              <SangdamView/>
             </v-window-item>
           </v-window>
         </v-card>
@@ -55,7 +55,9 @@
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
-import NoticeView from '@/views/my/notice/NoticeView.vue'
+import SangdamView from '@/views/my/sangdam/SangdamView.vue'
+
+SangdamView
 
   export default {
     name: 'MyPage',
@@ -63,7 +65,7 @@ import NoticeView from '@/views/my/notice/NoticeView.vue'
       CheckEditInformation,
       LikeView,
       MyPostView,
-      NoticeView
+      SangdamView,
     },
     data(){
       return{

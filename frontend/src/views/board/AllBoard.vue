@@ -1,5 +1,5 @@
 <template>
-  <div id="KidBoard">
+  <div id="AllBoard">
     <div id="worryBoard">
       <div id="worryBoardtitle">
         <h1>고민 게시판</h1>
@@ -19,7 +19,7 @@
       
     </div>
 
-    <KidBoardList
+    <AllBoardList
     
     />
     <!-- <div class="text-center">
@@ -34,13 +34,13 @@
 
 <script>
 // @ is an alias to /srcz
-import KidBoardList from '@/components/boarditem/KidBoardList.vue'
+import AllBoardList from '@/components/boarditem/allboard/AllBoardList.vue'
 
 
 export default {
-  name: 'KidBoard',
+  name: 'AllBoard',
   components: {
-    KidBoardList,
+    AllBoardList,
   },
   data () {
       return {
@@ -53,7 +53,7 @@ export default {
 
 
 <style>
-#KidBoard {
+#AllBoard {
   /* 반응형 x */
   width: 1255px;
   margin: 0 auto;
