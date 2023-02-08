@@ -29,6 +29,7 @@ public class CounselorRepositoryService {
     CounselorCustomRepository counselorCustomRepository;
     ScheduleRepository scheduleRepository;
 
+    ApplicantCustomRepository applicantCustomRepository;
     ApplicantRepository applicantRepository;
     FavoriteRepository favoriteRepository;
     ClientRepository clientRepository;
@@ -178,12 +179,15 @@ public class CounselorRepositoryService {
      * 상담신청을 하면 상담세션과 상담신청서가 생성된다.
      */
     @Transactional
-    public void setApplicationState(SetStateRequest request) {
+    public void setApplicationState(SetStateRequest request,String consultantId) {
         ConsultSession session = sessionRepository.getReferenceById(request.getSessionId());
+        if(session==null) return;
         session.setStatus(request.getState());
         sessionRepository.flush();
 
-        ConsultApplicant applicant = applicantRepository.getReferenceById(request.getSessionId());
+        ConsultApplicant applicant = applicantCustomRepository.getApplicants(consultantId,request.getSessionId());
+        if(applicant==null) return;
+//        applicantRepository.getReferenceById(request.getSessionId());
         applicant.setState(request.getState());
         applicantRepository.flush();
 
