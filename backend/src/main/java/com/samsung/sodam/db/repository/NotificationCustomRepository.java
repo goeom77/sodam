@@ -69,4 +69,12 @@ public class NotificationCustomRepository {
                 .where(notification.id.eq(id))
                 .fetchFirst();
     }
+
+    public Integer unreadNotiCount(String userId) {
+        return Math.toIntExact(queryFactory
+                .select(notification.id.count())
+                .from(notification)
+                .where(notification.receiverId.eq(userId), notification.isRead.eq(false))
+                .fetchFirst());
+    }
 }

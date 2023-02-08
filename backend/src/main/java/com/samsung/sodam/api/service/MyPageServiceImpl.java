@@ -32,4 +32,9 @@ public class MyPageServiceImpl implements MyPageService {
         notificationRepository.deleteById(id);
     }
 
+    @Override
+    public Integer unreadNotiCount(String userId) {
+        return notificationCustomRepository.unreadNotiCount(userId);
+    }
+
 }
