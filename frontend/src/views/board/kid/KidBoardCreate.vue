@@ -88,7 +88,7 @@ export default {
       category : null,
       title: null,
       content: null,
-      clientId: "id",
+      clientId: this.$store.state.payload.id,
       
 
       selectList: [

@@ -67,7 +67,7 @@ import KidBoardListMy from '../boarditem/KidBoardListMy.vue'
   <style>
   #KidBoardList {
     /* 반응형 x */
-    width: 800px;
+    /* width: 800px; */
     margin: 0 auto;
   }
   

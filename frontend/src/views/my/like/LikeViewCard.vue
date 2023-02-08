@@ -14,10 +14,11 @@
           class="ma-3"
           size="125"
           rounded="0"
+          style="float: left;"
         >
           <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
         </v-avatar>
-        <div class="d-flex flex-no-wrap justify-space-between">
+        <div class=" justify-space-between">
           <div>
             <v-card-title class="text-h5">
             </v-card-title>
@@ -26,17 +27,33 @@
 
             </v-card-subtitle>
           </div>
+          
+          <div>
+            <div>
+              <v-btn 
+                outlined 
+                runded 
+                text 
+                @click="moveTo" 
+                style="color:black; background-color: white;"
+                >자세히보기
+              </v-btn>
+            </div>
+            <div>
+              <v-card-actions>
+                <v-btn
+                  outlined
+                  rounded
+                  text
+                  @click="deleteFav"
+                  style="color:black; text-align: end;"
+                >
+                  X
+                </v-btn>
+              </v-card-actions>
+            </div>
+          </div>
 
-          <v-card-actions>
-            <v-btn
-              outlined
-              rounded
-              text
-              @click="deleteFav"
-            >
-              X
-            </v-btn>
-          </v-card-actions>
         </div>
       </v-card>
     </v-col>
@@ -74,8 +91,15 @@ export default {
         }
       })
       .then(res=>{
-        console.log(res)
+        console.log('카드 삭제 댐')
+        this.$emit('delete-card',)
       })
+      .catch(res=>{
+        console.log('카드 삭제 안댐')
+      })
+    },
+    moveTo(){
+      this.$router.push({ name: 'consultantcarditem', params: {id: this.counselorId} })
     }
   }
 }
