@@ -4,7 +4,9 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { INITIAL_EVENTS, createEventId } from './event-utils'
+import {INITIAL_EVENTS, createEventId} from './event-utils'
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default defineComponent({
   components: {
@@ -72,6 +74,11 @@ export default defineComponent({
     handleEvents(events) {
       this.currentEvents = events
     },
+    checkData(){
+      axios({
+        // ...
+      })
+    }
   }
 })
 
