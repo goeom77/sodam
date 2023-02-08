@@ -90,7 +90,7 @@ export default {
     getInquiryarticleDetail() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/${this.$route.params.id}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }

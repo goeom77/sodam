@@ -1,7 +1,6 @@
 <template>
-  <div id="MyPostViewListItem" v-if="index < 3">
-    <div>
-    <!-- <div  v-if="check === 0"> -->
+  <div id="MyInquiryPostViewListItem" v-if="index < 3">
+    <!-- <div  v-if="check === 0">
       <div style="float:left; margin-left: 60px;">
         <h5>내 게시글</h5>
       </div>
@@ -17,15 +16,15 @@
             {{ MyPostarticle.title }}
           </router-link>
         </div>
-        <div>
-          <p>{{ MyPostarticle.clientId }}  {{ MyPostarticle?.createdAt }}</p>
+        <MyInquiryPostarticlep>{{ MyPostarticle.clientId }}  {{ MyPostarticle?.createdAt }}</p>
         </div>
       </div>
       <div >
         <h3>{{ MyPostarticle.views }}, {{ MyPostarticle.commentCount }}</h3>
       </div>
     </div>
-    <!-- <div v-else>
+    <div v-else> -->
+    <div>
       <div style="float:left; margin-left: 60px;">
         <h5>내 게시글</h5>
       </div>
@@ -37,23 +36,23 @@
             params: { id: MyInquiryPostarticle.id } 
           }"
         >
-          {{ MyPostarticle.title }}
+          {{ MyInquiryPostarticle.title }}
         </router-link>
       </div>
-      <div v-if="check === 1">
+      <div >
         <p>{{ MyInquiryPostarticle.writerId }}  {{ MyInquiryPostarticle?.createdAt }}</p>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'MyPostViewListItem',
+  name: 'MyInquiryPostViewListItem',
   props: {
-    MyPostarticle: Object,
-    // MyInquiryPostarticle: Object,
+    // MyPostarticle: Object,
+    MyInquiryPostarticle: Object,
     index: Number,
     limit: Number,
     // check: Number,

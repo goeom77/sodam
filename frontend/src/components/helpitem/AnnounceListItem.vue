@@ -12,7 +12,7 @@
             params: { id: Announcearticle.id } 
           }"
         >
-          {{ Announcearticle.id }}
+          {{ Announcearticle.title }}
         </router-link>
         <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
