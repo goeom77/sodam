@@ -1,7 +1,7 @@
 <template>
   <div id="MyPostViewList" >
     <div>
-      <div>
+      <!-- <div>
         <h2>여긴 고민게시판 내 글</h2>
         <MyPostViewListItem
           v-for="(MyPostarticle, index) in MyBoardarticles.content"
@@ -15,12 +15,32 @@
       <div>
         <h2>여긴 1:1 문의 내 글</h2>
         <MyPostViewListItem
-          v-for="(MyPostarticle, index) in MyInquiryarticles.content"
-          :key="MyPostarticle.id"
-          :MyPostarticle="MyPostarticle"
+          v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
+          :key="MyInquiryPostarticle.id"
+          :MyInquiryPostarticle="MyInquiryPostarticle"
           :index="index"
           :limit="MyPostListPage"
           :check=1
+        /> 
+      </div> -->
+      <div>
+        <h2>여긴 고민게시판 내 글</h2>
+        <MyPostViewListItem
+          v-for="(MyPostarticle, index) in MyBoardarticles.content"
+          :key="MyPostarticle.postId"
+          :MyPostarticle="MyPostarticle"
+          :index="index"
+          :limit="MyPostListPage"
+        /> 
+      </div>
+      <div>
+        <h2>여긴 1:1 문의 내 글</h2>
+        <MyInquiryPostViewListItem
+          v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
+          :key="MyInquiryPostarticle.id"
+          :MyInquiryPostarticle="MyInquiryPostarticle"
+          :index="index"
+          :limit="MyPostListPage"
         /> 
       </div>
     </div>
@@ -31,6 +51,7 @@
 
 import axios from 'axios'
 import MyPostViewListItem from '../mypost/MyPostViewListItem.vue'
+import MyInquiryPostViewListItem from '../mypost/MyInquiryPostViewListItem.vue'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -44,7 +65,8 @@ export default {
     }
   },
   components: {
-    MyPostViewListItem
+    MyPostViewListItem,
+    MyInquiryPostViewListItem,
   },
   created() {
     this.getMyBoardarticless()
@@ -81,12 +103,13 @@ export default {
           console.log('어림도 없지 문의')
         })
     },
+
   }
 }
 </script>
 
 <style>
-#KidBoardList {
+#MyPostViewList {
   width: 1255px;
 }
 #WriteButton {

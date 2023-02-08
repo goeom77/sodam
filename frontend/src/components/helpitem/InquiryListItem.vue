@@ -5,7 +5,7 @@
     </div>
     <div >
       <div>
-        <!-- <router-link 
+        <router-link 
           style="color:black" 
           :to="{ 
             name: 'InquiryDetail', 
@@ -13,7 +13,7 @@
           }"
         >
           {{ Inquiryarticle.title }}
-        </router-link> -->
+        </router-link>
         <!-- <button style="color:black" @click="clickList">{{ KidBoardarticle.title }}</button> -->
       </div>
       <div>
