@@ -54,9 +54,13 @@ public interface AuthService {
      */
     public Member getMemberByEmail(String email);
 
+    public Member getMemberById(String id);
+
     public void updatePassword(String id, String pw);
 
     TokenDto reissue(String refreshToken);
 
     void deleteMember(String id);
+
+    void confirmPassword(String id, String password);
 }
