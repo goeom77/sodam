@@ -59,6 +59,7 @@ export default {
           end: selectInfo.endStr,
           allDay: selectInfo.allDay
         })
+        console.log(selectInfo)
       }
     },
     handleEventClick(clickInfo) {

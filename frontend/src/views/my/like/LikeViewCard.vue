@@ -23,7 +23,6 @@
             <v-card-title class="text-h5">
             </v-card-title>
             <v-card-subtitle>
-              {{ consult }}
 
             </v-card-subtitle>
           </div>
@@ -48,12 +47,12 @@
                   @click="deleteFav"
                   style="color:black; text-align: end;"
                 >
+
                   X
                 </v-btn>
               </v-card-actions>
             </div>
           </div>
-
         </div>
       </v-card>
     </v-col>
@@ -74,7 +73,7 @@ export default {
   data(){
     return{
       clientId:this.$store.state.payload.id,
-      CounselorId:null,
+      counselorId:this.consult.id,
     }
   },
   methods:{
