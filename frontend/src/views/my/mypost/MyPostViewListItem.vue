@@ -10,7 +10,7 @@
           <router-link 
             style="color:black" 
             :to="{ 
-              name: 'KidBoardDetail', 
+              name: 'BoardDetailView', 
               params: { postId: MyPostarticle.postId } 
             }"
           >

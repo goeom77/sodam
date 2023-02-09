@@ -1,21 +1,27 @@
-<template>
-  <div id="AnnounceCreate">
-    <div id="AnnounceCreateBoard">
-      <div id="AnnounceCreateBoardtitle">
-        <h1>HELP DESK</h1>
-      </div>
-      <div id="AnnounceCreateWrite"> 
-        <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
-        <router-link to="/Inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
-      </div>
-      <div>
 
+<template>
+  <div id="BoardCreateView">
+    <div id="BoardCreateBoard">
+      <div id="BoardCreateBoardtitle">
+        <h1>고민 게시판</h1>
       </div>
+
     </div>
     <div>
-      <div id="HelpWritebox">
-        <form @submit.prevent="AnnouncecreateArticle">
+      <div id="Writebox">
+        <form @submit.prevent="BoardCreateArticle">
         <!-- <form> -->
+          <div style="text-align:start; padding: 10px;">
+            <label for="category">대상</label>
+            <select id="worryselect" v-model="category" >
+              <option 
+                v-for="(item, index) in selectList"
+                :key="index"
+                :value="item.value"
+                >{{ item.name }}</option
+              >
+            </select>
+          </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
             <input type="text" id="title" v-model.trim="title">
@@ -50,7 +56,7 @@
           <!-- <button @click="KidBoardarticleUpdate">등록</button> -->
 
         </form>
-        <button @click="AnnouncearticleUpdate">수정</button>
+        <button @click="KidBoardarticleUpdate">수정</button>
       </div>
     </div>
   </div>
@@ -62,40 +68,49 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
-  name: 'AnnounceCreate',
+  name: 'BoardCreateView',
 
   data() {
     return {
       uploadimageurl: [],    // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0,           // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데, 이 때 이 값도 넘겨줌
-      id: this.$route.params.id,
+      postId: this.$route.params.postId,
       category : null,
       title: null,
       content: null,
-      userType: "003",
-      writer: "idid",
+      clientId: this.$store.state.payload.id,
       
+
+      selectList: [
+        { name: "아동", value: "child" },
+        { name: "청소년", value: "teenager" },
+        { name: "성인", value: "adult" },
+        { name: "부부", value: "couple" },
+        { name: "노년", value: "elder" },
+        { name: "기타", value: "other" },
+      ],
     }
   },
 
   created() {
-    this.AnnounceArticleContent()
+    this.KidBoardArticleContent()
   },
 
   methods: {
-    AnnounceArticleContent() {
-      const id  = this.id 
+    KidBoardArticleContent() {
+      const postId  = this.postId 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
+        // url: `${VUE_APP_API_URL}/trouble/${postId}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
-        // url: `${VUE_APP_API_URL}/trouble/${postId}`
       })
         .then((res) => {
           // console.log(res)
           console.log('됐음 멍')
+          this.category = res.data.category
           this.title = res.data.title
           this.content = res.data.content
         })
@@ -107,13 +122,16 @@ export default {
 
 
 
-    AnnouncecreateArticle() {
+    BoardCreateArticle() {
+      const category  = this.category 
       const title = this.title
       const content = this.content
-      const userType = this.userType
-      const writer = this.writer
+      const clientId = this.clientId
 
-      if (!title) {
+      if (!category ) {
+        alert('대상을 선택해주세요')
+        return
+      } else if (!title) {
         alert('제목을 입력해주세요')
         return
       } else if (!content) {
@@ -123,23 +141,23 @@ export default {
 
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/admin/notice/writing`,
+          url: `${VUE_APP_API_URL}/api/trouble/writing`,
           data: {
+            category : category ,
             title: title,
             content: content,
-            // userType: userType,
-            // writer: writer,
+            clientId: clientId,
             // imagecnt: this.imagecnt
           },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
-        .then((res) => {
-          console.log(res)
-          console.log('여긴 안에러')
-          this.$router.push({ name: 'Announce' })
-        })
+          .then((res) => {
+            console.log('여긴 안에러')
+            this.$router.push({ 
+              name: 'BoardView'  })
+          })
           .catch((err) => {
             console.log('여긴 에러')
             console.log(err)
@@ -178,16 +196,18 @@ export default {
 
 
 
-    AnnouncearticleUpdate() {
+    KidBoardarticleUpdate() {
+      const category  = this.category 
       const title = this.title
       const content = this.content
 
       axios({
         method: 'put',
-        url: `${VUE_APP_API_URL}/api/admin/notice/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
         data: {
           title: title,
           content: content,
+          category: category,
         },
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
@@ -196,8 +216,8 @@ export default {
       .then(() => {
         console.log('됨')
         this.$router.push({ 
-          name: 'AnnounceDetail', 
-          params: { id: this.$route.params.id } })
+          name: 'BoardDetailView', 
+          params: { postId: this.$route.params.postId } })
 
 
           
@@ -215,7 +235,7 @@ export default {
 
 
 <style>
-#AnnounceCreate {
+#BoardCreate {
   width: 1255px;
   margin: 0 auto;
 }
@@ -225,7 +245,7 @@ a {
   color: white;
 }
 
-#AnnounceCreateBoard {
+#BoardCreateBoard {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -237,7 +257,7 @@ a {
   height: 250px;
   position: relative;
 }
-#AnnounceCreateWrite {
+#KidBoardCategoryWrite {
   width:100%; 
   height:60px; 
   line-height: 65px;
@@ -249,7 +269,7 @@ a {
   position: absolute;
   bottom: 0px;
 } 
-#AnnounceCreateBoardtitle {
+#BoardCreateBoardtitle {
   position: absolute;
   left: 50%; 
   bottom: 50%; 
@@ -262,6 +282,19 @@ a {
   margin: 60px;
 }
 
+#worryselect {
+width: 980px; 
+height: 50px;
+padding: .8em .5em; 
+border: 1px solid #B9B6B6;
+font-family: inherit;  
+/* background: url('arrow.jpg') no-repeat 95% 50%;  */
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+margin-left: 100px;
+}
 
 #title {
 width: 980px; 
