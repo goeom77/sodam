@@ -28,7 +28,6 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
                 <div v-if="searchfinish===false">
                   <QnaHelpViewListItem
                     v-for="(Boardarticle, index) in QnaHelpViewListarticles.content"
@@ -52,7 +51,6 @@
                     @refresh-Board="getQnaHelpViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

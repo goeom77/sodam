@@ -67,11 +67,11 @@
     </v-window-item>
     
     <v-window-item value="six">
-      <OldBoard/>
+      <OldBoardViewList/>
     </v-window-item>
 
     <v-window-item value="seven">
-      <GuitarBoard/>
+      <GuitarBoardViewList/>
     </v-window-item>
 
     <v-window-item value="eight">

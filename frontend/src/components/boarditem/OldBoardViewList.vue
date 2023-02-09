@@ -18,17 +18,16 @@
             </v-col>
             <v-col align-self="center">
               <div>
-                <Button
+                <button
                   @click="OldBoardViewListarticlessearch"
                   style="background-color: #579BB1; border-radius: 10px; width: 70%; height: 30px;  float: left; padding-bottom: 0%;"
-                >SEARCH</Button>
+                >SEARCH</button>
 
               </div>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
                 <div v-if="OldBoardViewListarticles===[]">
                   <h1>
                     게시글이 없습니다
@@ -57,7 +56,6 @@
                     @refresh-Board="getOldBoardViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>
