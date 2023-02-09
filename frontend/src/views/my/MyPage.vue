@@ -1,54 +1,59 @@
 <template>
-  <div id="Notice">
-    <div id="MyBoard">
-        <div id="MyBoardtitle">
-          <h1>마이페이지</h1>
-        </div>  
+<div id="fh5co-main">
+  <div class="fh5co-narrow-content">
+
+    <div id="Notice">
+      <div id="MyBoard">
+          <div id="MyBoardtitle">
+            <h1>마이페이지</h1>
+          </div>  
+        </div>
+  
+          <v-card class="Card">
+            <v-tabs
+              v-model="tab"
+              bg-color="transparent"
+              color="grey"
+              grow
+            >
+              <v-tab value="one">
+                개인정보 수정
+              </v-tab>
+              <v-tab value="two">
+                내 글 보기
+              </v-tab>
+              <v-tab value="three">
+                찜 목록
+              </v-tab>
+              <v-tab value="four">
+                상담 진행
+              </v-tab>
+            </v-tabs>
+            
+            <v-window v-model="tab">
+              <v-window-item value="one">
+                <CheckEditInformation/>
+              </v-window-item>
+              
+              <v-window-item value="two">
+                <MyPostView/>
+              </v-window-item>
+              
+              <v-window-item value="three">
+                <LikeView/>
+              </v-window-item>
+  
+              <v-window-item value="four">
+                <SangdamView/>
+              </v-window-item>
+            </v-window>
+          </v-card>
+        <div>
       </div>
-
-        <v-card class="Card">
-          <v-tabs
-            v-model="tab"
-            bg-color="transparent"
-            color="grey"
-            grow
-          >
-            <v-tab value="one">
-              개인정보 수정
-            </v-tab>
-            <v-tab value="two">
-              내 글 보기
-            </v-tab>
-            <v-tab value="three">
-              찜 목록
-            </v-tab>
-            <v-tab value="four">
-              상담 진행
-            </v-tab>
-          </v-tabs>
-          
-          <v-window v-model="tab">
-            <v-window-item value="one">
-              <CheckEditInformation/>
-            </v-window-item>
-            
-            <v-window-item value="two">
-              <MyPostView/>
-            </v-window-item>
-            
-            <v-window-item value="three">
-              <LikeView/>
-            </v-window-item>
-
-            <v-window-item value="four">
-              <SangdamView/>
-            </v-window-item>
-          </v-window>
-        </v-card>
-      <div>
+        <!-- <KidBoardList/> -->
     </div>
-      <!-- <KidBoardList/> -->
   </div>
+</div>
 </template>
   
 <script>
@@ -77,11 +82,7 @@ SangdamView
   
   
   <style>
-  #Notice {
-    /* 반응형 x */
-    width: 1255px;
-    margin: 0 auto;
-  }
+
   
   a {
     text-decoration: none;

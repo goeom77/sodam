@@ -101,39 +101,43 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class='demo-app'>
-    <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            :checked='calendarOptions.weekends'
-            @change='handleWeekendsToggle'
-          />
-          주말 포함
-        </label>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class='demo-app'>
+        <div class='demo-app-sidebar'>
+          <div class='demo-app-sidebar-section'>
+            <label>
+              <input
+                type='checkbox'
+                :checked='calendarOptions.weekends'
+                @change='handleWeekendsToggle'
+              />
+              주말 포함
+            </label>
+          </div>
+          <div class='demo-app-sidebar-section'>
+            <h2>All Events ({{ currentEvents.length }})</h2>
+            <ul>
+              <li v-for='event in currentEvents' :key='event.id'>
+                <b>{{ event.startStr }}</b>
+                <br>
+                <i>{{ event.title }}</i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class='demo-app-main'>
+          <FullCalendar
+            class='demo-app-calendar'
+            :options='calendarOptions'
+          >
+            <template v-slot:eventContent='arg'>
+              <b>{{ arg.timeText }}</b>
+              <i>{{ arg.event.title }}</i>
+            </template>
+          </FullCalendar>
+        </div>
       </div>
-      <div class='demo-app-sidebar-section'>
-        <h2>All Events ({{ currentEvents.length }})</h2>
-        <ul>
-          <li v-for='event in currentEvents' :key='event.id'>
-            <b>{{ event.startStr }}</b>
-            <br>
-            <i>{{ event.title }}</i>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class='demo-app-main'>
-      <FullCalendar
-        class='demo-app-calendar'
-        :options='calendarOptions'
-      >
-        <template v-slot:eventContent='arg'>
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template>
-      </FullCalendar>
     </div>
   </div>
 </template>
