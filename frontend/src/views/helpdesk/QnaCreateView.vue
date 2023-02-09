@@ -1,20 +1,15 @@
-<template>
-  <div id="InquiryCreate">
-    <div id="InquiryCreateBoard">
-      <div id="InquiryCreateBoardtitle">
-        <h1>HELP DESK</h1>
-      </div>
-      <div id="InquiryCreateWrite"> 
-        <router-link to="/Announce" id="AnnounceCategory" class="CategoryClass" >공지사항</router-link>
-        <router-link to="/inquiry" id="InquiryCategory" class="CategoryClass">1:1 문의</router-link>
-      </div>
-      <div>
 
+<template>
+  <div id="QnaCreateView">
+    <div id="QnaCreateBoard">
+      <div id="QnaCreateBoardtitle">
+        <h1>고민 게시판</h1>
       </div>
+
     </div>
     <div>
-      <div id="HelpWritebox">
-        <form @submit.prevent="InquirycreateArticle">
+      <div id="Writebox">
+        <form @submit.prevent="QnaCreateArticle">
         <!-- <form> -->
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
@@ -47,10 +42,10 @@
           </div> -->
           <input type="submit" id="submitno" value="취소">
           <input type="submit" id="submityes" value="등록">
-          <!-- <button @click="KidBoardarticleUpdate">등록</button> -->
+          <!-- <button @click="QnaarticleUpdate">등록</button> -->
 
         </form>
-        <button @click="KidBoardarticleUpdate">수정</button>
+        <button @click="QnaarticleUpdate">수정</button>
       </div>
     </div>
   </div>
@@ -62,35 +57,43 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
-  name: 'KidBoardCreate',
+  name: 'QnaCreateView',
 
   data() {
     return {
       uploadimageurl: [],    // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0,           // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데, 이 때 이 값도 넘겨줌
       id: this.$route.params.id,
-      category : null,
       title: null,
       content: null,
-      clientId: "id",
+      writerId: this.$store.state.payload.id,
       
+
+      selectList: [
+        { name: "아동", value: "child" },
+        { name: "청소년", value: "teenager" },
+        { name: "성인", value: "adult" },
+        { name: "부부", value: "couple" },
+        { name: "노년", value: "elder" },
+        { name: "기타", value: "other" },
+      ],
     }
   },
 
   created() {
-    this.InquiryArticleContent()
+    this.QnaArticleContent()
   },
 
   methods: {
-    InquiryArticleContent() {
+    QnaArticleContent() {
       const id  = this.id 
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/help-desk/qna/${this.$route.params.id}`,
+        // url: `${VUE_APP_API_URL}/trouble/${postId}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
-        // url: `${VUE_APP_API_URL}/trouble/${postId}`
       })
         .then((res) => {
           // console.log(res)
@@ -106,13 +109,13 @@ export default {
 
 
 
-    InquirycreateArticle() {
+    QnaCreateArticle() {
       const title = this.title
       const content = this.content
-      // const clientId = this.clientId
+      const writerId = this.writerId
 
-      if (!title) {
-        alert('제목을 입력해주세요')
+      if (!title ) {
+        alert('제목을 선택해주세요')
         return
       } else if (!content) {
         alert('내용을 입력해주세요')
@@ -125,6 +128,7 @@ export default {
           data: {
             title: title,
             content: content,
+            writerId: writerId,
             // imagecnt: this.imagecnt
           },
           headers: {
@@ -134,7 +138,7 @@ export default {
           .then((res) => {
             console.log('여긴 안에러')
             this.$router.push({ 
-              name: 'Inquiry' })
+              name: 'HelpView'  })
           })
           .catch((err) => {
             console.log('여긴 에러')
@@ -174,7 +178,7 @@ export default {
 
 
 
-    InquiryarticleUpdate() {
+    QnaarticleUpdate() {
       const title = this.title
       const content = this.content
 
@@ -192,8 +196,8 @@ export default {
       .then(() => {
         console.log('됨')
         this.$router.push({ 
-          name: 'InquiryDetail', 
-          params: { postId: this.$route.params.id } })
+          name: 'QnaDetailView', 
+          params: { id: this.$route.params.id } })
 
 
           
@@ -211,7 +215,7 @@ export default {
 
 
 <style>
-#InquiryCreate {
+#QnaCreate {
   width: 1255px;
   margin: 0 auto;
 }
@@ -221,7 +225,7 @@ a {
   color: white;
 }
 
-#InquiryCreateBoard {
+#QnaCreateBoard {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -233,7 +237,7 @@ a {
   height: 250px;
   position: relative;
 }
-#InquiryCreateWrite {
+#QnaCategoryWrite {
   width:100%; 
   height:60px; 
   line-height: 65px;
@@ -245,19 +249,32 @@ a {
   position: absolute;
   bottom: 0px;
 } 
-#InquiryCreateBoardtitle {
+#QnaCreateBoardtitle {
   position: absolute;
   left: 50%; 
   bottom: 50%; 
   transform: translate(-50%);
 }
 
-#HelpWritebox {
+#Writebox {
   border-top: 1px solid black;
   /* border-bottom: 1px solid black; */
   margin: 60px;
 }
 
+#worryselect {
+width: 980px; 
+height: 50px;
+padding: .8em .5em; 
+border: 1px solid #B9B6B6;
+font-family: inherit;  
+/* background: url('arrow.jpg') no-repeat 95% 50%;  */
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+margin-left: 100px;
+}
 
 #title {
 width: 980px; 

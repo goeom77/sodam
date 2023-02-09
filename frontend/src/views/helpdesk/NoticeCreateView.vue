@@ -1,37 +1,15 @@
-
 <template>
-  <div id="KidBoardCreate">
-    <div id="KidBoardCreateBoard">
-      <div id="KidBoardCreateBoardtitle">
-        <h1>고민 게시판</h1>
+  <div id="NoticeCreate">
+    <div id="NoticeCreateBoard">
+      <div id="NoticeCreateBoardtitle">
+        <h1>HELP DESK</h1>
       </div>
-      <div id="KidBoardCategoryWrite"> 
-        <router-link to="/KidBoard" id="KidCategory" class="CategoryClass" >아동 상담</router-link> 
-        <router-link to="/KidBoard" id="TeenCategory" class="CategoryClass">청소년 상담</router-link>
-        <router-link to="/" id="AdultCategory" class="CategoryClass">성인 상담</router-link>
-        <router-link to="/KidBoard" id="CoupleCategory" class="CategoryClass">부부 상담</router-link>
-        <router-link to="/KidBoard" id="OldCategory" class="CategoryClass">노년 상담</router-link>
-        <router-link to="/KidBoard" id="GuitarCategory" class="CategoryClass">기타 상담</router-link>
-      </div>
-      <div>
 
-      </div>
     </div>
     <div>
-      <div id="Writebox">
-        <form @submit.prevent="KidBoardcreateArticle">
+      <div id="HelpWritebox">
+        <form @submit.prevent="NoticecreateArticle">
         <!-- <form> -->
-          <div style="text-align:start; padding: 10px;">
-            <label for="category">대상</label>
-            <select id="worryselect" v-model="category" >
-              <option 
-                v-for="(item, index) in selectList"
-                :key="index"
-                :value="item.value"
-                >{{ item.name }}</option
-              >
-            </select>
-          </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
             <input type="text" id="title" v-model.trim="title">
@@ -66,7 +44,7 @@
           <!-- <button @click="KidBoardarticleUpdate">등록</button> -->
 
         </form>
-        <button @click="KidBoardarticleUpdate">수정</button>
+        <button @click="NoticearticleUpdate">수정</button>
       </div>
     </div>
   </div>
@@ -78,49 +56,40 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
-  name: 'KidBoardCreate',
+  name: 'NoticeCreateView',
 
   data() {
     return {
       uploadimageurl: [],    // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0,           // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데, 이 때 이 값도 넘겨줌
-      postId: this.$route.params.postId,
+      id: this.$route.params.id,
       category : null,
       title: null,
       content: null,
-      clientId: this.$store.state.payload.id,
+      userType: "003",
+      writer: this.$store.state.payload.id,
       
-
-      selectList: [
-        { name: "아동", value: "child" },
-        { name: "청소년", value: "teenager" },
-        { name: "성인", value: "adult" },
-        { name: "부부", value: "couple" },
-        { name: "노년", value: "elder" },
-        { name: "기타", value: "other" },
-      ],
     }
   },
 
   created() {
-    this.KidBoardArticleContent()
+    this.NoticeArticleContent()
   },
 
   methods: {
-    KidBoardArticleContent() {
-      const postId  = this.postId 
+    NoticeArticleContent() {
+      const id  = this.id 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
-        // url: `${VUE_APP_API_URL}/trouble/${postId}`,
+        url: `${VUE_APP_API_URL}/api/notice/${this.$route.params.id}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
+        // url: `${VUE_APP_API_URL}/trouble/${postId}`
       })
         .then((res) => {
           // console.log(res)
           console.log('됐음 멍')
-          this.category = res.data.category
           this.title = res.data.title
           this.content = res.data.content
         })
@@ -132,16 +101,13 @@ export default {
 
 
 
-    KidBoardcreateArticle() {
-      const category  = this.category 
+    NoticecreateArticle() {
       const title = this.title
       const content = this.content
-      const clientId = this.clientId
+      const userType = this.userType
+      const writer = this.writer
 
-      if (!category ) {
-        alert('대상을 선택해주세요')
-        return
-      } else if (!title) {
+      if (!title) {
         alert('제목을 입력해주세요')
         return
       } else if (!content) {
@@ -151,23 +117,23 @@ export default {
 
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/trouble/writing`,
+          url: `${VUE_APP_API_URL}/api/admin/notice/writing`,
           data: {
-            category : category ,
             title: title,
             content: content,
-            clientId: clientId,
+            // userType: userType,
+            // writer: writer,
             // imagecnt: this.imagecnt
           },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
-          .then((res) => {
-            console.log('여긴 안에러')
-            this.$router.push({ 
-              name: category  })
-          })
+        .then((res) => {
+          console.log(res)
+          console.log('여긴 안에러')
+          this.$router.push({ name: 'HelpView' })
+        })
           .catch((err) => {
             console.log('여긴 에러')
             console.log(err)
@@ -206,18 +172,16 @@ export default {
 
 
 
-    KidBoardarticleUpdate() {
-      const category  = this.category 
+    NoticearticleUpdate() {
       const title = this.title
       const content = this.content
 
       axios({
         method: 'put',
-        url: `${VUE_APP_API_URL}/api/trouble/${this.$route.params.postId}`,
+        url: `${VUE_APP_API_URL}/api/admin/notice/${this.$route.params.id}`,
         data: {
           title: title,
           content: content,
-          category: category,
         },
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
@@ -226,8 +190,8 @@ export default {
       .then(() => {
         console.log('됨')
         this.$router.push({ 
-          name: 'KidBoardDetail', 
-          params: { postId: this.$route.params.postId } })
+          name: 'NoticeDetailView', 
+          params: { id: this.$route.params.id } })
 
 
           
@@ -245,7 +209,7 @@ export default {
 
 
 <style>
-#KidBoardCreate {
+#NoticeCreate {
   width: 1255px;
   margin: 0 auto;
 }
@@ -255,7 +219,7 @@ a {
   color: white;
 }
 
-#KidBoardCreateBoard {
+#NoticeCreateBoard {
   background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
@@ -267,7 +231,7 @@ a {
   height: 250px;
   position: relative;
 }
-#KidBoardCategoryWrite {
+#NoticeCreateWrite {
   width:100%; 
   height:60px; 
   line-height: 65px;
@@ -279,7 +243,7 @@ a {
   position: absolute;
   bottom: 0px;
 } 
-#KidBoardCreateBoardtitle {
+#NoticeCreateBoardtitle {
   position: absolute;
   left: 50%; 
   bottom: 50%; 
@@ -292,19 +256,6 @@ a {
   margin: 60px;
 }
 
-#worryselect {
-width: 980px; 
-height: 50px;
-padding: .8em .5em; 
-border: 1px solid #B9B6B6;
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 100px;
-}
 
 #title {
 width: 980px; 

@@ -8,7 +8,7 @@
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ KidBoardComment.content }} {{ KidBoardComment.commentId }}
+      ┖ {{ QnaComment.content }} {{ QnaComment.commentId }}
       </div>
       <!-- <div v-else="">
         <KidBoardCommentForm
@@ -39,25 +39,25 @@
   
   <script>
   import axios from 'axios'
-  import KidBoardCommentForm from '../boarditem/KidBoardCommentForm.vue'
+  import QnaCommentForm from '../helpitem/QnaCommentForm.vue'
 
   const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
   export default {
-    name: 'KidBoardCommentList',
+    name: 'QnaCommentList',
     data() {
       return{
-        username: null,
-        userid: null,
+        // username: null,
+        writerId: null,
         updateStatus: false,
         content: null,
-        counselorId : null,
-        commentId : null,
+        // counselorId : null,
+        id : null,
         profileImageUrl: null,
       }
     },
     components: {
-      KidBoardCommentForm,
+      QnaCommentForm,
     },
     computed: {
       imgSrc() {
@@ -65,7 +65,7 @@
       },
     },
     props: {
-      KidBoardComment: Object,
+      BoardComment: Object,
       index: Number,
       limit: Number,
     },
@@ -92,7 +92,7 @@
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/qna/comment/${this.QnaComment.id}/`,
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
@@ -104,29 +104,29 @@
           console.log(err)
         })
       },
-      getUserName() {
-        console.log('유저네임 들어왔냐?')
-        axios({
-          method: 'post',
-          url: `${VUE_APP_API_URL}/api/counselor/${this.KidBoardComment.counselorId}`,
-          data: {
-            userid: this.KidBoardComment.comment_user
-          },
-          headers: {
-            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-          }
-        })
-        .then((res) => {
-          this.username = res.data.username
-          this.userid = res.data.userid
-        })
-        // .then(() => {
-        //   this.getProfileImage()
-        // })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
+    //   getUserName() {
+    //     console.log('유저네임 들어왔냐?')
+    //     axios({
+    //       method: 'post',
+    //       url: `${VUE_APP_API_URL}/api/counselor/${this.QnaComment.counselorId}`,
+    //       data: {
+    //         userid: this.QnaComment.comment_user
+    //       },
+    //       headers: {
+    //         Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+    //       }
+    //     })
+    //     .then((res) => {
+    //       this.username = res.data.username
+    //       this.userid = res.data.userid
+    //     })
+    //     .then(() => {
+    //       this.getProfileImage()
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    // },
     // getCommentUpdate() {
     //     axios({
     //       method: 'get',
@@ -150,18 +150,18 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/qna/comment/${this.QnaComment.id}/`,
           data: {
             content: this.content,
-            counselorId: this.counselorId ,
-            commentId: this.commentId 
+            // counselorId: this.counselorId ,
+            id: this.id 
           },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
-          this.$emit('update-comment')
+          // this.$emit('update-comment')
           console.log('댓글 수정 성공')
           this.updateStatus = false
         })

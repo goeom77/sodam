@@ -1,7 +1,7 @@
 <template>
   <div >
-    <!-- <div>{{KidBoardarticle}}</div> -->
-    <form @submit.prevent="createKidBoardComment" style="border-radius:0px; height:50px;  display:flex; justify-content: space-between; width: 100px;">
+    <!-- <div>{{Boardarticle}}</div> -->
+    <form @submit.prevent="createBoardComment" style="border-radius:0px; height:50px;  display:flex; justify-content: space-between; width: 100px;">
       <div>
       <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="title"  v-model.trim="inputData">
     </div>
@@ -20,10 +20,10 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 export default {
-    name: 'KidBoardCommentForm',
+    name: 'BoardCommentForm',
     props: {
-        KidBoardarticle: Object,
-        KidBoardComment: Object,
+        Boardarticle: Object,
+        BoardComment: Object,
     },
     data() {
         return {
@@ -32,13 +32,13 @@ export default {
 
     },
     // created() {
-    //   this.getKidBoardCommentDetail()
+    //   this.getBoardCommentDetail()
     // },
     methods: {
-      // getKidBoardarticleDetail() {
+      // getBoardarticleDetail() {
       //   axios({
       //     method: 'get',
-      //     url: `${VUE_APP_API_URL}/api/trouble/${KidBoardComment.commentId}`
+      //     url: `${VUE_APP_API_URL}/api/trouble/${BoardComment.commentId}`
       //     // url: `${VUE_APP_API_URL}/trouble/${postId}`
       //   })
       //     .then((res) => {
@@ -48,7 +48,7 @@ export default {
       //     })
       //     .catch((err) => {
       //       console.log('실패이다람쥐')
-      //       KidBoardarticle.log(err)
+      //       Boardarticle.log(err)
       //     })
       // },
 
@@ -56,21 +56,21 @@ export default {
 
 
 
-      createKidBoardComment() {
+      createBoardComment() {
         const content = this.inputData
-        // const boardId = this.KidBoardarticle?.postId
-        // const counselorId = this.KidBoardarticle?.clientId
+        // const boardId = this.Boardarticle?.postId
+        // const counselorId = this.Boardarticle?.clientId
         if (!content) {
             alert('댓글을 입력해주세요')
             return
         }
         axios({
             method: 'post',
-            // url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardarticle.id}/`,
+            // url: `${VUE_APP_API_URL}/api/trouble/comment/${this.Boardarticle.id}/`,
             url: `${VUE_APP_API_URL}/api/trouble/comment`,
             data: {
                 content: content,
-                boardId: this.KidBoardarticle?.postId,
+                boardId: this.Boardarticle?.postId,
                 counselorId: 'counselor2'
             },
             headers: {

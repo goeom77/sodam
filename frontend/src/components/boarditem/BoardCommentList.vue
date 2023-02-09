@@ -8,18 +8,18 @@
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ InquiryComment.content }} {{ InquiryComment.commentId }}
+      ┖ {{ BoardComment.content }} {{ BoardComment.commentId }}
       </div>
       <!-- <div v-else="">
-        <KidBoardCommentForm
-          :KidBoardComment="KidBoardComment"
+        <BoardCommentForm
+          :BoardComment="BoardComment"
         />
       </div> -->
       <div style="margin-top:3px;">
         <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="updateComment">수정하기</a>
         <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="deleteComment">삭제</a>
-        <!-- <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="deleteComment">삭제</a> -->
+        <!-- <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.BoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
+        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.BoardComment.counselorId" @click="deleteComment">삭제</a> -->
       </div>
     </div>
       <hr style="margin:0px;">
@@ -39,12 +39,12 @@
   
   <script>
   import axios from 'axios'
-  import InquiryCommentForm from '../helpitem/InquiryCommentForm.vue'
+  import BoardCommentForm from '../boarditem/BoardCommentForm.vue'
 
   const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
   export default {
-    name: 'InquiryCommentList',
+    name: 'BoardCommentList',
     data() {
       return{
         username: null,
@@ -57,7 +57,7 @@
       }
     },
     components: {
-      InquiryCommentForm,
+      BoardCommentForm,
     },
     computed: {
       imgSrc() {
@@ -65,7 +65,7 @@
       },
     },
     props: {
-      InquiryComment: Object,
+      BoardComment: Object,
       index: Number,
       limit: Number,
     },
@@ -76,7 +76,7 @@
       // getProfileImage() {
       //   axios({
       //     method: 'get',
-      //     url: `${VUE_APP_API_URL}/api/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
+      //     url: `${VUE_APP_API_URL}/api/accounts/profile_image/${this.BoardComment.comment_user}/`,
       //     headers: { 
       //       'Content-Type': 'multipart/form-data',
       //           Authorization: `Token ${this.$store.state.token}`
@@ -92,13 +92,13 @@
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}/comment/${this.InquiryComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.BoardComment.commentId}/`,
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
-          // this.$emit('delete-comment')
+          this.$emit('delete-comment')
         })
         .catch((err) => {
           console.log(err)
@@ -108,9 +108,9 @@
         console.log('유저네임 들어왔냐?')
         axios({
           method: 'post',
-          url: `${VUE_APP_API_URL}/api/counselor/${this.InquiryComment.counselorId}`,
+          url: `${VUE_APP_API_URL}/api/counselor/${this.BoardComment.counselorId}`,
           data: {
-            userid: this.InquiryComment.comment_user
+            userid: this.BoardComment.comment_user
           },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
@@ -130,7 +130,7 @@
     // getCommentUpdate() {
     //     axios({
     //       method: 'get',
-    //       url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
+    //       url: `${VUE_APP_API_URL}/api/trouble/comment/${this.BoardComment.commentId}/`,
     //       headers: { 
     //           Authorization: `Token ${this.$store.state.token}`
     //       }
@@ -150,7 +150,7 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `${VUE_APP_API_URL}/api/qna/${this.$route.params.id}/comment/${this.InquiryComment.commentId}/`,
+          url: `${VUE_APP_API_URL}/api/trouble/comment/${this.BoardComment.commentId}/`,
           data: {
             content: this.content,
             counselorId: this.counselorId ,
@@ -161,7 +161,7 @@
           }
         })
         .then(() => {
-          // this.$emit('update-comment')
+          this.$emit('update-comment')
           console.log('댓글 수정 성공')
           this.updateStatus = false
         })
