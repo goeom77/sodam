@@ -27,14 +27,16 @@ export default defineComponent({
         },
         initialView: 'dayGridMonth',
         initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        editable: true,
+        editable: true, 
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
-        eventsSet: this.handleEvents
+        eventsSet: this.handleEvents,
+        droppable: true,
+        locale:'ko'
         /* you can update a remote database when these fire:
         eventAdd:
         eventChange:
@@ -63,8 +65,22 @@ export default defineComponent({
           allDay: selectInfo.allDay
         })
       }
-      
+
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/newSchedule`,
+        data:{
+          "clientId": "client",
+          "counselorId": "counselor01",
+          "dateTime": "2023-06-01 14:00:00",
+          "sessionId": 95,
+          "status": "APPROVED"
+        }
+      })
+
+
       console.log(selectInfo)
+      console.log(title)
     },
     handleEventClick(clickInfo) {
       if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -74,11 +90,11 @@ export default defineComponent({
     handleEvents(events) {
       this.currentEvents = events
     },
-    checkData(){
-      axios({
-        // ...
-      })
-    }
+    // checkData(){
+    //   axios({
+    //     // ...
+    //   })
+    // }
   }
 })
 
@@ -94,7 +110,7 @@ export default defineComponent({
             :checked='calendarOptions.weekends'
             @change='handleWeekendsToggle'
           />
-          toggle weekends
+          주말 포함
         </label>
       </div>
       <div class='demo-app-sidebar-section'>
