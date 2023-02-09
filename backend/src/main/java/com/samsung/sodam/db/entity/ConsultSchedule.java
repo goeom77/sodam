@@ -33,7 +33,4 @@ public class ConsultSchedule {
     private Integer turn; // 회차
     @Column(name = "session_id")
     private Integer sessionId;
-
-    @Column(name = "openvidu_id")
-    private String openviduId; // 화상상담 세션 ID
 }
