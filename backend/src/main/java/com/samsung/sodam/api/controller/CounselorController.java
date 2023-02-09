@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -55,16 +54,20 @@ public class CounselorController {
         return service.getCounselorDetail(id);
     }
 
-    @PutMapping(value = "/counselor/{id}")
+    @PostMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorSignupRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, CounselorSignupRequest request) {
         try {
-            System.out.println("editProfileCounselor - parameter test");
-            System.out.println(request.getConsultType());
-            System.out.println(Arrays.toString(request.getRoutine()));
+//            System.out.println("-------------------------------------");
+//            System.out.println("\n\n\n\n");
+//            System.out.println("editProfileCounselor - parameter test");
+//            System.out.println(request.getConsultType());
+//            System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
-
+            counselorProfileService.deleteAssociateProfileTable(request.getEdu_delete(), request.getCert_delete());
             counselorProfileService.uploadAssociateProfileTable(request);
+//            System.out.println("\n\n\n\n");
+//            System.out.println("-------------------------------------");
             return HttpStatus.OK;
         } catch(Exception e){
             e.printStackTrace();
