@@ -28,7 +28,6 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
                 <div v-if="searchfinish===false">
                   <BoardViewListItem
                     v-for="(Boardarticle, index) in TeenBoardViewListarticles.content"
@@ -52,7 +51,6 @@
                     @refresh-Board="getTeenBoardViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>
