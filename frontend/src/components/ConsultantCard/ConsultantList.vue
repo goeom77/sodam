@@ -49,8 +49,8 @@ export default {
         this.counselorInfo = res.data.content
       })
     },
-
   },
+
   created() {
     this.getCounselorInfo()
   }
