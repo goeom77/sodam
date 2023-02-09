@@ -45,7 +45,6 @@ public class CounselorRequest {
 
     private String profileImg;
 
-//    private List<Education> educationRow;
     private List<Career> careers;
 
     //private List<String> consultType;

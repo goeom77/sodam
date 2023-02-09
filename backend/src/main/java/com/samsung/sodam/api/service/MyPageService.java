@@ -5,8 +5,9 @@ import com.samsung.sodam.api.response.MyOneNotiResponse;
 import com.samsung.sodam.db.entity.NotificationType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 public interface MyPageService {
 
@@ -14,5 +15,6 @@ public interface MyPageService {
     MyOneNotiResponse getOneMyNoti(Long id);
     void deleteOneMyNoti(Long id);
     Integer unreadNotiCount(String userId);
+    void uploadProfileImg(MultipartFile file, String id) throws IOException;
 
 }
