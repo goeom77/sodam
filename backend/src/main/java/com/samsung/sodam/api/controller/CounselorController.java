@@ -10,7 +10,9 @@ import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class CounselorController {
+public class CounselorController extends Counselor{
 
     private final CounselorRepositoryService service;
     private final ClientService clientService;
@@ -32,10 +34,11 @@ public class CounselorController {
     }
 
     //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
-//    @PostMapping("counselor/")
-//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-//        return service.searchCounselor(request, pageable);
-//    }
+    @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
+    @PostMapping("counselor/search")
+    public Page<CounselorListResponse> searchCounselor(@Validated @RequestBody CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
+        return service.searchCounselor(request, pageable);
+    }
 
     @ApiOperation(value = "모든 상담사를 조회")
     @PostMapping("counselor/")

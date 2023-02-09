@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import lombok.*;
@@ -79,5 +80,20 @@ public class Counselor extends Member {
         this.enterprise = enterprise;
         this.profileImg = profileImg;
         this.consultTypeList = consultTypeList;
+    }
+
+    static public CounselorListResponse toResponse(Counselor counselorList){
+        return CounselorListResponse.builder()
+                .id(counselorList.getId())
+                .name(counselorList.getName())
+                .email(counselorList.getEmail())
+                .tel(counselorList.getTel())
+                .career(counselorList.getCareer())
+                .introduce(counselorList.getIntroduce())
+                .gender(counselorList.getGender())
+                .routine(counselorList.getRoutine())
+                .profileImg(counselorList.getProfileImg())
+                .consultTypeList(counselorList.getConsultTypeList())
+                .build();
     }
 }

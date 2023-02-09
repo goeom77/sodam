@@ -1,7 +1,8 @@
 package com.samsung.sodam.api.controller;
 
-import com.samsung.sodam.api.request.ScheduleRequest;
-import com.samsung.sodam.api.request.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.ScheduleRequest;
+import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.api.service.ApplicantService;
 import com.samsung.sodam.api.service.schedule.ScheduleService;
 import com.samsung.sodam.db.entity.ConsultApplicant;
@@ -55,5 +56,12 @@ public class ScheduleController {
     @ApiOperation(value = "입력한 기간 내의 승인된 상태의 상담신청정보를 조회한다",notes = "기간 미입력 시 오늘기준 1년 이후까지의 목록 보여줌.")
     public List<ConsultApplicant> searchSchedule(@Validated  @RequestBody SearchSchedule request){
         return service.searchSchedules(request);
+    }
+
+    @PostMapping("/search/monthly")
+    @ApiOperation(value = "설정한 기간의 상담일정을 조회한다",notes = "월별,년별등 대량 데이터 조회 시 이용할 데이터 일부만 내려줌.")
+    public List<MonthlyResponse> getMonthlySchedule(){
+
+        return null;
     }
 }

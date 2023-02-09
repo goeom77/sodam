@@ -1,4 +1,4 @@
-package com.samsung.sodam.api.request;
+package com.samsung.sodam.api.request.schedule;
 
 import com.nimbusds.openid.connect.sdk.claims.Gender;
 import com.samsung.sodam.db.entity.STATE;
@@ -30,11 +30,14 @@ public class ScheduleRequest {
     private Integer id;
 
     @Column(name = "session_id")
+    @ApiModelProperty(required = true)
     private Integer sessionId;
-    @Column(name = "client_id")
-    private String clientId;
-    @Column(name = "counselor_id")
-    private String counselorId;
+//    @Column(name = "client_id")
+//    @ApiModelProperty(required = false)
+//    private String clientId;
+//    @Column(name = "counselor_id")
+//    @ApiModelProperty(required = false)
+//    private String counselorId;
     private STATE status=STATE.WAIT;
 
     @ApiModelProperty(value = "상담 일정", example = "2023-06-01 14:00:00", required = true)

@@ -1,6 +1,6 @@
 package com.samsung.sodam.api.service.schedule;
 
-import com.samsung.sodam.api.request.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.SearchSchedule;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.repository.ScheduleRepository;
@@ -27,7 +27,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ConsultSchedule makeSchedule(ConsultSchedule request) {
         return repository.save(request);
-
     }
 
     @Override

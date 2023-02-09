@@ -9,6 +9,8 @@ import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Education;
 import com.samsung.sodam.db.entity.ProfilePhoto;
 import com.samsung.sodam.db.repository.*;
+import com.samsung.sodam.db.repository.counselor.CounselorCustomRepository;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

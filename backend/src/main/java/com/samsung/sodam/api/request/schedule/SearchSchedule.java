@@ -1,4 +1,4 @@
-package com.samsung.sodam.api.request;
+package com.samsung.sodam.api.request.schedule;
 
 import com.samsung.sodam.db.converter.StateAttributeConverter;
 import com.samsung.sodam.db.entity.STATE;

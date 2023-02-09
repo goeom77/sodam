@@ -1,10 +1,9 @@
 package com.samsung.sodam.db.repository.schedule;
 
-import com.samsung.sodam.api.request.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.SearchSchedule;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import org.springframework.data.domain.Page;
-import com.samsung.sodam.api.request.RoomRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

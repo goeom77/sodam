@@ -4,12 +4,15 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
+import com.samsung.sodam.db.repository.counselor.CounselorCustomRepository;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -191,6 +194,12 @@ public class CounselorRepositoryService {
         applicant.setState(request.getState());
         applicantRepository.flush();
 
+    }
+
+
+    @Transactional
+    public Page<CounselorListResponse> searchCounselor(CounselorSearchRequest request,Pageable pageable){
+        return counselorCustomRepository.searchCounselor(request,pageable);
     }
 
 

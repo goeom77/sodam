@@ -6,7 +6,7 @@ import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.ClientRepository;
-import com.samsung.sodam.db.repository.CounselorRepository;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import com.samsung.sodam.db.repository.EnterpriseRepository;
 import com.samsung.sodam.db.repository.RefreshTokenRedisRepository;
 import com.samsung.sodam.jwt.JwtTokenProvider;
