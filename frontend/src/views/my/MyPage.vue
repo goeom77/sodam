@@ -139,15 +139,15 @@ SangdamView
   }
 
   .Card{
-    width:100%; 
-    height:500px; 
+    /* width:100%; 
+    height:500px;  */
     /* justify-content: center; */
     /* display: grid; */
     /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
-    background-color:white(0, 0, 0, 0.5);
+    /* background-color:white(0, 0, 0, 0.5);
     padding-left: 60px;
     padding-right:60px;
-    position: absolute;
+    position: absolute; */
 
     /* height:1000px; */
   }

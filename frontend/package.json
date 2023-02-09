@@ -8,6 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "@fullcalendar/daygrid": "^6.0.3",
+    "@fullcalendar/interaction": "^6.0.3",
+    "@fullcalendar/timegrid": "^6.0.3",
+    "@fullcalendar/vue3": "^6.0.3",
+=======
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",
@@ -15,6 +21,7 @@
     "@fullcalendar/timegrid": "^6.1.4",
     "@fullcalendar/vue3": "^6.1.4",
     "@mdi/font": "5.9.55",
+>>>>>>> 80c8aad4f3b76b0f010960c6be578c2cc0c6ceab
     "axios": "^1.2.4",
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
@@ -37,6 +44,11 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@mdi/font": "^7.1.96",
+    "@mdi/js": "^7.1.96",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -44,6 +56,7 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "material-design-icons-iconfont": "^6.7.0",
     "vue-cli-plugin-vuetify": "~2.5.8",
     "webpack-plugin-vuetify": "^2.0.0-alpha.0"
   },

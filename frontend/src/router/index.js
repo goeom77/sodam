@@ -8,16 +8,29 @@ import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
 import CalendarView from '@/components/management/schedule/CalendarView.vue'
-import KidBoard from '../views/board/kid/KidBoard.vue'
-import KidBoardDetail from '../views/board/kid/KidBoardDetail.vue'
-import Announce from '../views/helpdesk/announce/Announce.vue'
-import AnnounceDetail from '../views/helpdesk/announce/AnnounceDetail.vue'
-import Inquiry from '../views/helpdesk/inquiry/Inquiry.vue'
-import InquiryDetail from '../views/helpdesk/inquiry/InquiryDetail.vue'
+
+
+// 고민게시판 페이지
+import BoardView from '../views/board/BoardView.vue'
+// 고민게시판 상세보기
+import BoardDetailView from '../views/board/BoardDetailView.vue'
+// 고민게시판 작성하기
+import BoardCreateView from '../views/board/BoardCreateView.vue'
+
+
+// 헬프데스크 페이지
+import HelpView from '../views/helpdesk/HelpView.vue'
+// 공지사항 상세보기
+import NoticeDetailView from '../views/helpdesk/NoticeDetailView.vue'
+// 공지사항 작성하기
+import NoticeCreateView from '../views/helpdesk/NoticeCreateView.vue'
+// 문의사항 상세보기
+import QnaDetailView from '../views/helpdesk/QnaDetailView.vue'
+// 문의사항 작성하기
+import QnaCreateView from '../views/helpdesk/QnaCreateView.vue'
+
+
 import ClientManage from '@/components/management/client/ClientManage.vue'
-import KidBoardCreate from '../views/board/kid/KidBoardCreate.vue'
-import AnnounceCreate from '../views/helpdesk/announce/AnnounceCreate.vue'
-import InquiryCreate from '../views/helpdesk/inquiry/InquiryCreate.vue'
 import VideoPage from '../components/video/VideoPage.vue'
 import ConsultantCardItem from '@/components/ConsultantCard/ConsultantCardItem.vue'
 import ConsultantCardItemReviewCreate from '@/components/ConsultantCard/ConsultantCardItemReviewCreate.vue'
@@ -80,38 +93,60 @@ const routes = [
     name:'Calendar',
     component: CalendarView
   },
+  
+  
+  // 고민게시판 페이지
   {
-    path: '/KidBoard',
-    name: 'KidBoard',
-    component: KidBoard
+    path: '/BoardView',
+    name: 'BoardView',
+    component: BoardView
   },
+  // 고민게시판 상세보기
   {
-    path: '/KidBoardDetail/:postId?',
-    name: 'KidBoardDetail',
-    component: KidBoardDetail,
-    // props: true
+    path: '/BoardDetailView/:postId?',
+    name: 'BoardDetailView',
+    component: BoardDetailView,
+  },
+  // 고민게시판 작성하기
+  {
+    path: '/BoardCreateView/:postId?',
+    name: 'BoardCreateView',
+    component: BoardCreateView,
   },
   
+  
+  // 헬프데스크 페이지
   {
-    path: '/Announce',
-    name: 'Announce',
-    component: Announce
+    path: '/HelpView',
+    name: 'HelpView',
+    component: HelpView
   },
+  // 공지사항 상세보기
   {
-    path: '/AnnounceDetail/:id?',
-    name: 'AnnounceDetail',
-    component: AnnounceDetail
+    path: '/NoticeDetailView/:id?',
+    name: 'NoticeDetailView',
+    component: NoticeDetailView
   },
+  // 공지사항 작성하기
   {
-    path: '/Inquiry',
-    name: 'Inquiry',
-    component: Inquiry
+    path: '/NoticeCreateView',
+    name: 'NoticeCreateView',
+    component: NoticeCreateView
   },
+  // 문의사항 상세보기 
   {
-    path: '/InquiryDetail/:id?',
-    name: 'InquiryDetail',
-    component: InquiryDetail
+    path: '/QnaDetailView/:id?',
+    name: 'QnaDetailView',
+    component: QnaDetailView
   },
+  // 문의사항 작성하기  
+  {
+    path: '/QnaCreateView',
+    name: 'QnaCreateView',
+    component: QnaCreateView
+  },
+
+  
   {
     path: '/ClientManage',
     name: 'ClientManage',
@@ -127,21 +162,8 @@ const routes = [
     name: 'EditInformation',
     component: EditInformation
   },
-  {
-    path: '/KidBoardCreate/:postId?',
-    name: 'KidBoardCreate',
-    component: KidBoardCreate,
-  },
-  {
-    path: '/AnnounceCreate',
-    name: 'AnnounceCreate',
-    component: AnnounceCreate
-  },
-  {
-    path: '/InquiryCreate',
-    name: 'InquiryCreate',
-    component: InquiryCreate
-  },
+ 
+ 
   {
     path: '/VideoPage',
     name: 'VideoPage',
