@@ -1,218 +1,153 @@
+<script>
+import { defineComponent } from 'vue'
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
+import {INITIAL_EVENTS, createEventId} from './event-utils'
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
+export default defineComponent({
+  components: {
+    FullCalendar,
+  },
+  data() {
+    return {
+      calendarOptions: {
+        plugins: [
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin // needed for dateClick
+        ],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        initialView: 'dayGridMonth',
+        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+        editable: true, 
+        selectable: true,
+        selectMirror: true,
+        dayMaxEvents: true,
+        weekends: true,
+        select: this.handleDateSelect,
+        eventClick: this.handleEventClick,
+        eventsSet: this.handleEvents,
+        droppable: true,
+        locale:'ko'
+        /* you can update a remote database when these fire:
+        eventAdd:
+        eventChange:
+        eventRemove:
+        */
+      },
+      currentEvents: [],
+    }
+  },
+  methods: {
+    handleWeekendsToggle() {
+      this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
+    },
+    handleDateSelect(selectInfo) {
+      let title = prompt('상담 일정을 입력해주세요')
+      let calendarApi = selectInfo.view.calendar
+
+      calendarApi.unselect() // clear date selection
+
+      if (title) {
+        calendarApi.addEvent({
+          id: createEventId(),
+          title,
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
+          allDay: selectInfo.allDay
+        })
+      }
+
+      // axios({
+      //   method:'post',
+      //   url:`${VUE_APP_API_URL}/api/schedule/search`,
+      //   data:{
+      //     "userId": this.$store.state.payload.id,
+      //   }
+      // })
+      // .then(res=>{
+      //   console.log(res)
+      // })
+
+      console.log(selectInfo)
+      console.log(title)
+    },
+    handleEventClick(clickInfo) {
+      if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+        clickInfo.event.remove()
+      }
+    },
+    // handleEvents(events) {
+    //   this.currentEvents = events
+    // },
+    getSessionData(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/search`,
+        data:{
+          "userId": this.$store.state.payload.id,
+        }
+      })
+      .then(res=>{
+        console.log(res.data)
+        this.currentEvents = res.data
+      })
+    }
+  },
+  created(){
+    this.getSessionData()
+  }
+})
+</script>
+
 <template>
-<div class="content">
-    <div class="container-fluid h-100">
-      <div class="row h-100">
-        <div class="col-3">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">
-                이벤트
-              </h3>
-            </div>
-            <div class="card-body p-0">
-              <div id="external-events">
-                <div class="external-event bg-success" data-toggle="modal" data-target="#maintenance">
-                  1
-                </div>
-                <div class="external-event bg-warning">
-                  2
-                </div>
-                <div class="external-event bg-info">
-                  3
-                </div>
-                <div class="external-event bg-primary">
-                  4
-                </div>
-              </div>
-            </div>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class='demo-app'>
+        <div class='demo-app-sidebar'>
+          <div class='demo-app-sidebar-section'>
+            <label>
+              <input
+                type='checkbox'
+                :checked='calendarOptions.weekends'
+                @change='handleWeekendsToggle'
+              />
+              주말 포함
+            </label>
+          </div>
+          <div class='demo-app-sidebar-section'>
+            <h2>All Events ({{ currentEvents.length }})</h2>
+            <ul>
+              <li v-for='event in currentEvents' :key='event.id'>
+
+                <i>{{ event.name }}</i>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="col-9 h-100">
-          <div class="card cal">
-            <div class="card-body p-0 h-100">
-              <div
-                id="calendar"
-                class="h-100"
-              >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.content -->
-    <div id="maintenance" class="modal fade">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">
-              이벤트 등록
-            </h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <label for="title" class="col-3">이벤트명</label>
-              <div class="col-9">
-                <input id="title" v-model="maintenance.title" class="form-control w-100" type="text">
-              </div>
-            </div>
-            <div class="row">
-              <label for="title" class="col-3">색상선택</label>
-              <div class="col-9 btn-group w-100 my-20">
-                <ul id="color-chooser" class="fc-color-picker">
-                  <li><a class="text-primary" href="#" @click="maintenance.color='primary'"><i class="fas fa-square" /></a></li>
-                  <li><a class="text-warning" href="#" @click="maintenance.color='warning'"><i class="fas fa-square" /></a></li>
-                  <li><a class="text-success" href="#" @click="maintenance.color='success'"><i class="fas fa-square" /></a></li>
-                  <li><a class="text-danger" href="#" @click="maintenance.color='danger'"><i class="fas fa-square" /></a></li>
-                  <li><a class="text-muted" href="#" @click="maintenance.color='muted'"><i class="fas fa-square" /></a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="row">
-              <label for="detail" class="col-3">이벤트 세부내용</label>
-              <div class="col-9">
-                <textarea id="detail" v-model="maintenance.description" class="form-control" rows="3" />
-              </div>
-            </div>
-            <div class="row">
-              <span class="col-3">시간</span>
-              <input id="bannerDataSdate" type="hidden" name="bannerDataSdate" value="">
-              <input id="bannerDataEdate" type="hidden" name="bannerDataEdate" value="">
-              <div class="form-group col-9">
-                <div class="input-group w-100">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-clock" /></span>
-                  </div>
-                  <input id="reservationtime" type="text" class="form-control float-right">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              Close
-            </button>
-            <button type="button" class="btn btn-primary" @click="save()">
-              Save changes
-            </button>
-          </div>
+        <div class='demo-app-main'>
+          <FullCalendar
+            class='demo-app-calendar'
+            :options='calendarOptions'
+          >
+            <template v-slot:eventContent='arg'>
+              <b>{{ arg.timeText }}</b>
+              <i>{{ arg.event.title }}</i>
+            </template>
+          </FullCalendar>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import Vue from 'vue';
-
-declare const FullCalendar: any;
-
-export default Vue.extend({
-  data((vm: any): any) {
-    return {
-      maintenance: {
-        title: null,
-        description: null,
-        color: null,
-        startedAt: vm.$moment().format('YYYY-MM-DD HH:mm:ss'),
-        endedAt: vm.$moment().format('YYYY-MM-DD HH:mm:ss'),
-      },
-    };
-  },
-  mounted(): any {
-    this.initCalendar();
-    this.setDate(new Date(), new Date());
-  },
-  methods: {
-    save() {
-      // API Post
-    },
-
-    setDate(date1, date2) {
-      this.maintenance.startedAt = this.$moment(date1).format('YYYY-MM-DD 09:00:00');
-      this.maintenance.endedAt = this.$moment(date2).format('YYYY-MM-DD 18:00:00');
-
-      $('#reservationtime').daterangepicker({
-        timePicker: true,
-        startDate: this.$moment(date1).format('YYYY-MM-DD 09:00:00'),
-        endDate: this.$moment(date2).format('YYYY-MM-DD 18:00:00'),
-        timePickerIncrement: 30,
-        locale: {
-          format: 'YYYY-MM-DD HH:mm:ss',
-        },
-      });
-    },
-    initCalendar() {
-      $(document).ready(() => {
-        const date = new Date();
-        const d = date.getDate(),
-          m = date.getMonth(),
-          y = date.getFullYear();
-
-        const { Calendar } = FullCalendar;
-        const calendarEl = document.getElementById('calendar');
-        const containerEl = document.getElementById('external-events');
-        let numClicks = 0;
-        let timeOut;
-        const draggable = new FullCalendar.Draggable(containerEl, {
-          itemSelector: '.external-event',
-          eventData(eventEl) {
-            return {
-              title: eventEl.innerText,
-              backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-              borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-              textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
-            };
-          },
-        });
-
-        const calendar = new Calendar(calendarEl, {
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          },
-          themeSystem: 'bootstrap',	// 이렇게 설정하면 다크모트 라이트모드 가능
-          editable: true,
-          droppable: true, // this allows things to be dropped onto the calendar !!!
-          drop: ((info) => {
-            $('#maintenance').modal('show');
-            this.setDate(new Date(info.dateStr), new Date(info.dateStr));
-          }),
-          dateClick: ((info) => {
-            numClicks++;
-            switch (numClicks) {
-              case 2:
-                numClicks = 0;
-                $('#maintenance').modal('show');
-                this.setDate(new Date(info.dateStr), new Date(info.dateStr));
-                break;
-              case 1:
-                timeOut = setTimeout(() => {
-                  numClicks = 0;
-                }, 400);
-                break;
-              default:
-                break;
-            }
-          }),
-          eventClick: ((info) => {
-            info.el.addEventListener('click', () => {
-              $('#maintenance').modal('show');
-            });
-          }),
-        });
-        calendar.render();
-      });
-    },
-
-  },
-});
-</script>
-
 
 <style lang='css'>
 
