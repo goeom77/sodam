@@ -1,5 +1,6 @@
 <template>
-  <div>
+<div id="fh5co-main">
+  <div class="fh5co-narrow-content">
     <v-card class="Card">
       <v-tabs
         v-model="tab"
@@ -31,8 +32,9 @@
           <DeleteAccount/>
         </v-window-item>
         
-      </v-window>
-    </v-card>
+        </v-window>
+      </v-card>
+    </div>
   </div>
 </template>
 

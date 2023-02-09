@@ -1,7 +1,7 @@
 <template>
 
   <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
-    {{ counselor }}
+
     <v-card>
     <v-row>
       <v-col>
@@ -27,18 +27,17 @@
               <br>
               {{ counselor.consultTypeList}}
             </v-card-subtitle>
+            <v-card-actions>
+              <v-btn
+                outlined
+                rounded
+                text
+                @click="moveTo(counselor.id)"
+              >
+                Button
+              </v-btn>
+            </v-card-actions>
           </div>
-
-          <v-card-actions>
-            <v-btn
-              outlined
-              rounded
-              text
-              @click="moveTo(counselor.id)"
-            >
-              Button
-            </v-btn>
-          </v-card-actions>
         </div>
       </v-card>
     </v-col>

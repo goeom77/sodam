@@ -5,7 +5,6 @@
         <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
       </div>
       <div class="child2">
-        
         <span>
           {{ counselorData.name }} 상담사
         </span>
@@ -25,7 +24,6 @@
         <h4>
           {{ counselorData.consultTypeList }}
         </h4>
-        
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
             관심 상담사 등록 
