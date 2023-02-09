@@ -8,12 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@fullcalendar/daygrid": "^6.0.3",
-    "@fullcalendar/interaction": "^6.0.3",
-    "@fullcalendar/timegrid": "^6.0.3",
-    "@fullcalendar/vue3": "^6.0.3",
-=======
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",
@@ -21,7 +15,6 @@
     "@fullcalendar/timegrid": "^6.1.4",
     "@fullcalendar/vue3": "^6.1.4",
     "@mdi/font": "5.9.55",
->>>>>>> 80c8aad4f3b76b0f010960c6be578c2cc0c6ceab
     "axios": "^1.2.4",
     "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
