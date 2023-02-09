@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(value = "/api/my-page")
@@ -39,6 +40,19 @@ public class MyPageController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @ApiOperation(value = "프로필 이미지 업로드")
+    @PostMapping("/profile-img/{id}")
+    public ResponseEntity<String> uploadProfileImg(@RequestBody MultipartFile file, @PathVariable String id) {
+        try {
+            service.uploadProfileImg(file, id);
+            return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @GetMapping(value = "/notification")
     @ApiOperation(value = "내게 온 알림 전체목록", notes = "내게 온 모든 알림 전체 목록 (상담, 고민댓글, 문의댓글, STT)")

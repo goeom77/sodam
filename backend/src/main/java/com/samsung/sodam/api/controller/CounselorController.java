@@ -4,6 +4,7 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.service.ClientService;
+import com.samsung.sodam.api.service.CounselorProfileService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
@@ -21,12 +22,15 @@ import java.util.List;
 public class CounselorController {
 
     private final CounselorRepositoryService service;
+    private final CounselorProfileService counselorProfileService;
     private final ClientService clientService;
 
     private final ReviewService reviewService;
 
-    public CounselorController(CounselorRepositoryService service, ClientService clientService, ReviewService reviewService) {
+
+    public CounselorController(CounselorRepositoryService service, CounselorProfileService counselorProfileService, ClientService clientService, ReviewService reviewService) {
         this.service = service;
+        this.counselorProfileService = counselorProfileService;
         this.clientService = clientService;
         this.reviewService = reviewService;
     }
@@ -53,12 +57,14 @@ public class CounselorController {
 
     @PutMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorSignupRequest request) {
         try {
             System.out.println("editProfileCounselor - parameter test");
             System.out.println(request.getConsultType());
             System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
+
+            counselorProfileService.uploadAssociateProfileTable(request);
             return HttpStatus.OK;
         } catch(Exception e){
             e.printStackTrace();
