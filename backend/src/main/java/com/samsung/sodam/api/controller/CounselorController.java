@@ -8,13 +8,13 @@ import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,7 +43,30 @@ public class CounselorController {
     @PostMapping("counselor/")
     public Page<Counselor> searchCounselor() {
         Pageable pageable = Pageable.ofSize(20);
-        return service.getAllCounselor(pageable);
+        //service.getAllCounselor(pageable);
+        String str = "dd";
+        ArrayList<CONSULT_TYPE> conlist = new ArrayList<>();
+        conlist.add(CONSULT_TYPE.COURSE);
+        List<Counselor> list = new ArrayList<>();
+
+        Counselor c = Counselor.builder()
+                .email("email")
+                .name("name")
+                .id("string")
+                .tel("telll")
+                .consultTypeList(conlist)
+                .gender(GENDER.MEN)
+        .build();
+        c.setRoleByCommonCode();
+        list.add(c);
+        list.add(c);
+        list.add(c);
+        list.add(c);
+        list.add(c);
+        list.add(c);
+        Page<Counselor> result = new PageImpl<>(list);
+
+        return result;
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")
