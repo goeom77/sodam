@@ -46,10 +46,8 @@ public class CounselorListResponse {
     @Convert(converter = ConsultListConverter.class)
     private List<CONSULT_TYPE> consultTypeList = null;
 
-//    @Column(name="education")
-//    @Convert(converter = EducationListConverter.class)
-//    private List<Education> education;
-//
+
+
     @Column(name="career")
     @ApiModelProperty(value = "상담사 경력")
     @Convert(converter = CareerListConverter.class)

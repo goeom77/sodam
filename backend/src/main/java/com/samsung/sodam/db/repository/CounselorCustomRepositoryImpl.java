@@ -1,14 +1,17 @@
 package com.samsung.sodam.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.samsung.sodam.api.response.CounselorListResponse;
+import com.samsung.sodam.api.response.*;
 import com.samsung.sodam.db.entity.Counselor;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.samsung.sodam.db.entity.QCertificate.certificate;
 import static com.samsung.sodam.db.entity.QCounselor.counselor;
+import static com.samsung.sodam.db.entity.QEducation.education;
 import static com.samsung.sodam.db.entity.QFavoriteCounselor.favoriteCounselor;
 
 @Repository
@@ -43,5 +46,47 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
                 .routine(it.getRoutine())
                 .tel(it.getTel()).build()).collect(Collectors.toList());
 
+    }
+
+    /**
+     * 상담사용 프로필 보기 (마이페이지)
+     * @param id 상담사 아이디
+     * @return 프로필 + 자격증 + 학력사항 */
+    @Transactional
+    public CounselorDetailResponse getCounselorDetailAll(String id){
+        Counselor c = queryFactory.selectFrom(counselor).where(counselor.id.eq(id)).fetchOne();
+        if (c == null) return null;
+
+        CounselorDetailResponse result = new CounselorDetailResponse(getCounselorDetail(id));
+
+        List<CertificateResponse> certList = queryFactory
+            .select(new QCertificateResponse(
+                    certificate.id,
+                    certificate.name,
+                    certificate.serial_num,
+                    certificate.agency,
+                    certificate.photo
+            )).from(certificate)
+                .innerJoin(certificate.counselor, counselor)
+                .where(certificate.counselor.id.eq(id))
+                .fetch();
+
+        List<EducationResponse> eduList = queryFactory
+                .select(new QEducationResponse(
+                        education.id,
+                        education.degree,
+                        education.school,
+                        education.major,
+                        education.is_graduate,
+                        education.photo
+                )).from(education)
+                .innerJoin(education.counselor, counselor)
+                .where(education.counselor.id.eq(id))
+                .fetch();
+
+        result.setCertificate(certList);
+        result.setEducation(eduList);
+        System.out.println(result);
+        return result;
     }
 }
