@@ -35,5 +35,7 @@ export default {
   width: 320px;
   font-size: 16px;
   outline: none;
+  border:1px solid black;
+  border-radius: 10px;
 }
 </style>

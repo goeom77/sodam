@@ -1,16 +1,11 @@
 <template>
   <div class="row animate-box" data-animate-effect="fadeInLeft">
-    <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
-      <ConsultantCard
-        v-for="(counselor,idx) in counselorInfo"
-        :key="idx"
-        :counselor="counselor"/>
-      <a href="work.html">
-        <img src="images/work_1.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
-        <h3 class="fh5co-work-title">Work Title Here</h3>
-        <p>Illustration, Branding</p>
-      </a>
-    </div>
+    <div class="d-flex flex-wrap">
+        <ConsultantCard
+          v-for="(counselor,idx) in counselorInfo"
+          :key="idx"
+          :counselor="counselor"/>
+      </div>
   </div>
 
 
