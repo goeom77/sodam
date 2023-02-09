@@ -3,8 +3,7 @@
 <div id="fh5co-main">
   <div class="fh5co-narrow-content">
     <div>
-      {{ this.counselorData }}
-      
+
       <div>
         <ConsultantCardItemInfo
         :counselorData="this.counselorData"/>

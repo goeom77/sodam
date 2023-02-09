@@ -1,4 +1,8 @@
 <template>
+
+<div id="fh5co-main">
+  <div class="fh5co-narrow-content">
+
   <div @click="checkData">후기</div>
     <div>
       <div id="Writebox">
@@ -41,6 +45,8 @@
         </form>
         <!-- <button @click="ReviewUpdate">수정</button> -->
       </div>
+    </div>
+    </div>
     </div>
   </template>
   
