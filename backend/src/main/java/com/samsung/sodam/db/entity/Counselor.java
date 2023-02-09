@@ -64,13 +64,13 @@ public class Counselor extends Member {
     @Convert(converter = ConsultListConverter.class)
     private List<CONSULT_TYPE> consultTypeList = null;
 
-    @OneToMany(mappedBy = "counselor")
-//    @JoinColumn(name = "counselor_id" , referencedColumnName = "id")
-    private List<Certificate> cert = new ArrayList<>();
-
-    @OneToMany(mappedBy = "counselor")
-    //@JoinColumn(name = "counselor_id" , referencedColumnName = "id")
-    private List<Education> edu = new ArrayList<>();
+//    @OneToMany(mappedBy = "counselor")
+////    @JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+//    private List<Certificate> cert = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "counselor")
+//    //@JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+//    private List<Education> edu = new ArrayList<>();
 
     @Builder
     public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
