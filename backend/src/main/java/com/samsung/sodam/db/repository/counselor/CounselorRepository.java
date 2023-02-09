@@ -25,6 +25,7 @@ public interface CounselorRepository extends JpaRepository<Counselor,String>{
 
     Counselor getById(String id);
     Optional<Counselor> findById(String id);
+    Optional<Counselor> findByEmail(String email);
 
     Counselor getByEmail(String email);
 

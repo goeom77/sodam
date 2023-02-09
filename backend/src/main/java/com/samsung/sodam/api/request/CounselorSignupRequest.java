@@ -17,6 +17,10 @@ import java.util.ArrayList;
 public class CounselorSignupRequest extends CounselorRequest{
     ArrayList<CertRequest> certificates;
     ArrayList<EduRequest> educations;
+
+    ArrayList<Long> cert_delete;
+    ArrayList<Long> edu_delete;
+
     //ArrayList<Career> careers;
 
     //@Convert(converter = CareerListConverter.class)

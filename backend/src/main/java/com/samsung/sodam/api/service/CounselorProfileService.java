@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CounselorProfileService {
     private final CounselorCustomRepository counselorCustomRepository;
     private final CertificateRepository certRepository;
     private final EducationRepository eduRepository;
-    private final profilePhotoRepository profilePhotoRepository;
+    private final ProfilePhotoRepository profilePhotoRepository;
     private final FileGCSService fileService;
 
     public CounselorDetailResponse getCounselorDetailAll(String id){
@@ -51,7 +52,41 @@ public class CounselorProfileService {
             conselorRepository.save(counselor);
         }
 
+    }
 
+    public void deleteAssociateProfileTable(ArrayList<Long> eduDelete, ArrayList<Long> certDelete) {
+//        List<ProfilePhoto> eduPhotoList =  eduRepository.selectPhotoByIdInQuery(eduDelete);
+//        List<Long> eduIdList = new ArrayList<>();
+//        for (ProfilePhoto photo : eduPhotoList){
+//            eduIdList.add(photo.getId());
+//        }
+//
+//        eduRepository.deleteAllByIdInQuery(eduDelete);
+//        System.out.println(eduIdList);
+//        profilePhotoRepository.deleteAllByIdInQuery(eduIdList);
+        deleteEducation(eduDelete);
+        deleteCertification(certDelete);
+    }
+
+    private void deleteEducation(ArrayList<Long> list){
+        List<ProfilePhoto> photoList =  eduRepository.selectPhotoByIdInQuery(list);
+        List<Long> eduIdList = new ArrayList<>();
+        for (ProfilePhoto photo : photoList){
+            eduIdList.add(photo.getId());
+            // gcp에서 삭제 구현하기
+        }
+
+        eduRepository.deleteAllByIdInQuery(list);
+        profilePhotoRepository.deleteAllByIdInQuery(eduIdList);
+    }
+    private void deleteCertification(ArrayList<Long> list){
+        List<ProfilePhoto> photoList =  certRepository.selectPhotoByIdInQuery(list);
+        List<Long> eduIdList = new ArrayList<>();
+        for (ProfilePhoto photo : photoList){
+            eduIdList.add(photo.getId());
+        }
+        certRepository.deleteAllByIdInQuery(list);
+        profilePhotoRepository.deleteAllByIdInQuery(eduIdList);
     }
 
     private void uploadCertificate(ArrayList<CertRequest> list, Counselor counselor) throws IOException {
@@ -99,4 +134,7 @@ public class CounselorProfileService {
         }
 
     }
+
+
+
 }

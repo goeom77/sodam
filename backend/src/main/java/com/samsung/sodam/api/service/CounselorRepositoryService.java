@@ -65,8 +65,10 @@ public class CounselorRepositoryService {
         // 전화번호 수정
         if(request.getTel() != null) counselor.setTel(request.getTel());
 
+        if(request.getName() != null) counselor.setName(request.getName());
+
         // 이메일 수정
-        if(request.getEmail() != null) {
+        if(request.getEmail() != null && !counselor.getEmail().equals(request.getEmail())) {
             authService.validateDuplicateEmail(request.getEmail());
             counselor.setEmail(request.getEmail());
         }
@@ -80,7 +82,7 @@ public class CounselorRepositoryService {
             counselor.setCareer(request.getCareers());
         }
 
-        if(!request.getConsultType().isEmpty()){
+        if(request.getConsultType() != null &&!request.getConsultType().isEmpty()){
             counselor.setConsultTypeList(request.getConsultType());
         }
         System.out.println(counselor.getConsultTypeList().toString());

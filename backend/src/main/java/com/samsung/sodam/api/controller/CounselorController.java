@@ -4,6 +4,7 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.service.ClientService;
+import com.samsung.sodam.api.service.CounselorProfileService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,12 +23,15 @@ import java.util.List;
 public class CounselorController extends Counselor{
 
     private final CounselorRepositoryService service;
+    private final CounselorProfileService counselorProfileService;
     private final ClientService clientService;
 
     private final ReviewService reviewService;
 
-    public CounselorController(CounselorRepositoryService service, ClientService clientService, ReviewService reviewService) {
+
+    public CounselorController(CounselorRepositoryService service, CounselorProfileService counselorProfileService, ClientService clientService, ReviewService reviewService) {
         this.service = service;
+        this.counselorProfileService = counselorProfileService;
         this.clientService = clientService;
         this.reviewService = reviewService;
     }
@@ -54,14 +57,20 @@ public class CounselorController extends Counselor{
         return service.getCounselorDetail(id);
     }
 
-    @PutMapping(value = "/counselor/{id}")
+    @PostMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, CounselorSignupRequest request) {
         try {
-            System.out.println("editProfileCounselor - parameter test");
-            System.out.println(request.getConsultType());
-            System.out.println(Arrays.toString(request.getRoutine()));
+//            System.out.println("-------------------------------------");
+//            System.out.println("\n\n\n\n");
+//            System.out.println("editProfileCounselor - parameter test");
+//            System.out.println(request.getConsultType());
+//            System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
+            counselorProfileService.deleteAssociateProfileTable(request.getEdu_delete(), request.getCert_delete());
+            counselorProfileService.uploadAssociateProfileTable(request);
+//            System.out.println("\n\n\n\n");
+//            System.out.println("-------------------------------------");
             return HttpStatus.OK;
         } catch(Exception e){
             e.printStackTrace();

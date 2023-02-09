@@ -1,6 +1,6 @@
 <template>
-  <div class="check">
-    <div class="checkForm">
+  <div class="check" style="padding-top:30px">
+    <div class="checkForm" style="margin:auto; padding-top: 30px;">
       <h2>회원 정보 수정</h2>
       <h4>고객님의 소중한 개인정보 보호를 위해 비밀번호를 다시 확입합니다.</h4>
       <br>
