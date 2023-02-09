@@ -1,8 +1,7 @@
 <template>
   <v-container>
     <div class="content">
-      <form @submit.prevent="counselorUpdate">
-        <!-- <form> -->
+      <!-- <form @submit.prevent="counselorUpdate">
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="name">이름</label>
             <input type="text" id="name" v-model.trim="name">
@@ -29,22 +28,28 @@
           </div>
 
           <input type="submit" id="submitno" value="수정">
-        </form>
+        </form> -->
+        <div>
+          <v-file-input
+                accept="image/*"
+                v-model="this.profileImage"
+                label="File input"
+              ></v-file-input>
+              <button @click="OnImage">제출</button>
+        </div>
     </div>
   </v-container>
 </template>
 
 <script>
-
- import axios from 'axios'
- const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'EditInformation',
   data(){
-
     return{
-      tab:null,
+      profileImage:null,
       tel:0,
       career: '',
       introduce: '',
@@ -52,14 +57,31 @@ export default {
       name: '',
       email: '',
       id: this.$store.state.payload.id
-
     }
   },
   created() {
       this.getcounselordetail()
   },
   methods:{
+    OnImage(){
+      const formdata = new FormData()
+      formdata.append('profileImage', this.profileImage)
+      return axios({
+        method:'',
+        url:`${VUE_APP_API_URL}`,
+        data:{
+          profile: this.profile_image
+        },
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(res=>{
+        console.log(res)
+      })
+    },
      getcounselordetail() {
+      const formdata = new FormData()
         axios({
           method: 'get',
           url: `${VUE_APP_API_URL}/api/my-page/counselor/${this.$store.state.payload.id}`,
@@ -68,6 +90,7 @@ export default {
           }
         })
         .then(() => {
+          this.please = res.data
           this.tel = res.data.tel
           this.career = res.data.career
           this.introduce = res.data.introduce
@@ -105,8 +128,8 @@ export default {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
-      .then(() => {
-        console.log('업데이트 된단다 재훈아')
+      .then((res) => {
+        console.log(res)g
         this.$router.push({ 
           name: 'MainEdit', 
           // params: { postId: this.$route.params.postId } 
