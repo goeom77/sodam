@@ -1,6 +1,8 @@
 package com.samsung.sodam.db.repository.schedule;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
@@ -55,18 +57,21 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
     }
 
     @Override
-    public List<MonthlyResponse> getMonthlySchedule(String counselorId, LocalDateTime dateTime) {
-//        return queryFactory.select(MonthlyResponse.builder()
-//                        .scheduleId(consultSchedule.id)
-//                        .title(consultApplicant.name)
-//                        .start(consultSchedule.dateTime)
-//                ).from(consultApplicant).join(consultSession)
-//                .on(consultApplicant.sessionId.eq(consultSession.id))
-//                .where(
-//                        consultApplicant.state.eq(request.state),
-//                        consultSession.counselorId.eq(request.userId),
-//                        consultApplicant.dueDate.between(request.start,request.end)
-//                ).fetch();
-        return null;
+    public List<MonthlyResponse> getMonthlySchedule(MonthlyScheduleRequest request) {
+        return queryFactory.select(
+                Projections.constructor(MonthlyResponse.class,
+                        consultSchedule.id,
+                        consultApplicant.name,
+                        consultSchedule.dateTime,
+                        consultSchedule.dateTime,
+                        consultSchedule.sessionId,
+                        consultSchedule.state
+                        )
+                ).from(consultApplicant).join(consultSchedule)
+                .on(consultApplicant.sessionId.eq(consultSchedule.sessionId))
+                .join(consultSession).on(consultApplicant.sessionId.eq(consultSession.id))
+                .where(
+                        consultSession.counselorId.eq(request.getCounselorId())
+                ).fetch();
     }
 }

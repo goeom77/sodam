@@ -1,5 +1,6 @@
 package com.samsung.sodam.api.service.schedule;
 
+import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
@@ -43,8 +44,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<MonthlyResponse> getMonthlySchedule(String counselorId, LocalDateTime dateTime) {
-        return customRepository.getMonthlySchedule(counselorId,dateTime);
-//        return null;
+    public List<MonthlyResponse> getMonthlySchedule(MonthlyScheduleRequest request) {
+        return customRepository.getMonthlySchedule(request).stream().map(it->{
+            it.setEnd(it.getStart().plusMinutes(50));
+            return it;
+        }).toList();
     }
 }

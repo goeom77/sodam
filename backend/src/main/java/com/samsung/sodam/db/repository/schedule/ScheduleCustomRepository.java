@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.repository.schedule;
 
+import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
@@ -17,5 +18,5 @@ public interface ScheduleCustomRepository {
 
     List<ConsultApplicant> searchSchedules(SearchSchedule request);
 
-    List<MonthlyResponse> getMonthlySchedule(String counselorId, LocalDateTime dateTime);
+    List<MonthlyResponse> getMonthlySchedule(MonthlyScheduleRequest request);
 }
