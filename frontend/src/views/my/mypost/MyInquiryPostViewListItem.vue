@@ -32,7 +32,7 @@
         <router-link 
           style="color:black" 
           :to="{ 
-            name: 'InquiryDetail', 
+            name: 'NoticeDetailView', 
             params: { id: MyInquiryPostarticle.id } 
           }"
         >

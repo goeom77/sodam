@@ -1,12 +1,11 @@
 <template>
   <div v-if="isLogin===true">
 
-    {{ this.sessionInfo }}
+    <!-- {{ this.sessionInfo }} -->
     <ClientManageCard
     v-for="(clientData,idx) in this.sessionInfo"
     :key="idx"
     :clientData="clientData"/>
-
   </div>
 </template>
 
@@ -23,7 +22,8 @@ export default {
   data(){
     return{
       sessionInfo: null,
-      id: this.$store.state.payload.id
+      id: this.$store.state.payload.id,
+      clientInfo:null,
     }
   },
   methods:{
@@ -34,6 +34,7 @@ export default {
         // url:`${VUE_APP_API_URL}/api/consult-session?counselorId=${this.id}`,
         data:{
           counselorId : this.id
+          
         }
       })
       .then(res=>{
@@ -41,6 +42,8 @@ export default {
         console.log(res)
       })
     },
+    
+
   },
   computed:{
     isLogin(){
@@ -49,8 +52,11 @@ export default {
   },
   created() {
     this.getSessionInfo()
+
   }
     
+
+  
 }
 </script>
 
