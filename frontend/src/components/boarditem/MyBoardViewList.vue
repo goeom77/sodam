@@ -28,7 +28,10 @@
           </v-row>
           <v-row>
             <v-col>
+
                <div v-if="searchfinish===false">
+
+
                   <BoardViewListItem
                     v-for="(Boardarticle, index) in MyBoardViewListarticles.content"
                     :key="Boardarticle.postId"

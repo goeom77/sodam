@@ -11,7 +11,6 @@
   
         <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">고민 게시판</v-toolbar-title>
   
-        <v-spacer></v-spacer>
 
         <div>
           <router-link 
