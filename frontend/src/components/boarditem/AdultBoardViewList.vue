@@ -18,10 +18,10 @@
             </v-col>
             <v-col align-self="center">
               <div>
-                <Button
+                <button
                   @click="AdultBoardViewListarticlessearch"
                   style="background-color: #579BB1; border-radius: 10px; width: 70%; height: 30px;  float: left; padding-bottom: 0%;"
-                >SEARCH</Button>
+                >SEARCH</button>
 
               </div>
             </v-col>
