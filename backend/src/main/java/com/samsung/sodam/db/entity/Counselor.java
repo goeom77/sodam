@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -62,7 +63,7 @@ public class Counselor extends Member {
 
     @Column(name = "consult_type")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList = null;
+    private List<CONSULT_TYPE> consultTypeList = Collections.emptyList();
 
 
     @Builder
