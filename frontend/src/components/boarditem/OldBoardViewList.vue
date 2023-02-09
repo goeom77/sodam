@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>ardView
     <v-container>
       <v-card elevation="10" outlined width="100%" class="mx-auto">
 
@@ -28,7 +28,6 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
                 <div v-if="OldBoardViewListarticles===[]">
                   <h1>
                     게시글이 없습니다
@@ -57,7 +56,6 @@
                     @refresh-Board="getOldBoardViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

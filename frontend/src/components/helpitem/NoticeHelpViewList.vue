@@ -7,7 +7,6 @@
 
           <v-row>
             <v-col>
-              <v-data-table>
                 
                 <div >
                   <NoticeHelpViewListItem
@@ -20,7 +19,6 @@
                     @refresh-Board="getNoticeHelpViewListArticles"
                 /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

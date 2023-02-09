@@ -28,7 +28,6 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
                 
                 <div v-if="searchfinish===false">
                   <BoardViewListItem
@@ -53,7 +52,6 @@
                     @refresh-Board="getAllBoardViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

@@ -1,21 +1,20 @@
 <template>
-  <div id="homeview">
-    <div id="hand">
-      <div id="ImageLetter">
-        <h1>소중한 당신을 위해</h1>
-        <h1>여기, 소담이 함께합니다.</h1> 
+		<div id="fh5co-main">
+      <div class="fh5co-narrow-content">
+        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">소중한 당신을 위해
+        </h2>
+        <span>여기, 소담이 함께합니다.</span> 
         <br>
         <br>
-        <ConsultantCardSearch/>
         <input id="searhBar"
           class="search-input"
           type="text"
           placeholder="상담사, 카테고리 검색.."
           />
       </div>
+      <ConsultantList/>
     </div>
-    <ConsultantList/>
-  </div>
+
 </template>
 
 <script>
@@ -34,37 +33,34 @@ export default {
 }
 </script>
 <style>
-#homeview {
-  /* 반응형 x */
-  width: 1255px;
-  margin: 0 auto;
-}
 
-#hand {
-  /* margin-top: 61px; */
-  /* width: 100%; */
-  height: 300px;
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('../assets//images/hand.png');
-  background-color: aliceblue;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  /* background-size: cover; */
-    /* opacity: 0.7; */
-  text-align: start;
-  font-size: large;
-  font-weight: 100;
-  padding-top: 20px;
-  padding-bottom: 40px;
-  padding-left: 50px;
-  padding-right: 50px;
+#fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
 }
-#searhBar {
-  width: 100%;
-  height: 35px;
-  /* padding: auto; */
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
+    width: 100%;
+  }
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
   margin: 0 auto;
+  padding: 4em 0;
 }
-#ImageLetter {
-  margin: 30px;
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
+  }
 }
 </style>

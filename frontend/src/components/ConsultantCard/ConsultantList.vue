@@ -1,4 +1,19 @@
 <template>
+  <div class="row animate-box" data-animate-effect="fadeInLeft">
+    <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
+      <ConsultantCard
+        v-for="(counselor,idx) in counselorInfo"
+        :key="idx"
+        :counselor="counselor"/>
+      <a href="work.html">
+        <img src="images/work_1.jpg" alt="Free HTML5 Website Template by FreeHTML5.co" class="img-responsive">
+        <h3 class="fh5co-work-title">Work Title Here</h3>
+        <p>Illustration, Branding</p>
+      </a>
+    </div>
+  </div>
+
+
   <div id="ConsultantList" class="hello">
     <div id="ConsultantCategory">
       <div id="box1">상담사</div>
@@ -65,8 +80,40 @@ export default {
 }
 </script>
 
-<style scoped>
-h3 {
+<style>
+
+.work-item {
+  margin-bottom: 30px;
+}
+.work-item a {
+  border: none;
+  text-align: center;
+}
+.work-item a img {
+  margin-bottom: 10px;
+  float: left;
+  border: 10px solid transparent;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.work-item a h3 {
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 10px;
+}
+.work-item a p {
+  font-size: 14px;
+  color: #cccccc;
+  margin-bottom: 0;
+}
+.work-item a:hover, .work-item a:active, .work-item a:focus {
+  text-decoration: none;
+}
+.work-item a:hover img, .work-item a:active img, .work-item a:focus img {
+  border: 1px solid #000;
+}
+/* h3 {
   margin: 40px 0 0;
 }
 ul {
@@ -91,7 +138,7 @@ a {
   width:20%; 
   height:50px; 
   line-height: 50px;
-  /* justify-content: center; */
+
   text-align: center;
   color: white;
   background-color:#579BB1;}
@@ -115,7 +162,7 @@ a {
   margin-bottom: 0px;
   width:20%; 
   line-height: 50px;
-  /* justify-content: center; */
+
   text-align: center;
   border: 1px solid #5F5F5F;
   }
@@ -130,5 +177,5 @@ a {
   line-height: 50px;
   border-top: 1px solid #5F5F5F;
   border-bottom: 1px solid #5F5F5F;
-  }  
+  }   */
 </style>
