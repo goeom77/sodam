@@ -1,4 +1,4 @@
-package com.samsung.sodam.api.service;
+package com.samsung.sodam.api.service.admin;
 
 import com.samsung.sodam.api.request.HelpDeskRequest;
 import com.samsung.sodam.db.entity.Notice;

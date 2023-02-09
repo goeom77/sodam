@@ -4,18 +4,16 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.service.ClientService;
+import com.samsung.sodam.api.service.CounselorProfileService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,12 +21,15 @@ import java.util.List;
 public class CounselorController {
 
     private final CounselorRepositoryService service;
+    private final CounselorProfileService counselorProfileService;
     private final ClientService clientService;
 
     private final ReviewService reviewService;
 
-    public CounselorController(CounselorRepositoryService service, ClientService clientService, ReviewService reviewService) {
+
+    public CounselorController(CounselorRepositoryService service, CounselorProfileService counselorProfileService, ClientService clientService, ReviewService reviewService) {
         this.service = service;
+        this.counselorProfileService = counselorProfileService;
         this.clientService = clientService;
         this.reviewService = reviewService;
     }
@@ -43,30 +44,7 @@ public class CounselorController {
     @PostMapping("counselor/")
     public Page<Counselor> searchCounselor() {
         Pageable pageable = Pageable.ofSize(20);
-        //service.getAllCounselor(pageable);
-        String str = "dd";
-        ArrayList<CONSULT_TYPE> conlist = new ArrayList<>();
-        conlist.add(CONSULT_TYPE.COURSE);
-        List<Counselor> list = new ArrayList<>();
-
-        Counselor c = Counselor.builder()
-                .email("email")
-                .name("name")
-                .id("string")
-                .tel("telll")
-                .consultTypeList(conlist)
-                .gender(GENDER.MEN)
-        .build();
-        c.setRoleByCommonCode();
-        list.add(c);
-        list.add(c);
-        list.add(c);
-        list.add(c);
-        list.add(c);
-        list.add(c);
-        Page<Counselor> result = new PageImpl<>(list);
-
-        return result;
+        return service.getAllCounselor(pageable);
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")
@@ -76,14 +54,20 @@ public class CounselorController {
         return service.getCounselorDetail(id);
     }
 
-    @PutMapping(value = "/counselor/{id}")
+    @PostMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, CounselorSignupRequest request) {
         try {
-            System.out.println("editProfileCounselor - parameter test");
-            System.out.println(request.getConsultType());
-            System.out.println(Arrays.toString(request.getRoutine()));
+//            System.out.println("-------------------------------------");
+//            System.out.println("\n\n\n\n");
+//            System.out.println("editProfileCounselor - parameter test");
+//            System.out.println(request.getConsultType());
+//            System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
+            counselorProfileService.deleteAssociateProfileTable(request.getEdu_delete(), request.getCert_delete());
+            counselorProfileService.uploadAssociateProfileTable(request);
+//            System.out.println("\n\n\n\n");
+//            System.out.println("-------------------------------------");
             return HttpStatus.OK;
         } catch(Exception e){
             e.printStackTrace();

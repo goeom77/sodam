@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Member {
@@ -23,6 +24,8 @@ public class Member {
 
     private String commonCodeId;
 
+    private String profileImg;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -30,3 +33,4 @@ public class Member {
         this.role = Role.find(this.getCommonCodeId());
     }
 }
+
