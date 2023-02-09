@@ -431,6 +431,68 @@ export default new Vuex.Store({
         console.log(res)
       })
     },
+    
+
+    counselorUpdate(context, payload){
+      const formdata = new FormData()
+      formdata.append('id',payload.id)
+      formdata.append('password',payload.password)
+      formdata.append('name',payload.name)
+      formdata.append('tel',payload.name)
+      formdata.append('email',payload.email)
+      formdata.append('gender',payload.gender)
+      formdata.append('enterprisestr',payload.enterprise_id)
+      console.log('payload - certificate start')
+      if (payload.certificate.length > -1){
+        for (let i=0;i<payload.certificate.length; i++){
+          const certificateForm = payload.certificate[i]
+          formdata.append(`certificates[${i}].name`, certificateForm.certificate_name)
+          formdata.append(`certificates[${i}].serial_num`, certificateForm.certificate_number)
+          formdata.append(`certificates[${i}].agency`, certificateForm.certificate_agency)
+          formdata.append(`certificates[${i}].file`, certificateForm.certificate_file[0])
+        }
+      }
+      if (payload.education.length > -1){
+        for (let i=0;i<payload.education.length; i++){
+          const educationForm = payload.education[i]
+          formdata.append(`educations[${i}].degree`, educationForm.degree)
+          formdata.append(`educations[${i}].school`, educationForm.school)
+          formdata.append(`educations[${i}].major`, educationForm.major)
+          formdata.append(`educations[${i}].is_graduate`, educationForm.is_graduate)
+          formdata.append(`educations[${i}].file`, educationForm.education_file[0])
+        }
+      }
+      if (payload.career.length > -1){
+        for (let i=0;i<payload.career.length; i++){
+          const careerForm = payload.career[i]
+          formdata.append(`careers[${i}].name`, careerForm.career_name)
+          formdata.append(`careers[${i}].content`, careerForm.career_content)
+          formdata.append(`careers[${i}].period`, careerForm.career_period)
+        }
+      }
+      // form 객체 확인 key-value
+      for (var pair of formdata.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+      return axios({
+        method: 'put',
+        url: `${VUE_APP_API_URL}/api/counselor/${this.$store.state.payload.id}`,
+        headers:{
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formdata,
+        dataType:'json',
+        processData:false,
+        contentType:false,
+      })
+      .then((res)=>{
+        console.log(res)
+      })
+      .catch((res)=>{
+        console.log(res)
+      })
+    },
+
 
     logOut(context){
       context.commit('DELETE_TOKEN')
