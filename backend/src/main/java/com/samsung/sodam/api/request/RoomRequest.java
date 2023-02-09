@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class RoomRequest {
 
-    private Long scheduleId;
+    private Integer sessionId;
     private String openviduId;
 
 }
