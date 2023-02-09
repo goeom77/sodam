@@ -1,15 +1,16 @@
 package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.ScheduleRequest;
-import com.samsung.sodam.api.request.SetStateRequest;
+import com.samsung.sodam.api.request.SearchSchedule;
 import com.samsung.sodam.api.service.ApplicantService;
-import com.samsung.sodam.api.service.ScheduleService;
+import com.samsung.sodam.api.service.schedule.ScheduleService;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/schedule")
@@ -46,4 +47,9 @@ public class ScheduleController {
         return service.getMySchedules(userId);
     }
 
+
+    @PostMapping("/search")
+    public List<ConsultApplicant> searchSchedule(@RequestBody SearchSchedule request){
+        return service.searchSchedules(request);
+    }
 }

@@ -1,7 +1,9 @@
 package com.samsung.sodam.db.repository.schedule;
 
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.ScheduleRequest;
+import com.samsung.sodam.api.request.SearchSchedule;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.entity.QConsultSchedule;
@@ -11,15 +13,16 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static com.samsung.sodam.db.entity.QConsultApplicant.consultApplicant;
 import static com.samsung.sodam.db.entity.QConsultSchedule.consultSchedule;
 import static com.samsung.sodam.db.entity.QConsultSession.consultSession;
 
 @Repository
-public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository{
+public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
 
     final JPAQueryFactory queryFactory;
-    EntityManager em;
 
     public ScheduleCustomRepositoryImpl(JPAQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
@@ -37,4 +40,17 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository{
 
         return null;
     }
+
+    @Override
+    public List<ConsultApplicant> searchSchedules(SearchSchedule request) {
+        return queryFactory.select(consultApplicant).from(consultApplicant).join(consultSession)
+                .on(consultApplicant.sessionId.eq(consultSession.id))
+                .where(
+                        consultApplicant.state.eq(request.state),
+                        consultSession.counselorId.eq(request.userId),
+                        consultApplicant.dueDate.between(request.start,request.end)
+                ).fetch();
+
+    }
+
 }

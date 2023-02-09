@@ -1,7 +1,7 @@
 package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.HelpDeskRequest;
-import com.samsung.sodam.api.service.AdminServiceImpl;
+import com.samsung.sodam.api.service.admin.AdminServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
