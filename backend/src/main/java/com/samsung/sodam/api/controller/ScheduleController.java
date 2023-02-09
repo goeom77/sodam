@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -60,8 +61,8 @@ public class ScheduleController {
 
     @PostMapping("/search/monthly")
     @ApiOperation(value = "설정한 기간의 상담일정을 조회한다",notes = "월별,년별등 대량 데이터 조회 시 이용할 데이터 일부만 내려줌.")
-    public List<MonthlyResponse> getMonthlySchedule(){
-
+    public List<MonthlyResponse> getMonthlySchedule(@RequestParam String counselorId, LocalDateTime dateTime){
+//        service.getMonthlySchedule(counselorId,dateTime);
         return null;
     }
 }

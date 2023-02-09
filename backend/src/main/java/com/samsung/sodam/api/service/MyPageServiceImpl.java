@@ -7,7 +7,7 @@ import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Member;
 import com.samsung.sodam.db.entity.NotificationType;
 import com.samsung.sodam.db.repository.ClientRepository;
-import com.samsung.sodam.db.repository.CounselorRepository;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import com.samsung.sodam.db.repository.NotificationCustomRepository;
 import com.samsung.sodam.db.repository.NotificationRepository;
 import lombok.AllArgsConstructor;
@@ -60,10 +60,10 @@ public class MyPageServiceImpl implements MyPageService {
 
         m.setProfileImg(url);
 
-        if(m instanceof Counselor){    // Counselor일때 Member로 들어감
-            Counselor c= (Counselor) m;
+        if (m instanceof Counselor) {    // Counselor일때 Member로 들어감
+            Counselor c = (Counselor) m;
             counselorRepository.save(c);
-        } else if(m instanceof Client){
+        } else if (m instanceof Client) {
             Client c = (Client) m;
             clientRepository.save(c);
         }

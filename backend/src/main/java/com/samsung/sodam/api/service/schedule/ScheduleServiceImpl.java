@@ -1,6 +1,7 @@
 package com.samsung.sodam.api.service.schedule;
 
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.repository.ScheduleRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,5 +40,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ConsultApplicant> searchSchedules(SearchSchedule request) {
         return customRepository.searchSchedules(request);
+    }
+
+    @Override
+    public List<MonthlyResponse> getMonthlySchedule(String counselorId, LocalDateTime dateTime) {
+        return customRepository.getMonthlySchedule(counselorId,dateTime);
+//        return null;
     }
 }
