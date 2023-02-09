@@ -8,6 +8,8 @@ import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,13 +45,15 @@ public class ScheduleController {
 
     @GetMapping("/schedules")
     @ApiOperation(value = "유저id로 본인이 포함된 일정을 조회한다")
-    public Page<ConsultSchedule> getSchedules(String userId){
-        return service.getMySchedules(userId);
+    public Page<ConsultSchedule> getSchedules(Pageable pageable ,@Validated String userId){
+        if (pageable==null) pageable = Pageable.ofSize(20);
+        return service.getMySchedules(pageable,userId);
     }
 
 
     @PostMapping("/search")
-    public List<ConsultApplicant> searchSchedule(@RequestBody SearchSchedule request){
+    @ApiOperation(value = "입력한 기간 내의 승인된 상태의 상담신청정보를 조회한다",notes = "기간 미입력 시 오늘기준 1년 이후까지의 목록 보여줌.")
+    public List<ConsultApplicant> searchSchedule(@Validated  @RequestBody SearchSchedule request){
         return service.searchSchedules(request);
     }
 }

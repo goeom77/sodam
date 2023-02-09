@@ -6,12 +6,14 @@ import com.samsung.sodam.api.request.RoomRequest;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import org.springframework.data.domain.Page;
 import com.samsung.sodam.api.request.RoomRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface ScheduleCustomRepository {
     Page<ConsultSchedule> getSchedulesByClientId(String counselorId, String clientId);
 
-    Page<ConsultSchedule> getMySchedules(String userId);
+    Page<ConsultSchedule> getMySchedules(Pageable pageable, String userId);
 
     List<ConsultApplicant> searchSchedules(SearchSchedule request);
     void createSession(RoomRequest request);

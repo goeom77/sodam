@@ -10,6 +10,8 @@ import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.entity.QConsultSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -37,10 +39,10 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
 
 
     @Override
-    public Page<ConsultSchedule> getMySchedules(String userId) {
-//        queryFactory.selectFrom(consultSchedule).where(consultSchedule.i)
-
-        return null;
+    public Page<ConsultSchedule> getMySchedules(Pageable pageable,String userId) {
+         List<ConsultSchedule> list = queryFactory.selectFrom(consultSchedule).where(consultSession.counselorId.eq(userId).or(consultSession.clientId.eq(userId))).orderBy(consultSchedule.dateTime.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+         Long count = queryFactory.select(consultSchedule.id).from(consultSchedule).where(consultSession.counselorId.eq(userId).or(consultSession.clientId.eq(userId))).orderBy(consultSchedule.dateTime.desc()).fetchOne();
+        return new PageImpl<>(list, pageable,count);
     }
     @Override
     public void createSession(RoomRequest request) {  // openvidu 화상세션 id 추가

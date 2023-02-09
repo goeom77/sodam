@@ -6,6 +6,7 @@ import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.repository.ScheduleRepository;
 import com.samsung.sodam.db.repository.schedule.ScheduleCustomRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,9 +31,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Page<ConsultSchedule> getMySchedules(String userId) {
+    public Page<ConsultSchedule> getMySchedules(Pageable pageable,String userId) {
 //        repository.
-        return customRepository.getMySchedules(userId);
+        return customRepository.getMySchedules(pageable,userId);
     }
 
     @Override
