@@ -8,11 +8,9 @@
           </em>
           <span>여기, 소담이 함께합니다.</span> 
         </h2>
-
       </div>
       <br>
       <br>
-      <ConsultantCardSearch/>
     </div>
     <ConsultantList/>
   </div>

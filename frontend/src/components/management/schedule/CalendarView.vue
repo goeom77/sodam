@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -66,18 +66,16 @@ export default defineComponent({
         })
       }
 
-      axios({
-        method:'post',
-        url:`${VUE_APP_API_URL}/api/schedule/newSchedule`,
-        data:{
-          "clientId": "client",
-          "counselorId": "counselor01",
-          "dateTime": "2023-06-01 14:00:00",
-          "sessionId": 95,
-          "status": "APPROVED"
-        }
-      })
-
+      // axios({
+      //   method:'post',
+      //   url:`${VUE_APP_API_URL}/api/schedule/search`,
+      //   data:{
+      //     "userId": this.$store.state.payload.id,
+      //   }
+      // })
+      // .then(res=>{
+      //   console.log(res)
+      // })
 
       console.log(selectInfo)
       console.log(title)
@@ -87,17 +85,27 @@ export default defineComponent({
         clickInfo.event.remove()
       }
     },
-    handleEvents(events) {
-      this.currentEvents = events
-    },
-    // checkData(){
-    //   axios({
-    //     // ...
-    //   })
-    // }
+    // handleEvents(events) {
+    //   this.currentEvents = events
+    // },
+    getSessionData(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/search`,
+        data:{
+          "userId": this.$store.state.payload.id,
+        }
+      })
+      .then(res=>{
+        console.log(res.data)
+        this.currentEvents = res.data
+      })
+    }
+  },
+  created(){
+    this.getSessionData()
   }
 })
-
 </script>
 
 <template>
@@ -119,9 +127,8 @@ export default defineComponent({
             <h2>All Events ({{ currentEvents.length }})</h2>
             <ul>
               <li v-for='event in currentEvents' :key='event.id'>
-                <b>{{ event.startStr }}</b>
-                <br>
-                <i>{{ event.title }}</i>
+
+                <i>{{ event.name }}</i>
               </li>
             </ul>
           </div>

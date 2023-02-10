@@ -17,14 +17,14 @@ def make_file(data):
 
 
 
-def stt_send_mail(data, recipients):
+def stt_send_mail(date, recipients, counselor_name, file_url):
 
     sender = os.environ['MAIL_USERNAME']
     password = os.environ['MAIL_PW']
     print(sender)
 
     from_addr = formataddr(('Sodam STT', sender))
-    to_addr = formataddr(('상담사님', recipients))
+    to_addr = formataddr((counselor_name + ' 상담사님', recipients))
 
     session = None
     try:
@@ -44,20 +44,33 @@ def stt_send_mail(data, recipients):
         message.set_charset('utf-8')
         message['From'] = from_addr
         message['To'] = to_addr
-        message['Subject'] = '안녕하세요'
+        message['Subject'] = '[소담]' + ' ' + date + '세션 기록 송부'
 
         # 메일 콘텐츠 - 내용
         body = '''
-        <h2>안녕하세요.</h1>
-        <h4>허도치입니다.</h1>
+<div style='margin:100px;'>
+    <div align='center' style='background-color:#eeeeee; font-family:verdana; padding:0.5em; '>
+        <h1 style='padding-bottom:10px; '>세션 기록을 확인하세요 🎉 </h1>
+        <hr/>
+        <div style='font-size:130%'>
+            안녕하세요. 소담입니다.<br>
+            <strong>''' + date + ''' </strong> 세션 기록이 왔어요!
+            <br>
+            <div>앞으로도 저희 서비스 이용 부탁드려요 :D </div>
+            <div>
+                <br/>
+            </div>
+        </div></div></div>
         '''
-        bodyPart = MIMEText(body + data, 'html', 'utf-8')
+        bodyPart = MIMEText(body, 'html', 'utf-8')
         message.attach(bodyPart)
 
         # 메일 콘텐츠 - 첨부파일
         attachments = [
             # os.path.join(os.getcwd(), 'storage', 'rude.jpg')
-            os.path.join('C:\\testFile', 'rude.jpg')
+            # os.path.join('C:\\testFile', 'rude.jpg')
+            # os.path.join(os.getcwd(), 'storage', file_name + '.txt')
+            file_url
         ]
 
         for attachment in attachments:
