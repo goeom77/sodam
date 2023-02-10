@@ -9,7 +9,7 @@ plugins {
 
 group = 'com.samsung'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = "16"
+sourceCompatibility = "11"
 
 configurations {
     compileOnly {
@@ -96,4 +96,4 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
-targetCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_11
