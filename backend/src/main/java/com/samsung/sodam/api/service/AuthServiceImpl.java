@@ -6,7 +6,7 @@ import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.ClientRepository;
-import com.samsung.sodam.db.repository.CounselorRepository;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import com.samsung.sodam.db.repository.EnterpriseRepository;
 import com.samsung.sodam.db.repository.RefreshTokenRedisRepository;
 import com.samsung.sodam.jwt.JwtTokenProvider;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -61,21 +62,21 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public Member getMemberByEmail(String email) {
-        Client client = clientRepository.getByEmail(email);
-        Counselor counselor = conselorRepository.getByEmail(email);
+        Optional<Client> client = clientRepository.findByEmail(email);
+        Optional<Counselor> counselor = conselorRepository.findByEmail(email);
         Member m = null;
-        if(client != null) m = client;
-        else if(counselor != null) m = counselor;
+        if(client.isPresent()) m = client.orElse(null);
+        else if(counselor.isPresent()) m = counselor.orElse(null);
         return m;
     }
 
     @Override
     public Member getMemberById(String id) {
-        Client client = clientRepository.getById(id);
-        Counselor counselor = conselorRepository.getById(id);
+        Optional<Client> client = clientRepository.findById(id);
+        Optional<Counselor> counselor = conselorRepository.findById(id);
         Member m = null;
-        if(client != null) m = client;
-        else if(counselor != null) m = counselor;
+        if(client.isPresent()) m = client.orElse(null);
+        else if(counselor.isPresent()) m = counselor.orElse(null);
         return m;
     }
 

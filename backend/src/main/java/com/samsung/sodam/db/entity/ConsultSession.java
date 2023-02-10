@@ -27,4 +27,7 @@ public class ConsultSession {
     @Convert(converter = StateAttributeConverter.class)
     STATE status;
 
+    @Column(name = "openvidu_id")
+    private String openviduId; // 화상상담 세션 ID
+
 }

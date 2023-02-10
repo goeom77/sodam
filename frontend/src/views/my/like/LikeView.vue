@@ -1,15 +1,16 @@
 <template>
-  {{ this.clientId }}
-  <div v-if="this.favList">
-    <LikeViewCard
-    v-for="(consult,idx) in favList"
-    :key="idx"
-    :consult="consult"
-    @delete-card="getFavList"
-    />
-  </div>
-  <div v-else>
-    등록한 상담사가 없습니다
+  <div style="margin:auto">
+    <div v-if="this.favList">
+      <LikeViewCard
+      v-for="(consult,idx) in favList"
+      :key="idx"
+      :consult="consult"
+      @delete-card="getFavList"
+      />
+    </div>
+    <div v-else>
+      등록한 상담사가 없습니다
+    </div>
   </div>
 </template>
 

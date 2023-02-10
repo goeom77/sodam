@@ -45,7 +45,6 @@ import MainEdit from '@/views/my/edit/MainEdit.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
-import PageNotFound from '../views/PageNotFound.vue';
 
 
 const routes = [
@@ -235,11 +234,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     redirect: '/404'
   },
-  {
-    path: '/404',
-    name: 'PageNotFound',
-    component: PageNotFound
-  },
+
 ]
 
 const router = createRouter({

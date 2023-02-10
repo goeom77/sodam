@@ -1,12 +1,13 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -62,15 +63,15 @@ public class Counselor extends Member {
 
     @Column(name = "consult_type")
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> consultTypeList = null;
+    private List<CONSULT_TYPE> consultTypeList = Collections.emptyList();
 
-    @OneToMany(mappedBy = "counselor")
-//    @JoinColumn(name = "counselor_id" , referencedColumnName = "id")
-    private List<Certificate> cert = new ArrayList<>();
-
-    @OneToMany(mappedBy = "counselor")
-    //@JoinColumn(name = "counselor_id" , referencedColumnName = "id")
-    private List<Education> edu = new ArrayList<>();
+//    @OneToMany(mappedBy = "counselor")
+////    @JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+//    private List<Certificate> cert = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "counselor")
+//    //@JoinColumn(name = "counselor_id" , referencedColumnName = "id")
+//    private List<Education> edu = new ArrayList<>();
 
     @Builder
     public Counselor(String id, String name, String password, String email, String tel, List<Career> career, String introduce, GENDER gender, Boolean qualification, String routine, Enterprise enterprise, String profileImg, List<CONSULT_TYPE> consultTypeList) {
@@ -87,5 +88,20 @@ public class Counselor extends Member {
         this.enterprise = enterprise;
         this.profileImg = profileImg;
         this.consultTypeList = consultTypeList;
+    }
+
+    static public CounselorListResponse toResponse(Counselor counselorList){
+        return CounselorListResponse.builder()
+                .id(counselorList.getId())
+                .name(counselorList.getName())
+                .email(counselorList.getEmail())
+                .tel(counselorList.getTel())
+                .career(counselorList.getCareer())
+                .introduce(counselorList.getIntroduce())
+                .gender(counselorList.getGender())
+                .routine(counselorList.getRoutine())
+                .profileImg(counselorList.getProfileImg())
+                .consultTypeList(counselorList.getConsultTypeList())
+                .build();
     }
 }

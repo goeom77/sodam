@@ -1,60 +1,100 @@
 <template>
-  <div>
-    <!-- 예약 -->
-    {{ this.counselorData }}
-    <div>
-      <h1 @click="checkDate(dueDate)">상담 유형 </h1>
-      <select id="Typeselect" v-model="consultType">
-        <option 
-          v-for="(item, index) in selectTypeList"
-          :key="index"
-          :value="item.value"
-          >{{ item.name }}</option
-        >
-      </select>
+<div class="container">
+  <div class=" text-center mt-5 ">
+    <h1 >상담 신청서</h1>      
+  </div>
+  <div class="row ">
+    <div class="col-lg-7 mx-auto">
+      <div class="card mt-2 mx-auto p-4 bg-light">
+        <div class="card-body bg-light">
+          <div class = "container">
+            <form id="contact-form" role="form">
+              <div class="controls">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_need" @click="checkDate(dueDate)">상담 유형 *</label>
+                      <select id="form_need" class="form-control" v-model="consultType" required="required">
+                        <option 
+                          v-for="(item, index) in selectTypeList"
+                          :key="index"
+                          :value="item.value"
+                          >{{ item.name }}</option
+                        >
+                      </select>
+                      <label for="form_name">성함 *</label>
+                      <input id="form_name" type="text" name="name" v-model="name" class="form-control" placeholder="성함" required="required" data-error="이름은 필수사항입니다">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="form_lastname">성별 *</label>
+                        <select id="form_need" v-model="gender" class="form-control">
+                          <option 
+                            v-for="(item, index) in genderList"
+                            :key="index"
+                            :value="item.value"
+                            >{{ item.name }}</option
+                          >
+                        </select>
+                        <label for="form_name">나이 *</label>
+                        <input id="form_name" type="number" name="name" v-model="age" class="form-control" placeholder="나이" required="required" data-error="이름은 필수사항입니다">
 
-      <h1>성함</h1>
-      <input type="text" name="name" v-model="name">
-      
-      <h1>연락처</h1>
-      <input type="number" name="name" v-model="tel">
-      
-      <h1>Email</h1>
-      <input type="Email" name="email" v-model="email">
-      
-      <h1>나이</h1>
-      <input type="number" name="name" min="0" max="150" v-model="age">
 
-      <h1>성별</h1>
-      <select id="genderselect" v-model="gender" >
-        <option 
-          v-for="(item, index) in genderList"
-          :key="index"
-          :value="item.value"
-          >{{ item.name }}</option
-        >
-      </select>
-      <h1>고민 내용</h1>
-      <textarea name="" id="" cols="30" rows="10" v-model="content"></textarea>
-      <h1>상담 기한</h1>
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
 
-      <datepicker
-        v-model="dueDate"
-        lang="ko"
-        :lowerLimit="new Date()"
-        :clearable="false"
-      />
 
-      <v-btn
-        outlined
-        rounded
-        text
-        @click="reserveConsult"
-      >
-        Button
-      </v-btn>
+                    <label for="form_email">Email *</label>
+                    <input id="form_email" type="email" name="email"  v-model="email" class="form-control" placeholder="E-mail" required="required" data-error="Valid email is required.">
+                  </div>
+                </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="form_name">TEL</label>
+                      <input id="form_name" type="number" name="name" class="form-control" v-model="tel" placeholder="TEL" required="required" data-error="Firstname is required.">
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label for="form_name">상담 기한</label>
+                <datepicker
+                 class="form-control"
+                 placeholder="YYYY-MM-DD" required="required"
+                  v-model="dueDate"
+                  lang="ko"
+                  :lowerLimit="new Date()"
+                  :clearable="false"
+                />
+
+              </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="form_message">고민 내용 *</label>
+                    <textarea id="form_message" name="message" v-model="content" class="form-control" placeholder="원하시는 상담" rows="4" required="required" data-error="Please, leave us a message."></textarea>
+                </div>
+              </div>
+              <div class="col-md-12 d-flex justify-content-center" style="margin:auto;">
+                <input type="submit" class="btn btn-success btn-send  pt-2 btn-block" value="Send Message" @click="reserveConsult">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+        <!-- /.8 -->
+    </div>
+    <!-- /.row-->
+</div>
+</div>
+
 </template>
 
 
@@ -168,5 +208,34 @@ export default {
 
 
 <style>
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {
+    margin-bottom: 40px;
+}
+
+label {
+    color: #333;
+}
+
+.btn-send {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    width: 80%;
+    margin-left: 3px;
+    }
+.help-block.with-errors {
+    color: #ff5050;
+    margin-top: 5px;
+
+}
+
+.card{
+	margin-left: 10px;
+	margin-right: 10px;
+}
 
 </style>

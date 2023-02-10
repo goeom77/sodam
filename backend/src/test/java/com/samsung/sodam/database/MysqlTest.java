@@ -4,7 +4,7 @@
 //import com.samsung.sodam.api.request.CounselorSearchRequest;
 //import com.samsung.sodam.config.TestConfig;
 //import com.samsung.sodam.db.entity.Counselor;
-//import com.samsung.sodam.db.repository.CounselorRepository;
+//import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
