@@ -170,7 +170,8 @@ const routes = [
   {
     path: '/VideoPage',
     name: 'VideoPage',
-    component: VideoPage
+    component: VideoPage,
+    props:true
   },
   {
     path: '/consultantcarditem/:id?',
@@ -241,7 +242,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 })
 
 

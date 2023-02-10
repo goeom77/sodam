@@ -1,13 +1,15 @@
 <template>
-  
   <v-card
     class="mx-auto"
     max-width="344"
   >
   <v-card-text>
     {{ clientData }}
+    <p>
+      컨설턴트 이름 : {{this.consultant_name}}
+    </p>
 
-    <p class="text-h4 text--primary">
+    <p>
       성함 : {{ clientData.name }}
     </p>
     
@@ -28,11 +30,27 @@
       
       </v-btn>
     </v-card-actions>
-    <router-link to="/VideoPage" style="color: white; background-color: red;">비디오 페이지로</router-link>
+    <div>
+      <!-- v-if 상담 기간인 경우 -->
+      <!-- 상담사랑 고객의 키값을 비교 -->
+      <v-btn
+        text
+        color="red accent-4"
+      >
+      <p @click="moveTo2">상담하기 </p>
+
+      </v-btn>
+    </div>
   </v-card>
 </template>
 
 <script>
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
+import axios from "axios";
+// const APPLICATION_SERVER_URL = process.env.APPLICATION_SERVER_URL
+// const OPENVIDU_SERVER_SECRET = "SODAM";
+
 export default {
   name:'ClientManageCard',
   props:{
@@ -40,20 +58,38 @@ export default {
   },
   data(){
     return{
-      client:null
+      consultant_id: this.$store.state.payload.id,
     }
+  },
+  created() {
+    this.getCounselorData()
+    // 상담사 네임을 기입
   },
   methods:{
-    moveTo(){
+    // 컨설턴트 정보 가져오기
+    getCounselorData(){
+      axios({
+        method:'get',
+        url:`${VUE_APP_API_URL}/api/counselor/${this.consultant_id}`,
+        data:{
+          id: this.consultant_id
+        },        
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        this.consultant_name = res.data.name
+      })
+    },
+    moveTo() {
       this.$router.push({ name: 'ClientManageDetail', params: {id: this.clientData.email }  })
+    },
+    // 세션 id 내려주기 (지금 구현 안되어 있음)
+    moveTo2(){
+      this.$router.push({ name: 'VideoPage', params: {id: 1} })
     }
-    // propsToData(){
-    //   this.client = this.clientData
-    // }
   },
-  created(){
-    // this.propsToData()
-  }
 }
 </script>
 
