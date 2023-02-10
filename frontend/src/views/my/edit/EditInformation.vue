@@ -129,7 +129,7 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res)g
+        console.log(res)
         this.$router.push({ 
           name: 'MainEdit', 
           // params: { postId: this.$route.params.postId } 

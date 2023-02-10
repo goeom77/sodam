@@ -27,7 +27,7 @@ export default defineComponent({
         },
         initialView: 'dayGridMonth',
         initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        editable: true, 
+        editable: true,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,

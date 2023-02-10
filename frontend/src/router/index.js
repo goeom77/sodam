@@ -45,6 +45,8 @@ import MainEdit from '@/views/my/edit/MainEdit.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
+import CalendarView22 from "@/components/management/schedule/CalendarView22.vue";
+import CalendarTest from "@/components/management/schedule copy/CalendarTest.vue";
 
 
 const routes = [
@@ -91,7 +93,8 @@ const routes = [
   {
     path:'/Calendar',
     name:'Calendar',
-    component: CalendarView
+    component: CalendarTest
+    // component: CalendarView
   },
   
   
