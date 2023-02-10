@@ -198,8 +198,8 @@ export default {
 							:value="createdAt"
 						/>
 					</v-col>
-					<v-col v-if="this.common_code==='1' && this.jender">
-						<v-text-field readonly dense :value="jender"/>
+					<v-col v-if="this.common_code==='1' && this.gender">
+						<v-text-field readonly dense :value="gender"/>
 					</v-col>
           <v-col v-if="this.common_code==='1' && this.age">
 						<v-text-field readonly dense :value="age" />
@@ -315,7 +315,7 @@ export default {
           this.BoardComments= res.data.commentList
           this.content= res.data.content
           this.postId= res.data.postId
-          this.jender= res.data.jender
+          this.gender= res.data.gender
           this.age = res.data.age
         })
     },
