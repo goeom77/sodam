@@ -19,6 +19,7 @@
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
     "event-source-polyfill": "^1.0.31",
+    "jquery": "^3.6.3",
     "moment": "^2.29.4",
     "openvidu-browser": "2.25.0",
     "roboto-fontface": "*",

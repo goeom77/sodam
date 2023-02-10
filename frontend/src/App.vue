@@ -54,9 +54,9 @@
               <span></span>
               <router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
             </li>
-            <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
           </ul>
         </nav>
       </aside>

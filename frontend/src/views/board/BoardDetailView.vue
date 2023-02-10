@@ -198,8 +198,11 @@ export default {
 							:value="createdAt"
 						/>
 					</v-col>
-					<v-col>
-						<v-text-field readonly dense :value="views" />
+					<v-col v-if="this.common_code==='1' && this.jender">
+						<v-text-field readonly dense :value="jender"/>
+					</v-col>
+          <v-col v-if="this.common_code==='1' && this.age">
+						<v-text-field readonly dense :value="age" />
 					</v-col>
 				</v-row>
 				<v-row>
@@ -225,7 +228,7 @@ export default {
 
     <BoardCommentList
       v-for="(BoardComment, index) in Boardarticle?.commentList"
-      :key="BoardComment.id"
+      :key="BoardComment.postId"
       :BoardComment="BoardComment"
       :index="index"
       :limit="BoardCommentsCurrentPage"
@@ -263,9 +266,15 @@ export default {
 			commentCount: 0,
 			BoardComments: null,
 			comment: '',
+      jender: '',
+      age: '',
       postId: postId,
       Boardarticle: null,
+
+
+
       BoardCommentsCurrentPage: 1,
+      common_code: this.$store.state.payload.common_code,
             
       imagelist: [],     
       imagecnt: 0,     
@@ -273,9 +282,21 @@ export default {
 	},
 	created() {
 		this.getBoardarticleDetail()
+    this.getUserDetail()
 	},
 	methods: {
-    
+    getUserDetail() {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/client/${this.clientId}`,
+      })
+      
+        .then((res) => {
+          console.log(this.$route.params.postId)
+          this.jender= res.data.jender
+          this.age = res.data.age
+        })
+    },
 
     getBoardarticleDetail() {
       axios({
@@ -294,6 +315,8 @@ export default {
           this.BoardComments= res.data.commentList
           this.content= res.data.content
           this.postId= res.data.postId
+          this.jender= res.data.jender
+          this.age = res.data.age
         })
     },
     BoardarticleUpdate() {
