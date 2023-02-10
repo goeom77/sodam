@@ -5,11 +5,11 @@ import gcpCredentials
 
 
 # async def transcribe_gcs(gcs_uri):
-def transcribe_gcs(gcs_uri):
+def transcribe_gcs(gcs_uri, file_name):
     """Asynchronously transcribes the audio file specified by the gcs_uri."""
     from google.cloud import speech
 
-    client = speech.SpeechClient.from_service_account_file('key.json')
+    # client = speech.SpeechClient.from_service_account_file('key.json')
     print(gcpCredentials.get_credentials_path())
     client = speech.SpeechClient.from_service_account_file(gcpCredentials.get_credentials_path())
 
@@ -22,11 +22,21 @@ def transcribe_gcs(gcs_uri):
         language_code="ko-Kr",
         enable_word_time_offsets=True
     )
-
+    print('1. send stt request')
     operation = client.long_running_recognize(config=config, audio=audio)
-
     print("Waiting for operation to complete...")
-    # response = await asyncio.gather(operation.result())
+
+    print('2. make file')
+    path = os.path.join(os.getcwd(), 'storage')
+    if not os.path.exists(path):
+        # if the storage directory is not present
+        # then create it.
+        os.makedirs(path)
+
+    path = os.path.join(path, file_name + '.txt')
+    f = open(path, 'w', encoding='utf-8')
+
+
     response = operation.result()
 
     # Each result is for a consecutive portion of the audio. Iterate through
@@ -47,9 +57,13 @@ def transcribe_gcs(gcs_uri):
         sec = str(start_time_int % 60).zfill(2)
         msec = str(int(start_time_ms * 10)).zfill(2)
         print("[ {}:{}:{} ] {}".format(min, sec, msec, alternative.transcript))
+        f.write("[ {}:{}:{} ] {}".format(min, sec, msec, alternative.transcript) + '\n')
         # for word_info in alternative.words:
         #     print("[{} - {}]".format(word_info.start_time.total_seconds(), word_info.end_time.total_seconds()), end=' : ')
         #     print(word_info.word)
+
+    f.close()
+    return path
 
 
 

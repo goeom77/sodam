@@ -1,41 +1,47 @@
 <template>
-  <div>
-    {{ this.counselorData }}
-    
-    <div>
-      <ConsultantCardItemInfo
-      :counselorData="this.counselorData"/>
-    </div>
-  </div>
-    <v-card>
-      <v-tabs v-model="tab">
-        <v-tab value="one">
-          상담 예약
-        </v-tab>
-        <v-tab value="two">
-          상담 후기 
-        </v-tab>
-      </v-tabs>
-      <v-card-text>
-        <v-window v-model="tab">
-          <v-window-item
-          value="one"
-          style="height:1500px"
-          >
-          <ConsultantCardItemReserve
-          :counselorData="this.counselorData"/>
-          </v-window-item>
 
-          <v-window-item  
-            value="two"
+<div id="fh5co-main">
+  <div class="fh5co-narrow-content">
+    <div>
+
+      <div>
+        <ConsultantCardItemInfo
+        :counselorData="this.counselorData"/>
+      </div>
+    </div>
+      <v-card>
+        <v-tabs v-model="tab">
+          <v-tab value="one">
+            상담 예약
+          </v-tab>
+          <v-tab value="two">
+            상담 후기 
+          </v-tab>
+        </v-tabs>
+        <v-card-text>
+          <v-window v-model="tab">
+            <v-window-item
+            value="one"
             style="height:1500px"
-          >
-          <ConsultantCardItemReview
-          :counselorData="this.counselorData"/>
-          </v-window-item>
-        </v-window>
-      </v-card-text>
-    </v-card>
+            >
+            <ConsultantCardItemReserve
+            :counselorData="this.counselorData"/>
+            </v-window-item>
+  
+            <v-window-item  
+              value="two"
+              style="height:1500px"
+            >
+            <ConsultantCardItemReview
+            :counselorData="this.counselorData"/>
+            </v-window-item>
+          </v-window>
+        </v-card-text>
+      </v-card>
+
+
+  </div>
+</div>
 </template>
 
 <script>

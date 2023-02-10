@@ -18,17 +18,17 @@
             </v-col>
             <v-col align-self="center">
               <div>
-                <Button
+                <button
                   @click="CoupleBoardViewListarticlessearch"
                   style="background-color: #579BB1; border-radius: 10px; width: 70%; height: 30px;  float: left; padding-bottom: 0%;"
-                >SEARCH</Button>
+                >SEARCH</button>
 
               </div>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table>
+
                 <div v-if="searchfinish===false">
                   <BoardViewListItem
                     v-for="(Boardarticle, index) in CoupleBoardViewListarticles.content"
@@ -52,7 +52,6 @@
                     @refresh-Board="getCoupleBoardViewListArticles"
                   /> 
                 </div>
-              </v-data-table>
             </v-col>
           </v-row>
         </v-card-text>

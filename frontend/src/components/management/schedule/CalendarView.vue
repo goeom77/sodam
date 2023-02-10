@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
 import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -27,14 +27,16 @@ export default defineComponent({
         },
         initialView: 'dayGridMonth',
         initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        editable: true,
+        editable: true, 
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
-        eventsSet: this.handleEvents
+        eventsSet: this.handleEvents,
+        droppable: true,
+        locale:'ko'
         /* you can update a remote database when these fire:
         eventAdd:
         eventChange:
@@ -63,61 +65,86 @@ export default defineComponent({
           allDay: selectInfo.allDay
         })
       }
-      
+
+      // axios({
+      //   method:'post',
+      //   url:`${VUE_APP_API_URL}/api/schedule/search`,
+      //   data:{
+      //     "userId": this.$store.state.payload.id,
+      //   }
+      // })
+      // .then(res=>{
+      //   console.log(res)
+      // })
+
       console.log(selectInfo)
+      console.log(title)
     },
     handleEventClick(clickInfo) {
       if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
         clickInfo.event.remove()
       }
     },
-    handleEvents(events) {
-      this.currentEvents = events
-    },
-    checkData(){
+    // handleEvents(events) {
+    //   this.currentEvents = events
+    // },
+    getSessionData(){
       axios({
-        // ...
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/search`,
+        data:{
+          "userId": this.$store.state.payload.id,
+        }
+      })
+      .then(res=>{
+        console.log(res.data)
+        this.currentEvents = res.data
       })
     }
+  },
+  created(){
+    this.getSessionData()
   }
 })
-
 </script>
 
 <template>
-  <div class='demo-app'>
-    <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            :checked='calendarOptions.weekends'
-            @change='handleWeekendsToggle'
-          />
-          toggle weekends
-        </label>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class='demo-app'>
+        <div class='demo-app-sidebar'>
+          <div class='demo-app-sidebar-section'>
+            <label>
+              <input
+                type='checkbox'
+                :checked='calendarOptions.weekends'
+                @change='handleWeekendsToggle'
+              />
+              주말 포함
+            </label>
+          </div>
+          <div class='demo-app-sidebar-section'>
+            <h2>All Events ({{ currentEvents.length }})</h2>
+            <ul>
+              <li v-for='event in currentEvents' :key='event.id'>
+
+                <i>{{ event.name }}</i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class='demo-app-main'>
+          <FullCalendar
+            class='demo-app-calendar'
+            :options='calendarOptions'
+          >
+            <template v-slot:eventContent='arg'>
+              <b>{{ arg.timeText }}</b>
+              <i>{{ arg.event.title }}</i>
+            </template>
+          </FullCalendar>
+        </div>
       </div>
-      <div class='demo-app-sidebar-section'>
-        <h2>All Events ({{ currentEvents.length }})</h2>
-        <ul>
-          <li v-for='event in currentEvents' :key='event.id'>
-            <b>{{ event.startStr }}</b>
-            <br>
-            <i>{{ event.title }}</i>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class='demo-app-main'>
-      <FullCalendar
-        class='demo-app-calendar'
-        :options='calendarOptions'
-      >
-        <template v-slot:eventContent='arg'>
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </template>
-      </FullCalendar>
     </div>
   </div>
 </template>

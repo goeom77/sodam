@@ -1,6 +1,8 @@
 <template>
-  <div @click="checkData">후기</div>
-    <div>
+    <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div @click="checkData">후기</div>
+      <div>
       <div id="Writebox" v-if="this.reviewData">
         <form>
           <div style="text-align:start; padding: 10px;">
@@ -11,22 +13,22 @@
               v-model="this.reviewData.stars"
               hover
               half-increments
-            ></v-rating>
-          </div>
+              ></v-rating>
+            </div>
 
-          <div style="text-align:start; padding: 10px;">
-            <label for="category">대상</label>
-            <select id="worryselect" v-model="this.reviewData.type" >
-              <option 
+            <div style="text-align:start; padding: 10px;">
+              <label for="category">대상</label>
+              <select id="worryselect" v-model="this.reviewData.type" >
+                <option 
                 v-for="(item, index) in selectTypeList"
                 :key="index"
                 :value="item.value"
                 >{{ item.name }}</option
-              >
-            </select>
-          </div>
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
-            <label for="title">제목</label>
+                >
+              </select>
+            </div>
+            <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
+              <label for="title">제목</label>
             <input type="text" id="title" v-model.trim="this.reviewData.title">
           </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
@@ -41,7 +43,8 @@
         <!-- <button @click="ReviewUpdate">수정</button> -->
       </div>
     </div>
-    {{ this.reviewData }}
+  </div>
+  </div>
   </template>
   
   <script>
@@ -129,5 +132,33 @@
   </script>
   
   <style>
-  
+  #fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
+    width: 100%;
+  }
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
+  }
+} 
   </style>

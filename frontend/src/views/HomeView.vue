@@ -1,21 +1,20 @@
 <template>
-  <div id="homeview">
-    <div id="hand">
-      <div id="ImageLetter">
-        <h1>소중한 당신을 위해</h1>
-        <h1>여기, 소담이 함께합니다.</h1> 
-        <br>
-        <br>
-        <ConsultantCardSearch/>
-        <input id="searhBar"
-          class="search-input"
-          type="text"
-          placeholder="상담사, 카테고리 검색.."
-          />
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class="five">
+        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">
+          <em>
+            소중한 당신을 위해
+          </em>
+          <span>여기, 소담이 함께합니다.</span> 
+        </h2>
       </div>
+      <br>
+      <br>
     </div>
     <ConsultantList/>
   </div>
+
 </template>
 
 <script>
@@ -34,37 +33,107 @@ export default {
 }
 </script>
 <style>
-#homeview {
-  /* 반응형 x */
-  width: 1255px;
-  margin: 0 auto;
+.five h2 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700; color:#202020;
+  text-transform: uppercase;
+  word-spacing: 1px; letter-spacing:2px;
+}
+.five h2 span {
+  margin-top: 40px;
+  text-transform: none;
+  font-size:.75em;
+  font-weight: normal;
+  font-style: italic; font-family: "Playfair Display","Bookman",serif;
+  color:#999; letter-spacing:-0.005em; word-spacing:1px;
+  letter-spacing:none;
+}
+.five h2:before {
+  position: absolute;
+  left: 0;
+  bottom: 38px;
+  width: 60px;
+  height: 4px;
+  content: "";
+  left: 50%;
+  margin-left: -30px;
+  background-color: #dfdfdf;
 }
 
-#hand {
-  /* margin-top: 61px; */
-  /* width: 100%; */
-  height: 300px;
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('../assets//images/hand.png');
-  background-color: aliceblue;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  /* background-size: cover; */
-    /* opacity: 0.7; */
-  text-align: start;
-  font-size: large;
-  font-weight: 100;
-  padding-top: 20px;
-  padding-bottom: 40px;
-  padding-left: 50px;
-  padding-right: 50px;
+.fh5co-heading animate-box{
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 45px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.5);
 }
-#searhBar {
-  width: 100%;
-  height: 35px;
-  /* padding: auto; */
+#fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
+    width: 100%;
+  }
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
   margin: 0 auto;
+  padding: 4em 0;
 }
-#ImageLetter {
-  margin: 30px;
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
+  }
+}
+
+
+.work-item {
+  margin-bottom: 30px;
+}
+.work-item a {
+  border: none;
+  text-align: center;
+}
+.work-item a img {
+  margin-bottom: 10px;
+  float: left;
+  border: 10px solid transparent;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.work-item a h3 {
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 10px;
+}
+.work-item a p {
+  font-size: 14px;
+  color: #cccccc;
+  margin-bottom: 0;
+}
+.work-item a:hover, .work-item a:active, .work-item a:focus {
+  text-decoration: none;
+}
+.work-item a:hover img, .work-item a:active img, .work-item a:focus img {
+  border: 1 px solid #000;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #000;
+  font-family: "Montserrat";
+  font-weight: 700;
+  margin: 0 0 30px 0;
 }
 </style>

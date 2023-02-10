@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin:auto">
     <h1>MyPost</h1>
 
     <MyPostViewList/>

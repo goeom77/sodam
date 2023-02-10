@@ -1,13 +1,10 @@
 <template>
-  <v-container>
-  
-    {{ counselor }}
-    <v-card
-    max-width="400"
-    class="mx-auto"
-  >
-    <v-row dense>
-      <v-col cols="12">
+
+  <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
+
+    <v-card>
+    <v-row>
+      <v-col>
         <v-card
         color="white"
         theme="dark"
@@ -28,27 +25,25 @@
             <v-card-subtitle>
               {{ counselor.introduce }}
               <br>
-              {{ counselor.major}}
+              {{ counselor.consultTypeList}}
             </v-card-subtitle>
+            <v-card-actions>
+              <v-btn
+                outlined
+                rounded
+                text
+                @click="moveTo(counselor.id)"
+              >
+                Button
+              </v-btn>
+            </v-card-actions>
           </div>
-
-          <v-card-actions>
-            <v-btn
-              outlined
-              rounded
-              text
-              @click="moveTo(counselor.id)"
-            >
-              Button
-            </v-btn>
-          </v-card-actions>
         </div>
       </v-card>
     </v-col>
   </v-row>
 </v-card>
-</v-container>
-
+</div>
 </template>
 
 <script>
@@ -70,5 +65,7 @@ export default {
 </script>
 
 <style>
-
+.work-item{
+  padding:30px;
+}
 </style>

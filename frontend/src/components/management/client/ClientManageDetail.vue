@@ -2,7 +2,9 @@
   <div>
     {{ id }}
     <ClientManageDetailInfo
-    :id="id"/>
+    :id="id"
+
+    />
   </div>
 </template>
 
@@ -24,6 +26,7 @@ export default {
     }
   },
   methods:{
+
     
   }
 }

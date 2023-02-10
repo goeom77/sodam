@@ -4,40 +4,44 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.ClientListResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.api.service.ClientService;
+import com.samsung.sodam.api.service.CounselorProfileService;
 import com.samsung.sodam.api.service.CounselorRepositoryService;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiOperation;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class CounselorController {
+public class CounselorController extends Counselor{
 
     private final CounselorRepositoryService service;
+    private final CounselorProfileService counselorProfileService;
     private final ClientService clientService;
 
     private final ReviewService reviewService;
 
-    public CounselorController(CounselorRepositoryService service, ClientService clientService, ReviewService reviewService) {
+
+    public CounselorController(CounselorRepositoryService service, CounselorProfileService counselorProfileService, ClientService clientService, ReviewService reviewService) {
         this.service = service;
+        this.counselorProfileService = counselorProfileService;
         this.clientService = clientService;
         this.reviewService = reviewService;
     }
 
     //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
-//    @PostMapping("counselor/")
-//    public Page<Counselor> searchCounselor(CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-//        return service.searchCounselor(request, pageable);
-//    }
+    @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
+    @PostMapping("counselor/search")
+    public Page<CounselorListResponse> searchCounselor(@Validated @RequestBody CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
+        return service.searchCounselor(request, pageable);
+    }
 
     @ApiOperation(value = "모든 상담사를 조회")
     @PostMapping("counselor/")
@@ -53,14 +57,20 @@ public class CounselorController {
         return service.getCounselorDetail(id);
     }
 
-    @PutMapping(value = "/counselor/{id}")
+    @PostMapping(value = "/counselor/{id}")
     @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
-    public HttpStatus editProfilecCounselor(@PathVariable String id, @RequestBody CounselorRequest request) {
+    public HttpStatus editProfilecCounselor(@PathVariable String id, CounselorSignupRequest request) {
         try {
-            System.out.println("editProfileCounselor - parameter test");
-            System.out.println(request.getConsultType());
-            System.out.println(Arrays.toString(request.getRoutine()));
+//            System.out.println("-------------------------------------");
+//            System.out.println("\n\n\n\n");
+//            System.out.println("editProfileCounselor - parameter test");
+//            System.out.println(request.getConsultType());
+//            System.out.println(Arrays.toString(request.getRoutine()));
             service.editProfile(request, id);
+            counselorProfileService.deleteAssociateProfileTable(request.getEdu_delete(), request.getCert_delete());
+            counselorProfileService.uploadAssociateProfileTable(request);
+//            System.out.println("\n\n\n\n");
+//            System.out.println("-------------------------------------");
             return HttpStatus.OK;
         } catch(Exception e){
             e.printStackTrace();

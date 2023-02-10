@@ -41,6 +41,7 @@ export default {
         const result = total.filter(index => index.email === this.id);
         
         this.clientInfo = result 
+        // this.$emit('get-clientInfo')
         // this.clientInfo = res.data
       })
     },
