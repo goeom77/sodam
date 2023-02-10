@@ -1,13 +1,15 @@
 <template>
-  <div id="main-container" class="container">
+  <div class="container d-flex justify-content-center">
     <div v-if="!session">
       <!-- 모달을 띄워줄것 녹화할 수 있다는 것 -->
       <div id="join-div">
         <img src="#" />
       </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
+      <div>
         <h1>SODAM</h1>
-        <div class="form-group">
+        <div>
+          <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
+          <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
           <p>
             <label>Participant</label>
             <input
@@ -17,7 +19,7 @@
               required
             />
           </p>
-          <p>
+          <p >
             <label>Session</label>
             <input
               v-model="mySessionId"
@@ -37,47 +39,46 @@
         </div>
       </div>
     </div>
-
+    <!-- 스트림 시작 -->
     <div id="session" v-if="session">
       <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          @click="leaveSession"
-          value="Leave session"
-        />
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
+        <v-btn
           id="buttonVideo"
           @click="videoController"
-          value="mute Video"
-        />
-
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
+        >
+          <span>{{ videoMsg }}</span>
+        </v-btn>
+        <v-btn
           id="buttonAudio"
           @click="audioController"
-          value="mute Audio"
-        />
+        >
+          <span>{{ audioMsg }}</span>
+        </v-btn>
+        <v-btn
+          id="buttonLeaveSession"
+          color="red"
+          @click="leaveSession"
+        >
+          <span>나가기</span>
+        </v-btn>
       </div>
-      <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div>
-      <div id="video-container" class="col-md-6">
-        <user-video
-          :stream-manager="publisher"
-          @click="updateMainVideoStreamManager(publisher)"
-        />
-        <user-video
-          v-for="sub in subscribers"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)"
-        />
+      <div>
+        <div id="main-video" class="col-md-5">
+          <user-video :stream-manager="mainStreamManager" />
+        </div>
+        <div id="video-container" class="col-md-5">
+          <user-video
+            :stream-manager="publisher"
+            @click="updateMainVideoStreamManager(publisher)"
+          />
+          <user-video
+            v-for="sub in subscribers"
+            :key="sub.stream.connection.connectionId"
+            :stream-manager="sub"
+            @click="updateMainVideoStreamManager(sub)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -104,12 +105,20 @@ export default {
       subscribers: [],
       videoMute: false,
       audioMute: false,
+      audioMsg: "마이크 OFF",
+      videoMsg: "비디오 OFF",
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       message: "",
       chatSeq: 0,
       chatList: [],
     };
+  },
+  created() {
+    if (this.videoMute == true) this.videoMsg = "비디오 OFF";
+    else this.videoMsg = "비디오 ON";
+    if (this.audioMute == true) this.audioMsg = "마이크 OFF";
+    else this.audioMsg = "마이크 ON";
   },
   methods: {
     joinSession() {
@@ -272,10 +281,14 @@ export default {
     },
     videoController() {
       this.videoMute = !this.videoMute;
+      if(this.videoMute == true) this.videoMsg = "비디오 OFF";
+      else(this.videoMsg = "비디오 ON");
       this.publisher.publishVideo(this.videoMute);
     },
     audioController() {
       this.audioMute = !this.audioMute;
+      if(this.audioMute == true) this.audioMsg = "마이크 OFF";
+      else(this.audioMsg = "마이크 ON");
       this.publisher.publishAudio(this.audioMute);
     },
     // sendChat() {
@@ -298,3 +311,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>
