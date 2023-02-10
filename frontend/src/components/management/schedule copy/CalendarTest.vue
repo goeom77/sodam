@@ -3,14 +3,14 @@ import {defineComponent} from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
 
 
 
 document.addEventListener('DOMContentLoaded', function() {
   var Calendar = FullCalendar.Calendar;
-  var Draggable = FullCalendar.Draggable;
+  // var Draggable = FullCalendar.Draggable;
 
   var containerEl = document.getElementById('external-events');
   var calendarEl = document.getElementById('calendar');
@@ -203,7 +203,7 @@ export default defineComponent({
 <!--&lt;!&ndash;          </div>&ndash;&gt;-->
 <!--        </div>-->
         <div class='demo-app-main'>
-          <div id='external-events'>
+          <div id='external-events' class="drag-cover">
             <p>
               <strong>Draggable Events</strong>
             </p>
@@ -231,7 +231,7 @@ export default defineComponent({
           </div>
           <FullCalendar
               class='demo-app-calendar'
-              :options='calendarOptions'
+              :options=calendarOptions
           >
             <template v-slot:eventContent='arg'>
               <b>{{ arg.timeText }}</b>
