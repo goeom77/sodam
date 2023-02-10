@@ -167,6 +167,9 @@ public class AuthServiceImpl implements AuthService{
                 .email(request.getEmail())
                 .tel(request.getTel())
                 .profileImg(request.getProfileImg())
+                .age(request.getAge())
+                .gender(request.getGender())
+                .commonCodeId(Role.CLIENT.getCommonCode())
                 .build());
 
         return client;
