@@ -5,6 +5,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // is the "remove after drop" checkbox checked?
       if (checkbox.checked) {
         // if so, remove the element from the "Draggable Events" list
+        console.log(info)
         info.draggedEl.parentNode.removeChild(info.draggedEl);
       }
     },
@@ -70,6 +73,7 @@ export default defineComponent({
   },
   data() {
     return {
+      userId:this.$store.state.payload.id,
       calendarOptions: {
         plugins: [
           dayGridPlugin,
@@ -99,6 +103,7 @@ export default defineComponent({
         */
       },
       currentEvents: [],
+      DraggableEvents: [],
     }
   },
   methods: {
@@ -108,7 +113,7 @@ export default defineComponent({
     handleDateSelect(selectInfo) {
       let title = prompt('Please enter a new title for your event')
       let calendarApi = selectInfo.view.calendar
-
+      
       calendarApi.unselect() // clear date selection
 
       if (title) {
@@ -128,10 +133,32 @@ export default defineComponent({
     },
     handleEvents(events) {
       this.currentEvents = events
+      
     },
     onEventDrop ({ event }) {
       this.currentEvents=event
+      console.log(event)
+    },
+    getListData(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/search`,
+        data:{
+          state:'APPROVED',
+          userId: this.userId
+        }
+      })
+      .then(res=>{
+        let len = res.data.length
+        for (let i=0; i<len; i++){
+          this.currentEvents.push(res.data[i])
+        }
+        console.log(this.currentEvents)
+      })
     }
+  },
+  created(){
+    this.getListData()
   }
 })
 
@@ -141,77 +168,18 @@ export default defineComponent({
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class='demo-app'>
-<!--        <div class='demo-app-sidebar'>-->
-<!--          <div class='demo-app-sidebar-section'>-->
-<!--            <h2>Instructions</h2>-->
-<!--            <ul>-->
-<!--              <li>Select dates and you will be prompted to create a new event</li>-->
-<!--              <li>Drag, drop, and resize events</li>-->
-<!--              <li>Click an event to delete it</li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--          <div class='demo-app-sidebar-section'>-->
-<!--            <label>-->
-<!--              <input-->
-<!--                  type='checkbox'-->
-<!--                  :checked='calendarOptions.weekends'-->
-<!--                  @change='handleWeekendsToggle'-->
-<!--              />-->
-<!--              toggle weekends-->
-<!--            </label>-->
-
-<!--          </div>-->
-<!--&lt;!&ndash;          <div class='demo-app-sidebar-section'>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;            요기&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <div id='external-events'>&ndash;&gt;-->
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong>Draggable Events</strong>&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 1</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 2</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 3</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 4</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 5</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type='checkbox' id='drop-remove' />&ndash;&gt;-->
-<!--&lt;!&ndash;                <label for='drop-remove'>remove after drop</label>&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;            요기&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <div id='calendar-container'>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div id='calendar' class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h2>All Events ({{ currentEvents.length }})</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;            <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;              <li v-for='event in currentEvents' :key='event.id'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <b>{{ event.startStr }}</b>&ndash;&gt;-->
-<!--&lt;!&ndash;                <i>{{ event.title }}</i>&ndash;&gt;-->
-<!--&lt;!&ndash;              </li>&ndash;&gt;-->
-<!--&lt;!&ndash;            </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </div>-->
         <div class='demo-app-main'>
           <div id='external-events' class="drag-cover">
             <p>
               <strong>Draggable Events</strong>
-            </p>
 
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'>
-              <div class='fc-event-main'>My Event 1</div>
+            </p>
+            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
+            v-for="(event,idx) in currentEvents"
+            :key="idx">
+              <div class='fc-event-main'>{{event.name}}</div>
             </div>
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable'>
+            <!-- <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable'>
               <div class='fc-event-main'>My Event 2</div>
             </div>
             <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable'>
@@ -222,7 +190,7 @@ export default defineComponent({
             </div>
             <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
               <div class='fc-event-main'>My Event 5</div>
-            </div>
+            </div> -->
 
             <p>
               <input type='checkbox' id='drop-remove' />
@@ -238,6 +206,7 @@ export default defineComponent({
               <i>{{ arg.event.title }}</i>
             </template>
           </FullCalendar>
+          {{ this.currentEvents }}
         </div>
       </div>
     </div>

@@ -43,6 +43,9 @@ export default new Vuex.Store({
     },
     getNotiCount(state) {
       return state.newNotiCount;
+    },
+    getIdData(state){
+      return state.payload.id
     }
   },
   mutations: {
