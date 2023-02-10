@@ -160,6 +160,6 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
 //                .where(counselor.name.contains("%" + request.getKeyword() + "%")
 //                        , counselor.introduce.like(request.getKeyword())
 //                        , counselor.consultTypeList.contains(request.getType())).fetchOne();
-        return new PageImpl<>(list.stream().map(Counselor::toResponse).toList(), Pageable.ofSize(pageable.getPageSize()), list.size());
+        return new PageImpl<>(list.stream().map(Counselor::toResponse).collect(Collectors.toList()), Pageable.ofSize(pageable.getPageSize()), list.size());
     }
 }

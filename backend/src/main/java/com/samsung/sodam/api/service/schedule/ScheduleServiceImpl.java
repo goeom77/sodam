@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -48,6 +49,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         return customRepository.getMonthlySchedule(request).stream().map(it->{
             it.setEnd(it.getStart().plusMinutes(50));
             return it;
-        }).toList();
+        }).collect(Collectors.toList());
     }
 }
