@@ -25,6 +25,7 @@ public class TroubleServiceImpl implements TroubleService {
     private final TroubleRepository repository;
     private final TroubleCustomRepository customRepository;
     private final TroubleCommentRepository commentRepository;
+    private final ClientRepository clientRepository;
     private final CounselorRepository counselorRepository;
     private final TroubleCommentLikeRepository commentLikeRepository;
 
@@ -53,7 +54,16 @@ public class TroubleServiceImpl implements TroubleService {
 
     @Override
     public TroubleOneResponse getTrouble(String userId, Long id) {
-        return customRepository.getTrouble(userId, id);
+        TroubleOneResponse response = customRepository.getTrouble(userId, id);
+        Optional<Client> c = clientRepository.findById(response.getClientId());
+        Client client = null;
+        if(c.isPresent()) {
+            client = c.get();
+            System.out.println(c);
+            if(client.getAge() != null )response.setAge(client.getAge().getValue());
+            response.setGender(client.getGender());
+        }
+        return response;
     }
 
     @Override

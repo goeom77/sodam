@@ -157,7 +157,9 @@ public class KakaoAuthServiceImpl implements KakaoAuthService{
 
     @Override
     public Client clientSignupKakao(KakaoUser user) {
-        return authService.clientSignup(new ClientRequest(user.getId(), "NO_PASSWORD", user.getName(), null, user.getEmail(), user.getThumbnailImage()));
+        return authService.clientSignup(ClientRequest.builder().
+                id(user.getId())
+                .password("NO_PASSWORD").name(user.getName()).email(user.getEmail()).profileImg(user.getThumbnailImage()).build());
     }
 
     @Override
