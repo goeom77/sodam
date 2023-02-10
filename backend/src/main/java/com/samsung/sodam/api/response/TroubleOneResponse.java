@@ -2,6 +2,7 @@ package com.samsung.sodam.api.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
+import com.samsung.sodam.db.entity.GENDER;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -47,6 +48,10 @@ public class TroubleOneResponse {
 
     @ApiModelProperty(value = "해당 게시글의 댓글 목록")
     private List<TroubleCommentResponse> commentList;
+
+    private GENDER gender;
+
+    private String age;
 
     @QueryProjection
     public TroubleOneResponse(Long postId, String category, String title, String content, String clientId,

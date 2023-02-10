@@ -1,6 +1,7 @@
 package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.ClientRequest;
+import com.samsung.sodam.api.response.ClientResponse;
 import com.samsung.sodam.api.service.ClientService;
 import com.samsung.sodam.db.entity.Client;
 import io.swagger.annotations.ApiOperation;
@@ -18,8 +19,10 @@ public class ClientController {
 
     @ApiOperation(value = "client 상세정보 조회", notes="client 본인이 사용하는 client 정보 조회")
     @GetMapping("/{id}")
-    public Client getClientInfo(@PathVariable String id) {
-        return clientService.getClientDetail(id);
+    public ClientResponse getClientInfo(@PathVariable String id) {
+        Client c = clientService.getClientDetail(id);
+        ClientResponse response = new ClientResponse(c);
+        return response;
     }
 
     @PutMapping(value = "/{id}")

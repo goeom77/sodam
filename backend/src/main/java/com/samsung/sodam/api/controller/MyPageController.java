@@ -43,7 +43,7 @@ public class MyPageController {
 
     @ApiOperation(value = "프로필 이미지 업로드")
     @PostMapping("/profile-img/{id}")
-    public ResponseEntity<String> uploadProfileImg(@RequestBody MultipartFile file, @PathVariable String id) {
+    public ResponseEntity<String> uploadProfileImg(@RequestPart MultipartFile file, @PathVariable String id) {
         try {
             service.uploadProfileImg(file, id);
             return new ResponseEntity<>(file.getOriginalFilename(), HttpStatus.OK);
