@@ -149,7 +149,7 @@ export default {
       });
 
       eventSource.onerror = event => {
-        console.log(event.data);
+        console.log(event);
       }
       
     }
@@ -168,14 +168,11 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted");
-    console.log(VUE_APP_API_URL, LOCAL_URL)
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
     }
   },
   beforeUpdate() {
-    console.log("beforeUpdate")
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');
