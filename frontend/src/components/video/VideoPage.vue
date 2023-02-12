@@ -112,60 +112,6 @@
             <button class="btn btn-sm btn-outline-secondary" type="button" @click="leaveSession">나가기</button>
           </form>
         </nav>
-      </div>
-      <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          @click="leaveSession"
-          value="Leave session"
-        />
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonVideo"
-          @click="videoController"
-          value="mute Video"
-        />
-
-        <input
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonAudio"
-          @click="audioController"
-          value="mute Audio"
-        />
-
-        <!-- 녹음 버튼 -->
-        <div v-if="recordMode === false">
-        <v-btn
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonRecord"
-          @click="startRecord"
-        >
-          <span>start record</span>
-        </v-btn>
-        </div>
-        <div v-else>
-        <v-btn
-          class="btn btn-large btn-danger"
-          type="button"
-          id="buttonRecord"
-          @click="stopRecord"
-        >
-          <span>stop record</span>
-        </v-btn>
-        </div>
-
-      </div>
-      <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div>
-      <div style="height:50px;"></div>
-      <div>
         <!-- session -->
         <div class="d-flex justify-content-center">
           <div style="float:left">
@@ -204,6 +150,27 @@
             >
               <span>{{ audioMsg }}</span>
             </v-btn>
+            <!-- 녹음 버튼 -->
+
+            <v-btn
+              v-if="recordMode == false"
+              class="btn btn-large btn-danger"
+              type="button"
+              id="buttonRecord"
+              @click="startRecord"
+            >
+              <span>start record</span>
+            </v-btn>
+            <v-btn
+              v-else
+              class="btn btn-large btn-danger"
+              type="button"
+              id="buttonRecord"
+              @click="stopRecord"
+            >
+              <span>stop record</span>
+            </v-btn>
+
             <v-btn
               id="buttonLeaveSession"
               color="red"
@@ -243,6 +210,8 @@ export default {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      recordMode : false,
+      recordNames: [],
       videoMute: false,
       audioMute: false,
       recordMode : false,
@@ -513,7 +482,7 @@ export default {
         this.recordMode = !this.recordMode;
         })
         .catch((error) => console.log(error));
-    }
+    },
     // sendChat() {
     //   if (this.message != "") {
     //     this.session
