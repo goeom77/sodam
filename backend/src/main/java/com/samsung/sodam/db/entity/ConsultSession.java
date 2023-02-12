@@ -1,6 +1,7 @@
 package com.samsung.sodam.db.entity;
 
 import com.samsung.sodam.db.converter.StateAttributeConverter;
+import com.samsung.sodam.db.converter.SttStateAttributeConverter;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,4 +31,6 @@ public class ConsultSession {
     @Column(name = "openvidu_id")
     private String openviduId; // 화상상담 세션 ID
 
+    @Convert(converter = SttStateAttributeConverter.class)
+    STT_STATE stt_status;
 }
