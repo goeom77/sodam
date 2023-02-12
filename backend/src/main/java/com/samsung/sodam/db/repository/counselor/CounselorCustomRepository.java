@@ -1,5 +1,6 @@
 package com.samsung.sodam.db.repository.counselor;
 
+import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
 import com.samsung.sodam.api.response.CounselorDetailResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
@@ -18,4 +19,6 @@ public interface CounselorCustomRepository{
     CounselorDetailResponse getCounselorDetailAll(String userId);
 
     Page<CounselorListResponse> searchCounselor(CounselorSearchRequest request, Pageable pageable);
+
+    Page<CounselorListResponse> getBestCounselor(Pageable pageable);
 }

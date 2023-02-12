@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RoomServiceImpl implements RoomService{
+public class RoomServiceImpl implements RoomService {
 
 
     @Value("${openvidu.url}")
@@ -49,10 +49,10 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public ResponseDto<?> startRecord(String sessionId) {
         // 이미 녹음중일 때
-        if(sessionRecordingMap.get(sessionId) != null) {
+        if (sessionRecordingMap.get(sessionId) != null) {
             try {
                 Recording recording = openVidu.getRecording(sessionRecordingMap.get(sessionId));
-                if(recording.getStatus().equals(Recording.Status.started)) {
+                if (recording.getStatus().equals(Recording.Status.started)) {
                     // 녹음중
                     return ResponseDto.builder()
                             .ok(true)
@@ -71,13 +71,13 @@ public class RoomServiceImpl implements RoomService{
 
         // 새로운 녹음 시작
         Recording recording = null;
-        try{
+        try {
             //openvidu 서버의 녹음 데이터 확인
             recording = openVidu.getRecording(sessionId);
-        }catch (OpenViduJavaClientException | OpenViduHttpException exception){
+        } catch (OpenViduJavaClientException | OpenViduHttpException exception) {
             log.info("not current Recording");
         }
-        try{
+        try {
             RecordingProperties properties = new RecordingProperties.Builder()
                     .outputMode(Recording.OutputMode.COMPOSED)
                     .hasAudio(true)
@@ -91,7 +91,7 @@ public class RoomServiceImpl implements RoomService{
                     .result(recording)
                     .build();
 
-        }catch (OpenViduException e){
+        } catch (OpenViduException e) {
             //녹음 시작 실패
             sessionRecordingMap.remove(sessionId);
             return ResponseDto.builder()

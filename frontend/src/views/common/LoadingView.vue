@@ -1,7 +1,8 @@
 <template>
 
-  <div class="lds-facebook" v-if="loading">
+  <div v-if="loading" style="width: 100px">
     <div>
+     <h1> 로딩중입니다</h1>
     </div>
     <div>
     </div>
@@ -19,6 +20,9 @@
         required: true,
       },
     },
+    created() {
+      console.log("loading created")
+    }
   }
 </script>
 

@@ -72,7 +72,7 @@
 
 <script>
 
-import axios from 'axios'
+import axios from "@/store/instance.js";
 import BoardViewListItem from '../boarditem/BoardViewListItem.vue'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
