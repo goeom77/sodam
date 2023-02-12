@@ -4,6 +4,11 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :review="review"/>
+    
+  
+
+
+
     <v-btn outlined rounded text @click="moveTo">
       후기작성
     </v-btn>

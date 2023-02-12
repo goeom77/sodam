@@ -1,12 +1,12 @@
 <template>
-  <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
-      <blockquote class="grass">
-        <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>  
-        <p>{{review.contents}}</p>
-      </blockquote>   
-    </div>
+  <div>
+    <blockquote class="grass">
+      <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>  
+      <p>{{review.contents}}</p>
+    </blockquote>   
+
   </div>
+  
 </template>
 
 <script>
@@ -25,20 +25,20 @@ export default {
 </script>
 
 <style>
-#fh5co-main {
-  width: 85%;
+#fh5co-main2 {
+
   float: right;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
 }
 @media screen and (max-width: 1200px) {
-  #fh5co-main {
+  #fh5co-main2 {
     width: 70%;
   }
 }
 @media screen and (max-width: 768px) {
-  #fh5co-main {
+  #fh5co-main2 {
     width: 100%;
   }
 }
@@ -46,10 +46,10 @@ export default {
   position: relative;
   width: 80%;
   margin: 0 auto;
-  padding: 2em 0;
+  padding: 1em 0;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-main .fh5co-narrow-content {
+  #fh5co-main2 .fh5co-narrow-content {
     width: 100%;
     padding: 3.5em 1em;
   }
