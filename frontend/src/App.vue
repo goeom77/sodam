@@ -63,11 +63,13 @@
     </div>
   </div>
   <router-view /> 
+  <LoadingBar :loading="this.$store.state.loadingStatus"></LoadingBar>
 </template>
 
 <script>
 import axios from 'axios'
 import { EventSourcePolyfill } from "event-source-polyfill";
+import LoadingBar from '../src/views/common/LoadingView'
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -83,6 +85,7 @@ export default {
   },
   component: {
     // Spinner
+    LoadingBar
   },
   methods: {
     logOut(){
@@ -138,7 +141,8 @@ export default {
             });
             
             notification.addEventListener('click', () => {
-                window.open("http://localhost:8180/AlarmView", '_self');
+              // url: `${VUE_APP_API_URL}/api/auth/kakao`
+                window.open(`${VUE_APP_API_URL}/AlarmView`, '_self');
             });
         }
 

@@ -266,7 +266,7 @@ export default {
 			commentCount: 0,
 			BoardComments: null,
 			comment: '',
-      jender: '',
+      gender: '',
       age: '',
       postId: postId,
       Boardarticle: null,
@@ -293,7 +293,7 @@ export default {
       
         .then((res) => {
           console.log(this.$route.params.postId)
-          this.jender= res.data.jender
+          this.gender= res.data.gender
           this.age = res.data.age
         })
     },
