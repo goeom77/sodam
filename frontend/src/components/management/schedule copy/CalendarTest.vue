@@ -6,11 +6,11 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {INITIAL_EVENTS, createEventId} from './event-utils'
 import axios from 'axios'
+
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   var Calendar = FullCalendar.Calendar;
   // var Draggable = FullCalendar.Draggable;
 
@@ -23,22 +23,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   new Draggable(containerEl, {
     itemSelector: '.fc-event',
-    editable: true,
-    droppable: true,
-    drop: function(info) {
+    drop: function (info) {
       // is the "remove after drop" checkbox checked?
       if (checkbox.checked) {
-        console.log("draggable drop info : "+JSON.stringify(info))
-        // if so, remove the element from the "Draggable Events" list
-        console.log(info)
+        console.log("draggable drop info : " + JSON.stringify(info))
         info.draggedEl.parentNode.removeChild(info.draggedEl);
       }
     },
+    eventClick: this.handleEventClick,
+    eventsSet: this.handleEvents,
+    eventDrop: this.onEventDrop,
+    droppable:true,
     eventData: function(eventEl) {
       return {
-        title: eventEl.innerText
-      };
+        title: eventEl.innerText.trim(),
+        duration : "02:00"
+      }
     }
+    // eventData: this.DraggableEvents
   });
 
   // initialize the calendar
@@ -50,23 +52,25 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
+    dropAccept: '.fc-event',
+    droppable: true,
     editable: true, // this allows things to be dropped onto the calendar
-    // drop: function(info) {
-    //   // is the "remove after drop" checkbox checked?
-    //   if (checkbox.checked) {
-    //     // if so, remove the element from the "Draggable Events" list
-    //
-    //     console.log("calendar drop info : "+JSON.stringify(info))
-    //     // if so, remove the element from the "Draggable Events" list
-    //     info.draggedEl.parentNode.removeChild(info.draggedEl);
-    //     info.draggedEl.parentNode.removeChild(info.draggedEl);
-    //   }
-    // }
+    // eventSources: {
+    //   events: [],
+    //   color: 'yellow',   // an option!
+    //   textColor: 'black' // an option!
+    // },
+    drop: function (info) {
+      // is the "remove after drop" checkbox checked?
+      if (checkbox.checked) {
+        console.log("draggable drop info : " + JSON.stringify(info))
+        info.draggedEl.parentNode.removeChild(info.draggedEl);
+      }
+    }
   });
 
   calendar.render();
 });
-
 
 
 export default defineComponent({
@@ -75,7 +79,7 @@ export default defineComponent({
   },
   data() {
     return {
-      userId:this.$store.state.payload.id,
+      userId: this.$store.state.payload.id,
       calendarOptions: {
         plugins: [
           dayGridPlugin,
@@ -98,13 +102,18 @@ export default defineComponent({
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         eventDrop: this.onEventDrop,
-        /* you can update a remote database when these fire:
-        eventAdd:
-        eventChange:
+        // you can update a remote database when these fire:
+        // eventAdd: {},
+        // eventChange: {},
 
-        */
+
+        // eventSources: {
+        //   events: [],
+        //   color: 'yellow',
+        //   textColor: 'black'
+        // }
       },
-      currentEvents: [],
+      // currentEvents: [],
       DraggableEvents: [],
     }
   },
@@ -115,7 +124,7 @@ export default defineComponent({
     handleDateSelect(selectInfo) {
       let title = prompt('Please enter a new title for your event')
       let calendarApi = selectInfo.view.calendar
-      
+
       calendarApi.unselect() // clear date selection
 
       if (title) {
@@ -135,35 +144,47 @@ export default defineComponent({
     },
     handleEvents(events) {
       console.log("handleEvents : >> "+JSON.stringify(events))
-      this.currentEvents = events
-      
-    },
-    onEventDrop ({ event }) {
-      console.log("onEventDrop : >> "+JSON.stringify(event))
+      // console.log("handleEvents : >> ")
+      this.DraggableEvents = events
 
-      this.currentEvents=event
-      console.log(event)
     },
-    getListData(){
+    onEventDrop({event}) {
+      console.log("onEventDrop : >> " + JSON.stringify(event))
+
+      this.DraggableEvents = event
+      // console.log(event)
+    },
+    getApprovedData() {
       axios({
-        method:'post',
-        url:`${VUE_APP_API_URL}/api/schedule/search`,
-        data:{
-          state:'APPROVED',
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/schedule/search`,
+        data: {
+          state: 'APPROVED',
           userId: this.userId
         }
       })
-      .then(res=>{
-        let len = res.data.length
-        for (let i=0; i<len; i++){
-          this.currentEvents.push(res.data[i])
+          .then(res => {
+            this.DraggableEvents = res.data
+            console.log("currentEvents:>>>> " + JSON.stringify(res.data))
+          })
+    },
+    getExpectedData() {
+      axios({
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/schedule/search/monthly`,
+        data: {
+          counselorId: this.userId
         }
-        console.log(this.currentEvents)
       })
+          .then(res => {
+            console.log("getExpectedData:>>>> " +JSON.stringify(res.data))
+            this.calendarOptions.eventSources.events = res.data
+          })
     }
   },
-  created(){
-    this.getListData()
+  created() {
+    this.getExpectedData()
+    this.getApprovedData()
   }
 })
 
@@ -179,39 +200,29 @@ export default defineComponent({
               <strong>Draggable Events</strong>
 
             </p>
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
-            v-for="(event,idx) in currentEvents"
-            :key="idx">
-              <div class='fc-event-main'>{{event.name}}</div>
+            <div
+                class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
+                v-for="(event,idx) in DraggableEvents"
+                :key="idx">
+              <div class='fc-event-main'>{{ event.name }}</div>
+              <div class='fc-event-main'>{{ event.createdDateTime.split('T')[0] }}</div>
             </div>
-            <!-- <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable'>
-              <div class='fc-event-main'>My Event 2</div>
-            </div>
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable'>
-              <div class='fc-event-main'>My Event 3</div>
-            </div>
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-              <div class='fc-event-main'>My Event 4</div>
-            </div>
-            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-              <div class='fc-event-main'>My Event 5</div>
-            </div> -->
-
             <p>
-              <input type='checkbox' id='drop-remove' />
+              <input type='checkbox' id='drop-remove'/>
               <label for='drop-remove'>remove after drop</label>
             </p>
           </div>
           <FullCalendar
               class='demo-app-calendar'
-              :options=calendarOptions
+              :options=this.calendarOptions
           >
             <template v-slot:eventContent='arg'>
-              <b>{{ arg.timeText }}</b>
-              <i>{{ arg.event.title }}</i>
+              <i>제발 보여줘</i>
+              <i>{{ arg.eventSources.events }}</i>
+<!--              <i>{{ arg.eventSources.events.start.split('T')[0] }}</i>-->
             </template>
           </FullCalendar>
-          {{ this.currentEvents }}
+<!--          {{ this.DraggableEvents }}-->
         </div>
       </div>
     </div>

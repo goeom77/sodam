@@ -63,13 +63,15 @@
     </div>
   </div>
   <router-view /> 
-  <LoadingBar :loading="this.$store.state.loadingStatus"></LoadingBar>
+  <LoadingView :loading="store.state.loadingStatus"></LoadingView>
 </template>
 
 <script>
 import axios from 'axios'
+// import axios from '@/store/instance.js'
 import { EventSourcePolyfill } from "event-source-polyfill";
-import LoadingBar from '../src/views/common/LoadingView'
+import store from "@/store";
+import LoadingView from "@/views/common/LoadingView.vue";
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -85,7 +87,7 @@ export default {
   },
   component: {
     // Spinner
-    LoadingBar
+    LoadingView
   },
   methods: {
     logOut(){
@@ -159,6 +161,9 @@ export default {
     }
   },
   computed:{
+    store() {
+      return store
+    },
     isLogin(){
       return this.$store.getters.isLogin
     },
