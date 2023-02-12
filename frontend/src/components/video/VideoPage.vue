@@ -137,12 +137,12 @@
               class="ma-2"
               @click="videoController"
             >
-              <div v-if="videoMute == false">
-                <v-icon icon="mdi-video" size="large"></v-icon>
-              </div>
-              <div v-else>
-                <v-icon icon="mdi-video-off" size="large"></v-icon>
-              </div>
+            <v-icon
+              v-if="videoMute == false" 
+              icon="mdi-video-ouline" size="large"></v-icon>
+            <v-icon
+              v-else 
+              icon="mdi-video-off-outline" size="large"></v-icon>
             </v-btn>
             <v-btn
               id="buttonAudio"
@@ -322,7 +322,7 @@ export default {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: !this.audioMute, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: !this.videoMute, // Whether you want to start publishing with your video enabled or not
-              resolution: "600x900", // The resolution of your video
+              resolution: "600x700", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
