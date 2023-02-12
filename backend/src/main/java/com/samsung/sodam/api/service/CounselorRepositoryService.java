@@ -98,6 +98,10 @@ public class CounselorRepositoryService {
 //        return reviewRepository.findAllByClientId(id);
 //    }
 
+    public Page<CounselorListResponse> getBestCounleor(Pageable pageable){
+        return counselorCustomRepository.getBestCounselor(pageable);
+    }
+
     public Page<Client> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable);
     }

@@ -33,4 +33,7 @@ public class ConsultSchedule {
     private Integer turn; // 회차
     @Column(name = "session_id")
     private Integer sessionId;
+
+    @Column(name = "consult_result")
+    private String consultResult;
 }
