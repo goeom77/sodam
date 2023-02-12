@@ -14,4 +14,18 @@ public class GenderConverter extends EntityConverter<GENDER, String> {
     protected GENDER[] getValueList() {
         return GENDER.values();
     }
+
+    @Override
+    public String convertToDatabaseColumn(GENDER attribute) {
+        if(attribute != null)
+            return super.convertToDatabaseColumn(attribute);
+        return GENDER.NONE.getValue();
+    }
+
+    @Override
+    public GENDER convertToEntityAttribute(String dbData) {
+        if(dbData != null && !dbData.equals(""))
+            return super.convertToEntityAttribute(dbData);
+        return GENDER.NONE;
+    }
 }

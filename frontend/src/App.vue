@@ -54,20 +54,22 @@
               <span></span>
               <router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
             </li>
-            <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
           </ul>
         </nav>
       </aside>
     </div>
   </div>
   <router-view /> 
+  <LoadingBar :loading="this.$store.state.loadingStatus"></LoadingBar>
 </template>
 
 <script>
 import axios from 'axios'
 import { EventSourcePolyfill } from "event-source-polyfill";
+import LoadingBar from '../src/views/common/LoadingView'
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -83,6 +85,7 @@ export default {
   },
   component: {
     // Spinner
+    LoadingBar
   },
   methods: {
     logOut(){
@@ -138,7 +141,8 @@ export default {
             });
             
             notification.addEventListener('click', () => {
-                window.open("http://localhost:8180/AlarmView", '_self');
+              // url: `${VUE_APP_API_URL}/api/auth/kakao`
+                window.open(`${VUE_APP_API_URL}/AlarmView`, '_self');
             });
         }
 
@@ -149,7 +153,7 @@ export default {
       });
 
       eventSource.onerror = event => {
-        console.log(event.data);
+        console.log(event);
       }
       
     }
@@ -168,14 +172,11 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted");
-    console.log(VUE_APP_API_URL, LOCAL_URL)
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
     }
   },
   beforeUpdate() {
-    console.log("beforeUpdate")
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');

@@ -1,5 +1,4 @@
 <template>
-
 <div id="fh5co-main">
   <div class="fh5co-narrow-content">
     <div>
@@ -40,9 +39,12 @@
       </v-card>
 
 
-  </div>
+   </div>
 </div>
 </template>
+
+
+
 
 <script>
 import ConsultantCardItemReserve from '@/components/ConsultantCard/ConsultantCardItemReserve.vue'
