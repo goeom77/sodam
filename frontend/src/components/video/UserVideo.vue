@@ -1,28 +1,9 @@
 <template>
   <div v-if="streamManager">
-    <div>
       <!-- 사전 파일 -  -->
       <!-- lazy-src를 대기로 바꿀것 -->
-      <v-img
-        style="display:none"
-        class="mx-auto"
-        height="300"
-        lazy-src="https://picsum.photos/id/11/100/60"
-        max-width="500"
-        src="https://bad.src/not/valid"
-      >
-        <template v-slot:placeholder>
-          <div class="d-flex align-center justify-center fill-height">
-            <v-progress-circular
-              color="grey-lighten-4"
-              indeterminate
-            ></v-progress-circular>
-          </div>
-        </template>
-      </v-img>
-    </div>
-    <div style="">
-      <ov-video 
+    <div>
+      <ov-video
         :stream-manager="streamManager"
         :test=true
       />
