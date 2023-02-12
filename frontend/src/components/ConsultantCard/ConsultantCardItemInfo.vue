@@ -2,7 +2,7 @@
   <v-container>
     <div class="parent">
       <div class="child1" style="padding-right: 15px;">
-        <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
+        <img v-bind:src="`${counselorData.profileImg}`" alt="까비">
       </div>
       <div class="child2">
         <h1>

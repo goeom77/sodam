@@ -10,35 +10,17 @@
 </template>
 
 <script>
-import axios from 'axios'
-const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
 export default {
   name:'ConsultantCardItemReviewItem',
   props:{
     review:Object,
-    idx:Number,
-    limit:Number
   },
   methods:{
     goDetail(){
       this.$router.push({name:'ConsultantCardItemReviewItemDetail', params:{id: this.review.id}})
     },
-    reviewUpdate(){
-      const clientId = review.clientId
-      const contents = string
-      const counselorId = string
-      const id = 0
-      const pastCount = 0
-      const stars = 0
-      const title = "string"
-      const type = "string"
-
-      axios({
-        method:'post',
-        url:`${VUE_APP_API_URL}/api/review/${reviewId}`
-      })
-    },
-  }
+  },
 }
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-
   <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
 
     <v-card>
@@ -14,7 +13,8 @@
           size="125"
           rounded="0"
         >
-          <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
+        <img v-bind:src="`${counselor.profileImg}`" alt="까비">
+          
         </v-avatar>
         <div class="d-flex flex-no-wrap justify-space-between">
           <div>

@@ -1,19 +1,9 @@
 <template>
   <div>
-    <!-- {{ counselorData }} -->
     <ConsultantCardItemReviewItem
     v-for="(review, idx) in reviews"
     :key="idx"
-    :idx="idx"
-    :review="review"  
-    :limit="page"/>
-    <div class="text-center">
-      <v-pagination
-        v-model="page"
-        :length="6"
-      ></v-pagination>
-    </div>
-
+    :review="review"/>
     <v-btn outlined rounded text @click="moveTo">
       후기작성
     </v-btn>
@@ -58,9 +48,14 @@ export default {
         console.log(res)
         this.reviews = res.data.content
       })
-    }
+      .catch(res=>{
+        console.log(res)
+        console.log('안직힘   ')
+        this.getReview()
+      })
+    },
   },
-  created(){
+  mounted(){
     this.getReview()
   }
 }
