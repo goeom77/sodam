@@ -112,6 +112,56 @@
             <button class="btn btn-sm btn-outline-secondary" type="button" @click="leaveSession">나가기</button>
           </form>
         </nav>
+      <div id="session-header">
+        <h1 id="session-title">{{ mySessionId }}</h1>
+        <input
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonLeaveSession"
+          @click="leaveSession"
+          value="Leave session"
+        />
+        <input
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonVideo"
+          @click="videoController"
+          value="mute Video"
+        />
+
+        <input
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonAudio"
+          @click="audioController"
+          value="mute Audio"
+        />
+
+        <!-- 녹음 버튼 -->
+        <div v-if="recordMode === false">
+        <v-btn
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonRecord"
+          @click="startRecord"
+        >
+          <span>start record</span>
+        </v-btn>
+        </div>
+        <div v-else>
+        <v-btn
+          class="btn btn-large btn-danger"
+          type="button"
+          id="buttonRecord"
+          @click="stopRecord"
+        >
+          <span>stop record</span>
+        </v-btn>
+        </div>
+
+      </div>
+      <div id="main-video" class="col-md-6">
+        <user-video :stream-manager="mainStreamManager" />
       </div>
       <div style="height:50px;"></div>
       <div>
@@ -172,6 +222,7 @@ import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideo from "@/components/video/UserVideo.vue";
 axios.defaults.headers.post["Content-Type"] = "application/json";
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 const OPENVIDU_SERVER_URL = "https://i8e103.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "SODAM";
 export default {
@@ -193,6 +244,8 @@ export default {
       subscribers: [],
       videoMute: false,
       audioMute: false,
+      recordMode : false,
+      recordNames: [],
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       message: "",
@@ -422,6 +475,44 @@ export default {
       else(this.audioMsg = "마이크 ON");
       this.publisher.publishAudio(this.audioMute);
     },
+    startRecord() {
+      const recordName = `recording_${this.mySessionId}_${this.recordNames.length + 1}`;
+      this.recordNames.push(recordName);
+      axios
+        .post(
+          `${VUE_APP_API_URL}/api/room/recordings/start/${this.mySessionId}`,
+          {},
+          {
+            auth: {
+              username: "OPENVIDUAPP",
+              password: OPENVIDU_SERVER_SECRET,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response)
+          this.recordMode = !this.recordMode;
+        })
+        .catch((error) => console.log(error));
+    },
+    stopRecord() {
+      axios
+        .post(
+          `${VUE_APP_API_URL}/api/room/recordings/stop/${this.mySessionId}`,
+          {},
+          {
+            auth: {
+              username: "OPENVIDUAPP",
+              password: OPENVIDU_SERVER_SECRET,
+            },
+          }
+        )
+        .then((response) => {
+        console.log(response)
+        this.recordMode = !this.recordMode;
+        })
+        .catch((error) => console.log(error));
+    }
     // sendChat() {
     //   if (this.message != "") {
     //     this.session

@@ -3,12 +3,17 @@ import axios from 'axios'
 import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
+// 로딩 임포트
+export const LOADING_STATUS = 'LOADING_STATUS'
+// import * as types from './mutation_types'
+
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    loadingStatus: false,
     newNotiCount: 0,
     KidBoardarticles: [],
     Announcearticles: [],
@@ -43,9 +48,17 @@ export default new Vuex.Store({
     },
     getNotiCount(state) {
       return state.newNotiCount;
+    },
+    getIdData(state){
+      return state.payload.id
     }
   },
   mutations: {
+    // 로딩 타입
+    LOADING_STATUS (state, loadingStatus) {
+      state.loadingStatus = loadingStatus
+    },
+    
     GET_BOARDARTICLES(state, Boardarticles) {
       console.log(Boardarticles)
       state.Boardarticles = Boardarticles
