@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
   new Draggable(containerEl, {
     itemSelector: '.fc-event',
     editable: true,
-    draggable:true,
     droppable: true,
     drop: function(info) {
       // is the "remove after drop" checkbox checked?
       if (checkbox.checked) {
+        console.log("draggable drop info : "+JSON.stringify(info))
         // if so, remove the element from the "Draggable Events" list
         info.draggedEl.parentNode.removeChild(info.draggedEl);
       }
@@ -47,16 +47,18 @@ document.addEventListener('DOMContentLoaded', function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    editable: true,
-    draggable:true,
-    droppable: true, // this allows things to be dropped onto the calendar
-    drop: function(info) {
-      // is the "remove after drop" checkbox checked?
-      if (checkbox.checked) {
-        // if so, remove the element from the "Draggable Events" list
-        info.draggedEl.parentNode.removeChild(info.draggedEl);
-      }
-    }
+    editable: true, // this allows things to be dropped onto the calendar
+    // drop: function(info) {
+    //   // is the "remove after drop" checkbox checked?
+    //   if (checkbox.checked) {
+    //     // if so, remove the element from the "Draggable Events" list
+    //
+    //     console.log("calendar drop info : "+JSON.stringify(info))
+    //     // if so, remove the element from the "Draggable Events" list
+    //     info.draggedEl.parentNode.removeChild(info.draggedEl);
+    //     info.draggedEl.parentNode.removeChild(info.draggedEl);
+    //   }
+    // }
   });
 
   calendar.render();
@@ -95,7 +97,7 @@ export default defineComponent({
         /* you can update a remote database when these fire:
         eventAdd:
         eventChange:
-        eventRemove:
+
         */
       },
       currentEvents: [],
@@ -127,9 +129,12 @@ export default defineComponent({
       }
     },
     handleEvents(events) {
+      console.log("handleEvents : >> "+JSON.stringify(events))
       this.currentEvents = events
     },
     onEventDrop ({ event }) {
+      console.log("onEventDrop : >> "+JSON.stringify(event))
+
       this.currentEvents=event
     }
   }
@@ -141,67 +146,6 @@ export default defineComponent({
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class='demo-app'>
-<!--        <div class='demo-app-sidebar'>-->
-<!--          <div class='demo-app-sidebar-section'>-->
-<!--            <h2>Instructions</h2>-->
-<!--            <ul>-->
-<!--              <li>Select dates and you will be prompted to create a new event</li>-->
-<!--              <li>Drag, drop, and resize events</li>-->
-<!--              <li>Click an event to delete it</li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--          <div class='demo-app-sidebar-section'>-->
-<!--            <label>-->
-<!--              <input-->
-<!--                  type='checkbox'-->
-<!--                  :checked='calendarOptions.weekends'-->
-<!--                  @change='handleWeekendsToggle'-->
-<!--              />-->
-<!--              toggle weekends-->
-<!--            </label>-->
-
-<!--          </div>-->
-<!--&lt;!&ndash;          <div class='demo-app-sidebar-section'>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;            요기&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <div id='external-events'>&ndash;&gt;-->
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong>Draggable Events</strong>&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 1</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 2</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 3</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 4</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class='fc-event-main'>My Event 5</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                <input type='checkbox' id='drop-remove' />&ndash;&gt;-->
-<!--&lt;!&ndash;                <label for='drop-remove'>remove after drop</label>&ndash;&gt;-->
-<!--&lt;!&ndash;              </p>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;            요기&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <div id='calendar-container'>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div id='calendar' class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h2>All Events ({{ currentEvents.length }})</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;            <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;              <li v-for='event in currentEvents' :key='event.id'>&ndash;&gt;-->
-<!--&lt;!&ndash;                <b>{{ event.startStr }}</b>&ndash;&gt;-->
-<!--&lt;!&ndash;                <i>{{ event.title }}</i>&ndash;&gt;-->
-<!--&lt;!&ndash;              </li>&ndash;&gt;-->
-<!--&lt;!&ndash;            </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </div>-->
         <div class='demo-app-main'>
           <div id='external-events' class="drag-cover">
             <p>
