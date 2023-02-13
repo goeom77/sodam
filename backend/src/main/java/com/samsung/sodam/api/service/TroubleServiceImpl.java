@@ -98,7 +98,7 @@ public class TroubleServiceImpl implements TroubleService {
         commentRepository.save(troubleComment);
 
         notificationService.send(troubleBoard.get().getClientId(), NotificationType.TROUBLE,
-                "고민게시글에 댓글이 등록되었습니다.", "", "/AlarmView");
+                "고민게시글에 댓글이 등록되었습니다.", "", "/KidBoardDetail/" + troubleBoard.get().getId());
     }
 
     @Override

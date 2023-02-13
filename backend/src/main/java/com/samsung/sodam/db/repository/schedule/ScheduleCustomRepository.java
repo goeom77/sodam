@@ -2,7 +2,6 @@ package com.samsung.sodam.db.repository.schedule;
 
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
-import com.samsung.sodam.api.response.RemindNotiDto;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
@@ -20,8 +19,4 @@ public interface ScheduleCustomRepository {
     List<ConsultApplicant> searchSchedules(SearchSchedule request);
 
     List<MonthlyResponse> getMonthlySchedule(MonthlyScheduleRequest request);
-
-    List<RemindNotiDto> getTodayRemind();
-
-    List<RemindNotiDto> getOneHourRemind();
 }
