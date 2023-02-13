@@ -65,12 +65,14 @@
                   <v-form>
                     <v-text-field
                       prepend-icon="mdi-account"
+                      v-model="id"
                       name="login"
                       label="Login"
                       type="text"
                     ></v-text-field>
                     <v-text-field
                       prepend-icon="mdi-lock-outline"
+                      v-model="password"
                       id="password"
                       name="password"
                       label="Password"
