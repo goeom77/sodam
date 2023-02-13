@@ -229,7 +229,6 @@ export default {
   components: {
     UserVideo,
   },
-  props: ['id'],
   data() {
     return {
       consultadmit: false,
@@ -238,6 +237,7 @@ export default {
       common_code: undefined,
       OV: undefined,
       session: undefined,
+      scheduleId: 1,    // 일정 ID (추가)
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
@@ -495,7 +495,7 @@ export default {
     stopRecord() {
       axios
         .post(
-          `${VUE_APP_API_URL}/api/room/recordings/stop/${this.mySessionId}`,
+          `${VUE_APP_API_URL}/api/room/recordings/stop/${this.mySessionId}/${this.scheduleId}`,
           {},
           {
             auth: {
