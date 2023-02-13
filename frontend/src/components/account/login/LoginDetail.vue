@@ -34,28 +34,11 @@
     </v-tab>
   </v-tabs>
   <div style="height:20px"></div>
-  <!-- <v-window v-model="tab">
-    <v-window-item value="one">
-      <v-btn
-        class="ma-2"
-        color="purple"
-        icon="mdi-account-heart-outline"
-      ></v-btn>
-    </v-window-item>
-    <v-window-item value="two">
-      <v-btn
-        class="ma-2"
-        color="red-lighten-2"
-        icon="mdi-doctor"
-      ></v-btn>
-    </v-window-item>
-  </v-window> -->
   <div>
     <div style="margin: 0 auto; width:455px;">
       <v-card
         class="mx-auto"
-        max-width="380"
-        variant="outlined"
+        max-width="400"
       >
         <v-card-item>
           <div>
