@@ -46,12 +46,10 @@ export default {
         },
       })
       .then(res=>{
-        console.log(res)
+
         this.reviews = res.data.content
       })
       .catch(res=>{
-        console.log(res)
-        console.log('안직힘   ')
         this.getReview()
       })
     },

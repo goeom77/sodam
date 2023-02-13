@@ -15,11 +15,11 @@
         <div class="loginform">
           <div class="container__form container--signup" style="margin: 0 auto; width:455px;">
           <form action="#" class="form" id="form1">
-            <h2 class="form__title">Login</h2>
+            <h2 >Login</h2>
             <br>
-            <input class="inputTage" type="text" v-model="id"  placeholder="ID"/>
+            <input type="text" v-model="id" placeholder="ID">
             <br>
-            <input class="inputTage" type="password" v-model="password" placeholder="Password"/>
+            <input type="password" v-model="password" placeholder="Password"/>
             <br>
             <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
             <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>

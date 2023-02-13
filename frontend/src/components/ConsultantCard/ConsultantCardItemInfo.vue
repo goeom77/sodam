@@ -5,18 +5,35 @@
         <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
       </div>
       <div class="child2">
-        <!-- 하트 표시 -->
         <h1 style="display:inline;">
           {{ counselorData.name }} 상담사
-          <label class="like" style="float:right;">
+
+
+            <span v-if="this.likestatus===false" @click="likeCounselor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" fill="currentColor"></path>
+              </svg>
+            </span>
+            <div v-else @click="deleteFav">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" fill="currentColor"></path>
+              </svg>
+            </div>
+
+</h1> 
+        <!-- 하트 표시 -->
+          <!-- <label class="like" style="float:right;">
             <input type="checkbox"/>
             <div class="hearth"/>
           </label>
-          
           <a class="dribbble" href="https://dribbble.com/TaminoMartinius" target="_blank">
             <img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt="" id="mybtn" @click="likeCounselor"/>
-          </a>
-        </h1>
+          </a> -->
+        
+
+        
         <br>
         <h2>
           {{ counselorData.introduce }}
@@ -77,13 +94,14 @@ export default {
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
       FavCounselor:null,
+      likestatus:false
     }
   },
   methods:{
     likeCounselor(){
       axios({
         method:'post',
-        url:`${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${this.counselorData.id}`,
+        url:`${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${counselorData.id}`,
         data:{
           clientId:this.clientId,
           counselorId : this.counselorData.id
@@ -95,6 +113,24 @@ export default {
       .then(res=>{
         console.log(res)
       })
+    },
+    deleteFav(){
+      axios({
+        method:'delete',
+        url: `${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${this.counselorData.id}`,
+        data:{
+          clientId: this.clientId,
+          counselorId: this.counselorData.id
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        console.log(res)
+        console.log('카드 삭제 댐')
+      })
+
     },
     getFavCounselor(){
       axios({
@@ -108,18 +144,32 @@ export default {
         // }
       })
       .then(res=>{
-        const checkList = res.data
+        let num = 0
+        let idx = res.data.length
 
-        checkList.forEach(function (check){
-          if (check.id === this.counselorData.id){
-            // 클릭 한번
-            document.getElementById("my-btn")[0].click();
-            console.log(check)
+        for (let i = 0; i < idx; i++){
+          if (res.data[i].id === this.counselorData.id){
+            num ++
           }
-        })
+        }
+
+        if (num === 0){
+          this.likestatus = false
+        } else{
+          this.likestatus = true
+        }
+
+        // const checkList = res.data
+        // const counselorData = this.counselorData
+        // checkList.forEach(function (check){
+        //   if (check.id === counselorData.id){
+        //     // 클릭 한번
+        //     console.log(check)
+        //   }
+        // })
         console.log(res.data)
         this.FavCounselor = res.data
-        // console.log("fav : >> " + JSON.stringify(res.data))
+        console.log("fav : >> " + JSON.stringify(res.data))
       })
     }
   },
@@ -131,229 +181,7 @@ export default {
 
 <style>
 /* 찜하기, 상담신청 버튼 */
-body{
-  font-family: 'Roboto', sans-serif;
-  text-align: center;
-  background: #f1f1f1;
-}
 
-#presentation{
-  width: 480px;
-  height: 120px;
-  padding: 20px;
-  margin: auto;
-  background: #FFF;
-  margin-top: 10px;
-  box-shadow: 0 3px 15px -5px rgba(0,0,0,0.1); 
-  transition: all 0.3s; 
-  border-radius: 10px;
-  
-}
-h1{
-  font-weight: 400;
-}
-
-h3{
-  font-weight: 400;
-  color: #666;
-}
-
-#presentation:hover{
-  box-shadow: 0 12px 28px -5px rgba(0,0,0,0.13);
-  transition: all 0.3s;
-  transform: translateZ(10px);
-}
-
-#floating-button{
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: #db4437;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  cursor: pointer;
-  box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
-}
-
-.plus{
-  color: white;
-  position: absolute;
-  top: 0;
-  display: block;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-  line-height: 55px;
-  font-size: 38px;
-  font-family: 'Roboto';
-  font-weight: 300;
-  animation: plus-out 0.3s;
-  transition: all 0.3s;
-}
-
-#container-floating{
-  position: fixed;
-  width: 70px;
-  height: 70px;
-  bottom: 30px;
-  right: 30px;
-  z-index: 50px;
-}
-
-#container-floating:hover{
-  height: 400px;
-  width: 90px;
-  padding: 30px;
-}
-
-#container-floating:hover .plus{
-  animation: plus-in 0.15s linear;
-  animation-fill-mode: forwards;
-}
-
-.edit{
-  position: absolute;
-  top: 0;
-  display: block;
-  bottom: 0;
-  left: 0;
-  display: block;
-  right: 0;
-  padding: 0;
-  opacity: 0;
-  margin: auto;
-  line-height: 65px;
-  transform: rotateZ(-70deg);
-  transition: all 0.3s;
-  animation: edit-out 0.3s;
-}
-
-#container-floating:hover .edit{
-  animation: edit-in 0.2s;
-  animation-delay: 0.1s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes edit-in{
-    from {opacity: 0; transform: rotateZ(-70deg);}
-    to {opacity: 1; transform: rotateZ(0deg);}
-}
-
-@keyframes edit-out{
-    from {opacity: 1; transform: rotateZ(0deg);}
-    to {opacity: 0; transform: rotateZ(-70deg);}
-}
-
-@keyframes plus-in{
-    from {opacity: 1; transform: rotateZ(0deg);}
-    to {opacity: 0; transform: rotateZ(180deg);}
-}
-
-@keyframes plus-out{
-    from {opacity: 0; transform: rotateZ(180deg);}
-    to {opacity: 1; transform: rotateZ(0deg);}
-}
-
-.nds{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  position: fixed;
-  z-index: 300;
-  transform:  scale(0);
-  cursor: pointer;
-}
-
-.nd1{
-  background: #d3a411;
-  right: 40px;
-  bottom: 120px;
-  animation-delay: 0.2s;
-    animation: bounce-out-nds 0.3s linear;
-  animation-fill-mode:  forwards;
-}
-
-.nd3{
-  background: #3c80f6;
-  right: 40px;
-  bottom: 180px;
-  animation-delay: 0.15s;
-    animation: bounce-out-nds 0.15s linear;
-  animation-fill-mode:  forwards;
-}
-
-.nd4{
-  background: #ba68c8;
-  right: 40px;
-  bottom: 240px;
-  animation-delay: 0.1s;
-    animation: bounce-out-nds 0.1s linear;
-  animation-fill-mode:  forwards;
-}
-
-@keyframes bounce-nds{
-    from {opacity: 0;}
-    to {opacity: 1; transform: scale(1);}
-}
-
-@keyframes bounce-out-nds{
-    from {opacity: 1; transform: scale(1);}
-    to {opacity: 0; transform: scale(0);}
-}
-
-#container-floating:hover .nds{
-  
-  animation: bounce-nds 0.1s linear;
-  animation-fill-mode:  forwards;
-}
-
-#container-floating:hover .nd3{
-  animation-delay: 0.08s;
-}
-#container-floating:hover .nd4{
-  animation-delay: 0.15s;
-}
-#container-floating:hover .nd5{
-  animation-delay: 0.2s;
-}
-
-.letter{
-  font-size: 23px;
-  font-family: 'Roboto';
-  color: white;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0;
-  top: 0;
-  bottom: 0;
-  text-align: center;
-  line-height: 40px;
-}
-
-.reminder{
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  line-height: 40px;
-}
-
-.profile{
-  border-radius: 50%;
-  width: 40px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  right: 20px;
-}
 
 /* 전화번호  */
 
@@ -447,9 +275,6 @@ html {
   user-select: none;
 }
 
-input {
-  display: none;
-}
 
 .like {
   display: block;

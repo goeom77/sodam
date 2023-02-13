@@ -134,9 +134,6 @@
     </v-dialog>
   </v-row>
   
-  
-  
-  
 
   <br>
     <ConsultantCardItemReview
