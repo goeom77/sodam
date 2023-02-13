@@ -9,9 +9,7 @@
               id="logo"
               :src="projectlogo"
               alt="noimage"
-              style="width: 75%; height: auto;
-              
-              "
+              style="width: 75%; height: auto;"
               />
             </router-link> &nbsp;&nbsp;&nbsp;</h1>
             
@@ -34,7 +32,7 @@
                     <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
                   </svg>
                   <!-- 마이페이지 -->
-                  <a href="/mypage" style="text-decoration: none  ;">
+                  <a href="/mypage" style="text-decoration: none;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
                       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
                     </svg>
@@ -60,17 +58,18 @@
         </nav>
       </aside>
     </div>
+    <router-view /> 
   </div>
-  <router-view /> 
-  <LoadingView :loading="store.state.loadingStatus"></LoadingView>
+  
+  <!-- <LoadingView :loading="loadingStatus"></LoadingView> -->
+  <!-- <LoadingView :loading="this.$store.state.loadingStatus"></LoadingView> -->
 </template>
 
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
 import { EventSourcePolyfill } from "event-source-polyfill";
-import store from "@/store";
-import LoadingView from "@/views/common/LoadingView.vue";
+// import LoadingView from '../src/views/common/LoadingView'
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -85,10 +84,13 @@ export default {
     }
   },
   component: {
-    // Spinner
-    LoadingView
+    // LoadingView
   },
+
+
   methods: {
+
+
     logOut(){
       axios({
         method: 'get',
@@ -175,12 +177,13 @@ export default {
       this.newNotiCount = count;
     }
   },
-  mounted() {
+  beforeMount() {
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
+      this.$store.dispatch('unreadNotiCount');
     }
   },
-  beforeUpdate() {
+  mounted() {
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');

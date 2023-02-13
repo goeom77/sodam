@@ -4,6 +4,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.samsung.sodam.api.request.SttRequest;
 import io.openvidu.java.client.Recording;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,7 @@ public class FileGCSService {
         return new StringBuilder().append("https://storage.googleapis.com").append("/").append(bucketName).append("/").append(path).append(encodeFileName).toString();
     }
 
-    public void recordUploadGCS (Recording file, String rootDir) throws IOException {
+    public SttRequest recordUploadGCS (Recording file, String rootDir) throws IOException {
 
         // 파일 저장 경로 설정
         String savedName = file.getName();
@@ -75,7 +76,14 @@ public class FileGCSService {
         BlobId blobId = BlobId.of(bucketName, newFileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         Blob blob = storage.create(blobInfo, is);
-        System.out.println(blob);
+
+        // 리턴타입
+        SttRequest sttRequest = SttRequest.builder()
+                .gcsDirectory("recording/" + datePath)
+                .url("gs://stt-bucket-binu/" + newFileName)
+                .fileName(uuid + "_" + savedName)
+                .build();
+        return sttRequest;
     }
 
 }

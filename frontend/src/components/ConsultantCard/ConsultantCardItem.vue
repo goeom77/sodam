@@ -1,12 +1,21 @@
 <template>
 <div id="fh5co-main">
   <div class="fh5co-narrow-content">
-    <div>
+    <div class="container" style="border: solid 1px black;">
+
       <div>
         <ConsultantCardItemInfo
         :counselorData="this.counselorData"/>
       </div>
+      
     </div>
+
+
+
+
+<!-- 상담 신청 버튼 -->
+
+
 
 <!-- 상담 신청서 -->
   <v-row justify="center">
@@ -23,9 +32,7 @@
         </v-btn>
       </template>
       <div class="container">
-        
-
-          <v-card style="width:70%; height:110%">
+        <v-card style="width:70%; height:110%">
               <div class=" text-center mt-5 ">
                 <h1 >상담 신청서</h1>      
               </div>
@@ -128,8 +135,7 @@
           </div>
           
         </v-card>
-        </div>
-  
+      </div>
     </v-dialog>
   </v-row>
 
@@ -138,7 +144,6 @@
       <ConsultantCardItemReview
       :counselorData="this.counselorData"/>
     </div>
-
   </div>
 </div>
 </template>
@@ -147,7 +152,6 @@
 
 
 <script>
-import ConsultantCardItemReserve from '@/components/ConsultantCard/ConsultantCardItemReserve.vue'
 import ConsultantCardItemReview from '@/components/ConsultantCard/ConsultantCardItemReview.vue'
 import ConsultantCardItemInfo from '@/components/ConsultantCard/ConsultantCardItemInfo.vue'
 import axios from 'axios'
@@ -157,7 +161,6 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
     name:'ConsultantCardItem',
     components: {
-      ConsultantCardItemReserve,
       ConsultantCardItemReview,
       ConsultantCardItemInfo,
       Datepicker
@@ -277,5 +280,8 @@ export default {
 </script>
 
 <style>
+
+
+
 
 </style>
