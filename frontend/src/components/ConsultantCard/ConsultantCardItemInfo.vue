@@ -5,9 +5,19 @@
         <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
       </div>
       <div class="child2">
-        <h1>
+        <!-- 하트 표시 -->
+        <h1 style="display:inline;">
           {{ counselorData.name }} 상담사
+          <label class="like" style="float:right;">
+            <input type="checkbox"/>
+            <div class="hearth"/>
+          </label>
+          
+          <a class="dribbble" href="https://dribbble.com/TaminoMartinius" target="_blank">
+            <img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt="" id="mybtn" @click="likeCounselor"/>
+          </a>
         </h1>
+        <br>
         <h2>
           {{ counselorData.introduce }}
         </h2>
@@ -41,23 +51,6 @@
         </div>
 
 
-        <!-- 상담사 등록 버튼 -->
-        <div id="container-floating">
-          <div class="nd4 nds"><img class="reminder">
-            <p class="letter">C</p>
-          </div>
-          
-          <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          
-          <div class="nd1 nds">
-            <p class="letter">E</p>
-          </div>
-
-          <div id="floating-button">
-            <p class="plus">+</p>
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
-          </div>
-        </div>
 <!-- 
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
@@ -83,6 +76,7 @@ export default {
     return{
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
+      FavCounselor:null,
     }
   },
   methods:{
@@ -101,7 +95,36 @@ export default {
       .then(res=>{
         console.log(res)
       })
+    },
+    getFavCounselor(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/fav/${this.clientId}`,
+        data:{
+          clientId:this.clientId,
+        },
+        // headers: {
+        //   Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        // }
+      })
+      .then(res=>{
+        const checkList = res.data
+
+        checkList.forEach(function (check){
+          if (check.id === this.counselorData.id){
+            // 클릭 한번
+            document.getElementById("my-btn")[0].click();
+            console.log(check)
+          }
+        })
+        console.log(res.data)
+        this.FavCounselor = res.data
+        // console.log("fav : >> " + JSON.stringify(res.data))
+      })
     }
+  },
+  beforeMount(){
+    this.getFavCounselor()
   }
 }
 </script>
@@ -125,14 +148,14 @@ body{
   transition: all 0.3s; 
   border-radius: 10px;
   
-  h1{
-    font-weight: 400;
-  }
-  
-  h3{
-    font-weight: 400;
-    color: #666;
-  }
+}
+h1{
+  font-weight: 400;
+}
+
+h3{
+  font-weight: 400;
+  color: #666;
 }
 
 #presentation:hover{
@@ -211,7 +234,7 @@ body{
 
 #container-floating:hover .edit{
   animation: edit-in 0.2s;
-   animation-delay: 0.1s;
+  animation-delay: 0.1s;
   animation-fill-mode: forwards;
 }
 
@@ -407,5 +430,102 @@ h1 em {
   margin: 1rem;
 }
 
+
+
+/* he */
+
+:root {
+  --size: 100px;
+  --frames: 62;
+}
+
+html {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+input {
+  display: none;
+}
+
+.like {
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  cursor: pointer;
+  border-radius: 999px;
+  overflow: visible;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hearth {
+  background-image: url('https://assets.codepen.io/23500/Hashflag-AppleEvent.svg');
+  background-size: calc(var(--size) * var(--frames)) var(--size);
+  background-repeat: no-repeat;
+  background-position-x: calc(var(--size) * (var(--frames) * -1 + 2));
+  background-position-y: calc(var(--size) * 0.02);
+  width: var(--size);
+  height: var(--size);
+}
+
+input:checked + .hearth {
+  animation: like 1s steps(calc(var(--frames) - 3));  
+  animation-fill-mode: forwards;
+}
+
+@keyframes like {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: calc(var(--size) * (var(--frames) * -1 + 3));
+  }
+}
+
+@media (hover: hover) {
+  .like:hover {
+    background-color: #E1255E15;
+    .hearth {
+      background-position-x: calc(var(--size) * (var(--frames) * -1 + 1));
+    }
+  }
+}
+
+// hashflag-gallery - dribbble - twitter
+.hashflag {
+  position: fixed;
+  display: block;
+  right: 114px;
+  bottom: 20px;
+  img {
+    display: block;
+    height: 28px;
+  }
+}
+.dribbble {
+  position: fixed;
+  display: block;
+  right: 20px;
+  bottom: 20px;
+  img {
+    display: block;
+    height: 28px;
+  }
+}
+.twitter {
+  position: fixed;
+  display: block;
+  right: 64px;
+  bottom: 14px;
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: #1da1f2;
+  }
+}
 
 </style>

@@ -54,11 +54,11 @@ public class RoomController {
         }
     }
 
-    @PostMapping(value = "/recordings/stop/{sessionId}")
+    @PostMapping(value = "/recordings/stop/{sessionId}/{scheduleId}")
     @ApiOperation(value = "녹음 중지", notes = "상담사가 녹음중지 버튼을 누르면 녹음이 중지된다")
-    public HttpStatus stopRecord(@PathVariable String sessionId) {
+    public HttpStatus stopRecord(@PathVariable String sessionId, @PathVariable Integer scheduleId) {
         try {
-            service.stopRecord(sessionId);
+            service.stopRecord(sessionId, scheduleId);
             return HttpStatus.OK;
         } catch (Exception e) {
             e.printStackTrace();

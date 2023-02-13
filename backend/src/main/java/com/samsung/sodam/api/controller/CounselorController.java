@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class CounselorController extends Counselor{
+public class CounselorController extends Counselor {
 
     private final CounselorRepositoryService service;
     private final CounselorProfileService counselorProfileService;
@@ -65,7 +65,7 @@ public class CounselorController extends Counselor{
     }
 
     @PostMapping(value = "/counselor/{id}")
-    @ApiOperation(value="상담사 정보 수정", notes="상담사 정보 수정 - email, 전화번호, 학력, 경력")
+    @ApiOperation(value = "상담사 정보 수정", notes = "상담사 정보 수정 - email, 전화번호, 학력, 경력")
     public HttpStatus editProfilecCounselor(@PathVariable String id, CounselorSignupRequest request) {
         try {
 //            System.out.println("-------------------------------------");
@@ -79,23 +79,17 @@ public class CounselorController extends Counselor{
 //            System.out.println("\n\n\n\n");
 //            System.out.println("-------------------------------------");
             return HttpStatus.OK;
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return HttpStatus.NOT_FOUND;
         }
     }
 
-    @PutMapping(value = "/counselor/test")
-    @ApiOperation(value="테스트")
-    public HttpStatus setCounselorType( String clientId, @RequestBody TestRequest request) {
-        try {
-            System.out.println(request.getList().toString());
-            service.counselorTest(request, clientId);
-            return HttpStatus.OK;
-        } catch(Exception e){
-            e.printStackTrace();
-            return HttpStatus.NOT_FOUND;
-        }
+    @PostMapping(value = "/counselor/test")
+    @ApiOperation(value = "검색 테스트")
+    public List<CounselorListResponse> setCounselorType(@RequestBody TestRequest request) {
+        System.out.println(request.getList().toString());
+        return service.counselorTest(request);
     }
 
     //상담 예약
@@ -164,7 +158,7 @@ public class CounselorController extends Counselor{
         return service.getAllClients(pageable);
     }
 
-    @GetMapping(value = { "/myclient/{consultantId}"})
+    @GetMapping(value = {"/myclient/{consultantId}"})
     @ApiOperation(value = "고객 목록 조회(삭제예정)")
     //고객목록
     public Page<ClientListResponse> getClients(@PathVariable String consultantId) {
@@ -192,11 +186,8 @@ public class CounselorController extends Counselor{
     @PostMapping("/consult-session/{consult_id}")
     @ApiOperation(value = "고객이 상담신청서를 작성한 경우 상담 요청 상태 변경")
     public void setApplicantSessionState(@RequestBody SetStateRequest request, @PathVariable String consult_id) {
-        service.setApplicationState(request,consult_id);
+        service.setApplicationState(request, consult_id);
     }
-
-
-
 
 
 }

@@ -9,7 +9,7 @@
           tabs
           style="text-align: start;">
           <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">고민 게시판</v-toolbar-title>
-          <div>
+          <div v-if="isLogin===true">
             <router-link 
               to="/BoardCreateView" 
               id="BoardCreateButton"
@@ -34,7 +34,7 @@
               <v-tab value="five">부부</v-tab>
               <v-tab value="six">노년</v-tab>
               <v-tab value="seven">기타</v-tab>
-              <v-tab value="eight">내 글 보기</v-tab>
+              <v-tab value="eight" v-if="isLogin===true">내 글 보기</v-tab>
         
             </v-tabs>
           </template>

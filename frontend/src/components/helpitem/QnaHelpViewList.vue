@@ -99,8 +99,8 @@ export default {
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/help-desk/qna/list`,
-        headers: {
-          "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
+        // headers: {
+        //   "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
           console.log('이거 되라 게시판 전체 목록')

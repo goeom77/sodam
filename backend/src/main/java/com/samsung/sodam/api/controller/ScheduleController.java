@@ -63,7 +63,13 @@ public class ScheduleController {
 
     @PostMapping("/search/monthly")
     @ApiOperation(value = "설정한 기간의 상담일정을 조회한다",notes = "월별,년별등 대량 데이터 조회 시 이용할 데이터 일부만 내려줌.")
-    public List<MonthlyResponse> getMonthlySchedule(@RequestParam(value = "counselorId") MonthlyScheduleRequest request){
+    public List<MonthlyResponse> getMonthlySchedule(@RequestBody MonthlyScheduleRequest request){
+        return service.getMonthlySchedule(request);
+    }
+
+    @PostMapping("/update/monthly")
+    @ApiOperation(value = "일정을 수정한다.",notes = "캘린더에 있던 일정을 다른 날짜로 옮기거나 상세 내용 수정할 때.")
+    public List<MonthlyResponse> updateMonthlySchedule(@RequestBody MonthlyScheduleRequest request){
         return service.getMonthlySchedule(request);
     }
 }

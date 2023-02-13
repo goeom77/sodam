@@ -1,13 +1,19 @@
 package com.samsung.sodam.api.service;
 
 import com.samsung.sodam.api.request.RoomRequest;
+import com.samsung.sodam.api.request.SttRequest;
 import com.samsung.sodam.api.response.ResponseDto;
 import com.samsung.sodam.db.repository.SessionCustomRepository;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -19,11 +25,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class RoomServiceImpl implements RoomService {
 
-
     @Value("${openvidu.url}")
     private String OPENVIDU_URL;
     @Value("${openvidu.secret}")
     private String SECRET;
+    private String FLASK_URL = "";
 
     private final SessionCustomRepository sessionCustomRepository;
     private OpenVidu openVidu;
@@ -102,14 +108,35 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public ResponseDto<?> stopRecord(String sessionId) {
+    public ResponseDto<?> stopRecord(String sessionId, Integer scheduleId) {
         try {
             // 녹음 중지
             Recording recording = openVidu.stopRecording(sessionRecordingMap.get(sessionId));
             sessionRecordingMap.remove(sessionId);
 
             // GCS에 업로드
-            fileService.recordUploadGCS(recording, "recording");
+            SttRequest sttRequest = fileService.recordUploadGCS(recording, "recording");
+
+            // flask stt api 요청
+            DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(FLASK_URL);
+            factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+            WebClient webClient = WebClient.builder()
+                    .uriBuilderFactory(factory)
+                    .baseUrl(FLASK_URL) // flask 서버 url
+                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .build();
+
+            sttRequest.setKey("key");
+            sttRequest.setScheduleId(scheduleId);
+
+            webClient.post()
+                .uri("/stt/do")
+                .bodyValue(sttRequest)
+                .retrieve()
+                    .onStatus(HttpStatus::is4xxClientError, clientResponse -> clientResponse.createException())
+                    .onStatus(HttpStatus::is5xxServerError, clientResponse -> clientResponse.createException())
+                .bodyToMono(HttpStatus.class);
 
             return ResponseDto.builder().ok(true).build();
         } catch (OpenViduJavaClientException | OpenViduHttpException exception) {

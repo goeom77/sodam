@@ -46,9 +46,6 @@ export default {
           data: {
             id: this.id,
           },
-          headers: {
-            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-          }
         })
         .then(res=>{
           console.log(res.data)

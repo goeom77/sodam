@@ -254,9 +254,8 @@ export default {
 		this.getBoardarticleDetail()
 	},
 	methods: {
-    
-
     getBoardarticleDetail() {
+
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/help-desk/notice/${this.$route.params.id}`,

@@ -55,6 +55,7 @@ export default {
   name:'ClientManageCard',
   props:{
     clientData:Object,
+    sessionInfo:Object
   },
   data(){
     return{
@@ -87,7 +88,7 @@ export default {
     },
     // 세션 id 내려주기 (지금 구현 안되어 있음)
     moveTo2(){
-      this.$router.push({ name: 'VideoPage', params: {id: 1} })
+      this.$router.push({ name: 'VideoPage' })
     }
   },
 }

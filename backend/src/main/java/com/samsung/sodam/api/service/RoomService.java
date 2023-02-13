@@ -8,5 +8,5 @@ public interface RoomService {
     void createSession(RoomRequest request);
     void deleteSession(RoomRequest request);
     ResponseDto<?> startRecord(String sessionId);
-    ResponseDto<?> stopRecord(String sessionId);
+    ResponseDto<?> stopRecord(String sessionId, Integer scheduleId);
 }

@@ -2,18 +2,16 @@
 
   <div v-if="loading" style="width: 100px">
     <div>
-     <h1> 로딩중입니다</h1>
+      <h1>로딩 중이냐?</h1>
     </div>
-    <div>
-    </div>
-    <div>
-    </div>
+
   </div>
 
 </template>
 
 <script>
   export default {
+    name: 'LoadingView',
     props: {
       loading: {
         type: Boolean,
@@ -21,7 +19,7 @@
       },
     },
     created() {
-      console.log("loading created")
+      console.log('되냐 로딩???')
     }
   }
 </script>
