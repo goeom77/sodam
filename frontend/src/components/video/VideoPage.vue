@@ -2,10 +2,10 @@
   <div class="container d-flex justify-content-center">
     <div v-if="!session">
       <!-- 모달을 띄워줄것 녹화할 수 있다는 것 -->
-      <div style="height:100px;"></div>
+      <div style="height:120px;"></div>
       <div id="cover">
         <div class="video-background"/>
-        <div>
+        <div id="LoginDetail">
           <h1>SODAM</h1>
           <div>
             <!-- 주의사항 테그 -->
