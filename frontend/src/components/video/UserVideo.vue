@@ -8,7 +8,7 @@
         :test=true
       />
     </div>
-    <div style="width: 100%; font-size: 23px;	text-align: center;">{{ clientData }}</div>
+    <div><p>{{ clientData }}</p></div>
   </div>
   </template>
   

@@ -4,67 +4,62 @@
     <div style="text-align:center">
       <aside id="fh5co-aside" role="complementary" class="border js-fullheight" >
         <h1 id="fh5co-logo">
-          <router-link to="/" style="display: flex; justify-content: center;">
+          <router-link to="/">
             <img
               id="logo"
               :src="projectlogo"
               alt="noimage"
-              style="width: 130px; height: 50px; "
+              style="width: 75%; height: auto;
+              
+              "
               />
             </router-link> &nbsp;&nbsp;&nbsp;</h1>
-            <div style="padding:30px;">
-            <div v-if="isLogin===true">
-              <h2>
-                {{ this.$store.state.payload.id }}님
-              </h2>
-              <br> 
-              안녕하세요
-              <!-- 알람 -->
-              <v-btn class="text-none" stacked style="background-color: white;">
-                <v-badge floating :content="newNotiCount" color="error" @click="alarm">
-                  <v-icon>mdi-bell-outline</v-icon>
-                </v-badge>
-              </v-btn>
-              <div id="navMypage">
-                <!-- 로그아웃 -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" @click="logOut">
-                  <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                </svg>
-                <!-- 마이페이지 -->
-                <a href="/mypage" style="text-decoration: none  ;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-                  </svg>
-                </a>
-              </div>
-              <!-- 로그인 -->
-            </div>
-            <div v-if="isLogin===false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
-                <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
-              </svg>
-            </div>
-
-          </div>
             
-        <nav id="fh5co-main-menu" role="navigation" >
-          <div >
+            <div style="padding:30px">
+              <div v-if="isLogin===true">
+                <h4>
+                  {{ this.$store.state.payload.id }}님
+                  <!-- 알람 -->
+                  <v-btn class="text-none" stacked style="background-color: white;">
+                    <v-badge floating :content="newNotiCount" color="error" @click="alarm">
+                      <v-icon>mdi-bell-outline</v-icon>
+                    </v-badge>
+                  </v-btn>
+                </h4>
+                
 
-            <ul >
-              <li>
-                <span></span>
-                <router-link style="display: flex; justify-content: center; font-size: large;" to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-              </li>
-              <li><router-link style="display: flex; justify-content: center; font-size: large;" to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
-              <li><router-link style="display: flex; justify-content: center; font-size: large;" to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
-              <li><router-link style="display: flex; justify-content: center; font-size: large;" to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
-            </ul>
-          </div>
+                <div id="navMypage">
+                  <!-- 로그아웃 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" @click="logOut">
+                    <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                  </svg>
+                  <!-- 마이페이지 -->
+                  <a href="/mypage" style="text-decoration: none  ;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>
+                  </a>
+                </div>
+                <!-- 로그인 -->
+              </div>
+              <div v-if="isLogin===false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
+                  <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                  <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                </svg>
+              </div>
+            </div>
+            
+        <nav id="fh5co-main-menu" role="navigation">
+          <ul style="margin-bottom:30px ;">
+            <li><router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
+          </ul>
         </nav>
       </aside>
     </div>
-
     <router-view /> 
   </div>
   
@@ -206,7 +201,6 @@ export default {
   font-size: 20px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.5);
-  background-color: #fef8f8;
 }
 @media screen and (max-width: 992px) {
   .fh5co-page {

@@ -4,9 +4,8 @@
       <!-- 모달을 띄워줄것 녹화할 수 있다는 것 -->
       <div style="height:100px;"></div>
       <div id="cover">
-        <div class="video-background">
-        </div>
-        <div id="LoginDetail">
+        <div class="video-background"/>
+        <div>
           <h1>SODAM</h1>
           <div>
             <!-- 주의사항 테그 -->
@@ -121,6 +120,57 @@
       </div>
     </div>
       <!-- 주의사항 테그 끝 -->
+    <div>
+      <div>
+        <div>
+          <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
+          <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
+          <p>
+            <label>Participant</label>
+            <input
+              v-model="myUserName"
+              class="form-control"
+              type="text"
+              required
+            />
+          </p>
+          <p >
+            <label>Session</label>
+            <input
+              v-model="mySessionId"
+              class="form-control"
+              type="text"
+              required
+            />
+          </p>
+          <!-- 상담사이면 -->
+          <p class="text-center" v-if="common_code==1">
+            <v-btn
+              @click="join()"
+            >
+              상담하기
+            </v-btn>
+          </p>
+          <!-- 고객이면 -->
+          <p class="text-center" v-if="common_code==2">
+            <v-btn
+              @click="join()"
+            >
+              상담하기
+            </v-btn>
+          </p>
+          <!-- 관리자이면 -->
+          <p class="text-center" v-if="common_code==0">
+            <v-btn
+              class="btn btn-lg btn-success"
+              @click="join()"
+            >
+              상담하기
+            </v-btn>
+          </p>
+        </div>
+      </div>
+    </div>
     <!-- 스트림 시작 -->
     <div id="session" v-if="session">
       <!-- session header -->
@@ -153,7 +203,6 @@
           <v-card class="mx-auto" max-width="500">
             <v-container fluid>
               <v-card>
-                <div v-if="subscribers.length == 0" class="extra-background" />
                 <user-video
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   v-for="sub in subscribers"
@@ -373,7 +422,7 @@ export default {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: !this.audioMute, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: !this.videoMute, // Whether you want to start publishing with your video enabled or not
-              resolution: "500x550", // The resolution of your video
+              resolution: "500x570", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
