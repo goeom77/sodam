@@ -9,10 +9,17 @@
           style="text-align: start;">
           <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">HELP DESK</v-toolbar-title>
           <v-spacer></v-spacer>
-          <div>
+          <div v-if="this.$store.state.payload.id==='admin'">
             <router-link 
               to="/NoticeCreateView" 
-              id="NoticeCreateButton"
+              id="NoticeCreateView"
+              class="HelpCreateButton" 
+              style="margin-right: 55px;">글쓰기</router-link> 
+          </div>
+          <div v-if="isLogin===true">
+            <router-link 
+              to="/QnaCreateView" 
+              id="QnaCreateView"
               class="HelpCreateButton" 
               style="margin-right: 55px;">글쓰기</router-link> 
           </div>

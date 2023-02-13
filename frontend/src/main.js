@@ -27,18 +27,20 @@ createApp(App).use(router)
 
 
 // axios 로딩
-  axios.interceptors.request.use(function (config) {
-    store.commit('LOADING_STATUS', true)
+  // axios.interceptors.request.use(function (config) {
+  //   console.log('로딩 들어왔냐?')
+  //   store.commit('LOADING_STATUS', true)
   
-    const token = localStorage.getItem('user_token');
-    config.headers.Authorization = "Bearer " + token;
-    return config;
-  });
+  //   const token = localStorage.getItem('user_token');
+  //   config.headers.Authorization = "Bearer " + token;
+  //   return config;
+  // });
   
-  axios.interceptors.response.use(function (config) {
-    store.commit('LOADING_STATUS', false)
+  // axios.interceptors.response.use(function (config) {
+  //   console.log('로딩 나가냐?')
+  //   store.commit('LOADING_STATUS', false)
   
-    return config
-  });
+  //   return config
+  // });
   
   export default axios;

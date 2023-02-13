@@ -4,7 +4,7 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 // 로딩 임포트
-export const LOADING_STATUS = 'LOADING_STATUS'
+// export const LOADING_STATUS = 'LOADING_STATUS'
 // import * as types from './mutation_types'
 
 
@@ -13,7 +13,7 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    loadingStatus: false,
+    // loadingStatus: false,
     newNotiCount: 0,
     KidBoardarticles: [],
     Announcearticles: [],
@@ -52,9 +52,9 @@ export default new Vuex.Store({
   },
   mutations: {
     // 로딩 타입
-    LOADING_STATUS (state, loadingStatus) {
-      state.loadingStatus = loadingStatus
-    },
+    // LOADING_STATUS (state, loadingStatus) {
+    //   state.loadingStatus = loadingStatus
+    // },
     
     GET_BOARDARTICLES(state, Boardarticles) {
       console.log(Boardarticles)

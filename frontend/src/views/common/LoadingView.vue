@@ -2,23 +2,25 @@
 
   <div class="lds-facebook" v-if="loading">
     <div>
+      <h1>로딩 중이냐?</h1>
     </div>
-    <div>
-    </div>
-    <div>
-    </div>
+
   </div>
 
 </template>
 
 <script>
   export default {
+    name: 'LoadingView',
     props: {
       loading: {
         type: Boolean,
         required: true,
       },
     },
+    created() {
+      console.log('되냐 로딩???')
+    }
   }
 </script>
 
