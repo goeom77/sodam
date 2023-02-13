@@ -1,4 +1,5 @@
 <template>
+  <div style="height:100px;"></div>
   <div id="cover">
     <div class="background">
     </div>
@@ -23,9 +24,6 @@ export default {
   width: 1255px;
   margin: 0 auto;
   text-align: center;
-}
-.check {
-  /* display: inline-block; */
 }
 
 .background {
