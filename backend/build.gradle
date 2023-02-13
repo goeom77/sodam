@@ -73,6 +73,8 @@ dependencies {
 
     // openvidu
     implementation 'io.openvidu:openvidu-java-client:2.22.0'
+    // webflux
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 }
 
