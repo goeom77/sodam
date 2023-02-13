@@ -56,7 +56,6 @@ export default new Vuex.Store({
     mutations: {
         // 로딩 타입
         LOADING_STATUS(state, loadingStatus) {
-            console.log("state : " + JSON.stringify(state) + " loadingStatus" + loadingStatus)
             state.loadingStatus = loadingStatus
         },
 
