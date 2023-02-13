@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -50,11 +52,9 @@ public class CounselorRepositoryService {
     public Counselor getCounselorInfo(String id) {
         return repository.getById(id);
     }
-    public Long counselorTest(TestRequest request, String id) {
-//        System.out.println("service :: "+request.getList().toString());
-//        System.out.println("service :: "+request.getList().getClass());
-//        return counselorCustomRepository.updateType(request,id);
-        return null;
+    public List<CounselorListResponse> counselorTest(TestRequest request) {
+        return repository.findAllByNameLikeAndGenderEquals("%"+request.getName()+"%",request.getGender()).stream().filter(it-> new HashSet<>(it.getConsultTypeList()).containsAll(request.getList())).map(it->CounselorListResponse.builder().consultTypeList(it.getConsultTypeList()).gender(it.getGender()).name(it.getName()).profileImg(it.getProfileImg()).tel(it.getTel()).build()).collect(Collectors.toList());
+//        return null;
     }
 
 

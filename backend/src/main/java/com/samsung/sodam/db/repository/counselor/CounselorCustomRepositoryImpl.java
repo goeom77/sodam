@@ -1,6 +1,7 @@
 package com.samsung.sodam.db.repository.counselor;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -9,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
+import com.samsung.sodam.api.request.TestRequest;
 import com.samsung.sodam.api.response.*;
 import com.samsung.sodam.db.entity.CONSULT_TYPE;
 import com.samsung.sodam.db.entity.Counselor;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -167,6 +170,34 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
 //                        , counselor.introduce.like(request.getKeyword())
 //                        , counselor.consultTypeList.contains(request.getType())).fetchOne();
         return new PageImpl<>(list.stream().map(Counselor::toResponse).collect(Collectors.toList()), Pageable.ofSize(pageable.getPageSize()), list.size());
+    }
+
+    @Override
+    public Page<CounselorListResponse> searchCounselorByType(TestRequest request) {
+
+//        List<Counselor> list = queryFactory.
+//                select(counselor)
+//                .from(counselor)
+//                .where(counselor.name.like("%" + request.getKeyword() + "%")).fetch();
+
+//        return queryFactory
+//                .selectFrom(counselor)
+//                .from(counselor)
+//                .where(counselor.consultTypeList.in())
+//                .fetch();
+
+        return null;
+    }
+
+    private Expression[] searchTypesIn(List<CONSULT_TYPE> types) {
+
+        List<Expression> tuples = new ArrayList<>();
+
+        for(CONSULT_TYPE type : types) {
+            tuples.add(Expressions.template(Object.class, "({0})", type));
+        }
+
+        return tuples.toArray(new Expression[0]);
     }
 
     @Override
