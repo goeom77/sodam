@@ -351,7 +351,11 @@ export default {
       this.$store.dispatch('counselorUpdate', payload)
       this.$router.push({name:'login'})
       }
+
+
     }
+
+    
   }
 }
 </script>
