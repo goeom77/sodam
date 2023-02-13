@@ -54,36 +54,45 @@
     <div style="margin: 0 auto; width:455px;">
       <v-card
         class="mx-auto"
-        max-width="344"
+        max-width="380"
         variant="outlined"
       >
         <v-card-item>
           <div>
-            <div class="text-overline mb-1">
-              <form action="#" class="form" id="form1">
-                <input type="text">
-                <br>
-                <div>
-                  <v-icon icon="mdi-account" size="large" color="black" style="width:10%"/>
-                  <input style="width:80%; height:50px; font-size:1.2em; padding-left:10px;" type="text" v-model="id"  placeholder="ID"/>
-                </div>
-                <div>
-                  <v-icon icon="mdi-lock-outline" size="large" color="black" style="width:10%"/>
-                  <input style="width:80%; height:50px; font-size:1.2em; padding-left:10px;" type="password" v-model="password" placeholder="Password"/>
-                </div>
-                <br>
-                <v-card-actions style="margin:0; padding:0">
-                  <v-btn style="width:99%; margin:0; padding:0;" variant="outlined" @click="logIn">로그인</v-btn>
-                </v-card-actions>
-                <v-card-actions style="margin:0; padding:0">
-                  <v-btn style="width:100%; margin:0; padding:0"><LoginKakao/></v-btn>
-                </v-card-actions>
-                <div style="width:100%">
-                  <router-link style="margin:auto" class="find" :to="{name:'findId'}">아이디찾기  |</router-link>
-                  <router-link style="margin:auto" class="find" :to="{name:'findPw'}">  비밀번호 찾기  |</router-link>
-                  <router-link style="margin:auto" class="find" :to="{name:'signupclient'}">  회원가입</router-link>
-                </div>
-              </form>
+            <div>
+              <v-layout justify-center>
+                <v-card-text>
+                  <v-form>
+                    <v-text-field
+                      prepend-icon="mdi-account"
+                      name="login"
+                      label="Login"
+                      type="text"
+                    ></v-text-field>
+                    <v-text-field
+                      prepend-icon="mdi-lock-outline"
+                      id="password"
+                      name="password"
+                      label="Password"
+                      type="password"
+                    ></v-text-field>
+                    <v-card-actions style="width:100%">
+                      <v-spacer></v-spacer>
+                      <v-btn style="width:100%" variant="outlined" @click="logIn">로그인</v-btn>
+                    </v-card-actions>
+                    <hr>
+                    <v-card-actions>
+                      <v-btn style="width:100%; border:0px;" @click="logIn"><LoginKakao  variant="outlined"/></v-btn>
+                    </v-card-actions>
+                    <br>
+                    <div style="width:100%">
+                      <router-link style="margin:auto" class="find" :to="{name:'findId'}">아이디찾기  |</router-link>
+                      <router-link style="margin:auto" class="find" :to="{name:'findPw'}">  비밀번호 찾기  |</router-link>
+                      <router-link style="margin:auto" class="find" :to="{name:'signupclient'}">  회원가입</router-link>
+                    </div>
+                  </v-form>
+                </v-card-text>
+              </v-layout>
             </div>
           </div>
         </v-card-item>
@@ -146,22 +155,6 @@ export default {
 </script>
 
 <style>
-.input {
-  background-color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 0.9rem 0.9rem;
-  margin: 0.5rem 0;
-  width: 90%;
-}
-.loginform{
-  margin-top: 100px;
-  width : 300px;
-  height: 300px;
-  /* border: 1px solid black; */
-  border-radius: 30px;
-  background-color: #FCFAEF;
-}
 .find{
   text-decoration-line: none;
   color: black;
