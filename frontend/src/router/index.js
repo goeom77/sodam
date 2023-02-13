@@ -7,7 +7,6 @@ import FindPw from '@/components/account//FindPw.vue'
 import SignUpClient from '@/components/account/signup/client/SignUpClient.vue'
 import SignUpCounselor from '@/components/account/signup/counselor/SignUpCounselor.vue'
 import SignUpCounselor2 from '@/components/account/signup/counselor/SignUpCounselor2.vue'
-import CalendarView from '@/components/management/schedule/CalendarView.vue'
 
 
 // 고민게시판 페이지
@@ -45,7 +44,6 @@ import MainEdit from '@/views/my/edit/MainEdit.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
-import CalendarView22 from "@/components/management/schedule/CalendarView22.vue";
 import CalendarTest from "@/components/management/schedule copy/CalendarTest.vue";
 
 
@@ -94,7 +92,6 @@ const routes = [
     path:'/Calendar',
     name:'Calendar',
     component: CalendarTest
-    // component: CalendarView
   },
   
   

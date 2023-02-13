@@ -1,31 +1,33 @@
 <template>
   <div id="fh5co-page">
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-    <div>
-      <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
+    <div style="text-align:center">
+      <aside id="fh5co-aside" role="complementary" class="border js-fullheight" >
         <h1 id="fh5co-logo">
           <router-link to="/">
             <img
               id="logo"
               :src="projectlogo"
               alt="noimage"
-              style="width: 75px; height: 30px; "
+              style="width: 75%; height: auto;
+              
+              "
               />
             </router-link> &nbsp;&nbsp;&nbsp;</h1>
             
             <div style="padding:30px">
               <div v-if="isLogin===true">
-                <h2>
+                <h4>
                   {{ this.$store.state.payload.id }}님
-                </h2>
-                <br> 
-                안녕하세요
-                <!-- 알람 -->
-                <v-btn class="text-none" stacked style="background-color: white;">
-                  <v-badge floating :content="newNotiCount" color="error" @click="alarm">
-                    <v-icon>mdi-bell-outline</v-icon>
-                  </v-badge>
-                </v-btn>
+                  <!-- 알람 -->
+                  <v-btn class="text-none" stacked style="background-color: white;">
+                    <v-badge floating :content="newNotiCount" color="error" @click="alarm">
+                      <v-icon>mdi-bell-outline</v-icon>
+                    </v-badge>
+                  </v-btn>
+                </h4>
+                
+
                 <div id="navMypage">
                   <!-- 로그아웃 -->
                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" @click="logOut">
@@ -49,11 +51,8 @@
             </div>
             
         <nav id="fh5co-main-menu" role="navigation">
-          <ul>
-            <li>
-              <span></span>
-              <router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
-            </li>
+          <ul style="margin-bottom:30px ;">
+            <li><router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
@@ -70,6 +69,7 @@
 
 <script>
 import axios from 'axios'
+// import axios from '@/store/instance.js'
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 
@@ -158,12 +158,15 @@ export default {
       });
 
       eventSource.onerror = event => {
-        console.log(event.data);
+        console.log(event);
       }
       
     }
   },
   computed:{
+    store() {
+      return store
+    },
     isLogin(){
       return this.$store.getters.isLogin
     },
@@ -177,14 +180,11 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted");
-    console.log(VUE_APP_API_URL, LOCAL_URL)
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
     }
   },
   beforeUpdate() {
-    console.log("beforeUpdate")
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');

@@ -1,5 +1,5 @@
 <template>
-	<video autoplay/>
+	<video poster="@/assets/images/logo.png" autoplay loop controls/>
 </template>
 
 <script>

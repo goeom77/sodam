@@ -1,10 +1,16 @@
 package com.samsung.sodam.db.repository.counselor;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.SubQueryExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
+import com.samsung.sodam.api.request.TestRequest;
 import com.samsung.sodam.api.response.*;
 import com.samsung.sodam.db.entity.CONSULT_TYPE;
 import com.samsung.sodam.db.entity.Counselor;
@@ -16,15 +22,18 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.querydsl.core.types.dsl.Wildcard.count;
 import static com.samsung.sodam.db.entity.Counselor.toResponse;
 import static com.samsung.sodam.db.entity.QCertificate.certificate;
 import static com.samsung.sodam.db.entity.QCounselor.counselor;
 import static com.samsung.sodam.db.entity.QEducation.education;
 import static com.samsung.sodam.db.entity.QFavoriteCounselor.favoriteCounselor;
+import static com.samsung.sodam.db.entity.QReview.review;
 
 @Repository
 public class CounselorCustomRepositoryImpl implements CounselorCustomRepository {
@@ -161,5 +170,60 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
 //                        , counselor.introduce.like(request.getKeyword())
 //                        , counselor.consultTypeList.contains(request.getType())).fetchOne();
         return new PageImpl<>(list.stream().map(Counselor::toResponse).collect(Collectors.toList()), Pageable.ofSize(pageable.getPageSize()), list.size());
+    }
+
+    @Override
+    public Page<CounselorListResponse> searchCounselorByType(TestRequest request) {
+
+//        List<Counselor> list = queryFactory.
+//                select(counselor)
+//                .from(counselor)
+//                .where(counselor.name.like("%" + request.getKeyword() + "%")).fetch();
+
+//        return queryFactory
+//                .selectFrom(counselor)
+//                .from(counselor)
+//                .where(counselor.consultTypeList.in())
+//                .fetch();
+
+        return null;
+    }
+
+    private Expression[] searchTypesIn(List<CONSULT_TYPE> types) {
+
+        List<Expression> tuples = new ArrayList<>();
+
+        for(CONSULT_TYPE type : types) {
+            tuples.add(Expressions.template(Object.class, "({0})", type));
+        }
+
+        return tuples.toArray(new Expression[0]);
+    }
+
+    @Override
+    public Page<CounselorListResponse> getBestCounselor(Pageable pageable) {
+
+        List<Tuple> list = queryFactory.select(counselor, review.stars.avg().as("points"))
+                .from(counselor)
+                .join(review)
+                .on(counselor.id.eq(review.counselorId))
+                .groupBy(counselor.id).fetch();
+
+
+
+//        list.stream().map(it -> CounselorListResponse.builder()
+//                .career(it.getCareer())
+//                .consultTypeList(it.getConsultTypeList())
+//                .email(it.getEmail())
+//                .gender(it.getGender())
+//                .id(it.getId())
+//                .introduce(it.getIntroduce())
+//                .name(it.getName())
+//                .profileImg(it.getProfileImg())
+//                .routine(it.getRoutine())
+//                .tel(it.getTel()).build()).collect(Collectors.toList());
+
+        System.out.println("tuples:" + list.toString());
+        return null;
     }
 }
