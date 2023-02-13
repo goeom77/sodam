@@ -5,10 +5,8 @@ import com.samsung.sodam.db.repository.EmitterRepository;
 import com.samsung.sodam.db.entity.Notification;
 import com.samsung.sodam.db.entity.NotificationType;
 import com.samsung.sodam.db.repository.NotificationRepository;
-import com.samsung.sodam.db.repository.schedule.ScheduleCustomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -22,7 +20,6 @@ public class NotificationService {
     private final Long TIME_OUT = 24 * 60 * 60 * 10000L;
     private final EmitterRepository emitterRepository;
     private final NotificationRepository notificationRepository;
-    private final ScheduleCustomRepository scheduleCustomRepository;
 
     public SseEmitter subscribe(String userId, String lastEventId) {
         String emitterId = makeTimeIncludeId(userId);
@@ -95,19 +92,5 @@ public class NotificationService {
                 .url(url)
                 .isRead(false)
                 .build();
-    }
-
-
-    @Scheduled(cron = "0 0 7 * * 1-5") // 월-금 오전 7시에 실행
-    public void todayRemind() {
-        // 오늘 상담 알림
-
-
-    }
-
-    @Scheduled(cron = "0 0/10 9-18 * * 1-5") // 월-금 9-18시 10분마다 실행
-    public void oneHourRemind() {
-        // 상담 1시간 전 알림
-
     }
 }

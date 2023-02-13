@@ -1,12 +1,9 @@
 package com.samsung.sodam.db.repository.schedule;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
-import com.samsung.sodam.api.response.RemindNotiDto;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
@@ -17,14 +14,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.samsung.sodam.db.entity.QConsultApplicant.consultApplicant;
 import static com.samsung.sodam.db.entity.QConsultSchedule.consultSchedule;
 import static com.samsung.sodam.db.entity.QConsultSession.consultSession;
-import static com.samsung.sodam.db.entity.QTroubleBoard.troubleBoard;
 
 @Repository
 public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
@@ -79,30 +74,4 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
                         consultSession.counselorId.eq(request.getCounselorId())
                 ).fetch();
     }
-
-    @Override
-    public List<RemindNotiDto> getTodayRemind() {
-        return queryFactory
-                .select(Projections.constructor(RemindNotiDto.class,
-                        consultSchedule.dateTime,
-                        consultSession.clientId,
-                        consultSession.counselorId
-                        )
-                ).from(consultSchedule).leftJoin(consultSession)
-                .on(consultSchedule.sessionId.eq(consultSession.id))
-                .where(diffDate(consultSchedule.dateTime))
-
-        return null;
-    }
-    private BooleanExpression diffDate(DateTimePath<LocalDateTime> scheduleDate) {
-        if(scheduleDate == null || scheduleDate.equals("")) return null;
-        LocalDate date = new LocalDate(scheduleDate.year(), scheduleDate.month(), scheduleDate.dayOfMonth());
-    }
-
-    @Override
-    public List<RemindNotiDto> getOneHourRemind() {
-        return null;
-    }
-
-
 }
