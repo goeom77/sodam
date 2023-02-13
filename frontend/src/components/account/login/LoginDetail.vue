@@ -61,14 +61,15 @@
           <div>
             <div class="text-overline mb-1">
               <form action="#" class="form" id="form1">
+                <input type="text">
                 <br>
                 <div>
                   <v-icon icon="mdi-account" size="large" color="black" style="width:10%"/>
-                  <input style="width:90%; height:50px; font-size:1.2em; padding-left:10px;" type="text" v-model="id"  placeholder="ID"/>
+                  <input style="width:80%; height:50px; font-size:1.2em; padding-left:10px;" type="text" v-model="id"  placeholder="ID"/>
                 </div>
                 <div>
                   <v-icon icon="mdi-lock-outline" size="large" color="black" style="width:10%"/>
-                  <input style="width:90%; height:50px; font-size:1.2em; padding-left:10px;" type="password" v-model="password" placeholder="Password"/>
+                  <input style="width:80%; height:50px; font-size:1.2em; padding-left:10px;" type="password" v-model="password" placeholder="Password"/>
                 </div>
                 <br>
                 <v-card-actions style="margin:0; padding:0">
