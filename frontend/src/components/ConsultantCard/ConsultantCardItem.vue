@@ -15,18 +15,17 @@
       persistent
     >
       <template v-slot:activator="{ props }">
-        
         <v-btn
           color="primary"
           v-bind="props"
         >
-          상담 신청
+          Open Dialog
         </v-btn>
       </template>
       <div class="container">
         
 
-          z<v-card style="width:70%; height:110%">
+          <v-card style="width:70%; height:110%">
               <div class=" text-center mt-5 ">
                 <h1 >상담 신청서</h1>      
               </div>
@@ -129,16 +128,18 @@
           </div>
           
         </v-card>
-      </div>
-      
+        </div>
+  
     </v-dialog>
   </v-row>
   
 
   <br>
-    <ConsultantCardItemReview
-    :counselorData="this.counselorData"/>
-    
+    <div>
+      <ConsultantCardItemReview
+      :counselorData="this.counselorData"/>
+    </div>
+
   </div>
 </div>
 </template>
@@ -277,6 +278,5 @@ export default {
 </script>
 
 <style>
-
 
 </style>

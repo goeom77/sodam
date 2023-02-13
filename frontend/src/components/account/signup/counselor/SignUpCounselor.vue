@@ -6,40 +6,10 @@
       </v-card-title>
       <v-card-text> 
           <v-row>
-          <!-- 나이 -->
-          <v-col cols="12">
-            <select id="form_need" class="form-control" v-model="consultType" required="required">
-              <option 
-                v-for="(item, index) in selectTypeList"
-                :key="index"
-                :value="item.value"
-                >{{ item.name }}</option
-              >
-            </select>
-              <div class="cntr">
-                <label for="opt1" class="radio">
-                <input type="radio" name="rdo" id="opt1" class="hidden" @click="genderToMen" checked/>
-                <span class="label"></span>남성
-              </label>
-              
-              <label for="opt2" class="radio">
-                <input type="radio" name="rdo" id="opt2" class="hidden" @click="genderToWomen"/>
-                <span class="label"></span>여성
-              </label>
-            </div>
-          </v-col>
+            <v-col cols="12"> 
+              <input type="radio" name="gender" v-model="gender" @click="genderToMen" checked>남성
+              <input type="radio" name="gender" v-model="gender" @click="genderToWomen">여성
 
-
-
-
-
-
-
-
-
-
-
-            <v-col cols="12">
               <v-text-field
               label="Id"
               type="text"
