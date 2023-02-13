@@ -199,6 +199,7 @@ export default {
   font-size: 20px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.5);
+  background-color: #fef8f8;
 }
 @media screen and (max-width: 992px) {
   .fh5co-page {
