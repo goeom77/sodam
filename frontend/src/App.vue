@@ -60,17 +60,18 @@
         </nav>
       </aside>
     </div>
+    <router-view /> 
   </div>
-  <router-view /> 
-  <LoadingView :loading="store.state.loadingStatus"></LoadingView>
+  
+  <!-- <LoadingView :loading="loadingStatus"></LoadingView> -->
+  <!-- <LoadingView :loading="this.$store.state.loadingStatus"></LoadingView> -->
 </template>
 
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
 import { EventSourcePolyfill } from "event-source-polyfill";
-import store from "@/store";
-import LoadingView from "@/views/common/LoadingView.vue";
+// import LoadingView from '../src/views/common/LoadingView'
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -85,10 +86,13 @@ export default {
     }
   },
   component: {
-    // Spinner
-    LoadingView
+    // LoadingView
   },
+
+
   methods: {
+
+
     logOut(){
       axios({
         method: 'get',

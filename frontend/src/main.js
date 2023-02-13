@@ -26,3 +26,21 @@ createApp(App).use(router)
   window.Kakao.init('46ea2a430e00975ef0166ed7e47277e9');
 
 
+// axios 로딩
+  // axios.interceptors.request.use(function (config) {
+  //   console.log('로딩 들어왔냐?')
+  //   store.commit('LOADING_STATUS', true)
+  
+  //   const token = localStorage.getItem('user_token');
+  //   config.headers.Authorization = "Bearer " + token;
+  //   return config;
+  // });
+  
+  // axios.interceptors.response.use(function (config) {
+  //   console.log('로딩 나가냐?')
+  //   store.commit('LOADING_STATUS', false)
+  
+  //   return config
+  // });
+  
+  export default axios;
