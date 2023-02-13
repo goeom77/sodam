@@ -1,14 +1,20 @@
 package com.samsung.sodam.api.service;
 
+import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.samsung.sodam.api.request.SttRequest;
+import io.openvidu.java.client.Recording;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -49,6 +55,35 @@ public class FileGCSService {
 
         // DB에 저장될 값 (파일 다운로드 경로)
         return new StringBuilder().append("https://storage.googleapis.com").append("/").append(bucketName).append("/").append(path).append(encodeFileName).toString();
+    }
+
+    public SttRequest recordUploadGCS (Recording file, String rootDir) throws IOException {
+
+        // 파일 저장 경로 설정
+        String savedName = file.getName();
+        UUID uuid = UUID.randomUUID();
+        String datePath = LocalDate.now().getYear() + "/" + LocalDate.now().getMonth().toString();
+        String path = rootDir + "/" + datePath + "/" + uuid + "_";
+        String newFileName = path + savedName;
+
+        // url에서 파일 다운로드
+        URL url = new URL(file.getUrl());
+        URLConnection urlConnection = url.openConnection();
+        InputStream is = urlConnection.getInputStream();
+
+        // 파일 저장
+        String bucketName = "stt-bucket-binu";
+        BlobId blobId = BlobId.of(bucketName, newFileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+        Blob blob = storage.create(blobInfo, is);
+
+        // 리턴타입
+        SttRequest sttRequest = SttRequest.builder()
+                .gcsDirectory("recording/" + datePath)
+                .url("gs://stt-bucket-binu/" + newFileName)
+                .fileName(uuid + "_" + savedName)
+                .build();
+        return sttRequest;
     }
 
 }

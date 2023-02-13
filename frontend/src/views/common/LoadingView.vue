@@ -1,6 +1,6 @@
 <template>
 
-  <div class="lds-facebook" v-if="loading">
+  <div v-if="loading" style="width: 100px">
     <div>
       <h1>로딩 중이냐?</h1>
     </div>

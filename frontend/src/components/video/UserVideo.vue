@@ -1,9 +1,13 @@
 <template>
   <div v-if="streamManager">
-    <ov-video 
-      :stream-manager="streamManager"
-      :test=true
-    />
+      <!-- 사전 파일 -  -->
+      <!-- lazy-src를 대기로 바꿀것 -->
+    <div>
+      <ov-video
+        :stream-manager="streamManager"
+        :test=true
+      />
+    </div>
     <div><p>{{ clientData }}</p></div>
   </div>
   </template>

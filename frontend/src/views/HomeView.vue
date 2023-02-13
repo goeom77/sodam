@@ -2,12 +2,19 @@
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class="five">
-        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">
-          <em>
-            소중한 당신을 위해
-          </em>
-          <span>여기, 소담이 함께합니다.</span> 
-        </h2>
+        <div class="container">
+          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft" style="font-size:3em;" >
+            <div class="bgImg">
+                <em>
+                  소중한 당신을 위해
+                </em>
+                <br>
+                <span>여기, 소담이 함께합니다.</span> 
+                
+              </div>
+            </h2>
+
+        </div>
       </div>
       <br>
       <br>
@@ -69,7 +76,7 @@ export default {
   color: rgba(0, 0, 0, 0.5);
 }
 #fh5co-main {
-  width: 85%;
+  width: 100%;
   float: right;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
@@ -96,6 +103,15 @@ export default {
     width: 100%;
     padding: 3.5em 1em;
   }
+}
+.bgImg{
+  background-image: url('@/assets/images/homeImg.png');
+  width:90%;
+  height: 50vh;
+  background-position: center center;
+  background-repeat: no-repeat;
+  
+  
 }
 
 

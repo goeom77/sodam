@@ -45,7 +45,7 @@ export default {
   //     return this.$store.state.AlarmViewarticles
   //   },
   // },
-  created() {
+  mounted() {
     this.getAlarmArticles()
     // this.getSangdamAlarmArticles()
     // this.getBoardAlarmArticles()
@@ -69,6 +69,7 @@ export default {
           this.AlarmViewarticles = res.data
         })
         .catch((err) => {
+          console.log(err);
           console.log('어림도 없지')
         })
     },

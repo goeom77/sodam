@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.samsung.sodam.db.converter.ConsultConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
+import com.samsung.sodam.db.converter.GenderConverter;
 import com.samsung.sodam.db.entity.CONSULT_TYPE;
+import com.samsung.sodam.db.entity.GENDER;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class TestRequest {
     @Convert(converter = ConsultListConverter.class)
-    private Set<CONSULT_TYPE> list;
+    private List<CONSULT_TYPE> list;
+
+    private String name;
+
+    @Convert(converter = GenderConverter.class)
+    private GENDER gender;
 }

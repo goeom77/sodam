@@ -1,8 +1,8 @@
 <template>
   <div id="fh5co-page">
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-    <div style="border-width: medium; border-style: none; border-color:black; border-radius: 20%;">
-      <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
+    <div style="text-align:center">
+      <aside id="fh5co-aside" role="complementary" class="border js-fullheight" >
         <h1 id="fh5co-logo">
           <router-link to="/" style="display: flex; justify-content: center;">
             <img
@@ -73,6 +73,7 @@
 
 <script>
 import axios from 'axios'
+// import axios from '@/store/instance.js'
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 
@@ -161,12 +162,15 @@ export default {
       });
 
       eventSource.onerror = event => {
-        console.log(event.data);
+        console.log(event);
       }
       
     }
   },
   computed:{
+    store() {
+      return store
+    },
     isLogin(){
       return this.$store.getters.isLogin
     },
@@ -179,15 +183,13 @@ export default {
       this.newNotiCount = count;
     }
   },
-  mounted() {
-    console.log("mounted");
-    console.log(VUE_APP_API_URL, LOCAL_URL)
+  beforeMount() {
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
+      this.$store.dispatch('unreadNotiCount');
     }
   },
-  beforeUpdate() {
-    console.log("beforeUpdate")
+  mounted() {
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');
@@ -203,6 +205,7 @@ export default {
   font-size: 20px;
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.5);
+  background-color: #fef8f8;
 }
 @media screen and (max-width: 992px) {
   .fh5co-page {

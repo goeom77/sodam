@@ -7,7 +7,9 @@
         <ClientManageCard
         v-for="(clientData,idx) in this.sessionInfo"
         :key="idx"
-        :clientData="clientData"/>
+        :clientData="clientData"
+        :sessionInfo="this.sessionInfo"
+        />
       </div>
     </div>
   </div>

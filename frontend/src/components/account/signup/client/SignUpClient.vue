@@ -2,10 +2,25 @@
   <v-container style="width:500px; height:800px;">
     <v-card>
       <v-card-title >
-        <span class="text-h5">회원 가입</span>
+        <span class="text-h5" @click="checkData">회원 가입</span>
       </v-card-title>
       <v-card-text> 
           <v-row>
+          <!-- 나이 -->
+            <v-col cols="12">
+              <div class="cntr">
+                <label for="opt1" class="radio">
+                <input type="radio" name="rdo" id="opt1" class="hidden" @click="genderToMen" checked/>
+                <span class="label"></span>남성
+              </label>
+              
+              <label for="opt2" class="radio">
+                <input type="radio" name="rdo" id="opt2" class="hidden" @click="genderToWomen"/>
+                <span class="label"></span>여성
+              </label>
+            </div>
+          </v-col>
+
             <v-col cols="12">
               <v-text-field
               label="Id"
@@ -52,13 +67,27 @@
                 required
               ></v-text-field>
             </v-col>
+            <!-- 나이 -->
+            <v-col cols="12">
+              
+            <label for="form_lastname">나이</label>
+            <select id="form_need" class="form-control" v-model="age" required="required">
+              <option 
+                v-for="(item, index) in selectAgeList"
+                :key="index"
+                :value="item.value"
+                >{{ item.name }}</option
+              >
+            </select>
+          </v-col>
+
             <v-col cols="12">
               <v-text-field
                 label="E-mail"
                 type="email"
                 v-model="email"
                 :rules="user_email_rule" 
-                required
+                
               ></v-text-field>
               <v-btn @click="CheckEmail" v-if="this.checkEmail===0">이메일 확인</v-btn>
               <div v-else-if="this.checkEmail !=0">
@@ -104,6 +133,17 @@ export default {
     name:'SignUpClient',
     data(){
       return{
+        selectAgeList:[
+          {name:'미지정',value:'NONE'},
+          {name:'9세 이하',value:'UNDER_10'},
+          {name:'10대',value:'RANGE_10'},
+          {name:'20대',value:'RANGE_20'},
+          {name:'30대',value:'RANGE_30'},
+          {name:'40대',value:'RANGE_40'},
+          {name:'50대',value:'RANGE_50'},
+          {name:'60대',value:'RANGE_60'},
+          {name:'70대 이상 ',value:'OVER_70'},
+        ],
         id:null,
         user_id_rule: [
         v => !!v || '아이디는 필수 입력사항입니다.',
@@ -142,12 +182,24 @@ export default {
         passwordValidFlag: true,
         passwordCheckFlag: true,
         msg:null,
+        age:null,
+        gender:'MEN',
         checkEmail:0,
         confirm_code:null,
       }
     },
 
     methods:{
+      checkData(){
+        console.log(this.gender)
+        console.log(this.age)
+      },
+      genderToMen(){
+        this.gender = 'MEN'
+      },
+      genderToWomen(){
+        this.gender = 'WOMEN'
+      },
             // 이메일 확인 
       CheckEmail(){
         axios({
@@ -218,17 +270,20 @@ export default {
       signup(){
         const id = this.id
         const password = this.password
-
         const name = this.name
         const email = this.email
         const tel = this.tel
-        
+        const gender = this.gender
+        const age = this.age
+
         const payload = {
           id: id,
           password: password,
           name: name,
           email: email,
           tel: tel,
+          gender: gender,
+          age: age,
         }
         console.log(payload)
         this.$store.dispatch('signupClient', payload)

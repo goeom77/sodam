@@ -1,6 +1,8 @@
 package com.samsung.sodam.db.repository.counselor;
 
+import com.samsung.sodam.api.request.CounselorRequest;
 import com.samsung.sodam.api.request.CounselorSearchRequest;
+import com.samsung.sodam.api.request.TestRequest;
 import com.samsung.sodam.api.response.CounselorDetailResponse;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import org.springframework.data.domain.Page;
@@ -18,4 +20,8 @@ public interface CounselorCustomRepository{
     CounselorDetailResponse getCounselorDetailAll(String userId);
 
     Page<CounselorListResponse> searchCounselor(CounselorSearchRequest request, Pageable pageable);
+
+    Page<CounselorListResponse> searchCounselorByType(TestRequest request);
+
+    Page<CounselorListResponse> getBestCounselor(Pageable pageable);
 }
