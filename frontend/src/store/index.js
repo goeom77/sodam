@@ -4,81 +4,40 @@ import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 
 // 로딩 임포트
-// export const LOADING_STATUS = 'LOADING_STATUS'
+export const LOADING_STATUS = 'LOADING_STATUS'
 // import * as types from './mutation_types'
 
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
-  state: {
-    // loadingStatus: false,
-    newNotiCount: 0,
-    KidBoardarticles: [],
-    Announcearticles: [],
-    Inquiryarticles: [],
-    AlarmViewarticles: [],
-    SangdamAlarmViewarticles: [],
-    BoardAlarmViewarticles: [],
-    HelpAlarmViewarticles: [],
-    GuitarAlarmViewarticles: [],
-    token:null,
-    payload:{
-      id: null,
-      password: null,
-      common_code: null
-    },
-    userSignupData:{
-      id:null,
-      password:null,
-      name:null,
-      tel:null,
-      email:null,
-      gender:null,
-      enterprise_id:null,
-    }, 
-  },
-  getters: {
-    isLogin(state) {
-      return state.token ? true : false
-    },
-    getUserData(state) {
-      return state.userSignupData
-    },
-    getNotiCount(state) {
-      return state.newNotiCount;
-    }
-  },
-  mutations: {
-    // 로딩 타입
-    // LOADING_STATUS (state, loadingStatus) {
-    //   state.loadingStatus = loadingStatus
-    // },
-    
-    GET_BOARDARTICLES(state, Boardarticles) {
-      console.log(Boardarticles)
-      state.Boardarticles = Boardarticles
-    },
-    GET_BOARDMYARTICLES(state, BoardMyarticles) {
-      console.log(BoardMyarticles)
-      state.BoardMyarticles = BoardMyarticles
-    },
-    GET_KIDBOARDARTICLES(state, KidBoardarticles) {
-      console.log(KidBoardarticles)
-      state.KidBoardarticles = KidBoardarticles
-    },
-    GET_ANNOUNCEARTICLES(state, Announcearticles) {
-      console.log(Announcearticles)
-      state.Announcearticles = Announcearticles
-    },
-    GET_INQUIRYARTICLES(state, Inquiryarticles) {
-      console.log(Inquiryarticles)
-      state.Inquiryarticles = Inquiryarticles
-    },
-    
-    GET_HISTORYVIEWARTICLES(state, HistoryViewarticles) {
-      state.HistoryViewarticles = HistoryViewarticles
+    plugins: [createPersistedState()],
+    state: {
+        loadingStatus: false,
+        newNotiCount: 0,
+        KidBoardarticles: [],
+        Announcearticles: [],
+        Inquiryarticles: [],
+        AlarmViewarticles: [],
+        SangdamAlarmViewarticles: [],
+        BoardAlarmViewarticles: [],
+        HelpAlarmViewarticles: [],
+        GuitarAlarmViewarticles: [],
+        token: null,
+        payload: {
+            id: null,
+            password: null,
+            common_code: null
+        },
+        userSignupData: {
+            id: null,
+            password: null,
+            name: null,
+            tel: null,
+            email: null,
+            gender: null,
+            enterprise_id: null,
+        },
     },
     getters: {
         isLogin(state) {

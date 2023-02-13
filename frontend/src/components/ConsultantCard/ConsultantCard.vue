@@ -93,7 +93,7 @@ export default {
 
 <style>
 :root {
-  --surface-color: white;
+  --surface-color: #fff;
   --curve: 40;
 }
 
@@ -103,7 +103,7 @@ export default {
 
 body {
   font-family: 'Noto Sans JP', sans-serif;
-  background-color: white;
+  background-color: #fef8f8;
 }
 
 .cards {
@@ -151,9 +151,9 @@ body {
   align-items: center;
   gap: 2em;
   padding: 2em;
-  border-radius: calc(var(--curve) * 1px) 0 0 0;
+  border-radius: calc(var(--curve) * 1px) 0 0 0;    
   background-color: var(--surface-color);
-  transform: translateY(-80%);
+  transform: translateY(-100%);
   transition: .2s ease-in-out;
 }
 
@@ -162,14 +162,14 @@ body {
   height: 80px;
   position: absolute;
   bottom: 100%;
-  right: 0;
+  right: 0;      
   z-index: 1;
 }
 
 .card__arc path {
   fill: var(--surface-color);
   d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-}
+}       
 
 .card:hover .card__header {
   transform: translateY(0);
