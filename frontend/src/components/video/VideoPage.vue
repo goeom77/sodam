@@ -112,74 +112,105 @@
             <button class="btn btn-sm btn-outline-secondary" type="button" @click="leaveSession">나가기</button>
           </form>
         </nav>
-        <!-- session -->
-        <div class="d-flex justify-content-center">
-          <div style="float:left">
-            <user-video :stream-manager="mainStreamManager" />
-          </div>
-          <div style="width:10px float:left"></div>
-          <div style="float:left">
-            <user-video
-              v-for="sub in subscribers"
-              :key="sub.stream.connection.connectionId"
-              :stream-manager="sub"
-              @click="updateMainVideoStreamManager(sub)"
-            />
-          </div>
-        </div>
       </div>
+      <div style="height:30px"></div>
+      <!-- session -->
+      <v-row justify="center">
+        <v-col cols="4">
+          <v-card class="mx-auto" max-width="500">
+            <v-container>
+              <v-card>
+                <user-video :stream-manager="mainStreamManager"/>
+                <v-card-actions>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-heart"></v-btn>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-bookmark"></v-btn>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-container>
+          </v-card>
+        </v-col>
+        <v-col cols="4">
+          <v-card class="mx-auto" max-width="500">
+            <v-container fluid>
+              <v-card>
+                <user-video
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  v-for="sub in subscribers"
+                  :key="sub.stream.connection.connectionId"
+                  :stream-manager="sub"
+                  @click="updateMainVideoStreamManager(sub)"
+                />
+                <v-card-actions>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-heart"></v-btn>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-bookmark"></v-btn>
+                  <v-btn size="small" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+      <!-- session 끝 -->
+      <div style="height:30px"></div>
       <nav class="navbar fixed-bottom" style="background-color: rgb(65, 65, 67);">
-        <div class="container-fluid">
+        <form class="container-fluid justify-content-center">
           <div>
             <v-btn
-              id="buttonVideo"
-              size="large"
-              class="ma-2"
+              size="x-large"
               @click="videoController"
+              color="grey-darken-4"
             >
-            <v-icon
-              v-if="videoMute == false" 
-              icon="mdi-video-ouline" size="large"></v-icon>
-            <v-icon
-              v-else 
-              icon="mdi-video-off-outline" size="large"></v-icon>
+              <v-icon v-if="videoMute == false" icon="mdi-video-outline" size="x-large"></v-icon>
+              <v-icon v-else icon="mdi-video-off-outline" size="x-large"></v-icon>
             </v-btn>
+            &nbsp;&nbsp;&nbsp;
             <v-btn
-              id="buttonAudio"
+              size="x-large"
+              v-if="audioMute == false"
+              color="grey-darken-4"
               @click="audioController"
             >
-              <span>{{ audioMsg }}</span>
+              <v-icon style="color:white" icon="mdi-volume-high" size="x-large"></v-icon>
             </v-btn>
-            <!-- 녹음 버튼 -->
+            <v-btn
+              size="x-large"
+              v-else
+              color="grey-darken-4"
+              @click="audioController"
+            >
+              
+              <v-icon style="color:white" icon="mdi-volume-off" size="x-large"></v-icon>
+            </v-btn>
+            &nbsp;&nbsp;&nbsp;
+              <!-- 녹음 버튼 -->
 
             <v-btn
+              size="x-large"
               v-if="recordMode == false"
-              class="btn btn-large btn-danger"
-              type="button"
-              id="buttonRecord"
+              color="grey-darken-4"
               @click="startRecord"
             >
-              <span>start record</span>
+              <v-icon style="color:red" icon="mdi-record-rec" size="x-large"></v-icon>
             </v-btn>
             <v-btn
+              size="x-large"
               v-else
-              class="btn btn-large btn-danger"
-              type="button"
-              id="buttonRecord"
               @click="stopRecord"
             >
-              <span>stop record</span>
+            <v-icon icon="mdi-stop" size="x-large"></v-icon>
             </v-btn>
-
+            &nbsp;&nbsp;&nbsp;
             <v-btn
+              size="x-large"
               id="buttonLeaveSession"
-              color="red"
+              color="grey-darken-4"
               @click="leaveSession"
             >
-              <span>나가기</span>
+              <v-icon icon="mdi-logout" size="x-large"></v-icon>
             </v-btn>
           </div>
-        </div>
+        </form>
       </nav>
     </div>
   </div>
@@ -322,7 +353,7 @@ export default {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: !this.audioMute, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: !this.videoMute, // Whether you want to start publishing with your video enabled or not
-              resolution: "600x700", // The resolution of your video
+              resolution: "500x570", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -435,14 +466,10 @@ export default {
     },
     videoController() {
       this.videoMute = !this.videoMute;
-      if(this.videoMute == true) this.videoMsg = "비디오 OFF";
-      else(this.videoMsg = "비디오 ON");
       this.publisher.publishVideo(this.videoMute);
     },
     audioController() {
       this.audioMute = !this.audioMute;
-      if(this.audioMute == true) this.audioMsg = "마이크 OFF";
-      else(this.audioMsg = "마이크 ON");
       this.publisher.publishAudio(this.audioMute);
     },
     startRecord() {
@@ -509,5 +536,11 @@ export default {
   width:100%;
   height:100%;
   background: rgb(26, 25, 31);
+
+}
+#video-main-bar-center {
+  display:flex;
+  justify-content:center;
+  align-content:center;
 }
 </style>
