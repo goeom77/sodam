@@ -56,8 +56,14 @@
       </tr>
     </table>
 
+    <!-- 학력 -->
     <div class="ten">
       <h1>학력</h1>
+    </div>
+    <div v-for="(edu,idx) in education"
+    :key="idx">
+    {{ edu.degree }} | {{ edu.school }} | {{ edu.major }} | {{ edu.is_graduate }} | {{ edu.education_file }}
+
     </div>
     <table id="sign_table">
         <thead>
@@ -181,7 +187,7 @@
     </table>
 
 
-    <!-- 상담 -->
+    <!-- ㄱ여력 -->
     <div class="ten">
       <h1>경력</h1>
     </div>
@@ -225,7 +231,9 @@
       </tfoot>
       <button class="button btn-primary" @click="addCareerRow">+추가</button>
     </table>
-
+    <div style="padding: 20px;">
+      <a style="margin:auto;" class="bn62" @click="counselorUpdate">확인</a>
+    </div>
 </template>
 
 <script>
@@ -233,7 +241,7 @@ import axios from 'axios'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
-  name:'EditInformation',
+  name:'EditInformationCounselor',
   data(){
     return{
       name: '',
@@ -288,13 +296,11 @@ export default {
   methods:{
     OnImage(){
       const formdata = new FormData()
-      formdata.append('profileImage', this.profileImage)
+      formdata.append('file', this.profileImage[0])
       return axios({
-        method:'',
-        url:`${VUE_APP_API_URL}`,
-        data:{
-          profile: this.profile_image
-        },
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/my-page/profile-img/${id}`,
+        data: formdata,
         headers:{
           'Content-Type': 'multipart/form-data',
         },
@@ -354,7 +360,7 @@ export default {
         .then((res) => {
           console.log(res)
           this.$router.push({
-            name: 'MainEdit',
+            name: 'MainEdit1',
             // params: { postId: this.$route.params.postId } 
           })
         })
@@ -411,12 +417,13 @@ export default {
 <style>
 
 .type03 {
+  width:95%;
   border-collapse: collapse;
   text-align: left;
   line-height: 1.5;
   border-top: 1px solid #ccc;
   border-left: 3px solid #369;
-  margin : 20px 10px;
+  margin : 20px 20px;
 }
 .type03 th {
   background-color: white;

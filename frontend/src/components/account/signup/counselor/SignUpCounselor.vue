@@ -95,8 +95,6 @@
           <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag || !passwordCheckFlag || emailCheckMsg == null">확인</v-btn>
         <!-- </div>
         <div v-else> -->
-          <v-btn color="blue darken-1" disabled text>확인</v-btn>
-        <!-- </div> -->
         
         <v-btn color="blue darken-1" text @click="moveBack">취소</v-btn>
       </v-card-actions>

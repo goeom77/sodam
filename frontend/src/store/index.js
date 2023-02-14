@@ -128,7 +128,7 @@ export default new Vuex.Store({
         },
         DELETE_TOKEN(state) {
             state.token = null,
-                state.userSignupData = null
+            state.userSignupData = null
         },
         GETCOUNSELORINFO(state) {
             console.log(state)

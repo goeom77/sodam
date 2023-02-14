@@ -13,11 +13,11 @@
             {{ this.$store.state.payload.id }}님
             <span id="navMypage">
               <!-- 알람 -->
-              <button class="text-none" stacked >
+              <v-btn class="text-none">
                 <v-badge :content="newNotiCount" color="error" @click="alarm">
-                  <v-icon>mdi-bell-outline</v-icon>
+                  <v-icon variant="text">mdi-bell-outline</v-icon>
                 </v-badge>
-              </button>
+              </v-btn>
             </span>
             </div>
           <hr>
@@ -60,7 +60,7 @@
     <router-link to="/">
       <img
         id="logo"
-        class="w-50 h-auto"
+        class="w-25 h-auto ml-5"
         :src="projectlogo"
         alt="noimage"
       />
@@ -127,13 +127,16 @@ export default {
     logOut(){
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/logout/id`,
+        url: `${VUE_APP_API_URL}/api/auth/logout`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
-      .then(
+      .then(res=>{
         this.$store.dispatch('logOut')
+        this.$router.push({name:'home'})
+      })
+      .then(
       )
     },
     logIn(){

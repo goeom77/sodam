@@ -12,7 +12,9 @@
       확인
     </v-btn>
     </div>
-    <router-link style="color:black" to="/MainEdit">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+    {{ this.common_code }}
+    <router-link  style="color:black" to="/MainEdit1">고민게시판</router-link>&nbsp;&nbsp;&nbsp;
+    <router-link  style="color:black" to="/MainEdit2">qweqwe</router-link >&nbsp;&nbsp;&nbsp;
   </div>
 </template>
 
@@ -24,13 +26,18 @@ export default {
     return{
       InputPassword:null,
       password: this.$store.state.payload.password,
+      common_code: this.$store.state.payload.common_code,
     }
   },
 
   methods:{
     checkPassword(){
       if (this.InputPassword === this.password){
-        this.$router.push({ name : 'MainEdit'})
+        if (this.common_code == 1){
+          this.$router.push({ name : 'MainEdit1'})
+        } else{
+          this.$router.push({ name : 'MainEdit2'})
+        }
       } else {
         alert('비밀번호가 다릅니다')
       }
