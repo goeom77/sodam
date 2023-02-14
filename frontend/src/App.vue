@@ -7,20 +7,20 @@
   >
     <v-card-item>
       <div style="text-align: center;">
-        <div class="text-h6 mb-1 pt-2">
-          {{ this.$store.state.payload.id }}님
-          <span id="navMypage">
-            <!-- 알람 -->
-            <button class="text-none" stacked >
-              <v-badge :content="newNotiCount" color="error" @click="alarm">
-                <v-icon>mdi-bell-outline</v-icon>
-              </v-badge>
-            </button>
-          </span>
-          </div>
-        <hr>
         <!-- 로그인 상태 시작 -->
         <div v-if="isLogin===true">
+          <div class="text-h6 mb-1 pt-2">
+            {{ this.$store.state.payload.id }}님
+            <span id="navMypage">
+              <!-- 알람 -->
+              <button class="text-none" stacked >
+                <v-badge :content="newNotiCount" color="error" @click="alarm">
+                  <v-icon>mdi-bell-outline</v-icon>
+                </v-badge>
+              </button>
+            </span>
+            </div>
+          <hr>
           <!-- 로그아웃 -->
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16" @click="logOut" type="button">
             <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
@@ -37,11 +37,14 @@
         </div>
         <!-- 로그인 상태 끝 -->
         <!-- 로그 아웃상태 -->
-        <div v-if="ifLogin===false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
-            <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-            <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
-          </svg>
+        <div v-if="isLogin===false" class="mt-3">
+          <a href="/login" style="text-decoration: none ;" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
+              <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+              <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+            </svg>
+            <p class="mt-1">로그인</p>
+          </a>
         </div>
         <div class="text-caption"></div>
       </div>
