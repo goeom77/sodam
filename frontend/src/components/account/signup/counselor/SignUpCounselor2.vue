@@ -1,4 +1,6 @@
 <template>
+  <div id="fh5co-main">
+  <div class="fh5co-narrow-content">
   <div @submit.prevent="onSubmit">
 <!-- 학력 -->
     <table>
@@ -63,7 +65,7 @@
           <td colspan="5" class="tablefoot"></td>
         </tfoot>
         <div>
-         <button class="button btn-primary" @click="addEducationRow">+추가</button>
+        <button class="button btn-primary" @click="addEducationRow">+추가</button>
       </div>
       </table>
 
@@ -183,6 +185,9 @@
     <v-btn color="blue darken-1" text @click="signUpCounselor">회원가입</v-btn>
     <v-btn color="blue darken-1" text @click="moveBack">뒤로가기</v-btn>
   </div>
+  </div>
+  </div>
+
 </template>
 
 <script>
