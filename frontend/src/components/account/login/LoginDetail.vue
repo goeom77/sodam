@@ -73,12 +73,7 @@
                     <div style="width:100%">
                       <router-link style="margin:auto" class="find" :to="{name:'findId'}">아이디찾기  |</router-link>
                       <router-link style="margin:auto" class="find" :to="{name:'findPw'}">  비밀번호 찾기  |</router-link>
-                      <span v-if="this.common_code === '2'">
-                        <router-link style="margin:auto" class="find" :to="{name:'signupclient'}">  회원가입</router-link>
-                      </span>
-                      <span v-else-if="this.common_code === '1'">
-                        <router-link style="margin:auto" class="find" :to="{name:'signupcounselor'}">  회원가입</router-link>
-                      </span>
+                      <router-link style="margin:auto" class="find" :to="{name:'signupclient'}">  회원가입</router-link>
                     </div>
                   </v-form>
                 </v-card-text>
