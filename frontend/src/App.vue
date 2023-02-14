@@ -1,9 +1,11 @@
 <template>
   <v-card
+    id="myCard"
     v-if="dialog===true"
     class="mx-auto bg-light"
     width="300"
     style="position: fixed; z-index: 9; top: 60px; right:50px;"
+    @blur="dialogclick"
   >
     <v-card-item>
       <div style="text-align: center;">
@@ -124,6 +126,16 @@ export default {
     dialogclick() {
       this.dialog = !this.dialog
     },
+    // closeclick() {
+    //   const card = document.getElementById('myCard')
+    //   window.onclick(function(e){
+    //     if (e.target == myCard){
+    //       this.dialog = false
+    //       console.log(card)
+    //       console.log(window)
+    //     }
+    //   })
+    // },
     logOut(){
       axios({
         method: 'get',
