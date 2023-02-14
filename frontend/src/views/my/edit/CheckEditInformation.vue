@@ -1,12 +1,13 @@
 <template>
   <div class="check" style="padding-top:30px">
     <div class="checkForm" style="margin:auto; padding-top: 30px;">
-      <h2>회원 정보 수정</h2>
-      <h4>고객님의 소중한 개인정보 보호를 위해 비밀번호를 다시 확입합니다.</h4>
+      <h2>비밀번호 확인</h2>
+      <h4>고객님의 소중한 개인정보 보호를 위해 <br>
+        비밀번호를 다시 확인합니다.</h4>
       <br>
       <h4>비밀번호가 노출되지않도록 주의해주세요</h4>
-      <input type="password" v-model="InputPassword"  placeholder="비밀번호"/>
-      <br>
+      <input id="checkPwInput" type="password" v-model="InputPassword"  placeholder="비밀번호"/>
+        <br>
       <v-btn @click="checkPassword">
       확인
     </v-btn>
@@ -39,6 +40,17 @@ export default {
 </script>
 
 <style>
+#checkPwInput {
+    padding: 10px;
+    width: 50%;
+    font-size: 17px;
+    font-family: Raleway;
+    border: 1px solid #aaaaaa;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    
+}
+
 
 .checkForm{
   width : 500px;

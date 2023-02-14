@@ -448,7 +448,6 @@ export default new Vuex.Store({
                 })
         },
 
-
         counselorUpdate(context, payload) {
             const formdata = new FormData()
             formdata.append('id', payload.id)
