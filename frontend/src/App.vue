@@ -179,7 +179,7 @@ export default {
       this.newNotiCount = count;
     }
   },
-  beforeMount() {
+  beforeUpdate() {
     if(this.$store.getters.isLogin) {
       this.initNotiListener();
       this.$store.dispatch('unreadNotiCount');

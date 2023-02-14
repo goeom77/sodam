@@ -394,7 +394,7 @@ export default new Vuex.Store({
             formdata.append('id', payload.id)
             formdata.append('password', payload.password)
             formdata.append('name', payload.name)
-            formdata.append('tel', payload.name)
+            formdata.append('tel', payload.tel)
             formdata.append('email', payload.email)
             formdata.append('gender', payload.gender)
             formdata.append('enterprisestr', payload.enterprise_id)
