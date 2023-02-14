@@ -242,11 +242,11 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to,from,next) => {
+// routes.beforeEach((to,from,next) => {
 //   const isLogin = this.$store.getters.isLogin
 //   const allowPages = [
 //     'home','login']
-    // ,'FindId','FindPw', 'LoginKakao','SignUpClient','SignUpCounselor','SignUpCounselor2','BoardView','BoardDetailView','HelpView','NoticeDetailView','QnaDetailView','QnaDetailView'
+//     // ,'FindId','FindPw', 'LoginKakao','SignUpClient','SignUpCounselor','SignUpCounselor2','BoardView','BoardDetailView','HelpView','NoticeDetailView','QnaDetailView','QnaDetailView'
 //   const forUserPages = !allowPages.includes(to.name)
 
 //   if (!isLogin && forUserPages) {
