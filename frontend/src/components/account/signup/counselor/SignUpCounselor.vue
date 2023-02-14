@@ -92,7 +92,7 @@
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
         <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
-          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag && !passwordValidFlag && !passwordCheckFlag">확인</v-btn>
+          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag || !passwordCheckFlag || emailCheckMsg == null">확인</v-btn>
         <!-- </div>
         <div v-else> -->
           <v-btn color="blue darken-1" disabled text>확인</v-btn>
@@ -172,7 +172,7 @@ export default {
         .then(res => {
           if(res.data === 'OK') {
             this.checkEmail = 1
-          } else if(res.data === 'CONFICT') { // 이미 존재하는 사용자
+          } else if(res.data === 'CONFLICT') { // 이미 존재하는 사용자
             this.checkEmail = 2
           } else {  // 이메일 에러
             this.checkEmail = 1 // -------- 이메일 복구 후 삭제
