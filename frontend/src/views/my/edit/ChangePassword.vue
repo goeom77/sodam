@@ -83,15 +83,16 @@ export default {
         method:'post',
         url:`${VUE_APP_API_URL}/api/auth/update-pw`,
         data:{
-          password:null,
-          new_password:null,
+          password:this.password,
+          new_password:this.password2,
         },
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
       })
       .then(res=>{
-        console.log(res)
+        this.$router.push({name:'home'})
+
       })
     }
   }

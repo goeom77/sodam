@@ -21,7 +21,7 @@
       
       <v-window v-model="tab">
         <v-window-item value="one">
-          <EditInformation/>
+          <EditInformationCounselor/>
         </v-window-item>
         
         <v-window-item value="two">
@@ -40,15 +40,15 @@
 
 <script>
 import ChangePassword from '@/views/my/edit/ChangePassword.vue'
-import EditInformation from '@/views/my/edit/EditInformation.vue'
+import EditInformationCounselor from '@/views/my/edit/EditInformationCounselor.vue'
 import DeleteAccount from '@/views/my/edit/DeleteAccount.vue'
 
 
 export default {
-  name:'MainEdit',
+  name:'MainEdit1',
   components:{
     ChangePassword,
-    EditInformation,
+    EditInformationCounselor,
     DeleteAccount
   },
   data(){
