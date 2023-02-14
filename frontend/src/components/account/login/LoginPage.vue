@@ -1,12 +1,12 @@
 <template>
-
-      <div id="cover">
-        <div class="background">
-        </div>
-        <div id="LoginDetail">
-          <LoginDetail/>
-        </div>
-      </div>
+  <div style="height:100px"></div>
+  <div id="cover">
+    <div class="background">
+    </div>
+    <div id="LoginDetail">
+      <LoginDetail/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,35 +45,5 @@ export default {
   background-color: #FCFAEF;
   margin-right: 0px;
   justify-content: center;
-}
-
-#fh5co-main {
-  width: 80%;
-  float: right;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
-@media screen and (max-width: 1200px) {
-  #fh5co-main {
-    width: 70%;
-  }
-}
-@media screen and (max-width: 768px) {
-  #fh5co-main {
-    width: 100%;
-  }
-}
-#fh5co-main .fh5co-narrow-content {
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
-  padding: 4em 0;
-}
-@media screen and (max-width: 768px) {
-  #fh5co-main .fh5co-narrow-content {
-    width: 100%;
-    padding: 3.5em 1em;
-  }
 }
 </style>

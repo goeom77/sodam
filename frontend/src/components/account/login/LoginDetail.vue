@@ -1,69 +1,90 @@
 <template>
-  <v-tabs>
-    <v-tab @click="ChangeToClient">
-      고객
+  <br>
+  <v-window v-model="tab">
+    <v-window-item value="one">
+      <div class="d-flex justify-content-center ml-4">
+        <v-btn
+          class="ma-2"
+          color="purple"
+          icon="mdi-account-heart-outline"
+        ></v-btn>
+        <h2 style="margin:auto; padding-right:60px;"> Login</h2>
+      </div>
+    </v-window-item>
+    <v-window-item value="two">
+      <div class="d-flex justify-content-center ml-4">
+        <v-btn
+          class="ma-2"
+          color="red-lighten-2"
+          icon="mdi-doctor"
+        ></v-btn>
+        <h2 style="margin:auto; padding-right:60px;">Login</h2>
+      </div>
+    </v-window-item>
+  </v-window>
+  <br>
+  <v-tabs style="width:100%;" v-model="tab">
+    <v-tab @click="ChangeToClient" style="width:50%;" value="one">
+      <div style="height:5%"></div>
+      <h5>고객</h5>
     </v-tab>
-    <v-tab @click="ChangeToCounselor">
-      상담사
+    <v-tab @click="ChangeToCounselor" style="width:50%" value="two">
+      <div style="height:5%"></div>
+      <h5>상담사</h5>
     </v-tab>
   </v-tabs>
-
-  <v-tabs-items v-model="tab">
-    <v-tab-item>
-      <div v-if="this.common_code==='2'">
-        고객 로그인 창 
-        <div class="loginform">
-          <div class="container__form container--signup" style="margin: 0 auto; width:455px;">
-          <form action="#" class="form" id="form1">
-            <h2 >Login</h2>
-            <br>
-            <input type="text" v-model="id" placeholder="ID">
-            <br>
-            <input type="password" v-model="password" placeholder="Password"/>
-            <br>
-            <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
-            <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
-            <br>
-            <v-btn @click="logIn">로그인</v-btn>
-            <br>
-            <br>
-            <LoginKakao/>
-            <div style="display:block">
-              <h4>계정이 없으신가요?</h4>
-              <router-link class="find" :to="{name:'signupclient'}">회원가입</router-link>
-              </div>
-            </form>
+  <div style="height:20px"></div>
+  <div>
+    <div style="margin: 0 auto; width:455px;">
+      <v-card
+        class="mx-auto"
+        max-width="400"
+      >
+        <v-card-item>
+          <div>
+            <div>
+              <v-layout justify-center>
+                <v-card-text>
+                  <v-form>
+                    <v-text-field
+                      prepend-icon="mdi-account"
+                      v-model="id"
+                      name="login"
+                      label="Login"
+                      type="text"
+                    ></v-text-field>
+                    <v-text-field
+                      prepend-icon="mdi-lock-outline"
+                      v-model="password"
+                      id="password"
+                      name="password"
+                      label="Password"
+                      type="password"
+                    ></v-text-field>
+                    <v-card-actions style="width:100%">
+                      <v-spacer></v-spacer>
+                      <v-btn style="width:100%" variant="outlined" @click="logIn">로그인</v-btn>
+                    </v-card-actions>
+                    <hr>
+                    <v-card-actions>
+                      <v-btn style="width:100%; border:0px;" @click="logIn"><LoginKakao  variant="outlined"/></v-btn>
+                    </v-card-actions>
+                    <br>
+                    <div style="width:100%">
+                      <router-link style="margin:auto" class="find" :to="{name:'findId'}">아이디찾기  |</router-link>
+                      <router-link style="margin:auto" class="find" :to="{name:'findPw'}">  비밀번호 찾기  |</router-link>
+                      <router-link style="margin:auto" class="find" :to="{name:'signupclient'}">  회원가입</router-link>
+                    </div>
+                  </v-form>
+                </v-card-text>
+              </v-layout>
+            </div>
           </div>
-        </div>
-      </div>
+        </v-card-item>
+      </v-card>
+    </div>
+  </div>
 
-      <div v-if="this.common_code==='1'">
-        상담사 로그인 창 
-        <div class="loginform">
-          <div class="container__form container--signup" style="margin: 0 auto; width:455px;">
-          <form action="#" class="form" id="form1">
-            <h2 class="form__title">Login</h2>
-            <input type="text" v-model="id"  placeholder="ID"/>
-            <br>
-            <input type="password" v-model="password" placeholder="Password"/>
-            <br>
-            <router-link class="find" :to="{name:'findId'}">아이디찾기</router-link>
-            <router-link class="find" :to="{name:'findPw'}">비밀번호 찾기</router-link>
-            <br>
-            <v-btn @click="logIn">로그인</v-btn>
-            <br>
-            <br>
-            <LoginKakao/>
-              <div style="display:block">
-                <h4>계정이 없으신가요?</h4>
-                <router-link class="find" :to="{name:'signupcounselor'}">회원가입</router-link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </v-tab-item>
-  </v-tabs-items>
 </template>
 
 <script>
@@ -78,6 +99,7 @@ export default {
         id: null,
         password: null,
         common_code:'2',
+        tab: null,
       }
     },
     methods:{
@@ -118,25 +140,12 @@ export default {
 </script>
 
 <style>
-.input {
-  background-color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 0.9rem 0.9rem;
-  margin: 0.5rem 0;
-  width: 90%;
-}
-.loginform{
-  margin-top: 100px;
-  width : 300px;
-  height: 300px;
-  /* border: 1px solid black; */
-  border-radius: 30px;
-  background-color: #FCFAEF;
-}
 .find{
   text-decoration-line: none;
   color: black;
 }
-
+.find:hover{
+  text-decoration-line:underline;
+  color: black;
+}
 </style>

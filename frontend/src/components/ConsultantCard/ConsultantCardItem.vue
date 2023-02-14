@@ -132,7 +132,6 @@
   
     </v-dialog>
   </v-row>
-  
 
   <br>
     <div>

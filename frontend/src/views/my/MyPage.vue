@@ -152,42 +152,4 @@ SangdamView
 
     /* height:1000px; */
   }
-
-
-  #fh5co-main {
-  width: 100%;
-  float: right;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
-@media screen and (max-width: 1200px) {
-  #fh5co-main {
-    width: 70%;
-  }
-}
-@media screen and (max-width: 768px) {
-  #fh5co-main {
-    width: 100%;
-  }
-}
-#fh5co-main .fh5co-narrow-content {
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-  padding: 4em 0;
-}
-@media screen and (max-width: 768px) {
-  #fh5co-main .fh5co-narrow-content {
-    width: 100%;
-    padding: 3.5em 1em;
-  }
-}
-.bgImg{
-  background-image: url('@/assets/images/homeImg.png');
-  width:90%;
-  height: 50vh;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
   </style>

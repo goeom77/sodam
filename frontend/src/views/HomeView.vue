@@ -110,6 +110,8 @@ export default {
   height: 50vh;
   background-position: center center;
   background-repeat: no-repeat;
+  
+  
 }
 
 

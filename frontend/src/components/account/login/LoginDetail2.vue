@@ -42,7 +42,6 @@
       },
       data(){
         return {
-          tab:null,
           iD: null,
           password: null,
           common_code:2,
