@@ -43,6 +43,7 @@ public class ClientServiceImpl implements ClientService {
             authService.validateDuplicateEmail(request.getEmail());
             c.setEmail(request.getEmail());
         }
+        if(request.getAge() != null) c.setAge(request.getAge());
         clientRepository.save(c);
     }
 
