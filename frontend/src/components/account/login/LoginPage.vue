@@ -1,4 +1,5 @@
 <template>
+  <div style="height:100px"></div>
   <div id="cover">
     <div class="background">
     </div>

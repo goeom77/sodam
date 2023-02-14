@@ -8,7 +8,6 @@
         <h1>
           {{ counselorData.name }} 상담사
         </h1>
-
         <h2>
           {{ counselorData.introduce }}
         </h2>
@@ -42,6 +41,23 @@
         </div>
 
 
+        <!-- 상담사 등록 버튼 -->
+        <div id="container-floating">
+          <div class="nd4 nds"><img class="reminder">
+            <p class="letter">C</p>
+          </div>
+          
+          <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
+          
+          <div class="nd1 nds">
+            <p class="letter">E</p>
+          </div>
+
+          <div id="floating-button">
+            <p class="plus">+</p>
+            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+          </div>
+        </div>
 <!-- 
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
@@ -109,14 +125,14 @@ body{
   transition: all 0.3s; 
   border-radius: 10px;
   
-}
-h1{
-  font-weight: 400;
-}
-
-h3{
-  font-weight: 400;
-  color: #666;
+  h1{
+    font-weight: 400;
+  }
+  
+  h3{
+    font-weight: 400;
+    color: #666;
+  }
 }
 
 #presentation:hover{
@@ -195,7 +211,7 @@ h3{
 
 #container-floating:hover .edit{
   animation: edit-in 0.2s;
-  animation-delay: 0.1s;
+   animation-delay: 0.1s;
   animation-fill-mode: forwards;
 }
 

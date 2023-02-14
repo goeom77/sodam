@@ -7,9 +7,6 @@
       <v-card-text> 
           <v-row>
             <v-col cols="12">
-              <input type="radio" name="gender" v-model="gender" @click="genderToMen" checked>남성
-              <input type="radio" name="gender" v-model="gender" @click="genderToWomen">여성
-
               <v-text-field
               label="Id"
               type="text"
@@ -55,16 +52,6 @@
                 required
               ></v-text-field>
             </v-col>
-            <!-- 나이 -->
-            <v-col cols="12">
-              <v-text-field
-                label="age"
-                type="number"
-                v-model="age"
-                required
-              ></v-text-field>
-            </v-col>
-
             <v-col cols="12">
               <v-text-field
                 label="E-mail"
@@ -155,8 +142,6 @@ export default {
         passwordValidFlag: true,
         passwordCheckFlag: true,
         msg:null,
-        age:null,
-        gender:'MEN',
         checkEmail:0,
         confirm_code:null,
       }
@@ -233,20 +218,17 @@ export default {
       signup(){
         const id = this.id
         const password = this.password
+
         const name = this.name
         const email = this.email
         const tel = this.tel
-        const gender = this.gender
-        const age = this.age
-
+        
         const payload = {
           id: id,
           password: password,
           name: name,
           email: email,
           tel: tel,
-          gender: gender,
-          age: age,
         }
         console.log(payload)
         this.$store.dispatch('signupClient', payload)

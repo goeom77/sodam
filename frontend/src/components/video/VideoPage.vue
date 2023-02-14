@@ -2,107 +2,125 @@
   <div class="container d-flex justify-content-center">
     <div v-if="!session">
       <!-- 모달을 띄워줄것 녹화할 수 있다는 것 -->
-      <div id="join-div">
-        <img src="#" />
-      </div>
-      <div>
-        <h1>SODAM</h1>
-          <v-row justify="center">
-          <!-- 주의사항 테그 -->
-          <v-dialog
-            v-model="dialog"
-            persistent
-          >
-            <template v-slot:activator="{ props }">
-              <v-btn
-                color="primary"
-                v-bind="props"
-              >
-                주의사항
-              </v-btn>
-            </template>
-            <v-card style="width: 40%; margin:auto">
-              <div style="height: 20px;"/>
-              <v-card-title class="text-h5" style="height:5%">
-                상담 녹화에 대한 안내
-              </v-card-title>
-              <v-card-text>
-                <p>상담의 투명성과 높은 질의 상담을 위해</p>
-                <p>면담과정을 녹화할 수 있습니다.</p>
-                <p>해당 상담의 녹화본은 오직 상담사만</p>
-                <p>볼 수 있으며, 다른 용도로 사용되지 않습니다.</p>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
+      <div style="height:120px;"></div>
+      <div id="cover">
+        <div class="video-background"/>
+        <div id="LoginDetail">
+          <h1>SODAM</h1>
+          <div>
+            <!-- 주의사항 테그 -->
+            <v-dialog
+              v-model="dialog"
+              persistent
+            >
+              <template v-slot:activator="{ props }">
                 <v-btn
-                  color="red-darken-1"
-                  variant="text"
-                  @click="dialog = false; consultadmit = false"
+                  color="primary"
+                  v-bind="props"
                 >
-                  Disagree
+                  주의사항
                 </v-btn>
+              </template>
+              <v-card style="width: 40%; margin:auto">
+                <div style="height: 20px;"/>
+                <v-card-title class="text-h4" style="height:5%">
+                  상담, 녹음 및 비밀 보장 동의서
+                </v-card-title>
+                <v-card-text>
+                  <p>  상담자와 내담자는 상담의 효과성을 위해 성실히 노력 할 것이며,</p>
+                  <p>내담자의 신상 및 상담 내용에 대하여 녹음 및 쌍방이 비밀을</p>
+                  <p>지킬 것을 약속합니다.</p>
+                  <p>  상담자는 강의, 교육, 출판, 심리검사, 상담 전문성 향상 훈련,</p>
+                  <p>사적 대화 등의 상황에서 내담자의 신원확인이 가능한 정보나 비밀</p>
+                  <p>  정보를 공개하지 않을 것을 약속합니다. 내담자는 상담 사전 안내 </p>
+                  <p>동의에 동의하겠습니다. </p>
+                  <p>단, 다음 사항에 해당하는 내용은 예외입니다.</p>
+                  <p>❗ 1. 자신이나 타인의 신체 또는 재산을 해칠 위험이 있는 경우</p>
+                  <p>❗ 2. 사회의 안전을 위협하는 경우</p>
+                  <p>❗ 3. 아동학대나 성폭력 등 중대한 범죄에 관한 내용을 알게된 경우</p>
+                  <p>❗ 4. 법원에서 정보공개의 요청이 있는 경우</p>
+                  <p>❗ 5. 감염성이 있는 치명적인 전염병을 가진 확실한 정보가 있는 경우</p>
+                  &nbsp;&nbsp;
+                  <h5>⭕녹음</h5>
+                  <p>1. 상담자가 상담 받는 장면을 녹화하거나 녹음 하는 이유는 내담자의</p>
+                  <p>문제 해결에 적극적으로 도움을 주고, 상담내용은 일정기간 기록,</p>
+                  <p>보관하기 위한 용도로 활용 됩니다.</p>
+                  <p>2. 보존기간은 3년 이내 입니다.</p>
+                  <p>3. 그 외의 용도로 활용할 경우는 반드시 내담자의 허락과 동의를</p>
+                  <p>받겠습니다.</p>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="red-darken-1"
+                    variant="text"
+                    @click="dialog = false; consultadmit = false"
+                  >
+                    Disagree
+                  </v-btn>
+                  <v-btn
+                    color="green-darken-1"
+                    variant="text"
+                    @click="dialog = false; consultadmit = true"
+                  >
+                    Agree
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <div>
+              <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
+              <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
+              <p>
+                <label>Participant</label>
+                <input
+                  v-model="myUserName"
+                  class="form-control"
+                  type="text"
+                  required
+                />
+              </p>
+              <p>
+              <label>Session</label>
+                <input
+                  v-model="mySessionId"
+                  class="form-control"
+                  type="text"
+                  required
+                />
+              </p>
+              <!-- 상담사이면 -->
+              <p class="text-center" v-if="common_code==1">
                 <v-btn
-                  color="green-darken-1"
-                  variant="text"
-                  @click="dialog = false; consultadmit = true"
+                  @click="join()"
                 >
-                  Agree
+                  상담하기
                 </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-        <!-- 주의사항 테그 끝 -->
-        <div>
-          <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
-          <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
-          <p>
-            <label>Participant</label>
-            <input
-              v-model="myUserName"
-              class="form-control"
-              type="text"
-              required
-            />
-          </p>
-          <p >
-            <label>Session</label>
-            <input
-              v-model="mySessionId"
-              class="form-control"
-              type="text"
-              required
-            />
-          </p>
-          <!-- 상담사이면 -->
-          <p class="text-center" v-if="common_code==1">
-            <v-btn
-              @click="join()"
-            >
-              상담하기
-            </v-btn>
-          </p>
-          <!-- 고객이면 -->
-          <p class="text-center" v-if="common_code==2">
-            <v-btn
-              @click="join()"
-            >
-              상담하기
-            </v-btn>
-          </p>
-          <!-- 관리자이면 -->
-          <p class="text-center" v-if="common_code==0">
-            <v-btn
-              class="btn btn-lg btn-success"
-              @click="join()"
-            >
-              상담하기
-            </v-btn>
-          </p>
+              </p>
+              <!-- 고객이면 -->
+              <p class="text-center" v-if="common_code==2">
+                <v-btn
+                  @click="join()"
+                >
+                  상담하기
+                </v-btn>
+              </p>
+              <!-- 관리자이면 -->
+              <p class="text-center" v-if="common_code==0">
+                <v-btn
+                  class="btn btn-lg btn-success"
+                  @click="join()"
+                >
+                  상담하기
+                </v-btn>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 스트림 시작 -->
+      <!-- 주의사항 테그 끝 -->
+          <!-- 스트림 시작 -->
     <div id="session" v-if="session">
       <!-- session header -->
       <div>
@@ -134,6 +152,7 @@
           <v-card class="mx-auto" max-width="500">
             <v-container fluid>
               <v-card>
+                <div v-if="subscribers.length == 0" class="extra-background" />
                 <user-video
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   v-for="sub in subscribers"
@@ -542,5 +561,21 @@ export default {
   display:flex;
   justify-content:center;
   align-content:center;
+}
+.video-background {
+  float:left; 
+  width: 800px;
+  height: 608px;
+  background-image: url(../../assets/images/video-front.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.extra-background {
+  float:left; 
+  width: 500px;
+  height: 600px;
+  background-image: url(../../assets/images/대기.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 </style>
