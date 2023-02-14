@@ -43,7 +43,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Page<ConsultSchedule> getMySchedules(Pageable pageable,String userId) {
-//        repository.
         return customRepository.getMySchedules(pageable,userId);
     }
 
