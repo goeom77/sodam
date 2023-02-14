@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 loadFonts()
 // Vue.prototype.$http = axios
 
-createApp(App).use(router)
+createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
