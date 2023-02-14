@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum STATE implements BaseEnumCode<Integer> {
+public enum STATE implements BaseEnumCode<Integer,String> {
     //대기, 승인, 거절, 예정, 진행중
     WAIT("대기", 0),
     APPROVED("승인", 1),

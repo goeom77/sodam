@@ -56,6 +56,7 @@ export default new Vuex.Store({
     mutations: {
         // 로딩 타입
         LOADING_STATUS(state, loadingStatus) {
+            console.log("state : " + JSON.stringify(state) + " loadingStatus" + loadingStatus)
             state.loadingStatus = loadingStatus
         },
 
@@ -393,7 +394,7 @@ export default new Vuex.Store({
             formdata.append('id', payload.id)
             formdata.append('password', payload.password)
             formdata.append('name', payload.name)
-            formdata.append('tel', payload.name)
+            formdata.append('tel', payload.tel)
             formdata.append('email', payload.email)
             formdata.append('gender', payload.gender)
             formdata.append('enterprisestr', payload.enterprise_id)

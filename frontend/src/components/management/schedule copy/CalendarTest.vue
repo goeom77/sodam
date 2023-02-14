@@ -4,14 +4,14 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
-import {INITIAL_EVENTS, createEventId} from './event-utils'
+import {createEventId, INITIAL_EVENTS} from './event-utils'
 import axios from 'axios'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  var Calendar = FullCalendar.Calendar;
+
   // var Draggable = FullCalendar.Draggable;
 
   var containerEl = document.getElementById('external-events');
@@ -23,52 +23,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   new Draggable(containerEl, {
     itemSelector: '.fc-event',
-    drop: function (info) {
-      // is the "remove after drop" checkbox checked?
-      if (checkbox.checked) {
-        console.log("draggable drop info : " + JSON.stringify(info))
-        info.draggedEl.parentNode.removeChild(info.draggedEl);
-      }
-    },
-    eventClick: this.handleEventClick,
-    eventsSet: this.handleEvents,
-    eventDrop: this.onEventDrop,
-    droppable:true,
-    eventData: function(eventEl) {
+    eventData: function (eventEl) {
       return {
-        title: eventEl.innerText.trim(),
-        duration : "02:00"
-      }
+        title: eventEl.innerText
+      };
+    },
+    drop: (event) => {
+      console.log("dropped" + JSON.stringify(event))
     }
-    // eventData: this.DraggableEvents
   });
 
   // initialize the calendar
   // -----------------------------------------------------------------
 
-  var calendar = Calendar(calendarEl, {
+  const calendar = FullCalendar.Calendar(calendarEl, {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    dropAccept: '.fc-event',
-    droppable: true,
-    editable: true, // this allows things to be dropped onto the calendar
-    // eventSources: {
-    //   events: [],
-    //   color: 'yellow',   // an option!
-    //   textColor: 'black' // an option!
-    // },
-    drop: function (info) {
-      // is the "remove after drop" checkbox checked?
-      if (checkbox.checked) {
-        console.log("draggable drop info : " + JSON.stringify(info))
-        info.draggedEl.parentNode.removeChild(info.draggedEl);
-      }
-    }
+    editable: true,
+    droppable: true, // this allows things to be dropped onto the calendar
   });
-
   calendar.render();
 });
 
@@ -79,12 +55,11 @@ export default defineComponent({
   },
   data() {
     return {
-      userId: this.$store.state.payload.id,
       calendarOptions: {
         plugins: [
           dayGridPlugin,
           timeGridPlugin,
-          interactionPlugin // needed for dateClick
+          interactionPlugin,
         ],
         headerToolbar: {
           left: 'prev,next today',
@@ -92,29 +67,33 @@ export default defineComponent({
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         initialView: 'dayGridMonth',
-        initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+        initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
         editable: true,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
-        select: this.handleDateSelect,
-        eventClick: this.handleEventClick,
+        resources: this.getExpectedData,
+        select: this.handleDateSelect, // 캘린더에서 드래그로 이벤트 생성
+        eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
-        eventDrop: this.onEventDrop,
-        // you can update a remote database when these fire:
-        // eventAdd: {},
-        // eventChange: {},
+        events: [],//데이터를 로딩 시킨다.
 
-
-        // eventSources: {
-        //   events: [],
-        //   color: 'yellow',
-        //   textColor: 'black'
-        // }
+        eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
+          console.log('eventAdd' + JSON.stringify(obj));
+        },
+        eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트}
+          console.log('eventChange' + JSON.stringify(obj));
+        },
+        eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
+          console.log('remove' + JSON.stringify(obj));
+          obj.event.remove();
+        },
       },
-      // currentEvents: [],
+      currentEvents: [],
       DraggableEvents: [],
+      loadedEvents: [],
+      detailData: null
     }
   },
   methods: {
@@ -124,9 +103,7 @@ export default defineComponent({
     handleDateSelect(selectInfo) {
       let title = prompt('Please enter a new title for your event')
       let calendarApi = selectInfo.view.calendar
-
       calendarApi.unselect() // clear date selection
-
       if (title) {
         calendarApi.addEvent({
           id: createEventId(),
@@ -138,21 +115,12 @@ export default defineComponent({
       }
     },
     handleEventClick(clickInfo) {
-      if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-        clickInfo.event.remove()
-      }
+      console.log("상세화면 보여줄 것"+ JSON.stringify(clickInfo))
+      let data = {sessionId: clickInfo.event.extendedProps.sessionId, dateTime: clickInfo.event.start}
+      this.getScheduleDetail(data)
     },
     handleEvents(events) {
-      console.log("handleEvents : >> "+JSON.stringify(events))
-      // console.log("handleEvents : >> ")
-      this.DraggableEvents = events
-
-    },
-    onEventDrop({event}) {
-      console.log("onEventDrop : >> " + JSON.stringify(event))
-
-      this.DraggableEvents = event
-      // console.log(event)
+      console.log("handleEvents : " + JSON.stringify(events))
     },
     getApprovedData() {
       axios({
@@ -160,25 +128,46 @@ export default defineComponent({
         url: `${VUE_APP_API_URL}/api/schedule/search`,
         data: {
           state: 'APPROVED',
-          userId: this.userId
+          userId: "counselor01"
+          // userId: this.userId
         }
       })
           .then(res => {
             this.DraggableEvents = res.data
-            console.log("currentEvents:>>>> " + JSON.stringify(res.data))
+            console.log("DraggableEvents:>>>> " + JSON.stringify(res.data))
           })
     },
-    getExpectedData() {
+    getExpectedData: function () {
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/search/monthly`,
         data: {
-          counselorId: this.userId
+          // counselorId: this.userId
+          counselorId: "counselor01"
         }
       })
           .then(res => {
-            console.log("getExpectedData:>>>> " +JSON.stringify(res.data))
-            this.calendarOptions.eventSources.events = res.data
+            console.log("getExpectedData:>>>> " + JSON.stringify(res.data))
+            // this.loadedEvents=res.data
+            // this.calendarOptions.events = res.data
+            this.calendarOptions.events = res.data
+            // this.calendarOptions.eventAdd(res.data)
+            // console.log("getExpectedData2222:>>>> " + JSON.stringify(this.calendarOptions.events))
+            return res.data
+          })
+    },
+    getScheduleDetail: function (schedule) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/schedule/search`,
+        data: {
+          "state": "APPROVED",
+          "sessionId": schedule.sessionId
+        }
+      })
+          .then(res => {
+            console.log("detail :>>>> " + JSON.stringify(res.data))
+            this.detailData = res.data
           })
     }
   },
@@ -193,36 +182,45 @@ export default defineComponent({
 <template>
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <p>Try scrolling the rest of the page to see this option in action.</p>
+        </div>
+      </div>
       <div class='demo-app'>
         <div class='demo-app-main'>
           <div id='external-events' class="drag-cover">
             <p>
               <strong>Draggable Events</strong>
-
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
+                scrolling
+              </button>
             </p>
             <div
                 class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
                 v-for="(event,idx) in DraggableEvents"
                 :key="idx">
               <div class='fc-event-main'>{{ event.name }}</div>
-              <div class='fc-event-main'>{{ event.createdDateTime.split('T')[0] }}</div>
             </div>
             <p>
               <input type='checkbox' id='drop-remove'/>
               <label for='drop-remove'>remove after drop</label>
             </p>
           </div>
-          <FullCalendar
-              class='demo-app-calendar'
-              :options=this.calendarOptions
-          >
-            <template v-slot:eventContent='arg'>
-              <i>제발 보여줘</i>
-              <i>{{ arg.eventSources.events }}</i>
-<!--              <i>{{ arg.eventSources.events.start.split('T')[0] }}</i>-->
+          <FullCalendar class="demo-app-calendar" :options="calendarOptions">
+            <template v-slot:eventContent="arg">
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                <b>{{ arg.event.start }}</b>
+                <i>{{ arg.event.title }}</i>
+              </button>
             </template>
           </FullCalendar>
-<!--          {{ this.DraggableEvents }}-->
         </div>
       </div>
     </div>

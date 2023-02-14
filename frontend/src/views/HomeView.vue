@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class="five">
@@ -8,6 +8,7 @@
                 <em>
                   소중한 당신을 위해
                 </em>
+              <span style="margin-left: 50px; font-weight: 1000;" class="fh5co-page">소중한 당신을 위해</span>
                 <br>
                 <span>여기, 소담이 함께합니다.</span> 
                 
@@ -40,6 +41,13 @@ export default {
 }
 </script>
 <style>
+.fh5co-page{
+  font-family: "Roboto", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.5);
+}
 .five h2 {
   text-align: center;
   font-size: 22px;
