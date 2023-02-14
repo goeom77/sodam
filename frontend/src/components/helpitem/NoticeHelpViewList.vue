@@ -1,24 +1,39 @@
 <template>
   <div>
-    <v-container>
       <v-card elevation="10" outlined width="100%" class="mx-auto">
-
-        <v-card-text>
-
-          <v-row>
+        <v-card-text class="noticehelp">
+          <v-row class="NoticeTable">
             <v-col>
-                
-                <div >
-                  <NoticeHelpViewListItem
-                    v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
-                    :key="Boardarticle.id"
-                    :Boardarticle="Boardarticle"
-                    :index="index"
-                    :limit="NoticeHelpViewListPage"
-                    @delete-Board="getNoticeHelpViewListArticles"
-                    @refresh-Board="getNoticeHelpViewListArticles"
-                /> 
-                </div>
+              <v-table>
+                <thead>
+                  <tr>
+                    <th class="table-header">
+                      Name
+                    </th>
+                    <th class="table-header">
+                      Calories
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="item in desserts"
+                    :key="item.name"
+                  >
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.calories }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
+                <NoticeHelpViewListItem
+                  v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
+                  :key="Boardarticle.id"
+                  :Boardarticle="Boardarticle"
+                  :index="index"
+                  :limit="NoticeHelpViewListPage"
+                  @delete-Board="getNoticeHelpViewListArticles"
+                  @refresh-Board="getNoticeHelpViewListArticles"/>
+              
             </v-col>
           </v-row>
         </v-card-text>
@@ -31,8 +46,6 @@
           </div>
         </div>
       </v-card>
-	
-	  </v-container>
   </div>
 </template>
 
@@ -81,11 +94,23 @@ export default {
 </script>
 
 <style>
+.noticehelp{
+  text-align: center;
+  justify-content: center;
+}
 #NoticeHelpViewList {
   /* width: 1255px; */
   margin: auto;
 }
 
+.NoticeTable{
+  width: 80%;
+}
+.table-header{
+  width: auto;
+  background-color: white;
+
+}
 
 
 </style>
