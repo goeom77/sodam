@@ -83,10 +83,10 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public void updatePassword(String id, String pw) {
-        Client c1 = clientRepository.getById(id);
-        Counselor c2 = conselorRepository.getById(id);
-        if(c1 != null) c1.setPassword(passwordEncoder.encode(pw));
-        else if(c2 != null) c2.setPassword(passwordEncoder.encode(pw));
+        Optional<Client> client = clientRepository.findById(id);
+        Optional<Counselor> counselor = conselorRepository.findById(id);
+        if(client.isPresent()) client.get().setPassword(passwordEncoder.encode(pw));
+        else if(counselor.isPresent()) counselor.get().setPassword(passwordEncoder.encode(pw));
         else throw new IllegalArgumentException("없는 아이디");
     }
 
