@@ -3,6 +3,7 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.ScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.response.schedule.DetailSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.api.service.ApplicantService;
 import com.samsung.sodam.api.service.schedule.ScheduleService;
@@ -45,6 +46,12 @@ public class ScheduleController {
                 .turn(0)
                 .build();
         service.makeSchedule(schedule);
+    }
+
+    @PostMapping("/detail")
+    @ApiOperation(value ="일정 상세화면을 조회한다")
+    public DetailSchedule detailSchedule(@RequestBody ScheduleRequest request){
+        return service.scheduleDetail(request);
     }
 
     @GetMapping("/schedules")

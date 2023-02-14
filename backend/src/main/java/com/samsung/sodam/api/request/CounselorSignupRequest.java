@@ -2,10 +2,7 @@ package com.samsung.sodam.api.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 
@@ -13,6 +10,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Builder
 @Data
+@EqualsAndHashCode(callSuper=false)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class CounselorSignupRequest extends CounselorRequest{
     ArrayList<CertRequest> certificates;

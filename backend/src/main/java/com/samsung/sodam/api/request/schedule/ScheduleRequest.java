@@ -40,6 +40,6 @@ public class ScheduleRequest {
 //    private String counselorId;
     private STATE status=STATE.WAIT;
 
-    @ApiModelProperty(value = "상담 일정", example = "2023-06-01 14:00:00", required = true)
-    private LocalDateTime dateTime;
+    @ApiModelProperty(value = "상담 일정", example = "2023-02-14T00:44:02", required = true)
+    private LocalDateTime dateTime = LocalDateTime.now();
 }

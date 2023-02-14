@@ -9,7 +9,12 @@ import javax.persistence.Converter;
  * WOMEN : "W"
  */
 @Converter(autoApply = true)
-public class GenderConverter extends EntityConverter<GENDER, String> {
+public class GenderConverter extends EntityConverter<GENDER, String,String> {
+    @Override
+    protected String[] getNameList() {
+        return new String[0];
+    }
+
     @Override
     protected GENDER[] getValueList() {
         return GENDER.values();

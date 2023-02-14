@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {createEventId, INITIAL_EVENTS} from './event-utils'
 import axios from 'axios'
+
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 
@@ -22,13 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   new Draggable(containerEl, {
     itemSelector: '.fc-event',
-    eventData: function(eventEl) {
+    eventData: function (eventEl) {
       return {
         title: eventEl.innerText
       };
     },
-    drop:(event)=>{
-      console.log("dropped"+JSON.stringify(event))
+    drop: (event) => {
+      console.log("dropped" + JSON.stringify(event))
     }
   });
 
@@ -76,22 +77,23 @@ export default defineComponent({
         select: this.handleDateSelect, // 캘린더에서 드래그로 이벤트 생성
         eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
-        events:[],//데이터를 로딩 시킨다.
+        events: [],//데이터를 로딩 시킨다.
 
-        eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
+        eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
           console.log('eventAdd' + JSON.stringify(obj));
         },
-        eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트}
+        eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트}
           console.log('eventChange' + JSON.stringify(obj));
         },
-        eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
+        eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
           console.log('remove' + JSON.stringify(obj));
           obj.event.remove();
         },
       },
       currentEvents: [],
       DraggableEvents: [],
-      loadedEvents:[]
+      loadedEvents: [],
+      detailData: null
     }
   },
   methods: {
@@ -113,10 +115,12 @@ export default defineComponent({
       }
     },
     handleEventClick(clickInfo) {
-      console.log("상세화면 보여줄 것")
+      console.log("상세화면 보여줄 것"+ JSON.stringify(clickInfo))
+      let data = {sessionId: clickInfo.event.extendedProps.sessionId, dateTime: clickInfo.event.start}
+      this.getScheduleDetail(data)
     },
     handleEvents(events) {
-      console.log("handleEvents : "+JSON.stringify(events))
+      console.log("handleEvents : " + JSON.stringify(events))
     },
     getApprovedData() {
       axios({
@@ -146,10 +150,24 @@ export default defineComponent({
             console.log("getExpectedData:>>>> " + JSON.stringify(res.data))
             // this.loadedEvents=res.data
             // this.calendarOptions.events = res.data
-            this.calendarOptions.events=res.data
+            this.calendarOptions.events = res.data
             // this.calendarOptions.eventAdd(res.data)
             // console.log("getExpectedData2222:>>>> " + JSON.stringify(this.calendarOptions.events))
             return res.data
+          })
+    },
+    getScheduleDetail: function (schedule) {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/schedule/search`,
+        data: {
+          "state": "APPROVED",
+          "sessionId": schedule.sessionId
+        }
+      })
+          .then(res => {
+            console.log("detail :>>>> " + JSON.stringify(res.data))
+            this.detailData = res.data
           })
     }
   },
@@ -164,7 +182,8 @@ export default defineComponent({
 <template>
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
-      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -178,7 +197,10 @@ export default defineComponent({
           <div id='external-events' class="drag-cover">
             <p>
               <strong>Draggable Events</strong>
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button>
+              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                      data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
+                scrolling
+              </button>
             </p>
             <div
                 class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
@@ -193,8 +215,10 @@ export default defineComponent({
           </div>
           <FullCalendar class="demo-app-calendar" :options="calendarOptions">
             <template v-slot:eventContent="arg">
-              <b>{{ arg.timeText }}</b>
-              <i>{{ arg.event.title }}</i>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                <b>{{ arg.event.start }}</b>
+                <i>{{ arg.event.title }}</i>
+              </button>
             </template>
           </FullCalendar>
         </div>
