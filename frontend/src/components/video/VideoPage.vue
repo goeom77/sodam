@@ -134,7 +134,7 @@
       <div style="height:30px"></div>
       <!-- session -->
       <v-row justify="center">
-        <v-col cols="4">
+        <v-col cols="4" v-if="common_code === 1">
           <v-card class="mx-auto" max-width="500">
             <v-container>
               <v-card>
