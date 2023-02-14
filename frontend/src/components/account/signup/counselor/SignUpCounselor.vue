@@ -92,7 +92,7 @@
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
         <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
-          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag && !passwordValidFlag && !passwordCheckFlag">확인</v-btn>
+          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag || !passwordCheckFlag || emailCheckMsg == null">확인</v-btn>
         <!-- </div>
         <div v-else> -->
         

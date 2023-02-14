@@ -246,7 +246,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
+// routes.beforeEach((to,from,next) => {
+//   const isLogin = this.$store.getters.isLogin
+//   const allowPages = [
+//     'home','login']
+//     // ,'FindId','FindPw', 'LoginKakao','SignUpClient','SignUpCounselor','SignUpCounselor2','BoardView','BoardDetailView','HelpView','NoticeDetailView','QnaDetailView','QnaDetailView'
+//   const forUserPages = !allowPages.includes(to.name)
 
+//   if (!isLogin && forUserPages) {
+//     alert('로그인이 필요합니다.')
+//     next({name:'login'})
+//   } else {
+//     next()
+//   }
+// })
 export default router
