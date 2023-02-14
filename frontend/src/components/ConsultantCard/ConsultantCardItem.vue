@@ -65,8 +65,6 @@
                                     </select>
                                     <label for="form_name">나이 *</label>
                                     <input id="form_name" type="number" name="name" v-model="age" class="form-control" placeholder="나이" required="required" data-error="이름은 필수사항입니다">
-    
-    
                                 </div>
                               </div>
                             </div>

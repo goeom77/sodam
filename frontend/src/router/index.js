@@ -39,8 +39,9 @@ import MyPage from '@/views/my/MyPage.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
 import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
-import EditInformation from '@/views/my/edit/EditInformation.vue'
-import MainEdit from '@/views/my/edit/MainEdit.vue'
+import EditInformationCounselor from '@/views/my/edit/EditInformationCounselor.vue'
+import MainEdit1 from '@/views/my/edit/MainEdit1.vue'
+import MainEdit2 from '@/views/my/edit/MainEdit2.vue'
 import ClientManageDetail from '@/components/management/client/ClientManageDetail.vue'
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
@@ -158,9 +159,9 @@ const routes = [
     component: CheckEditInformation
   },
   {
-    path: '/EditInformation',
-    name: 'EditInformation',
-    component: EditInformation
+    path: '/EditInformationCounselor',
+    name: 'EditInformationCounselor',
+    component: EditInformationCounselor
   },
  
  
@@ -210,9 +211,14 @@ const routes = [
     component: LikeView,
   },
   {
-    path: '/MainEdit',
-    name: 'MainEdit',
-    component: MainEdit
+    path: '/MainEdit1',
+    name: 'MainEdit1',
+    component: MainEdit1
+  },
+  {
+    path: '/MainEdit2',
+    name: 'MainEdit2',
+    component: MainEdit2
   },
   {
     path: '/ClientManageDetail/:id?',
