@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     editable: true,
-    droppable: true, // this allows things to be dropped onto the calendar
+    droppable: true, // this allows things to be dropped onto the calendar,
+
   });
   calendar.render();
 });
@@ -79,11 +80,12 @@ export default defineComponent({
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
-        resources: this.getExpectedData,
+        // resources: this.getExpectedData,
         select: this.handleDateSelect, // 캘린더에서 드래그로 이벤트 생성
         eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
         events: [],//데이터를 로딩 시킨다.
+
 
         eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
           console.log('eventAdd' + JSON.stringify(obj));
@@ -95,10 +97,10 @@ export default defineComponent({
           console.log('remove' + JSON.stringify(obj));
           obj.event.remove();
         },
-        // eventDrop:function (obj){
-        //   // console.log('eventDrop' + JSON.stringify(obj));
-        // },
-        drop: function(arg) {
+        eventDrop:function (obj){
+          console.log('eventDrop' + JSON.stringify(obj));
+        },
+        drop: function (arg) {
           console.log('drop : ' + JSON.stringify(arg));
           if (document.getElementById("drop-remove").checked) {
             // if so, remove the element from the "Draggable Events" list
@@ -107,10 +109,11 @@ export default defineComponent({
         },
         eventReceive: function (obj) {
           console.log('eventReceive' + JSON.stringify(obj));
-          this.saveNewSchedule(obj.extendedProps.sessionId)
+
         },
 
       },
+      expectedData: [],
       currentEvents: [],
       DraggableEvents: [],
       loadedEvents: [],
@@ -143,7 +146,15 @@ export default defineComponent({
     handleEvents(events) {
       console.log("handleEvents222 >>: " + JSON.stringify(events))
       //여기서 등록 요청 해야 함.
-
+      if(events.isEmpty) return
+      let v = null;
+      let obj = events.extendedProps
+      console.log("handleEvents333 >>: " + JSON.stringify(events))
+      if (obj === undefined) return;
+      if("scheduleId" in obj)v = events.extendedProps.scheduleId
+      // if(obj.has("scheduleId") )
+      console.log("handleEvents444 >>: " + JSON.stringify(events))
+      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId":v})
       // if(!events.isEmpty && events.extendedProps.sessionId != undefined){
       //   this.saveNewSchedule(events.extendedProps.sessionId)
       // }
@@ -162,16 +173,16 @@ export default defineComponent({
         url: `${VUE_APP_API_URL}/api/schedule/search`,
         data: {
           state: 'APPROVED',
-          userId: "counselor01"
-          // userId: this.userId
+          userId: "counselor01",
+          start:new Date().toJSON().split('.')[0]
         }
       })
           .then(res => {
             this.DraggableEvents = res.data.map(it => {
-              return {"id": it.sessionId, "title": it.name, "allDay": false}
+              return {"id": it.sessionId, "title": it.name, "allDay": false,"extendedProps":{"sessionId":it.sessionId}}
             })
             // this.DraggableEvents = res.data
-            console.log("DraggableEvents:>>>> " + JSON.stringify(res.data))
+            console.log("DraggableEvents:>>>> " + JSON.stringify(this.DraggableEvents))
           })
     },
     getExpectedData: function () {
@@ -207,6 +218,19 @@ export default defineComponent({
     },
     saveNewSchedule: function (monthlyEventInfo) {
       console.log("monthlyEventInfo :>>>> " + JSON.stringify(monthlyEventInfo))
+      axios({
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+        data: {
+          "dateTime": monthlyEventInfo.start,
+          "sessionId": monthlyEventInfo.sessionId,
+          "scheduleId": 107,
+        }
+      })
+          .then(res => {
+            console.log("detail :>>>> " + JSON.stringify(res.data))
+            this.detailData = res.data
+          })
     },
   },
   created() {
