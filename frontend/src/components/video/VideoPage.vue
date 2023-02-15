@@ -71,6 +71,7 @@
             <div>
               <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
               <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
+
               {{ common_code }}
               {{ myUserName }}
               {{ mySessionId }}
@@ -229,6 +230,10 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 const OPENVIDU_SERVER_URL = "https://i8e103.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "SODAM";
+
+// const route = useRoute()
+// this.sessionId = router.params.id
+
 export default {
   name: "VideoPage",
   components: {
@@ -257,6 +262,7 @@ export default {
       message: "",
       // chatSeq: 0,
       // chatList: [],
+      sessionId:null
     };
   },
   created() {

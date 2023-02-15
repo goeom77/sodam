@@ -344,9 +344,12 @@ export default defineComponent({
       this.detail = obj
       this.dialog = true
     },
+    startMeet(id) {
+      this.$router.push({ name: 'VideoPage', params: {id: id}});
+    },
     startSession(data) {
       console.log("data: " + data)
-    }
+    },
   },
   created() {
     this.getExpectedData()
@@ -366,7 +369,7 @@ export default defineComponent({
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <a class="btn btn-primary" role="button" v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
+          <a class="btn btn-primary" role="button" v-on:click="this.startMeet(this.detail.sessionId)">상담하러가기</a>
         </div>
       </div>
       <div class='demo-app'>
@@ -389,9 +392,9 @@ export default defineComponent({
                         class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
                         onclick="makeASchedule(arg); detail = arg">
-                  <div class="fc-daygrid-event-dot"></div>
-                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
-                  <i class="fc-event-title">{{ arg.event.title }}님</i>
+                  <div class="fc-daygrid-event-dot "></div>
+                  <a class="fc-event-time  fc-daygrid-dot-event">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
+                  <i class="fc-event-title  fc-daygrid-dot-event">{{ arg.event.title }}님</i>
                 </button>
               </template>
             </FullCalendar>
