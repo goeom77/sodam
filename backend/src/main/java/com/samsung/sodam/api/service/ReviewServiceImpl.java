@@ -47,6 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Review> data = reviewRepository.findById(reviewId);
         if (data.isEmpty()) return null;
         Review saved = data.get();
+        saved.setTitle(review.getTitle());
         saved.setContents(review.getContents());
         saved.setType(review.getType());
         saved.setStars(review.getStars());
