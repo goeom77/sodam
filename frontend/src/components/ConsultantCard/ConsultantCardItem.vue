@@ -8,8 +8,8 @@
       </div>
     </div>
 
-<!-- 상담 신청서 -->
-  <v-row justify="center">
+  <!-- 상담 신청서 start -->
+  <v-row justify="center" v-show="this.$store.state.payload.common_code == '2'">
     <v-dialog
       v-model="dialog"
       persistent
@@ -23,8 +23,6 @@
         </v-btn>
       </template>
       <div class="container">
-        
-
           <v-card style="width:70%; height:110%">
               <div class=" text-center mt-5 ">
                 <h1 >상담 신청서</h1>      
@@ -71,8 +69,6 @@
                           <div class="row">
                             <div class="col-md-6">
                               <div class="form-group">
-    
-    
                                 <label for="form_email">Email *</label>
                                 <input id="form_email" type="email" name="email"  v-model="email" class="form-control" placeholder="E-mail" required="required" data-error="Valid email is required.">
                               </div>
@@ -94,9 +90,7 @@
                               :lowerLimit="new Date()"
                               :clearable="false"
                             />
-    
                           </div>
-    
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
@@ -124,17 +118,14 @@
             </div>
         <!-- /.row-->
           </div>
-          
         </v-card>
-        </div>
-  
+      </div>
     </v-dialog>
   </v-row>
-
+  <!-- 상담 신청서 end -->
   <br>
     <div>
-      <ConsultantCardItemReview
-      :counselorData="this.counselorData"/>
+      <ConsultantCardItemReview />
     </div>
 
   </div>
@@ -216,7 +207,9 @@ export default {
 
         })
         .then(res=>{
-          this.counselorData = res.data
+          const counselorData = JSON.parse(JSON.stringify(res.data))
+          this.counselorData = counselorData
+          this.$store.dispatch('saveCounselor', counselorData)
         })
       },
       dateFormat(dueDate){

@@ -4,7 +4,7 @@
     max-width="344"
   >
   <v-card-text>
-    {{ clientData }}
+    <!-- {{ clientData }} -->
     <p>
       컨설턴트 이름 : {{this.consultant_name}}
     </p>

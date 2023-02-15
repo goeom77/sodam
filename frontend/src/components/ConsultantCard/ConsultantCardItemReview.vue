@@ -4,12 +4,16 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :review="review"/>
+<<<<<<< HEAD
     
   
 	
 
 
     <v-btn outlined rounded text @click="moveTo">
+=======
+    <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
+>>>>>>> ce50b62989b1188ad2a03c629e4bdd3855b4f1ba
       후기작성
     </v-btn>
   </div>
@@ -31,22 +35,21 @@ export default {
     return{
       reviews:null,
       clientId:null,
-      counselorId:null,
+      counselorId:"",
       type:null,
       page:1
     }
   },
   methods:{
     moveTo(){
-      this.$router.push({ name: 'consultantcarditemreviewcreate', params: {id: this.counselorData.id}  })
+      this.$router.push({ name: 'consultantcarditemreviewcreate', params: {id: this.$store.state.userSignupData.id }  })
     },
     getReview(){
       axios({
         method:'post',
         url: `${VUE_APP_API_URL}/api/review/my/counselor`,
         data:{
-          counselorId:this.counselorData.id,
-          clientId:this.$store.state.payload.id,
+          counselorId: this.counselorId
         },
       })
       .then(res=>{
@@ -56,11 +59,11 @@ export default {
       .catch(res=>{
         console.log(res)
         console.log('안직힘   ')
-        this.getReview()
       })
     },
   },
-  mounted(){
+  beforeMount(){
+    this.counselorId = this.$store.state.userSignupData.id;
     this.getReview()
   }
 }

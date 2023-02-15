@@ -8,10 +8,11 @@ import javax.persistence.Convert;
 import java.time.LocalDateTime;
 
 //월별 캘린더에 뿌려줄 데이터 담는 객체
-@Data
+
 @Builder
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MonthlyResponse {
     Long scheduleId;
@@ -21,4 +22,11 @@ public class MonthlyResponse {
     Integer sessionId;
     @Convert(converter = StateAttributeConverter.class)
     STATE state = STATE.WAIT;
+
+    public MonthlyResponse(Long scheduleId, String testName, LocalDateTime dateTime, LocalDateTime plusMinutes) {
+        this.scheduleId = scheduleId;
+        this.title = testName;
+        this.start = dateTime;
+        this.end = plusMinutes;
+    }
 }

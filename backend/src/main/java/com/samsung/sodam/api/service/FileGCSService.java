@@ -4,20 +4,31 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.samsung.sodam.db.entity.SttData;
+import com.samsung.sodam.db.repository.SttDataRepository;
+import com.samsung.sodam.util.ciperUtil;
+
 import com.samsung.sodam.api.request.SttRequest;
+
 import io.openvidu.java.client.Recording;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.Base64;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,6 +37,8 @@ import java.util.UUID;
 public class FileGCSService {
     // GCS의 key.json 파일 내용이 등록되어서 주입됨
     private final Storage storage;
+
+    private final SttDataRepository sttRepository;
 
     public String fileUploadGCS (MultipartFile file, String rootDir) throws IOException {
         String bucketName = "stt-bucket-binu";
@@ -85,5 +98,82 @@ public class FileGCSService {
                 .build();
         return sttRequest;
     }
+
+    public String downloadSttText(int scheduleId){
+        String bucketName = "stt-bucket-binu";
+        String contents = "";
+        SttData data = null;
+        Optional<SttData> obj = sttRepository.findByScheduleId(scheduleId);
+
+        if(obj.isEmpty()) return null;
+        data = obj.get();
+
+        String objectName = data.getGcs_directory() + data.getFile_name();
+
+        byte[] content = storage.readAllBytes(bucketName, objectName);
+
+        System.out.println(
+                "The contents of "
+                        + objectName
+                        + " from bucket name "
+                        + bucketName
+                        + " are: "
+                        + new String(content, StandardCharsets.UTF_8));
+        return contents;
+    }
+
+    public void downloadEncryptedObject(String objectName, String fileName, String key) throws IOException, NoSuchAlgorithmException {
+        String bucketName = "stt-bucket-binu";
+
+        // The ID of your GCS object
+        // String objectName = "your-object-name";
+
+        // The path to which the file should be downloaded
+        // Path destFilePath = Paths.get("/local/path/to/file.txt");
+
+        // The Base64 encoded decryption key, which should be the same key originally used to encrypt
+        // the object
+        // String decryptionKey = "TIbv/fjexq+VmtXzAlc63J4z5kFmWJ6NdAPQulQBT7g=";
+        Path path = Paths.get("../../../storage");
+        Path destFilePath = Path.of(path +"/" +fileName);
+
+        // 폴더 없을시 생성
+        File folder = new File(path.toUri());
+        if (!folder.exists()) {
+            try{
+                folder.mkdir(); //폴더 생성합니다. ("새폴더"만 생성)
+                System.out.println("폴더 생성완료.");
+            }
+            catch(Exception e){
+                e.getStackTrace();
+            }
+        }else {
+            System.out.println("폴더가 이미 존재합니다..");
+        }
+        String realKey1 = ciperUtil.encryptSHA256(key);
+        String realKey2 = ciperUtil.makeSHA(key);
+
+
+        System.out.println("encryptSHA256 "+realKey1);
+
+        byte[] decodedBytes = Base64.getEncoder().encode(realKey1.getBytes("utf-8"));
+//        realKey1 = realKey1 + ":";
+        Blob blob = storage.get(bucketName, objectName);
+
+        String decryptionKey = new String(decodedBytes, StandardCharsets.UTF_8);
+        System.out.println(decryptionKey);
+
+        blob.downloadTo(destFilePath, Blob.BlobSourceOption.decryptionKey(decryptionKey));
+
+        System.out.println(
+                "Downloaded object "
+                        + objectName
+                        + " from bucket name "
+                        + bucketName
+                        + " to "
+                        + destFilePath
+                        + " using customer-supplied encryption key");
+    }
+
 
 }

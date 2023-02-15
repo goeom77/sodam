@@ -2,11 +2,16 @@ import base64
 import hashlib
 from Crypto.Util.Padding import pad, unpad
 from Crypto.Cipher import AES
+import os
 
 Block_Size = 256
 class AESCipher(object):
     def __init__(self, key):
+        print('init')
+        print(key)
+        print(key.encode())
         self.key = hashlib.sha256(key.encode()).digest()
+        print('end')
 
     def encrypt(self, message):
         message = message.encode()
@@ -29,14 +34,22 @@ class AESCipher(object):
         return self.key
 
     def get_base64_key(self):
-        return base64.b64encode(self.key)
+        strkey = ''.join('{:02X}'.format(a) for a in self.key)
+        bytekey = strkey[0:32].encode()
+        print(type(bytekey))
+        print(bytekey.__len__())
+        return base64.b64encode(bytekey)
 
 
 if __name__ == '__main__':
-    key = "this is key"
+    key = "mykey"
     data = "암호화 대상문장 입니다"
 
     aes = AESCipher(key)
+
+    print(aes.get_key())
+    print(aes.get_base64_key())
+    print(aes.get_base64_key().decode('utf-8'))
 
     encrypt = aes.encrypt(data)
     print("암호화:", encrypt)
@@ -45,3 +58,9 @@ if __name__ == '__main__':
     decrypt = aes.decrypt(encrypt)
     print("복호화:", decrypt)
     print("-" * 100)
+
+    base64_key = aes.get_base64_key()
+    print(aes.get_key())
+    print(base64_key)
+    print(base64_key.decode('utf-8'))
+

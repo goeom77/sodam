@@ -29,12 +29,28 @@
           </svg>
           <button @click="logOut"><p class="mt-1">로그아웃</p></button>
           <hr>
+          <!-- 찜목록 -->
+          <router-link to="/LikeView" style="text-decoration: none ;" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+            </svg>
+            <button><p class="mt-1">찜 목록</p></button>
+          </router-link>
+          <hr>
           <!-- 마이페이지 -->
           <router-link to="/mypage" style="text-decoration: none ;" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
             </svg>
             <button><p class="mt-1">마이페이지</p></button>
+          </router-link>
+          <hr>
+           <!-- 개인정보 수정 -->
+          <router-link to="/CheckEditInformation" style="text-decoration: none ;" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+            </svg>
+            <button><p class="mt-1">개인정보 수정</p></button>
           </router-link>
         </div>
         <!-- 로그인 상태 끝 -->
@@ -58,7 +74,7 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <nav class="navbar navbar-light fixed-top d-flex justify-content-between pa-5" style="opacity=0.5">
+  <nav class="navbar navbar-light fixed-top d-flex justify-content-between pa-5 pb-0" style="opacity=0.5">
     <router-link to="/">
       <img
         id="logo"
