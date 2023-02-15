@@ -4,16 +4,7 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :review="review"/>
-<<<<<<< HEAD
-    
-  
-	
-
-
-    <v-btn outlined rounded text @click="moveTo">
-=======
     <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
->>>>>>> ce50b62989b1188ad2a03c629e4bdd3855b4f1ba
       후기작성
     </v-btn>
   </div>
