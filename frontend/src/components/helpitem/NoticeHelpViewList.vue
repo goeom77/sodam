@@ -1,42 +1,17 @@
 <template>
   <div>
-      <v-card elevation="10" outlined width="100%" class="mx-auto">
-        <v-card-text class="noticehelp">
-          <v-row class="NoticeTable">
-            <v-col>
-              <v-table>
-                <thead>
-                  <tr>
-                    <th class="table-header">
-                      Name
-                    </th>
-                    <th class="table-header">
-                      Calories
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="item in desserts"
-                    :key="item.name"
-                  >
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.calories }}</td>
-                  </tr>
-                </tbody>
-              </v-table>
-                <NoticeHelpViewListItem
-                  v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
-                  :key="Boardarticle.id"
-                  :Boardarticle="Boardarticle"
-                  :index="index"
-                  :limit="NoticeHelpViewListPage"
-                  @delete-Board="getNoticeHelpViewListArticles"
-                  @refresh-Board="getNoticeHelpViewListArticles"/>
-              
-            </v-col>
-          </v-row>
-        </v-card-text>
+      <v-card elevation="10" outlined width="80%" class="mx-auto">
+        
+          <NoticeHelpViewListItem
+            v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
+            :key="Boardarticle.id"
+            :Boardarticle="Boardarticle"
+            :index="index"
+            :limit="NoticeHelpViewListPage"
+            @delete-Board="getNoticeHelpViewListArticles"
+            @refresh-Board="getNoticeHelpViewListArticles"/>
+        
+            <!-- 페이지네이션 -->
         <div v-if="NoticeHelpViewListarticles">
           <div style="margin: auto;" >
             <v-pagination
@@ -103,9 +78,6 @@ export default {
   margin: auto;
 }
 
-.NoticeTable{
-  width: 80%;
-}
 .table-header{
   width: auto;
   background-color: white;

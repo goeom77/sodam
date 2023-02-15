@@ -1,9 +1,8 @@
 <template>
   <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
-
+    <div class="fh5co-narrow-content-Help">
         <v-toolbar
-          color="#FCFAEF"
+          color="white"
           dark
           tabs
           style="text-align: start;">
@@ -17,7 +16,7 @@
               style="margin-right: 55px;">글쓰기</router-link> 
           </div>
           <div v-if="isLogin===true">
-            <router-link 
+            <router-link    
               to="/QnaCreateView" 
               id="QnaCreateView"
               class="HelpCreateButton" 
@@ -50,7 +49,6 @@
         <v-window-item value="two">
           <QnaHelpViewList/>
         </v-window-item>
-
       </v-window>
 
   </div>
@@ -94,16 +92,16 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
     width: 100%;
   }
 }
-#fh5co-main .fh5co-narrow-content {
+#fh5co-main .fh5co-narrow-content-Help {
   position: relative;
   width: 80%;
   margin: 0 auto;
-  padding: 4em 0;
+  padding-top: 5em;
 }
 @media screen and (max-width: 768px) {
-  #fh5co-main .fh5co-narrow-content {
+  #fh5co-main .fh5co-narrow-content-Help {
     width: 100%;
-    padding: 3.5em 1em;
+    padding: 0;
   }
 }
 </style>
