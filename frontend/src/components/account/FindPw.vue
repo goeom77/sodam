@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width:500px; height:300px;">
+  <v-container style="width:500px; height:300px; margin-top: 5%;">
 
     <v-card>
       <v-card-title >

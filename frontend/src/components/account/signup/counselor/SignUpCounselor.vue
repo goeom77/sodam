@@ -1,11 +1,11 @@
 <template>
-  <v-container style="width:500px; height:800px;">
+  <v-container style="width:500px; height:800px; margin-top: 5%;">
     <v-card>
       <v-card-title >
         <span class="text-h5">회원 가입</span>
       </v-card-title>
       <v-card-text>
-        <v-form ref="form">
+        <v-form>
           <v-row>
             <v-col cols="12">
               <div>
@@ -236,9 +236,6 @@ export default {
       },
       // 회원가입
       nextTo(){
-        if(this.$refs.form.validate()) {
-          console.log("ok")
-        }
         const id = this.id
         const password = this.password
         const password2 = this.password2
