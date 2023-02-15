@@ -130,6 +130,10 @@ export default defineComponent({
     }
   },
   methods: {
+    // startmeetclient() {
+    //   console.log(this.detail.sessionId);
+    //   // this.$router.push({name: 'VideoPage', params: {id: this.detail.sessionId}});
+    // },
     handleWeekendsToggle() {
       this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
     },
