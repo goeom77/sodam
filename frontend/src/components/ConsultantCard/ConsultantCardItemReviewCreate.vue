@@ -117,7 +117,7 @@
         })
         .then(res=>{
           console.log(res)
-          this.$router.push({name:'consultantcarditem', params: {id: this.counselor.id} })
+          this.$router.push({name:'consultantcarditem', params: {id: this.$store.state.userSignupData.id} })
         })
       },
       backTo(){
