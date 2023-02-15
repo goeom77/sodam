@@ -248,7 +248,7 @@ export default defineComponent({
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+          id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -259,34 +259,39 @@ export default defineComponent({
       </div>
       <div class='demo-app'>
         <div class='demo-app-main'>
-          <div id='external-events' class="drag-cover">
-            <p>
-              <strong>Draggable Events</strong>
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
-                scrolling
-              </button>
-            </p>
-            <div
-                class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
-                v-for="(event,idx) in DraggableEvents"
-                :key="idx">
-              <div class='fc-event-main'>{{ event.title }}</div>
+          <div class="d-flex flex-no-wrap justify-space-between">
+
+            <!-- 일정 리스트  -->
+            <div id='external-events' class="drag-cover" style="width:20%;">
+              <p>
+                <strong>Draggable Events</strong>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
+                  scrolling
+                </button>
+              </p>
+              <div
+                  class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
+                  v-for="(event,idx) in DraggableEvents"
+                  :key="idx">
+                <div class='fc-event-main'>{{ event.title }}</div>
+              </div>
+              <p>
+                <input type='checkbox' id='drop-remove'/>
+                <label for='drop-remove'>remove after drop</label>
+              </p>
             </div>
-            <p>
-              <input type='checkbox' id='drop-remove'/>
-              <label for='drop-remove'>remove after drop</label>
-            </p>
+            <!-- 캘린더 -->
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:70%">
+              <template v-slot:eventContent="arg">
+                <b type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                
+                >{{arg.event.start.toTimeString().split(' ')[0].substr(0, 5)}}</b>
+                <i>{{ arg.event.title }}</i>
+                <i>{{ arg.event.sessionId }}</i>
+              </template>
+            </FullCalendar>
           </div>
-          <FullCalendar class="demo-app-calendar" :options="calendarOptions">
-            <template v-slot:eventContent="arg">
-              <b type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">{{
-                  arg.event.start.toTimeString().split(' ')[0].substr(0, 5)
-                }}</b>
-              <i>{{ arg.event.title }}</i>
-              <i>{{ arg.event.sessionId }}</i>
-            </template>
-          </FullCalendar>
         </div>
       </div>
     </div>
@@ -334,7 +339,6 @@ b { /* used for event dates/times */
 
 .demo-app-main {
   flex-grow: 1;
-  padding: 3em;
 }
 
 .fc { /* the calendar root */
@@ -343,7 +347,6 @@ b { /* used for event dates/times */
 }
 
 #external-events {
-  position: fixed;
   z-index: 2;
   top: 20px;
   left: 20px;
