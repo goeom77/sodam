@@ -318,8 +318,15 @@ def get_text(source_blob_name, file_name, key):
     path = source_blob_name + 'enc/' + file_name + '_stt.text'
 
     encrypt = storageUtil.download_blob_into_memory(path)
-    decrypt = aes.decrypt(encrypt)
-    return decrypt
+
+    try:
+        decrypt = aes.decrypt(encrypt)
+        return decrypt
+
+    except:
+        print('error')
+        traceback.print_exc()
+        return None
 
 
 def get_file(source_blob_name, file_name, key):
