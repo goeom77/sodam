@@ -86,6 +86,8 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
                                 consultSession.openviduId,
                                 consultSession.id,
                                 consultApplicant.email,
+                                consultSession.counselorId,
+                                consultSession.clientId,
                                 consultSchedule.dateTime,
                                 consultSchedule.turn,
                                 consultApplicant.tel,

@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service.schedule;
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.ScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.UpdateRequest;
 import com.samsung.sodam.api.response.schedule.DetailSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.db.entity.ConsultApplicant;
@@ -23,4 +24,6 @@ public interface ScheduleService {
     List<MonthlyResponse> getMonthlySchedule(MonthlyScheduleRequest request);
 
     DetailSchedule scheduleDetail(ScheduleRequest request);
+
+    ConsultSchedule updateScheduleTime(UpdateRequest request);
 }

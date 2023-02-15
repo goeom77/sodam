@@ -24,12 +24,20 @@ document.addEventListener('DOMContentLoaded', function () {
   new Draggable(containerEl, {
     itemSelector: '.fc-event',
     eventData: function (eventEl) {
+      console.log("eventData" + JSON.stringify(eventEl))
       return {
-        title: eventEl.innerText
+        title: eventEl.innerText,
       };
     },
-    drop: (event) => {
-      console.log("dropped" + JSON.stringify(event))
+    droppable: true,
+    drop: (info) => {
+      console.log("dropped" + JSON.stringify(info))
+    },
+    eventDrop: function (obj) {
+      console.log('eventDrop' + JSON.stringify(obj));
+    },
+    eventDragStop:function (info) {
+      console.log('eventDragStop' + JSON.stringify(info));
     }
   });
 
@@ -43,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     editable: true,
-    droppable: true, // this allows things to be dropped onto the calendar
+    droppable: true, // this allows things to be dropped onto the calendar,
+
   });
   calendar.render();
 });
@@ -73,11 +82,14 @@ export default defineComponent({
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
-        resources: this.getExpectedData,
+        // resources: this.getExpectedData,
         select: this.handleDateSelect, // 캘린더에서 드래그로 이벤트 생성
         eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
         events: [],//데이터를 로딩 시킨다.
+        eventDragStop:function (info) {
+          console.log('eventDragStop' + JSON.stringify(info));
+        },
 
         eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
           console.log('eventAdd' + JSON.stringify(obj));
@@ -89,7 +101,23 @@ export default defineComponent({
           console.log('remove' + JSON.stringify(obj));
           obj.event.remove();
         },
+        eventDrop:function (obj){
+          console.log('eventDrop' + JSON.stringify(obj));
+        },
+        drop: function (arg) {
+          console.log('drop : ' + JSON.stringify(arg));
+          if (document.getElementById("drop-remove").checked) {
+            // if so, remove the element from the "Draggable Events" list
+            arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+          }
+        },
+        eventReceive: function (obj) {
+          console.log('eventReceive' + JSON.stringify(obj));
+
+        },
+
       },
+      expectedData: [],
       currentEvents: [],
       DraggableEvents: [],
       loadedEvents: [],
@@ -110,17 +138,41 @@ export default defineComponent({
           title,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
-          allDay: selectInfo.allDay
+          allDay: selectInfo.allDay,
+          data: {
+            customData: '되나?'
+          },
         })
       }
     },
     handleEventClick(clickInfo) {
-      console.log("상세화면 보여줄 것"+ JSON.stringify(clickInfo))
+      console.log("상세화면 보여줄 것" + JSON.stringify(clickInfo))
       let data = {sessionId: clickInfo.event.extendedProps.sessionId, dateTime: clickInfo.event.start}
       this.getScheduleDetail(data)
     },
     handleEvents(events) {
-      console.log("handleEvents : " + JSON.stringify(events))
+      console.log("handleEvents222 >>: " + JSON.stringify(events))
+      //여기서 등록 요청 해야 함.
+      if(events.isEmpty) return
+      let v = null;
+      let obj = events.extendedProps
+      console.log("handleEvents333 >>: " + JSON.stringify(events))
+      if (obj === undefined) return;
+      if("scheduleId" in obj)v = events.extendedProps.scheduleId
+      // if(obj.has("scheduleId") )
+      console.log("handleEvents444 >>: " + JSON.stringify(events))
+      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId":v})
+      // if(!events.isEmpty && events.extendedProps.sessionId != undefined){
+      //   this.saveNewSchedule(events.extendedProps.sessionId)
+      // }
+
+      // calendarApi.addEvent({
+      //   id: createEventId(),
+      //   title,
+      //   start: selectInfo.startStr,
+      //   end: selectInfo.endStr,
+      //   allDay: selectInfo.allDay
+      // }
     },
     getApprovedData() {
       axios({
@@ -128,13 +180,16 @@ export default defineComponent({
         url: `${VUE_APP_API_URL}/api/schedule/search`,
         data: {
           state: 'APPROVED',
-          userId: "counselor01"
-          // userId: this.userId
+          userId: "counselor01",
+          start:new Date().toJSON().split('.')[0]
         }
       })
           .then(res => {
-            this.DraggableEvents = res.data
-            console.log("DraggableEvents:>>>> " + JSON.stringify(res.data))
+            this.DraggableEvents = res.data.map(it => {
+              return {"id": it.sessionId, "title": it.name, "allDay": false,"extendedProps":{"sessionId":it.sessionId}}
+            })
+            // this.DraggableEvents = res.data
+            console.log("DraggableEvents:>>>> " + JSON.stringify(this.DraggableEvents))
           })
     },
     getExpectedData: function () {
@@ -149,17 +204,15 @@ export default defineComponent({
           .then(res => {
             console.log("getExpectedData:>>>> " + JSON.stringify(res.data))
             // this.loadedEvents=res.data
-            // this.calendarOptions.events = res.data
             this.calendarOptions.events = res.data
-            // this.calendarOptions.eventAdd(res.data)
-            // console.log("getExpectedData2222:>>>> " + JSON.stringify(this.calendarOptions.events))
-            return res.data
+
+            console.log("getExpectedData1:>>>> " + JSON.stringify(this.calendarOptions.events))
           })
     },
     getScheduleDetail: function (schedule) {
       axios({
-        method: 'get',
-        url: `${VUE_APP_API_URL}/api/schedule/search`,
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/schedule/detail`,
         data: {
           "state": "APPROVED",
           "sessionId": schedule.sessionId
@@ -169,7 +222,32 @@ export default defineComponent({
             console.log("detail :>>>> " + JSON.stringify(res.data))
             this.detailData = res.data
           })
-    }
+    },
+    saveNewSchedule: function (monthlyEventInfo) {
+      console.log("monthlyEventInfo :>>>> " + JSON.stringify(monthlyEventInfo))
+      axios({
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+        data: {
+          "dateTime": monthlyEventInfo.start,
+          "sessionId": monthlyEventInfo.sessionId,
+          "scheduleId": 107,
+        }
+      })
+          .then(res => {
+            this.detailData = res.map(it=> new {
+                  "id": createEventId(),
+                  "title":it.title,
+                  "start": it.start,
+                  "allDay": false,
+                  "extendedProps":{
+                    "sessionId":it.sessionId
+                  }
+            })
+            console.log("detail :>>>> " + JSON.stringify(res.data))
+            // this.detailData = res.data
+          })
+    },
   },
   created() {
     this.getExpectedData()
@@ -183,7 +261,7 @@ export default defineComponent({
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+          id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -194,33 +272,39 @@ export default defineComponent({
       </div>
       <div class='demo-app'>
         <div class='demo-app-main'>
-          <div id='external-events' class="drag-cover">
-            <p>
-              <strong>Draggable Events</strong>
-              <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                      data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
-                scrolling
-              </button>
-            </p>
-            <div
-                class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
-                v-for="(event,idx) in DraggableEvents"
-                :key="idx">
-              <div class='fc-event-main'>{{ event.name }}</div>
+          <div class="d-flex flex-no-wrap justify-space-between">
+
+            <!-- 일정 리스트  -->
+            <div id='external-events' class="drag-cover" style="width:20%;">
+              <p>
+                <strong>Draggable Events</strong>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
+                  scrolling
+                </button>
+              </p>
+              <div
+                  class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
+                  v-for="(event,idx) in DraggableEvents"
+                  :key="idx">
+                <div class='fc-event-main'>{{ event.title }}</div>
+              </div>
+              <p>
+                <input type='checkbox' id='drop-remove'/>
+                <label for='drop-remove'>remove after drop</label>
+              </p>
             </div>
-            <p>
-              <input type='checkbox' id='drop-remove'/>
-              <label for='drop-remove'>remove after drop</label>
-            </p>
-          </div>
-          <FullCalendar class="demo-app-calendar" :options="calendarOptions">
-            <template v-slot:eventContent="arg">
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
-                <b>{{ arg.event.start }}</b>
+            <!-- 캘린더 -->
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:70%">
+              <template v-slot:eventContent="arg">
+                <b type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                
+                >{{arg.event.start.toTimeString().split(' ')[0].substr(0, 5)}}</b>
                 <i>{{ arg.event.title }}</i>
-              </button>
-            </template>
-          </FullCalendar>
+                <i>{{ arg.event.sessionId }}</i>
+              </template>
+            </FullCalendar>
+          </div>
         </div>
       </div>
     </div>
@@ -268,7 +352,6 @@ b { /* used for event dates/times */
 
 .demo-app-main {
   flex-grow: 1;
-  padding: 3em;
 }
 
 .fc { /* the calendar root */
@@ -277,7 +360,6 @@ b { /* used for event dates/times */
 }
 
 #external-events {
-  position: fixed;
   z-index: 2;
   top: 20px;
   left: 20px;
