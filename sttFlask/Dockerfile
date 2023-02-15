@@ -1,6 +1,6 @@
 # from
 FROM ubuntu:latest
-LABEL maintainer="Jamie Seol <theeluwin@gmail.com>"
+LABEL maintainer="GYU <7eom14@gmail.com>"
 
 # apt init
 ENV LANG=C.UTF-8
@@ -11,6 +11,7 @@ RUN apt-get update && \
 
 # java stuff
 RUN apt-get install -y openjdk-8-jdk
+ENV JAVA_HOME="/usr/lib/jvm/java-1.8-openjdk"
 
 # python stuff
 RUN apt-get install -y python3-pip python3-dev
@@ -22,6 +23,9 @@ RUN cd /usr/local/bin && \
 # apt cleanse
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# copy resources
+COPY . .
 
 # timezone
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -35,5 +39,15 @@ RUN pip install konlpy
 RUN cd /workspace && \
     curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | bash -s
 
-# entry
-ENTRYPOINT ["python"]
+FROM python:3.9
+
+COPY . /workspace
+
+RUN pip3 install flask 
+
+# pip install 실행
+RUN pip install -r requirements.txt
+
+WORKDIR /workspace
+
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port", "80"]
