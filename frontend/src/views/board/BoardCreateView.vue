@@ -1,7 +1,7 @@
 
 <template>
-  <div id="BoardCreateView">
-    <div id="BoardCreateBoard">
+     <div id="fh5co-main" >
+      <div class="fh5co-narrow-content">
       <div id="BoardCreateBoardtitle">
         <h1>고민 게시판</h1>
       </div>
@@ -12,8 +12,8 @@
         <form @submit.prevent="BoardCreateArticle">
         <!-- <form> -->
           <div style="text-align:start; padding: 10px;">
-            <label for="category">대상</label>
-            <select id="worryselect" v-model="category" >
+            <label for="category" style="float:left;">대상</label>
+            <select style="width: 85%;" id="worryselect" v-model="category"  >
               <option 
                 v-for="(item, index) in selectList"
                 :key="index"
@@ -24,39 +24,17 @@
           </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
-            <input type="text" id="title" v-model.trim="title">
+            <input style="width: 85%;" type="text" id="title" v-model.trim="title">
           </div>
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
+          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid #B9B6B6;">
             <label for="content">내용</label>
-            <textarea id="content" v-model="content"></textarea>
+            <textarea style="width: 85%;" id="content" v-model="content"></textarea>
           </div>
-          <!-- <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
-            <label for="image" style="float:left">사진 첨부</label>
-            <div id="image">
-              <v-file-input 
-                class="input" 
-                type="file"
-                outlined dense multiple prepend-icon="mdi-camera"
-
-                @change="onImageChange"
-                label="File input"
-              ></v-file-input>
-
-              이미지 미리보기
-              <v-img 
-                v-for="(item,i) in uploadimageurl" 
-                :key="i" 
-                :src="item.url"
-                contain height="150px" width="200px" style="border: 2px solid black; 
-                margin-left:100px;"/>
-            </div>
-          </div> -->
-          <input type="submit" id="submitno" value="취소">
-          <input type="submit" id="submityes" value="등록">
-          <!-- <button @click="KidBoardarticleUpdate">등록</button> -->
-
+          <router-link to="/BoardView" style="text-decoration: none; color: black;">취소</router-link>
+          <button v-if="check" @click="BoardarticleUpdate">수정</button>
+          <input v-else type="submit" id="submityes" value="등록">
         </form>
-        <button @click="KidBoardarticleUpdate">수정</button>
+        
       </div>
     </div>
   </div>
@@ -78,6 +56,7 @@ export default {
       category : null,
       title: null,
       content: null,
+      check: '',
       clientId: this.$store.state.payload.id,
       
 
@@ -93,11 +72,11 @@ export default {
   },
 
   created() {
-    this.KidBoardArticleContent()
+    this.BoardArticleContent()
   },
 
   methods: {
-    KidBoardArticleContent() {
+    BoardArticleContent() {
       const postId  = this.postId 
       axios({
         method: 'get',
@@ -113,6 +92,7 @@ export default {
           this.category = res.data.category
           this.title = res.data.title
           this.content = res.data.content
+          this.check = true
         })
         .catch(() => {
           console.log('안됐음 멍')
@@ -163,40 +143,11 @@ export default {
             console.log(err)
           })
     },
+    backTo(){
+        this.$router.go(-1);
+      },
 
-
-    //이미지 변경
-    // onImageChange(file) {    // v-file-input 변경시
-    //       if (!file) {
-    //         return;
-    //       }
-    //       const formData = new FormData();    // 파일을 전송할때는 FormData 형식으로 전송
-    //       this.uploadimageurl = [];        // uploadimageurl은 미리보기용으로 사용
-    //       file.forEach((item) => {
-    //         formData.append('filelist', item)    // formData의 key: 'filelist', value: 이미지
-    //         const reader = new FileReader();
-    //         reader.onload = (e) => {
-    //           this.uploadimageurl.push({url: e.target.result});
-    //           // e.target.result를 통해 이미지 url을 가져와서 uploadimageurl에 저장
-    //         };
-    //         reader.readAsDataURL(item);
-    //       });
-    //       axios({
-    //         url: "http://127.0.0.1:52273/content/imagesave/",    // 이미지 저장을 위해 back서버와 통신
-    //         method: "POST",
-    //         headers: {'Content-Type': 'multipart/form-data'},    // 이걸 써줘야 formdata 형식 전송가능
-    //         data: formData,
-    //       }).then(res => {
-    //         console.log(res.data.message);
-    //         this.imagecnt = file.length;    // 이미지 개수 저장
-    //       }).catch(err => {
-    //         alert(err);
-    //       });
-    //     },
-
-
-
-    KidBoardarticleUpdate() {
+    BoardarticleUpdate() {
       const category  = this.category 
       const title = this.title
       const content = this.content
@@ -236,8 +187,9 @@ export default {
 
 <style>
 #BoardCreate {
-  width: 1255px;
-  margin: 0 auto;
+  margin-left: 200px;
+  width: 85%;
+  /* margin: 0 auto; */
 }
 
 a {
@@ -246,10 +198,10 @@ a {
 }
 
 #BoardCreateBoard {
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
+  /* background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
   background-color: aliceblue;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%; */
   text-align: center;
   font-size: large;
   font-weight: 100;
@@ -257,18 +209,7 @@ a {
   height: 250px;
   position: relative;
 }
-#KidBoardCategoryWrite {
-  width:100%; 
-  height:60px; 
-  line-height: 65px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  background-color:rgba(96, 96, 96, 0.5);
-  padding-left: 60px;
-  padding-right:60px;
-  position: absolute;
-  bottom: 0px;
-} 
+
 #BoardCreateBoardtitle {
   position: absolute;
   left: 50%; 
@@ -324,28 +265,33 @@ appearance: none;
 margin-left: 100px;
 }
 
-#image {
-width: 990px; 
-height: 68px;
-padding: .4em .5em; 
-/* border: 1px solid #B9B6B6; */
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 130px;
+#fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
 }
-/* worryselect::-ms-expand {
-        display: none;
-} */
-
-#submitno {
-margin-top: 50px;
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
+  }
 }
-
-#submityes {
-margin-top: 50px;
+@media screen and (max-width: 768px) {
+  #fh5co-main {
+    width: 100%;
+  }
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
+  }
 }
 </style>
