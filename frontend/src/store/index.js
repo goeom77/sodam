@@ -128,7 +128,7 @@ export default new Vuex.Store({
         },
         DELETE_TOKEN(state) {
             state.token = null,
-                state.userSignupData = null
+            state.userSignupData = null
         },
         GETCOUNSELORINFO(state) {
             console.log(state)
@@ -394,7 +394,7 @@ export default new Vuex.Store({
             formdata.append('id', payload.id)
             formdata.append('password', payload.password)
             formdata.append('name', payload.name)
-            formdata.append('tel', payload.name)
+            formdata.append('tel', payload.tel)
             formdata.append('email', payload.email)
             formdata.append('gender', payload.gender)
             formdata.append('enterprisestr', payload.enterprise_id)
@@ -448,7 +448,6 @@ export default new Vuex.Store({
                     console.log(res)
                 })
         },
-
 
         counselorUpdate(context, payload) {
             const formdata = new FormData()

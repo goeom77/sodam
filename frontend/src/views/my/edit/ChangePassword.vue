@@ -6,7 +6,6 @@
         label="기존 비밀번호"
         type="password"
         v-model="password1"
-        @blur="passwordValid"
         :rules="user_pw_rule1"
         required
       ></v-text-field>
@@ -16,7 +15,6 @@
         label="새 비밀번호"
         type="password"
         v-model="password2"
-        @blur="passwordValid"
         :rules="user_pw_rule2"
         required
       ></v-text-field>
@@ -26,7 +24,6 @@
         label="비밀번호 확인"
         type="password"
         v-model="password3"
-        @blur="passwordValid"
         :rules="user_pw_rule3"
         required
       ></v-text-field>
@@ -37,6 +34,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ChangePassword',
   data(){
@@ -80,6 +79,21 @@ export default {
     },
 
     changePassword(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/auth/update-pw`,
+        data:{
+          password:this.password,
+          new_password:this.password2,
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        this.$router.push({name:'home'})
+
+      })
     }
   }
 }

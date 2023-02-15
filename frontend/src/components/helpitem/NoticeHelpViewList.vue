@@ -1,27 +1,17 @@
 <template>
   <div>
-    <v-container>
-      <v-card elevation="10" outlined width="100%" class="mx-auto">
-
-        <v-card-text>
-
-          <v-row>
-            <v-col>
-                
-                <div >
-                  <NoticeHelpViewListItem
-                    v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
-                    :key="Boardarticle.id"
-                    :Boardarticle="Boardarticle"
-                    :index="index"
-                    :limit="NoticeHelpViewListPage"
-                    @delete-Board="getNoticeHelpViewListArticles"
-                    @refresh-Board="getNoticeHelpViewListArticles"
-                /> 
-                </div>
-            </v-col>
-          </v-row>
-        </v-card-text>
+      <v-card elevation="10" outlined width="80%" class="mx-auto">
+        
+          <NoticeHelpViewListItem
+            v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
+            :key="Boardarticle.id"
+            :Boardarticle="Boardarticle"
+            :index="index"
+            :limit="NoticeHelpViewListPage"
+            @delete-Board="getNoticeHelpViewListArticles"
+            @refresh-Board="getNoticeHelpViewListArticles"/>
+        
+            <!-- 페이지네이션 -->
         <div v-if="NoticeHelpViewListarticles">
           <div style="margin: auto;" >
             <v-pagination
@@ -31,8 +21,6 @@
           </div>
         </div>
       </v-card>
-	
-	  </v-container>
   </div>
 </template>
 
@@ -81,11 +69,20 @@ export default {
 </script>
 
 <style>
+.noticehelp{
+  text-align: center;
+  justify-content: center;
+}
 #NoticeHelpViewList {
   /* width: 1255px; */
   margin: auto;
 }
 
+.table-header{
+  width: auto;
+  background-color: white;
+
+}
 
 
 </style>

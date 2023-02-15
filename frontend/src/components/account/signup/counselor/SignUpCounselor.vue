@@ -4,12 +4,14 @@
       <v-card-title >
         <span class="text-h5">회원 가입</span>
       </v-card-title>
-      <v-card-text> 
+      <v-card-text>
+        <v-form ref="form">
           <v-row>
-            <v-col cols="12"> 
-              <input type="radio" name="gender" v-model="gender" @click="genderToMen" checked>남성
-              <input type="radio" name="gender" v-model="gender" @click="genderToWomen">여성
-
+            <v-col cols="12">
+              <div>
+                <input type="radio" name="gender" v-model="gender" value="MEN" checked>남성
+                <input type="radio" name="gender" v-model="gender" value="WOMEN">여성
+              </div>
               <v-text-field
               label="Id"
               type="text"
@@ -64,14 +66,15 @@
                 required
               ></v-text-field>
               <v-btn @click="CheckEmail" v-if="this.checkEmail===0">이메일 확인</v-btn>
-              <div v-else-if="this.checkEmail !=0">
+              <div v-else-if="this.checkEmail === 1">
                 <v-text-field
                   label="인증 번호" type="number" v-model="this.confirm_code"
                   required
                 ></v-text-field>
-                <v-btn @click="CheckEmailConfirm">인증</v-btn>
-
+                <v-btn @click="CheckEmailConfirm" v-bind:disabled="emailCheckMsg != null">인증</v-btn>
+                {{ this.emailCheckMsg }}
               </div>
+              <div v-else-if="this.checkEmail === 2">이미 가입된 사용자입니다.</div>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -80,20 +83,18 @@
                 v-model="tel"
                 :rules="user_tel_rule" 
                 required
-                
               ></v-text-field>
             </v-col>
           </v-row>
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
         <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
-          <v-btn color="blue darken-1" text @click="nextTo">확인</v-btn>
+          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag || !passwordCheckFlag || emailCheckMsg == null">확인</v-btn>
         <!-- </div>
         <div v-else> -->
-          <v-btn color="blue darken-1" disabled text>확인</v-btn>
-        <!-- </div> -->
         
         <v-btn color="blue darken-1" text @click="moveBack">취소</v-btn>
       </v-card-actions>
@@ -139,18 +140,19 @@ export default {
         ],
         tel:null,
         user_tel_rule:[
-        v=> !! v|| '전화번호는 필수 입력사항입니다.'
+        v=> !! v || '전화번호는 필수 입력사항입니다.'
         ],
         idDuplicateFlag:true,
         // 중복 확인 여부 
-        checkDuplicateFlag:0,
-        passwordValidFlag: true,
-        passwordCheckFlag: true,
+        checkDuplicateFlag:false,
+        passwordValidFlag: false,
+        passwordCheckFlag: false,
         msg:null,
         gender:'MEN',
         checkEmail:0,
         confirm_code:null,
-        // 작성 규칙
+        // 이메일 인증 확인
+        emailCheckMsg: null
         
       }
     },
@@ -166,7 +168,14 @@ export default {
           }
         })
         .then(res => {
-          this.checkEmail = this.checkEmail+1
+          if(res.data === 'OK') {
+            this.checkEmail = 1
+          } else if(res.data === 'CONFLICT') { // 이미 존재하는 사용자
+            this.checkEmail = 2
+          } else {  // 이메일 에러
+            this.checkEmail = 1 // -------- 이메일 복구 후 삭제
+            alert('이메일 확인 중 문제가 발생했습니다. 잠시후 시도해 주세요.')
+          }
         })
       },
       // 이메일 인증
@@ -179,19 +188,14 @@ export default {
           }
         })
         .then((res)=>{
-          console.log(res)
+          this.emailCheckMsg = '이메일이 인증되었습니다.'
+        })
+        .catch((error) => {
+          this.emailCheckMsg = '인증코드가 일치하지 않습니다.'
         })
       },
-
-      genderToMen(){
-        this.gender = 'MEN'
-      },
-      genderToWomen(){
-        this.gender = 'WOMEN'
-      },
-
       checkDuplicate(){
-      this.checkDuplicateFlag = this.checkDuplicateFlag+1
+      this.checkDuplicateFlag = !this.checkDuplicateFlag
 
       },
       // 아이디 중복 검사
@@ -232,6 +236,9 @@ export default {
       },
       // 회원가입
       nextTo(){
+        if(this.$refs.form.validate()) {
+          console.log("ok")
+        }
         const id = this.id
         const password = this.password
         const password2 = this.password2
