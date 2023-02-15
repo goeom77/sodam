@@ -1,5 +1,5 @@
 <template>
-  <div>
+      <div>
     <blockquote class="grass">
       <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>  
       <p>{{review.contents}}</p>
@@ -118,5 +118,9 @@ blockquote em{
 blockquote.grass{
   border-left-color: #9fd477;
   border-right-color: #8bc163;
+}
+.ReviewContainer{
+  padding: 20px;
+  border-bottom: solid 1px #ccc;
 }
 </style>
