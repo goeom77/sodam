@@ -1,11 +1,9 @@
 package com.samsung.sodam.db.entity;
 
+import com.samsung.sodam.db.converter.SttStateAttributeConverter;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,4 +34,7 @@ public class ConsultSchedule {
 
     @Column(name = "consult_result")
     private String consultResult;
+
+    @Convert(converter = SttStateAttributeConverter.class)
+    STT_STATE stt_status;
 }

@@ -21,10 +21,12 @@ def stt_send_mail(date, recipients, counselor_name, file_url):
 
     sender = os.environ['MAIL_USERNAME']
     password = os.environ['MAIL_PW']
+
+    # password = os.environ['MAIL_PW']
     print(sender)
 
-    from_addr = formataddr(('Sodam STT', sender))
-    to_addr = formataddr((counselor_name + ' 상담사님', recipients))
+    from_addr = formataddr(('Sodam Service', sender))
+    to_addr = formataddr((str(counselor_name + ' 상담사님'), recipients))
 
     session = None
     try:
@@ -44,7 +46,7 @@ def stt_send_mail(date, recipients, counselor_name, file_url):
         message.set_charset('utf-8')
         message['From'] = from_addr
         message['To'] = to_addr
-        message['Subject'] = '[소담]' + ' ' + date + '세션 기록 송부'
+        message['Subject'] = '[소담]' + ' ' + date + ' 세션 기록 송부'
 
         # 메일 콘텐츠 - 내용
         body = '''
@@ -67,10 +69,8 @@ def stt_send_mail(date, recipients, counselor_name, file_url):
 
         # 메일 콘텐츠 - 첨부파일
         attachments = [
-            # os.path.join(os.getcwd(), 'storage', 'rude.jpg')
-            # os.path.join('C:\\testFile', 'rude.jpg')
-            # os.path.join(os.getcwd(), 'storage', file_name + '.txt')
-            file_url
+            os.path.join(os.getcwd(), 'storage', '0d6c94b1-7e29-4b26-969e-5f2b76daa39f_SessionA~4.txt')
+            # file_url
         ]
 
         for attachment in attachments:
@@ -99,4 +99,4 @@ def stt_send_mail(date, recipients, counselor_name, file_url):
             session.quit()
 
 if __name__=="__main__":
-    stt_send_mail("testtesttest!!!", "cmzlsho@gmail.com")
+    stt_send_mail("2023.02.14","entp1618@gmail.com",  "김아현",  "dd")
