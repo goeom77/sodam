@@ -17,8 +17,10 @@
     조회수 : {{ this.reviewData.pastCount }}
     <br>
     
-    <v-btn outlined rounded text @click="ReviewUpdate">수정</v-btn>
-    <v-btn outlined rounded text @click="ReviewDelete">삭제</v-btn>
+    <div v-if="this.reviewData.counselorId === this.$store.state.payload.id">
+      <v-btn outlined rounded text @click="ReviewUpdate">수정</v-btn>
+      <v-btn outlined rounded text @click="ReviewDelete">삭제</v-btn>
+    </div>
   </div>
 </div>
 </div>
@@ -70,11 +72,12 @@ export default {
           }
         })
         .then(res=>{
-          this.$router.go(-1);
+          this.$router.push({ name: 'consultantcarditem', params: {id: this.$store.state.userSignupData.id }  })
         })
       }
     },
     created(){
+      console.log("created")
       this.getReviewInfo()
     }
 }
