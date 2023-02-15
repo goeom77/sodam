@@ -227,28 +227,28 @@ export default defineComponent({
       this.detail.start = dateTime
       var monthlyEventInfo = this.detail
       // monthlyEventInfo.setAttribute("start",dateTime)
-      console.log(" this.detail :>>>> " + JSON.stringify(monthlyEventInfo))
+      console.log(" this.detail :>>>" + JSON.stringify(monthlyEventInfo))
       this.detail=null
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
         data: {
-          "dateTime": monthlyEventInfo.start,
-          "sessionId": monthlyEventInfo.sessionId,
-          "scheduleId": monthlyEventInfo.extendedProps.sessionId,
+          "start": monthlyEventInfo.start,
+          "sessionId": monthlyEventInfo.id,
+          "scheduleId":null,
         }
       })
           .then(res => {
             monthlyEventInfo = {
               "id": createEventId(),
-              "title": res.title,
+              "title": monthlyEventInfo.title,
               "start": res.start,
               "allDay": false,
               "extendedProps": {
                 "sessionId": res.sessionId
               }
             }
-            console.log("detail :>>>> " + JSON.stringify(res.data))
+            console.log("detail :>>>>" + JSON.stringify(res.data))
           })
     },
     makeASchedule: function (obj) {
@@ -281,17 +281,6 @@ export default defineComponent({
 <template>
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
-
-      <!--      <MakeNewScheduleForm-->
-      <!--          :asd="dialog"/>-->
-      <!--      <v-btn-->
-      <!--          color="primary"-->
-      <!--          class="ma-2"-->
-      <!--          @click="dialog = true"-->
-      <!--      >-->
-      <!--        Open Dialog 1-->
-      <!--      </v-btn>-->
-
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
@@ -351,7 +340,6 @@ export default defineComponent({
                   lang="ko"
                   :lowerLimit="new Date()"
                   :clearable="false"
-                  style="background: #00b3ee"
               />
             </div>
 

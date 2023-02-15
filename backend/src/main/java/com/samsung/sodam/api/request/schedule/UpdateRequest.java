@@ -20,5 +20,5 @@ public class UpdateRequest {
 
     private Long scheduleId;
 
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime start = LocalDateTime.now();
 }

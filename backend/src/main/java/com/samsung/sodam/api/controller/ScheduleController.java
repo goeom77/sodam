@@ -89,7 +89,7 @@ public class ScheduleController {
                     .sessionId(a.getSessionId())
                     .CONSULTTYPE(a.getConsultType())
                     .firstDayTime(a.getCreatedDateTime())
-                    .dateTime(request.getDateTime())
+                    .dateTime(request.getStart())
                     .isConsult("N")
                     .turn(0)
                     .build();
@@ -104,7 +104,7 @@ public class ScheduleController {
         } else {
             result = service.updateScheduleTime(request);
         }
-        return new MonthlyResponse(request.getScheduleId(), "test name",request.getDateTime(),request.getDateTime().plusMinutes(50));
+        return new MonthlyResponse(request.getScheduleId(), "유저이름",request.getStart(),request.getStart().plusMinutes(50));
     }
 
 }
