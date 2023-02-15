@@ -67,6 +67,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ConsultSchedule updateScheduleTime(UpdateRequest request) {
+//        customRepository.
         return null;
     }
 }
