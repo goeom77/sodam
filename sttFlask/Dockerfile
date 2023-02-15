@@ -1,32 +1,39 @@
+# from
 FROM ubuntu:latest
-LABEL maintainer="roseline124 <guseod24@gmail.com>"
+LABEL maintainer="Jamie Seol <theeluwin@gmail.com>"
 
+# apt init
 ENV LANG=C.UTF-8
+ENV TZ=Asia/Seoul
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends tzdata g++ curl
+    apt-get install -y --no-install-recommends tzdata g++ git curl
 
-# install java
+# java stuff
 RUN apt-get install -y openjdk-8-jdk
-ENV JAVA_HOME="/usr/lib/jvm/java-1.8-openjdk"
 
-# install python
+# python stuff
 RUN apt-get install -y python3-pip python3-dev
 RUN cd /usr/local/bin && \
-  ln -s /usr/bin/python3 python && \
-  ln -s /usr/bin/pip3 pip && \
-  pip install --upgrade pip
+    ln -s /usr/bin/python3 python && \
+    ln -s /usr/bin/pip3 pip && \
+    pip3 install --upgrade pip
 
-# apt clean
+# apt cleanse
 RUN apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
-# copy resources
-COPY . .
+# timezone
+RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# install python package
-RUN pip install -r requirements.txt
+# workspace
+RUN mkdir -p /workspace
+WORKDIR /workspace
 
-EXPOSE 8280
+# install python packages
+RUN pip install konlpy
+RUN cd /workspace && \
+    curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | bash -s
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8280"]
+# entry
+ENTRYPOINT ["python"]
