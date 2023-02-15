@@ -4,12 +4,7 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :review="review"/>
-    
-  
-
-
-
-    <v-btn outlined rounded text @click="moveTo">
+    <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
       후기작성
     </v-btn>
   </div>
@@ -31,7 +26,7 @@ export default {
     return{
       reviews:null,
       clientId:null,
-      counselorId:null,
+      counselorId:"",
       type:null,
       page:1
     }
@@ -45,7 +40,7 @@ export default {
         method:'post',
         url: `${VUE_APP_API_URL}/api/review/my/counselor`,
         data:{
-          counselorId: this.$store.state.userSignupData.id,
+          counselorId: this.counselorId
         },
       })
       .then(res=>{
@@ -59,6 +54,7 @@ export default {
     },
   },
   beforeMount(){
+    this.counselorId = this.$store.state.userSignupData.id;
     this.getReview()
   }
 }
