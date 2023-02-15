@@ -69,6 +69,8 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
     data () {
       return {
         tab: null,
+        
+        // helplogo : require('../../src/assets/images/help.png'),
         }
     }
   }
