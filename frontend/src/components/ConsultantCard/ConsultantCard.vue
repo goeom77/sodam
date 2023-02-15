@@ -1,31 +1,34 @@
 <template>
   <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
     <div class="card">
-      <img v-bind:src="`${counselor.profileImg}`" alt="까비" class="card_image" style="width:100%">
+      <img v-bind:src="`${counselor.profileImg}`" alt="까비" class="card_image" style="width:100%; height: 370px; object-fit: cover;">
       <div class="card__overlay">
         <div class="card__header">
           <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
           <div class="card__header-text">
-            <h2 class="card__title">{{ counselor.name}}</h2>            
-            <span class="card__status">{{ counselor.consultTypeList}}</span>
+            <h2 class="card__title">{{ counselor.name}} 상담사</h2>
+            <div class="starRate">
+              <v-rating
+                model-value="3"
+                size="x-small"
+                density="comfortable"
+                color="yellow"
+              ></v-rating>
+              <span class="text-grey-lighten-2 text-caption me-2">({{ 230 }})</span>
+            </div>
+            <div class="card__status">{{ convertConsultType(counselor.consultTypeList) }}</div>
           </div>
         </div>
         <div class="card__description">
-          {{ counselor.introduce }}
+          <div>{{ counselor.introduce }}</div>
 
           <button class="icon-btn add-btn">
             <div class="add-icon"></div>
             <div class="btn-txt" @click="moveTo(counselor.id)">자세히 보기</div>
           </button>
-
-          
         </div>
       </div>
-
     </div>
-    
-    
-
   </div>
   <!-- <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
     <v-card>
@@ -86,8 +89,36 @@ export default {
     moveTo(){
       this.$router.push({ name: 'consultantcarditem', params: {id: this.counselor.id} })
     },
+    convertConsultType(list) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
 
-  },  
+      let result = "";
+      list.forEach(element => {
+          selectTypeList.forEach( type => {
+              if(type.value === element) {
+                  result += type.name + " ";
+                  return;
+              }
+          })
+      });
+      return result;
+    }
+  }
 }
 </script>
 
@@ -118,7 +149,7 @@ body {
 .card {
   position: relative;
   display: block;
-  height: 100%;  
+  height: 80%;  
   border-radius: calc(var(--curve) * 1px);
   overflow: hidden;
   text-decoration: none;
@@ -127,6 +158,7 @@ body {
 .card__image {      
   width: 100%;
   height: auto;
+  object-fit: cover;
 }
 
 .card__overlay {
@@ -183,8 +215,8 @@ body {
 }
 
 .card__title {
-  font-size: 2em;
-  margin: 0 0 .3em;
+  font-size: 1.7em;
+  margin: 0 0 .2em;
   color: #6A515E;
 }
 
@@ -297,6 +329,13 @@ body {
   height: 4px;
   top: calc(50% - 2px);
 }
-
+.icon-btn.add-btn {
+  float: right;
+}
+.starRate {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
 
 </style>
