@@ -1,10 +1,10 @@
 <template>
-  <v-container style="width:500px; height:800px;">
+  <v-container style="width:500px; height:800px; margin-top: 5%;">
     <v-card>
       <v-card-title >
         <span class="text-h5">회원 가입</span>
       </v-card-title>
-      <v-card-text> 
+      <v-card-text>
           <v-row>
             <v-col cols="12">
               <v-text-field
