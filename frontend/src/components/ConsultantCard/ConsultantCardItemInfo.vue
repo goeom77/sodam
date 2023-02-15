@@ -125,6 +125,7 @@ body{
   transition: all 0.3s; 
   border-radius: 10px;
   
+}
 h1{
   font-weight: 400;
 }
@@ -132,7 +133,6 @@ h1{
 h3{
   font-weight: 400;
   color: #666;
-}
 }
 
 #presentation:hover{

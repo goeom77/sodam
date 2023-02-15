@@ -8,9 +8,8 @@
       @input="searchCounselor()"
       />
       {{ this.SearchData }}
-  </div>
-
-  <div class="row animate-box" data-animate-effect="fadeInLeft">
+      
+      <div class="row animate-box" data-animate-effect="fadeInLeft">
     <div v-if="this.checkInfo">
       <div class="d-flex flex-wrap">
           <ConsultantCard
@@ -21,15 +20,16 @@
     </div>
     <div v-else-if="this.checkInfo===null"> 
       <div class="d-flex flex-wrap">
-          <ConsultantCard
-            v-for="(counselor,idx) in counselorInfo"
-            :key="idx"
-            :counselor="counselor"/>
+        <ConsultantCard
+        v-for="(counselor,idx) in counselorInfo"
+        :key="idx"
+        :counselor="counselor"/>
       </div>
-
+      
     </div>
-
-    </div>
+    
+  </div>
+</div>
 
 </template>
 
