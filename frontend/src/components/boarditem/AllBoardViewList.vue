@@ -32,7 +32,7 @@
                 <div v-if="searchfinish===false">
                   <BoardViewListItem
                     v-for="(Boardarticle, index) in AllBoardViewListarticles.content"
-                    :key="Boardarticle.postId"
+                    :key="index"
                     :Boardarticle="Boardarticle"
                     :index="index"
                     :limit="AllBoardViewListPage"
@@ -72,7 +72,7 @@
 
 <script>
 
-import axios from "@/store/instance.js";
+import axios from "axios";
 import BoardViewListItem from '../boarditem/BoardViewListItem.vue'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -91,18 +91,14 @@ export default {
   components: {
     BoardViewListItem
   },
-  created() {
-    this.getAllBoardViewListArticles()
-
-  },
   methods: {
     getAllBoardViewListArticles() {
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/trouble/list`,
         // headers: {
-        //   "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
-      })
+          //   "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
+        })
         .then((res) => {
           console.log('이거 되라 게시판 전체 목록')
           this.AllBoardViewListarticles = res.data
@@ -110,12 +106,12 @@ export default {
         .catch((err) => {
           console.log('어림도 없지 게시판 전체 목록')
         })
-    },
-    AllBoardViewListarticlessearch() {
-      axios({
-        method: 'get',
-        url: `${VUE_APP_API_URL}/api/trouble/list?searchword=${this.schVal}`
-      })
+      },
+      AllBoardViewListarticlessearch() {
+        axios({
+          method: 'get',
+          url: `${VUE_APP_API_URL}/api/trouble/list?searchword=${this.schVal}`
+        })
         .then((res) => {
           console.log(res)
           this.contentlist = res.data;
@@ -128,7 +124,11 @@ export default {
           console.log('안됐음 카멜레온')
         })
     },
-  }
+  },
+  created() {
+    this.getAllBoardViewListArticles()
+  
+  },
 }
 </script>
 

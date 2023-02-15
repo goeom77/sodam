@@ -101,11 +101,16 @@ import MyBoardViewList from '../../components/boarditem/MyBoardViewList.vue'
       GuitarBoardViewList,
       MyBoardViewList,
     },
-    data () {
+    data() {
       return {
         tab: null,
         }
+    },
+    computed:{
+      isLogin(){
+        return this.$store.getters.isLogin
     }
+  },
   }
 </script>
 <style>

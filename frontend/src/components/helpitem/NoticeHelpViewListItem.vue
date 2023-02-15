@@ -14,7 +14,6 @@
         >
           {{ Boardarticle.title }}
         </router-link>
-       
       </div>
       <div>
         <p>{{ Boardarticle.adminId }}  {{ Boardarticle?.createdAt }}</p>
@@ -55,7 +54,7 @@ export default {
             border: 1px solid lightgray;
             border-radius: 10px;
             margin:5px;
-            background-color:SEASHELL;
+            background-color:white;
         }
         .flex-container.flex-start{justify-content: flex-start;}
         .flex-container.flex-end{justify-content: flex-end;}
