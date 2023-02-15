@@ -30,13 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
       };
     },
     droppable: true,
-    drop: (event) => {
-      console.log("dropped" + JSON.stringify(event))
+    drop: (info) => {
+      console.log("dropped" + JSON.stringify(info))
     },
     eventDrop: function (obj) {
       console.log('eventDrop' + JSON.stringify(obj));
     },
-
+    eventDragStop:function (info) {
+      console.log('eventDragStop' + JSON.stringify(info));
+    }
   });
 
   // initialize the calendar
@@ -85,7 +87,9 @@ export default defineComponent({
         eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
         events: [],//데이터를 로딩 시킨다.
-
+        eventDragStop:function (info) {
+          console.log('eventDragStop' + JSON.stringify(info));
+        },
 
         eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
           console.log('eventAdd' + JSON.stringify(obj));
@@ -228,8 +232,17 @@ export default defineComponent({
         }
       })
           .then(res => {
+            this.detailData = res.map(it=> new {
+                  "id": createEventId(),
+                  "title":it.title,
+                  "start": it.start,
+                  "allDay": false,
+                  "extendedProps":{
+                    "sessionId":it.sessionId
+                  }
+            })
             console.log("detail :>>>> " + JSON.stringify(res.data))
-            this.detailData = res.data
+            // this.detailData = res.data
           })
     },
   },
