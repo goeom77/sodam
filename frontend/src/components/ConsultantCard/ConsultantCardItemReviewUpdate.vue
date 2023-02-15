@@ -29,7 +29,7 @@
             </div>
             <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
               <label for="title">제목</label>
-            <input type="text" id="title" v-model.trim="this.reviewData.title">
+            <input type="text" id="title" v-model="this.reviewData.title">
           </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
             <label for="content">내용</label>
