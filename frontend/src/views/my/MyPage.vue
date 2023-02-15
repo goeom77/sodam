@@ -1,82 +1,82 @@
 <template>
-<div id="fh5co-main">
-  <div class="fh5co-narrow-content">
-
-    <div id="Notice">
-      <div id="MyBoard">
-          <div id="MyBoardtitle">
-            <h1>마이페이지</h1>
-          </div>  
+  <div>
+    <div id="fh5co-main" >
+      <div class="fh5co-narrow-content">
+        <div style="float: left;">
+          <div style="margin-top: 100px">
+            <h1> 안녕하세요 {{ this.name }}님!</h1>
+          </div>
+          <br>
+          <br>
+          <div style=" float: left; width: 66%;">
+            <h3 style=" padding-top: 10px; padding-lef: 10px; border: solid 1px gray">최근 활동</h3>
+            <MyPostView/>
+  
+            <!-- <LikeView/> -->
+            <!-- <SangdamView/> -->
+  
+          </div>
         </div>
-  
-          <v-card class="Card">
-            <v-tabs
-              v-model="tab"
-              bg-color="transparent"
-              color="grey"
-              grow
-            >
-              <v-tab value="one">
-                개인정보 수정
-              </v-tab>
-              <v-tab value="two">
-                내 글 보기
-              </v-tab>
-              <v-tab value="three">
-                찜 목록
-              </v-tab>
-              <v-tab value="four">
-                상담 진행
-              </v-tab>
-            </v-tabs>
-            
-            <v-window v-model="tab">
-              <v-window-item value="one">
-                <CheckEditInformation/>
-              </v-window-item>
-              
-              <v-window-item value="two">
-                <MyPostView/>
-              </v-window-item>
-              
-              <v-window-item value="three">
-                <LikeView/>
-              </v-window-item>
-  
-              <v-window-item value="four">
-                <SangdamView/>
-              </v-window-item>
-            </v-window>
-          </v-card>
-        <div>
       </div>
-        <!-- <KidBoardList/> -->
     </div>
   </div>
-</div>
+
 </template>
   
 <script>
-import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
+ import axios from 'axios'
+// import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
 import MyPostView from '@/views/my/mypost/MyPostView.vue'
 import SangdamView from '@/views/my/sangdam/SangdamView.vue'
 
-SangdamView
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+
 
   export default {
     name: 'MyPage',
     components: {
-      CheckEditInformation,
+      // CheckEditInformation,
       LikeView,
       MyPostView,
       SangdamView,
     },
     data(){
       return{
-        tab:null
+        tab:null,
+        age: '',
+        commonCodeId: '',
+        email: '',
+        gender: '',
+        id: '',
+        name: '',
+        profileImg: '',
+        tel: ''
       }
-    }
+    },
+    created() {
+      this.getUserDetail() 
+    },
+    methods: {
+      getUserDetail() {
+        axios({
+          method: 'get',
+          url: `${VUE_APP_API_URL}/api/client/${this.$store.state.payload.id}`,
+        })
+        
+        .then((res) => {
+          console.log(this.$route.params.postId)
+          this.gender= res.data.gender
+          this.age = res.data.age
+          this.commonCodeId= res.data.commonCodeId,
+          this.email= res.data.email,
+          this.id= res.data.id,
+          this.name= res.data.name,
+          this.profileImg= res.data.profileImg,
+          this.tel= res.data.tel
+        })
+      }
+    },
   }
   </script>
   
@@ -84,72 +84,35 @@ SangdamView
   <style>
 
   
-  a {
-    text-decoration: none;
-    color: white;
+  
+  
+#fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
   }
-  
-  a:visited {
-    background-color: #579BB1;
-  }
-  
-  
-  #MyBoard {
-    /* margin-top: 61px; */
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
     width: 100%;
-    background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
-    background-color: aliceblue;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    /* background-size: cover; */
-    text-align: center;
-    font-size: large;
-    font-weight: 100;
-    padding-top: 20px;
-    height: 250px;
-    position: relative;
   }
-  #myCategory {
-    width:100%; 
-    height:60px; 
-    line-height: 65px;
-    /* justify-content: center; */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background-color:rgba(96, 96, 96, 0.5);
-    padding-left: 60px;
-    padding-right:60px;
-    position: absolute;
-    bottom: 0px;
-  } 
-  #MyBoardtitle {
-    position: absolute;
-    left: 50%; 
-    bottom: 50%; 
-    transform: translate(-50%);
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
   }
-  #myCategory a.router-link-exact-active {
-    background-color: #579BB1;
-  }
-  .CategoryClass {
-    float:left;
-    height:60px; 
-    font-weight: 700;
-    border: 1px solid white;
-    border-bottom: 0px;
-  }
-
-  .Card{
-    /* width:100%; 
-    height:500px;  */
-    /* justify-content: center; */
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
-    /* background-color:white(0, 0, 0, 0.5);
-    padding-left: 60px;
-    padding-right:60px;
-    position: absolute; */
-
-    /* height:1000px; */
-  }
+}
   </style>
