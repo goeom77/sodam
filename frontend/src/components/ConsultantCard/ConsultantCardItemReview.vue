@@ -4,7 +4,16 @@
     v-for="(review, idx) in reviews"
     :key="idx"
     :review="review"/>
+<<<<<<< HEAD
+    
+  
+	
+
+
+    <v-btn outlined rounded text @click="moveTo">
+=======
     <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
+>>>>>>> ce50b62989b1188ad2a03c629e4bdd3855b4f1ba
       후기작성
     </v-btn>
   </div>
@@ -61,5 +70,33 @@ export default {
 </script>
 
 <style>
-
+/* .accordion-wrap {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.accordion {
+	position: relative;
+	border-top: 1px solid #fff;
+}
+.teaser {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 24px 100px 24px 0;
+  position: relative;
+}
+.accordion-toggle {
+			width: 100px;
+			height: 100%;
+			position: absolute;
+			background-color: rgba(255,255,255,.14);
+			right: 0;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: 0.3s ease;
+} */
 </style>
