@@ -22,5 +22,6 @@ public class SttData {
     @Column(length = 100)
     private String file_name;
 
-    private long session_id;
+    @Column(name = "schedule_id")
+    private Long scheduleId;
 }
