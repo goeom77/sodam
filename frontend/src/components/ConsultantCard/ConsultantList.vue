@@ -1,36 +1,34 @@
 <template>
-  <div>
-    <input id="searhBar"
-      class="search-input"
-      type="text"
-      v-model="this.SearchData"
-      placeholder="상담사, 카테고리 검색.."
-      @input="searchCounselor()"
-      />
-      {{ this.SearchData }}
+  <div class="counselor-container">
+    <div class="searchBarArea">
+      <input id="searhBar"
+        class="search-input"
+        type="text"
+        v-model="this.SearchData"
+        placeholder="상담사, 카테고리 검색.."
+        @input="searchCounselor()"
+        />
+    </div>
       
-      <div class="row animate-box" data-animate-effect="fadeInLeft">
-    <div v-if="this.checkInfo">
-      <div class="d-flex flex-wrap">
+    <div class="row animate-box" data-animate-effect="fadeInLeft">
+      <div v-if="this.checkInfo">
+        <div class="d-flex flex-wrap">
+            <ConsultantCard
+              v-for="(counselor,idx) in checkInfo"
+              :key="idx"
+              :counselor="counselor"/>
+        </div>
+      </div>
+      <div v-else-if="this.checkInfo===null"> 
+        <div class="d-flex flex-wrap">
           <ConsultantCard
-            v-for="(counselor,idx) in checkInfo"
-            :key="idx"
-            :counselor="counselor"/>
+          v-for="(counselor,idx) in counselorInfo"
+          :key="idx"
+          :counselor="counselor"/>
+        </div>
       </div>
     </div>
-    <div v-else-if="this.checkInfo===null"> 
-      <div class="d-flex flex-wrap">
-        <ConsultantCard
-        v-for="(counselor,idx) in counselorInfo"
-        :key="idx"
-        :counselor="counselor"/>
-      </div>
-      
-    </div>
-    
   </div>
-</div>
-
 </template>
 
 <script>
@@ -122,6 +120,13 @@ export default {
 .work-item a:hover img, .work-item a:active img, .work-item a:focus img {
   border: 1px solid #000;
 }
+.searchBarArea {
+  margin-bottom: 5%;
+}
+.animate-box {
+  padding: 0 7%;
+}
+
 /* h3 {
   margin: 40px 0 0;
 }
