@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8">
+</head>
 <body>
 
 <h1>This is Sodam 1</h1>
@@ -19,6 +22,16 @@
 login()"><img src="kakao_login_btn.png" alt="button"></a>
 <a onclick="alert('alert test')">alert?</a>
 <img src="https://storage.googleapis.com/stt-bucket-binu/profile/2023/FEBRUARY/1824fff7-7571-468d-9aa2-5437a5a473fd_KakaoTalk_20210726_131434370_04.jpg">
+<a onclick="async function request() {
+  const response = await fetch('https://localhost:8280/test',
+  {
+    method: 'GET',
+  });
+  const data = await response.json();
+  console.log(data)
+}
+request()
+">gcsTest!!!</a>
 </body>
 </html>
 

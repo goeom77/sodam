@@ -1,7 +1,5 @@
 <template>
-  <div style="margin:auto">
-    <h1>MyPost</h1>
-
+  <div style="margin:auto; ">
     <MyPostViewList/>
   </div>
 </template>

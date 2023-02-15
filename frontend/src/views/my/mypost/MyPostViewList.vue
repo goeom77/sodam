@@ -1,28 +1,6 @@
 <template>
   <div id="MyPostViewList" >
     <div>
-      <!-- <div>
-        <h2>여긴 고민게시판 내 글</h2>
-        <MyPostViewListItem
-          v-for="(MyPostarticle, index) in MyBoardarticles.content"
-          :key="MyPostarticle.postId"
-          :MyPostarticle="MyPostarticle"
-          :index="index"
-          :limit="MyPostListPage"
-          :check=0
-        /> 
-      </div>
-      <div>
-        <h2>여긴 1:1 문의 내 글</h2>
-        <MyPostViewListItem
-          v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
-          :key="MyInquiryPostarticle.id"
-          :MyInquiryPostarticle="MyInquiryPostarticle"
-          :index="index"
-          :limit="MyPostListPage"
-          :check=1
-        /> 
-      </div> -->
       <div>
         <h2>여긴 고민게시판 내 글</h2>
         <MyPostViewListItem
