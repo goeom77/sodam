@@ -5,8 +5,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {createEventId} from './event-utils'
-import MakeNewScheduleForm from "@/components/management/schedule copy/MakeNewScheduleForm.vue";
 import axios from 'axios'
+import Datepicker from "vue3-datepicker";
+
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 export default defineComponent({
   components: {
     FullCalendar,
+    Datepicker
   },
   data() {
     return {
@@ -123,6 +125,7 @@ export default defineComponent({
       loadedEvents: [],
       datetime: null,
       detailData: null,
+      detail: null,
       dialog: false,
     }
   },
@@ -216,11 +219,16 @@ export default defineComponent({
       })
           .then(res => {
             console.log("detail :>>>> " + JSON.stringify(res.data))
-            this.detailData = res.data
+            this.detail = res.data
           })
     },
-    saveNewSchedule: function (monthlyEventInfo) {
-      console.log("monthlyEventInfo :>>>> " + JSON.stringify(monthlyEventInfo))
+    saveNewSchedule: function (dateTime) {
+      console.log("monthlyEventInfo :>>>> " + JSON.stringify(this.detail))
+      this.detail.start = dateTime
+      var monthlyEventInfo = this.detail
+      // monthlyEventInfo.setAttribute("start",dateTime)
+      console.log(" this.detail :>>>> " + JSON.stringify(monthlyEventInfo))
+      this.detail=null
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
@@ -231,33 +239,36 @@ export default defineComponent({
         }
       })
           .then(res => {
-            this.detailData = res.map(it => new {
+            monthlyEventInfo = {
               "id": createEventId(),
-              "title": it.title,
-              "start": it.start,
+              "title": res.title,
+              "start": res.start,
               "allDay": false,
               "extendedProps": {
-                "sessionId": it.sessionId
+                "sessionId": res.sessionId
               }
-            })
+            }
             console.log("detail :>>>> " + JSON.stringify(res.data))
-            // this.detailData = res.data
           })
     },
     makeASchedule: function (obj) {
       console.log("makeASchedule : " + JSON.stringify(obj))
-      this.dialog = true;
+      this.dialog = true
       // {
       //   "start":obj.,
       //   "scheduleId":obj.id,
       //   "sessionId":obj.extendedProps.sessionId
       // }
-      this.saveNewSchedule()
+      // this.saveNewSchedule(obj,this.datetime)
     },
     clickApprovedData: function (obj) {
       console.log("clickApprovedData :" + JSON.stringify(obj))
+      this.detail = obj
       this.dialog = true
     },
+    startSession(data){
+      console.log("data: "+data)
+    }
   },
   created() {
     this.getExpectedData()
@@ -288,8 +299,7 @@ export default defineComponent({
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <a>{{ JSON.stringify(detailData) }}</a>
-          <a class="btn btn-primary disabled" role="button">상담하러가기</a>
+          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
         </div>
       </div>
       <div class='demo-app'>
@@ -310,7 +320,8 @@ export default defineComponent({
               <template v-slot:eventContent="arg">
                 <button type="button"
                         class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" onclick="detailData = arg">
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                        onclick="makeASchedule(arg); detail = arg">
                   <div class="fc-daygrid-event-dot"></div>
                   <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
                   <i class="fc-event-title">{{ arg.event.title }}님</i>
@@ -325,29 +336,25 @@ export default defineComponent({
             v-model="dialog"
             persistent
             width="1024"
+            height="500"
         >
           <v-card>
             <v-card-title>
               <span class="text-h5">일정등록</span>
             </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row align="center">
-                  <v-expansion-panels multiple>
-                    <v-expansion-panel>
-                      <v-expansion-panel-header>Null Value</v-expansion-panel-header>
-                      <v-expansion-panel-content>
-                        <v-flex xs4>
-                          <v-datetime-picker v-model="datetime"></v-datetime-picker>
-                        </v-flex>
-                        <div>Datetime value: <span v-text="datetime"></span></div>
-                      </v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-row>
 
-              </v-container>
-            </v-card-text>
+            <div style="height: 500px;">
+              <datepicker
+                  class="form-control"
+                  placeholder="YYYY-MM-DD" required="required"
+                  v-model="datetime"
+                  lang="ko"
+                  :lowerLimit="new Date()"
+                  :clearable="false"
+                  style="background: #00b3ee"
+              />
+            </div>
+
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
@@ -360,7 +367,7 @@ export default defineComponent({
               <v-btn
                   color="blue-darken-1"
                   variant="text"
-                  @click="dialog = false"
+                  @click="saveNewSchedule(datetime); dialog = false"
               >
                 Save
               </v-btn>
