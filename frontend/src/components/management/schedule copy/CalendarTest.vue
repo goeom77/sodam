@@ -110,7 +110,10 @@ export default defineComponent({
           title,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
-          allDay: selectInfo.allDay
+          allDay: selectInfo.allDay,
+          extendedProps: {
+            sessionId: 'BioChemistry'
+          },
         })
       }
     },
@@ -158,7 +161,7 @@ export default defineComponent({
     },
     getScheduleDetail: function (schedule) {
       axios({
-        method: 'get',
+        method: 'get',  
         url: `${VUE_APP_API_URL}/api/schedule/search`,
         data: {
           "state": "APPROVED",
