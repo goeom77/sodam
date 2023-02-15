@@ -24,6 +24,10 @@ public class DetailSchedule {
     public Integer sessionId;
     @Column(name = "email")
     public String email;
+    @Column(name = "counselor_id")
+    public String counselorId;
+    @Column(name = "client_id")
+    public String clientId;
     public LocalDateTime start;
     public Integer turn;
     public String phone;

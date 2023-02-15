@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service.schedule;
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.ScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.UpdateRequest;
 import com.samsung.sodam.api.response.schedule.DetailSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.api.service.NotificationService;
@@ -62,5 +63,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public DetailSchedule scheduleDetail(ScheduleRequest request) {
         return customRepository.getDetail(request);
+    }
+
+    @Override
+    public ConsultSchedule updateScheduleTime(UpdateRequest request) {
+        return null;
     }
 }

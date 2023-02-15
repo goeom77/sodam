@@ -3,20 +3,21 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.schedule.MonthlyScheduleRequest;
 import com.samsung.sodam.api.request.schedule.ScheduleRequest;
 import com.samsung.sodam.api.request.schedule.SearchSchedule;
+import com.samsung.sodam.api.request.schedule.UpdateRequest;
 import com.samsung.sodam.api.response.schedule.DetailSchedule;
 import com.samsung.sodam.api.response.schedule.MonthlyResponse;
 import com.samsung.sodam.api.service.ApplicantService;
 import com.samsung.sodam.api.service.schedule.ScheduleService;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
+import com.samsung.sodam.db.entity.STATE;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -74,9 +75,36 @@ public class ScheduleController {
         return service.getMonthlySchedule(request);
     }
 
+    @Transactional
     @PostMapping("/update/monthly")
     @ApiOperation(value = "일정을 수정한다.",notes = "캘린더에 있던 일정을 다른 날짜로 옮기거나 상세 내용 수정할 때.")
-    public List<MonthlyResponse> updateMonthlySchedule(@RequestBody MonthlyScheduleRequest request){
-        return service.getMonthlySchedule(request);
+    public MonthlyResponse updateMonthlySchedule(@RequestBody UpdateRequest request) {
+        ConsultSchedule result;
+        if (request.getScheduleId() == null) {
+            ConsultApplicant a = applicantService.getApplicantById(request.getSessionId());
+            ConsultSchedule schedule = ConsultSchedule.builder()
+                    .content(a.getContent())
+                    .email(a.getEmail())
+                    .tel(a.getTel())
+                    .sessionId(a.getSessionId())
+                    .CONSULTTYPE(a.getConsultType())
+                    .firstDayTime(a.getCreatedDateTime())
+                    .dateTime(request.getDateTime())
+                    .isConsult("N")
+                    .turn(0)
+                    .build();
+            result = service.makeSchedule(schedule);
+//        }
+//            setApplicantSessionState(ScheduleRequest.builder()
+//                    .status(STATE.EXPECTED)
+//                    .dateTime(request.getDateTime())
+//                    .sessionId(request.getSessionId())
+//                    .build();
+//
+        } else {
+            result = service.updateScheduleTime(request);
+        }
+        return new MonthlyResponse(request.getScheduleId(), "test name",request.getDateTime(),request.getDateTime().plusMinutes(50));
     }
+
 }
