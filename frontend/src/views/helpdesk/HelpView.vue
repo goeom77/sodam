@@ -72,7 +72,12 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
         
         // helplogo : require('../../src/assets/images/help.png'),
         }
-    }
+    },
+    computed:{
+      isLogin(){
+        return this.$store.getters.isLogin
+      }
+    },
   }
 </script>
 <style>

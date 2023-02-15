@@ -217,6 +217,7 @@ export default {
         })
         .then(res=>{
           this.counselorData = res.data
+          this.$store.dispatch('saveCounselor', res.data)
         })
       },
       dateFormat(dueDate){
@@ -267,7 +268,7 @@ export default {
         })
     },
     },
-    created() {
+    beforeMount() {
       this.changePropstoData()
       this.getCounselorData()
   }

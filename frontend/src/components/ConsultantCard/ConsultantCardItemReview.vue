@@ -38,15 +38,14 @@ export default {
   },
   methods:{
     moveTo(){
-      this.$router.push({ name: 'consultantcarditemreviewcreate', params: {id: this.counselorData.id}  })
+      this.$router.push({ name: 'consultantcarditemreviewcreate', params: {id: this.$store.state.userSignupData.id }  })
     },
     getReview(){
       axios({
         method:'post',
         url: `${VUE_APP_API_URL}/api/review/my/counselor`,
         data:{
-          counselorId:this.counselorData.id,
-          clientId:this.$store.state.payload.id,
+          counselorId: this.$store.state.userSignupData.id,
         },
       })
       .then(res=>{
@@ -56,11 +55,10 @@ export default {
       .catch(res=>{
         console.log(res)
         console.log('안직힘   ')
-        this.getReview()
       })
     },
   },
-  mounted(){
+  beforeMount(){
     this.getReview()
   }
 }
