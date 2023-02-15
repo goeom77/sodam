@@ -61,5 +61,33 @@ export default {
 </script>
 
 <style>
-
+/* .accordion-wrap {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.accordion {
+	position: relative;
+	border-top: 1px solid #fff;
+}
+.teaser {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 24px 100px 24px 0;
+  position: relative;
+}
+.accordion-toggle {
+			width: 100px;
+			height: 100%;
+			position: absolute;
+			background-color: rgba(255,255,255,.14);
+			right: 0;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: 0.3s ease;
+} */
 </style>

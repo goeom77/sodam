@@ -1,15 +1,15 @@
 <template>
   <div>
       <v-card elevation="10" outlined width="80%" class="mx-auto">
-        
-          <NoticeHelpViewListItem
-            v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
-            :key="Boardarticle.id"
-            :Boardarticle="Boardarticle"
-            :index="index"
-            :limit="NoticeHelpViewListPage"
-            @delete-Board="getNoticeHelpViewListArticles"
-            @refresh-Board="getNoticeHelpViewListArticles"/>
+
+        <NoticeHelpViewListItem
+          v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
+          :key="Boardarticle.id"
+          :Boardarticle="Boardarticle"
+          :index="index"
+          :limit="NoticeHelpViewListPage"
+          @delete-Board="getNoticeHelpViewListArticles"
+          @refresh-Board="getNoticeHelpViewListArticles"/>
         
             <!-- 페이지네이션 -->
         <div v-if="NoticeHelpViewListarticles">
@@ -78,12 +78,12 @@ export default {
   margin: auto;
 }
 
-.table-header{
-  width: auto;
-  background-color: white;
 
+.help-menu{
+  font-size: 50px;
+  font-weight: 1000;
+  border-bottom: 1px solid #ccc;
 }
-
 
 </style>
 

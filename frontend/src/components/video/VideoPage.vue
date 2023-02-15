@@ -10,13 +10,13 @@
           <div>
             <!-- 주의사항 테그 -->
             <v-dialog
-              v-model="dialog"
-              persistent
+                v-model="dialog"
+                persistent
             >
               <template v-slot:activator="{ props }">
                 <v-btn
-                  color="primary"
-                  v-bind="props"
+                    color="primary"
+                    v-bind="props"
                 >
                   주의사항
                 </v-btn>
@@ -52,16 +52,16 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn
-                    color="red-darken-1"
-                    variant="text"
-                    @click="dialog = false; consultadmit = false"
+                      color="red-darken-1"
+                      variant="text"
+                      @click="dialog = false; consultadmit = false"
                   >
                     Disagree
                   </v-btn>
                   <v-btn
-                    color="green-darken-1"
-                    variant="text"
-                    @click="dialog = false; consultadmit = true"
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog = false; consultadmit = true"
                   >
                     Agree
                   </v-btn>
@@ -71,45 +71,31 @@
             <div>
               <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
               <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
-              <p>
-                <label>Participant</label>
-                <input
-                  v-model="myUserName"
-                  class="form-control"
-                  type="text"
-                  required
-                />
-              </p>
-              <p>
-              <label>Session</label>
-                <input
-                  v-model="mySessionId"
-                  class="form-control"
-                  type="text"
-                  required
-                />
-              </p>
+              {{ common_code }}
+              {{ myUserName }}
+              {{ mySessionId }}
+              id : {{ id }}
               <!-- 상담사이면 -->
-              <p class="text-center" v-if="common_code==1">
+              <p class="text-center" v-if="common_code==='1'">
                 <v-btn
-                  @click="join()"
+                    @click="join()"
                 >
                   상담하기
                 </v-btn>
               </p>
               <!-- 고객이면 -->
-              <p class="text-center" v-if="common_code==2">
+              <p class="text-center" v-if="common_code==='2'">
                 <v-btn
-                  @click="join()"
+                    @click="join()"
                 >
                   상담하기
                 </v-btn>
               </p>
               <!-- 관리자이면 -->
-              <p class="text-center" v-if="common_code==0">
+              <p class="text-center" v-if="common_code==='0'">
                 <v-btn
-                  class="btn btn-lg btn-success"
-                  @click="join()"
+                    class="btn btn-lg btn-success"
+                    @click="join()"
                 >
                   상담하기
                 </v-btn>
@@ -119,8 +105,8 @@
         </div>
       </div>
     </div>
-      <!-- 주의사항 테그 끝 -->
-          <!-- 스트림 시작 -->
+    <!-- 주의사항 테그 끝 -->
+    <!-- 스트림 시작 -->
     <div id="session" v-if="session">
       <!-- session header -->
       <div>
@@ -152,13 +138,13 @@
           <v-card class="mx-auto" max-width="500">
             <v-container fluid>
               <v-card>
-                <div v-if="subscribers.length == 0" class="extra-background" />
+                <div v-if="subscribers.length === 0" class="extra-background" />
                 <user-video
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  v-for="sub in subscribers"
-                  :key="sub.stream.connection.connectionId"
-                  :stream-manager="sub"
-                  @click="updateMainVideoStreamManager(sub)"
+                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                    v-for="sub in subscribers"
+                    :key="sub.stream.connection.connectionId"
+                    :stream-manager="sub"
+                    @click="updateMainVideoStreamManager(sub)"
                 />
                 <v-card-actions>
                   <v-btn size="small" color="surface-variant" variant="text" icon="mdi-heart"></v-btn>
@@ -176,55 +162,55 @@
         <form class="container-fluid justify-content-center">
           <div>
             <v-btn
-              size="x-large"
-              @click="videoController"
-              color="grey-darken-4"
+                size="x-large"
+                @click="videoController"
+                color="grey-darken-4"
             >
-              <v-icon v-if="videoMute == false" icon="mdi-video-outline" size="x-large"></v-icon>
+              <v-icon v-if="videoMute === false" icon="mdi-video-outline" size="x-large"></v-icon>
               <v-icon v-else icon="mdi-video-off-outline" size="x-large"></v-icon>
             </v-btn>
             &nbsp;&nbsp;&nbsp;
             <v-btn
-              size="x-large"
-              v-if="audioMute == false"
-              color="grey-darken-4"
-              @click="audioController"
+                size="x-large"
+                v-if="audioMute === false"
+                color="grey-darken-4"
+                @click="audioController"
             >
               <v-icon style="color:white" icon="mdi-volume-high" size="x-large"></v-icon>
             </v-btn>
             <v-btn
-              size="x-large"
-              v-else
-              color="grey-darken-4"
-              @click="audioController"
+                size="x-large"
+                v-else
+                color="grey-darken-4"
+                @click="audioController"
             >
-              
+
               <v-icon style="color:white" icon="mdi-volume-off" size="x-large"></v-icon>
             </v-btn>
             &nbsp;&nbsp;&nbsp;
-              <!-- 녹음 버튼 -->
+            <!-- 녹음 버튼 -->
 
             <v-btn
-              size="x-large"
-              v-if="recordMode == false"
-              color="grey-darken-4"
-              @click="startRecord"
+                size="x-large"
+                v-if="recordMode === false"
+                color="grey-darken-4"
+                @click="startRecord"
             >
               <v-icon style="color:red" icon="mdi-record-rec" size="x-large"></v-icon>
             </v-btn>
             <v-btn
-              size="x-large"
-              v-else
-              @click="stopRecord"
+                size="x-large"
+                v-else
+                @click="stopRecord"
             >
-            <v-icon icon="mdi-stop" size="x-large"></v-icon>
+              <v-icon icon="mdi-stop" size="x-large"></v-icon>
             </v-btn>
             &nbsp;&nbsp;&nbsp;
             <v-btn
-              size="x-large"
-              id="buttonLeaveSession"
-              color="grey-darken-4"
-              @click="leaveSession"
+                size="x-large"
+                id="buttonLeaveSession"
+                color="grey-darken-4"
+                @click="leaveSession"
             >
               <v-icon icon="mdi-logout" size="x-large"></v-icon>
             </v-btn>
@@ -248,8 +234,10 @@ export default {
   components: {
     UserVideo,
   },
+  props:['id'],
   data() {
     return {
+      userId: undefined, // 로그인한 유저id
       consultadmit: false,
       dialog: false,
       // 1이면 상담사 2이면 상담자
@@ -260,8 +248,6 @@ export default {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
-      recordMode : false,
-      recordNames: [],
       videoMute: false,
       audioMute: false,
       recordMode : false,
@@ -275,47 +261,54 @@ export default {
   },
   created() {
     this.userInfo();
+    this.createmySessionId();
+    this.createmyUserName();
   },
-  mounted() {
-    this.preventBack();
-    window.addEventListener("beforeunload", this.unLoadEvent);
-    window.addEventListener("scroll", this.updateScroll);
-  },
-  beforeUnmount() {
-    window.removeEventListener("beforeunload", this.unLoadEvent);
-  },
+  // mounted() {
+  //   this.preventBack();
+  //   window.addEventListener("beforeunload", this.unLoadEvent);
+  //   window.addEventListener("scroll", this.updateScroll);
+  // },
+  // beforeUnmount() {
+  //   window.removeEventListener("beforeunload", this.unLoadEvent);
+  // },
   methods: {
-    preventBack: function () {
-      const thisObject = this;
-      history.pushState(null, null, location.href);
-      window.onbeforeunload = null;
-      window.onpopstate = function () {
-        this.swal("나가기 버튼을 이용해 주세요");
-        history.go(1);
-      };
+    createmySessionId() {
+      return
     },
-    scrollToUp() {
-      window.scrollTo(0, 0);
+    createmyUserName() {
+      return
     },
-    scrollToDown() {
-      window.scrollTo(0, 10000);
-    },
-    updateScroll() {
-      this.scrollPosition =
-        window.scrollY || document.documentElement.scrollTop;
-      // console.log(this.scrollPosition);
-    },
-    unLoadEvent: function (event) {
-      if (this.canLeaveSite) return;
-      event.preventDefault();
-      event.returnValue = "";
-    },    
+    // preventBack: function () {
+    //   history.pushState(null, null, location.href);
+    //   window.onbeforeunload = null;
+    //   window.onpopstate = function () {
+    //     this.swal("나가기 버튼을 이용해 주세요");
+    //     history.go(1);
+    //   };
+    // },
+    // scrollToUp() {
+    //   window.scrollTo(0, 0);
+    // },
+    // scrollToDown() {
+    //   window.scrollTo(0, 10000);
+    // },
+    // updateScroll() {
+    //   this.scrollPosition =
+    //       window.scrollY || document.documentElement.scrollTop;
+    //   // console.log(this.scrollPosition);
+    // },
+    // unLoadEvent: function (event) {
+    //   if (this.canLeaveSite) return;
+    //   event.preventDefault();
+    //   event.returnValue = "";
+    // },
     userInfo() {
       this.common_code = this.$store.state.payload.common_code
-      console.log(this.common_code)
+      this.userId = this.$store.state.payload.id
     },
     join() {
-      if (this.consultadmit == false) {
+      if (this.consultadmit === false) {
         this.$swal("주의사항을 확인하세요.")
       } else {
         this.joinSession()
@@ -365,31 +358,31 @@ export default {
       // 'token' parameter should be retrieved and returned by your own backend
       this.getToken(this.mySessionId).then((token) => {
         this.session
-          .connect(token, { clientData: this.myUserName })
-          .then(() => {
-            // --- Get your own camera stream with the desired properties ---
-            let publisher = this.OV.initPublisher(undefined, {
-              audioSource: undefined, // The source of audio. If undefined default microphone
-              videoSource: undefined, // The source of video. If undefined default webcam
-              publishAudio: !this.audioMute, // Whether you want to start publishing with your audio unmuted or not
-              publishVideo: !this.videoMute, // Whether you want to start publishing with your video enabled or not
-              resolution: "500x570", // The resolution of your video
-              frameRate: 30, // The frame rate of your video
-              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-              mirror: false, // Whether to mirror your local video or not
+            .connect(token, { clientData: this.myUserName })
+            .then(() => {
+              // --- Get your own camera stream with the desired properties ---
+              let publisher = this.OV.initPublisher(undefined, {
+                audioSource: undefined, // The source of audio. If undefined default microphone
+                videoSource: undefined, // The source of video. If undefined default webcam
+                publishAudio: !this.audioMute, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: !this.videoMute, // Whether you want to start publishing with your video enabled or not
+                resolution: "500x570", // The resolution of your video
+                frameRate: 30, // The frame rate of your video
+                insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+                mirror: false, // Whether to mirror your local video or not
+              });
+              this.mainStreamManager = publisher;
+              this.publisher = publisher;
+              // --- Publish your stream ---
+              this.session.publish(this.publisher);
+            })
+            .catch((error) => {
+              console.log(
+                  "There was an error connecting to the session:",
+                  error.code,
+                  error.message
+              );
             });
-            this.mainStreamManager = publisher;
-            this.publisher = publisher;
-            // --- Publish your stream ---
-            this.session.publish(this.publisher);
-          })
-          .catch((error) => {
-            console.log(
-              "There was an error connecting to the session:",
-              error.code,
-              error.message
-            );
-          });
       });
       window.addEventListener("beforeunload", this.leaveSession);
     },
@@ -424,64 +417,64 @@ export default {
         return this.session = undefined;
       }
       else {
-      return this.createSession(mySessionId).then((sessionId) =>
-        this.createToken(sessionId)
-      )};
+        return this.createSession(mySessionId).then((sessionId) =>
+            this.createToken(sessionId)
+        )}
     },
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessions
     createSession(sessionId) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
-            JSON.stringify({
-              customSessionId: sessionId,
-            }),
-            {
-              auth: {
-                username: "OPENVIDUAPP",
-                password: OPENVIDU_SERVER_SECRET,
-              },
-            }
-          )
-          .then((response) => response.data)
-          .then((data) => resolve(data.id))
-          .catch((error) => {
-            if (error.response.status === 409) {
-              resolve(sessionId);
-            } else {
-              console.warn(
-                `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
-              );
-              if (
-                window.confirm(
-                  `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
-                )
-              ) {
-                location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+            .post(
+                `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
+                JSON.stringify({
+                  customSessionId: sessionId,
+                }),
+                {
+                  auth: {
+                    username: "OPENVIDUAPP",
+                    password: OPENVIDU_SERVER_SECRET,
+                  },
+                }
+            )
+            .then((response) => response.data)
+            .then((data) => resolve(data.id))
+            .catch((error) => {
+              if (error.response.status === 409) {
+                resolve(sessionId);
+              } else {
+                console.warn(
+                    `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`
+                );
+                if (
+                    window.confirm(
+                        `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}\n\nClick OK to navigate and accept it. If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                    )
+                ) {
+                  location.assign(`${OPENVIDU_SERVER_URL}/accept-certificate`);
+                }
+                reject(error.response);
               }
-              reject(error.response);
-            }
-          });
+            });
       });
     },
     // See https://docs.openvidu.io/en/stable/reference-docs/REST-API/#post-openviduapisessionsltsession_idgtconnection
     createToken(sessionId) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-            {},
-            {
-              auth: {
-                username: "OPENVIDUAPP",
-                password: OPENVIDU_SERVER_SECRET,
-              },
-            }
-          )
-          .then((response) => response.data)
-          .then((data) => resolve(data.token))
-          .catch((error) => reject(error.response));
+            .post(
+                `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+                {},
+                {
+                  auth: {
+                    username: "OPENVIDUAPP",
+                    password: OPENVIDU_SERVER_SECRET,
+                  },
+                }
+            )
+            .then((response) => response.data)
+            .then((data) => resolve(data.token))
+            .catch((error) => reject(error.response));
       });
     },
     videoController() {
@@ -496,39 +489,39 @@ export default {
       const recordName = `recording_${this.mySessionId}_${this.recordNames.length + 1}`;
       this.recordNames.push(recordName);
       axios
-        .post(
-          `${VUE_APP_API_URL}/api/room/recordings/start/${this.mySessionId}`,
-          {},
-          {
-            auth: {
-              username: "OPENVIDUAPP",
-              password: OPENVIDU_SERVER_SECRET,
-            },
-          }
-        )
-        .then((response) => {
-          console.log(response)
-          this.recordMode = !this.recordMode;
-        })
-        .catch((error) => console.log(error));
+          .post(
+              `${VUE_APP_API_URL}/api/room/recordings/start/${this.mySessionId}`,
+              {},
+              {
+                auth: {
+                  username: "OPENVIDUAPP",
+                  password: OPENVIDU_SERVER_SECRET,
+                },
+              }
+          )
+          .then((response) => {
+            console.log(response)
+            this.recordMode = !this.recordMode;
+          })
+          .catch((error) => console.log(error));
     },
     stopRecord() {
       axios
-        .post(
-          `${VUE_APP_API_URL}/api/room/recordings/stop/${this.mySessionId}/${this.scheduleId}`,
-          {},
-          {
-            auth: {
-              username: "OPENVIDUAPP",
-              password: OPENVIDU_SERVER_SECRET,
-            },
-          }
-        )
-        .then((response) => {
-        console.log(response)
-        this.recordMode = !this.recordMode;
-        })
-        .catch((error) => console.log(error));
+          .post(
+              `${VUE_APP_API_URL}/api/room/recordings/stop/${this.mySessionId}/${this.scheduleId}`,
+              {},
+              {
+                auth: {
+                  username: "OPENVIDUAPP",
+                  password: OPENVIDU_SERVER_SECRET,
+                },
+              }
+          )
+          .then((response) => {
+            console.log(response)
+            this.recordMode = !this.recordMode;
+          })
+          .catch((error) => console.log(error));
     },
     // sendChat() {
     //   if (this.message != "") {
@@ -558,13 +551,13 @@ export default {
   background: rgb(26, 25, 31);
 
 }
-#video-main-bar-center {
-  display:flex;
-  justify-content:center;
-  align-content:center;
-}
+/*#video-main-bar-center {*/
+/*  display:flex;*/
+/*  justify-content:center;*/
+/*  align-content:center;*/
+/*}*/
 .video-background {
-  float:left; 
+  float:left;
   width: 800px;
   height: 608px;
   background-image: url(../../assets/images/video-front.png);
@@ -572,7 +565,7 @@ export default {
   background-size: 100% 100%;
 }
 .extra-background {
-  float:left; 
+  float:left;
   width: 500px;
   height: 600px;
   background-image: url(../../assets/images/대기.png);

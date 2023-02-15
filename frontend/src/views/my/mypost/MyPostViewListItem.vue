@@ -1,9 +1,9 @@
 <template>
-  <div id="MyPostViewListItem" v-if="index < 3">
-    <div>
+  <div id="MyPostViewListItem" v-if="index < 3" style="margin-bottom: 10px">
+    <div style="border: solid 1px gray">
     <!-- <div  v-if="check === 0"> -->
-      <div style="float:left; margin-left: 60px;">
-        <h5>내 게시글</h5>
+      <div >
+        <h5>{{ MyPostarticle.title }}</h5>
       </div>
       <div>
         <div>
@@ -15,7 +15,7 @@
             }"
           >
             <!-- {{ MyPostarticle.title }} -->
-            {{ MyPostarticle }}
+            <!-- {{ MyPostarticle }} -->
           </router-link>
         </div>
         <div>

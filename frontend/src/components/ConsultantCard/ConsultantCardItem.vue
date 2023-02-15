@@ -7,7 +7,6 @@
         :counselorData="this.counselorData"/>
       </div>
     </div>
-
   <!-- 상담 신청서 start -->
   <v-row justify="center" v-show="this.$store.state.payload.common_code == '2'">
     <v-dialog

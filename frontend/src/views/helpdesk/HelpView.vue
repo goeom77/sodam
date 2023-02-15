@@ -1,11 +1,14 @@
 <template>
   <div id="fh5co-main">
     <div class="fh5co-narrow-content-Help">
+      <!-- <img :src="helplogo" alt="" class="logo-class"> -->
+      <div>
         <v-toolbar
-          color="white"
-          dark
-          tabs
-          style="text-align: start;">
+        class="helpTool"
+        color="white"
+        dark
+        tabs
+        style="text-align:">
           <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">HELP DESK</v-toolbar-title>
           <v-spacer></v-spacer>
           <div v-if="this.$store.state.payload.id==='admin'">
@@ -29,7 +32,7 @@
               bg-color="transparent"
               color="grey"
               grow
-            
+  
             >
               <!-- <v-tabs-slider color="yellow"></v-tabs-slider> -->
     
@@ -39,18 +42,18 @@
             </v-tabs>
           </template>
         </v-toolbar>
-
+    
       </div>
       <v-window v-model="tab">
         <v-window-item value="one">
           <NoticeHelpViewList/>
         </v-window-item>
-
+  
         <v-window-item value="two">
           <QnaHelpViewList/>
         </v-window-item>
       </v-window>
-
+    </div>
   </div>
 </template>
 
@@ -70,7 +73,7 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
       return {
         tab: null,
         
-        // helplogo : require('../../src/assets/images/help.png'),
+        helplogo : require('@/assets/images/help.png'),
         }
     },
     computed:{
@@ -110,5 +113,21 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
     width: 100%;
     padding: 0;
   }
+}
+
+.logo-class{
+  position: relative;
+  width:100%;
+  height: 0%;
+  z-index: 5;
+}
+.helpTool{
+  background-image: url(../../assets/images/help.png) !important;
+  background-color: black !important;
+  background-size: cover;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 35vh;
 }
 </style>

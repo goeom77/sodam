@@ -11,14 +11,11 @@
               <span style="margin-left: 50px; font-weight: 1000;" class="fh5co-page">소중한 당신을 위해</span>
                 <br>
                 <span>여기, 소담이 함께합니다.</span> 
-                
-              </div>
-            </h2>
-
+            </div>
+          </h2>
         </div>
       </div>
-      <br>
-      <br>
+      <br><br>
     </div>
     <ConsultantList/>
   </div>
@@ -114,15 +111,11 @@ export default {
 }
 .bgImg{
   background-image: url('@/assets/images/homeImg.png');
-  width:90%;
+  width: 100%;
   height: 50vh;
   background-position: center center;
   background-repeat: no-repeat;
-  
-  
 }
-
-
 .work-item {
   margin-bottom: 30px;
 }

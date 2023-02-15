@@ -2,17 +2,18 @@
   <div>
     <div id="fh5co-main" >
       <div class="fh5co-narrow-content">
-        <div style="float: left;">
-          <div style="margin-top: 100px">
+        <div>
+          <div style="margin-top: 100px;  background-color: black;" >
             <h1> 안녕하세요 {{ this.name }}님!</h1>
           </div>
           <br>
-          <br>
-          <div style=" float: left; width: 66%;">
-            <h3 style=" padding-top: 10px; padding-lef: 10px; border: solid 1px gray">최근 활동</h3>
-            <MyPostView/>
-  
-            <!-- <LikeView/> -->
+          <div >
+            <div style="float: left; margin-top: 100px; background-color: brown;">
+              <MyPostViewList/>
+            </div>
+            <div style="float: left; margin-top: 100px;  background-color: blue;">
+              <SangdamView/>
+            </div>
             <!-- <SangdamView/> -->
   
           </div>
@@ -27,7 +28,7 @@
  import axios from 'axios'
 // import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 import LikeView from '@/views/my/like/LikeView.vue'
-import MyPostView from '@/views/my/mypost/MyPostView.vue'
+import MyPostViewList from '@/views/my/mypost/MyPostViewList.vue'
 import SangdamView from '@/views/my/sangdam/SangdamView.vue'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -38,7 +39,7 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
     components: {
       // CheckEditInformation,
       LikeView,
-      MyPostView,
+      MyPostViewList,
       SangdamView,
     },
     data(){
