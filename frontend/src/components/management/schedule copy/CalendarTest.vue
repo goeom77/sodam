@@ -135,8 +135,8 @@ export default defineComponent({
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
-          extendedProps: {
-            sessionId: 'BioChemistry'
+          data: {
+            customData: '되나?'
           },
         })
       }
