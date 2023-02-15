@@ -1,30 +1,6 @@
 <template>
-  <div id="MyInquiryPostViewListItem" v-if="index < 3">
-    <!-- <div  v-if="check === 0">
-      <div style="float:left; margin-left: 60px;">
-        <h5>내 게시글</h5>
-      </div>
-      <div>
-        <div>
-          <router-link 
-            style="color:black" 
-            :to="{ 
-              name: 'KidBoardDetail', 
-              params: { postId: MyPostarticle.postId } 
-            }"
-          >
-            {{ MyPostarticle.title }}
-          </router-link>
-        </div>
-        <MyInquiryPostarticlep>{{ MyPostarticle.clientId }}  {{ MyPostarticle?.createdAt }}</p>
-        </div>
-      </div>
-      <div >
-        <h3>{{ MyPostarticle.views }}, {{ MyPostarticle.commentCount }}</h3>
-      </div>
-    </div>
-    <div v-else> -->
-    <div>
+  <div id="MyInquiryPostViewListItem" v-if="index < 3" style="margin-top: 10px">
+    <div style="border: solid 1px gray">
       <div style="float:left; margin-left: 60px;">
         <h5>내 게시글</h5>
       </div>

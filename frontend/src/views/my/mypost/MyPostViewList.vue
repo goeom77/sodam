@@ -1,25 +1,27 @@
 <template>
-  <div id="MyPostViewList" >
-    <div>
-      <div>
-        <h2>여긴 고민게시판 내 글</h2>
-        <MyPostViewListItem
-          v-for="(MyPostarticle, index) in MyBoardarticles.content"
-          :key="MyPostarticle.postId"
-          :MyPostarticle="MyPostarticle"
-          :index="index"
-          :limit="MyPostListPage"
-        /> 
-      </div>
-      <div>
-        <h2>여긴 1:1 문의 내 글</h2>
-        <MyInquiryPostViewListItem
-          v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
-          :key="MyInquiryPostarticle.id"
-          :MyInquiryPostarticle="MyInquiryPostarticle"
-          :index="index"
-          :limit="MyPostListPage"
-        /> 
+  <div id="MyPostViewList">
+    <div id="fh5co-main" >
+      <div class="fh5co-narrow-content" style=" margin-left: 0;">
+        <div>
+          <h3 style=" padding-left: 10px; border: solid 1px gray">최근 게시글</h3>
+          <MyPostViewListItem
+            v-for="(MyPostarticle, index) in MyBoardarticles.content"
+            :key="MyPostarticle.postId"
+            :MyPostarticle="MyPostarticle"
+            :index="index"
+            :limit="MyPostListPage"
+          /> 
+        </div>
+        <div>
+          <h3 style="margin-top: 30px; border: solid 1px gray ">최근 1:1 문의</h3>
+          <MyInquiryPostViewListItem
+            v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
+            :key="MyInquiryPostarticle.id"
+            :MyInquiryPostarticle="MyInquiryPostarticle"
+            :index="index"
+            :limit="MyPostListPage"
+          /> 
+        </div>
       </div>
     </div>
   </div>
@@ -89,30 +91,37 @@ export default {
 
 <style>
 #MyPostViewList {
-  width: 1255px;
-}
-#WriteButton {
-  
-  height: 40px;
-  line-height: 40px;
-  margin-top: 50px;
-  margin-left: 60px;
-  margin-right: 60px;
-  border-bottom: 1px solid #5F5F5F;
-  display: flex;
-  vertical-align: middle;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-weight: 700;
+  width: 66%;
 }
 
-
-
-#KidBoardListAll {
-  color: black;
-  
+#fh5co-main {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
 }
-
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
+    width: 100%;
+  }
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
+  }
+}
 
 </style>
