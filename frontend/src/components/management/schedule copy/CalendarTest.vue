@@ -98,6 +98,42 @@ export default defineComponent({
         },
         eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트}
           console.log('eventChange' + JSON.stringify(obj));
+          let monthlyEventInfo = {
+            "sessionId": obj.event.extendedProps.sessionId,
+            "start": obj.event.start,
+            "scheduleId": obj.event.extendedProps.scheduleId,
+            "title": obj.event.title
+          };
+          monthlyEventInfo.start = obj.event.start;
+          this.detail = monthlyEventInfo
+          // var monthlyEventInfo = this.detail;
+          // monthlyEventInfo.setAttribute("start",dateTime)
+          console.log(" eventChange before call update api :>>>" + JSON.stringify(monthlyEventInfo))
+          this.detail = null;
+          axios({
+            method: 'post',
+            url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+            data: {
+              "sessionId":monthlyEventInfo.sessionId,
+              "start":monthlyEventInfo.start,
+              "scheduleId" : monthlyEventInfo.scheduleId
+            }
+          })
+              .then(res => {
+                monthlyEventInfo = {
+                  "id": res.data.scheduleId,
+                  "title": monthlyEventInfo.title,
+                  "start": monthlyEventInfo.start,
+                  "allDay": false,
+                  "extendedProps": {
+                    "sessionId": monthlyEventInfo.sessionId,
+                    "scheduleId": res.data.scheduleId
+                  }
+                }
+                // let calendarApi = obj.view.calendar
+                // calendarApi.addEvent(monthlyEventInfo)
+                console.log("eventChange detail after api response :>>>>" + JSON.stringify(res.data))
+              })
         },
         eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
           console.log('remove' + JSON.stringify(obj));
@@ -105,6 +141,41 @@ export default defineComponent({
         },
         eventDrop: function (obj) {
           console.log('eventDrop' + JSON.stringify(obj));
+          let monthlyEventInfo = {
+            "sessionId": obj.event.extendedProps.sessionId,
+            "start": obj.event.start,
+            "scheduleId": obj.event.extendedProps.scheduleId,
+            "title": obj.event.title
+          };
+          monthlyEventInfo.start = obj.event.start;
+          this.detail = monthlyEventInfo
+          // var monthlyEventInfo = this.detail;
+          // monthlyEventInfo.setAttribute("start",dateTime)
+          console.log(" eventDrop before call update api :>>>" + JSON.stringify(monthlyEventInfo))
+          this.detail = null;
+          axios({
+            method: 'post',
+            url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+            data: {
+              "sessionId":monthlyEventInfo.sessionId,
+              "start":monthlyEventInfo.start,
+              "scheduleId" : monthlyEventInfo.scheduleId
+            }
+          })
+              .then(res => {
+                monthlyEventInfo = {
+                  "id": createEventId(),
+                  "title": monthlyEventInfo.title,
+                  "start": monthlyEventInfo.start,
+                  "allDay": false,
+                  "extendedProps": {
+                    "sessionId": monthlyEventInfo.sessionId
+                  }
+                }
+                // let calendarApi = obj.view.calendar
+                // calendarApi.addEvent(monthlyEventInfo)
+                console.log("eventDrop detail after api response :>>>>" + JSON.stringify(res.data))
+              })
         },
         drop: function (arg) {
           console.log('drop : ' + JSON.stringify(arg));
@@ -166,7 +237,8 @@ export default defineComponent({
       if ("scheduleId" in obj) v = events.extendedProps.scheduleId
       // if(obj.has("scheduleId") )
       console.log("handleEvents444 >>: " + JSON.stringify(events))
-      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v})
+      this.detail = {"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v}
+      // this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v})
     },
     getApprovedData() {
       axios({
@@ -228,14 +300,14 @@ export default defineComponent({
       var monthlyEventInfo = this.detail
       // monthlyEventInfo.setAttribute("start",dateTime)
       console.log(" this.detail :>>>" + JSON.stringify(monthlyEventInfo))
-      this.detail=null
+      this.detail = null
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
         data: {
           "start": monthlyEventInfo.start,
           "sessionId": monthlyEventInfo.id,
-          "scheduleId":null,
+          "scheduleId": null,
         }
       })
           .then(res => {
@@ -248,7 +320,9 @@ export default defineComponent({
                 "sessionId": res.sessionId
               }
             }
-            console.log("detail :>>>>" + JSON.stringify(res.data))
+            // this.expectedData =  [...this.expectedData,monthlyEventInfo]
+            console.log("detail :>>>>" + JSON.stringify(this))
+            console.log("detail :>>>>" + JSON.stringify(event))
           })
     },
     makeASchedule: function (obj) {
@@ -266,8 +340,8 @@ export default defineComponent({
       this.detail = obj
       this.dialog = true
     },
-    startSession(data){
-      console.log("data: "+data)
+    startSession(data) {
+      console.log("data: " + data)
     }
   },
   created() {
@@ -282,13 +356,13 @@ export default defineComponent({
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="z-index: 99999 !important">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
+          <a class="btn btn-primary" role="button" v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
         </div>
       </div>
       <div class='demo-app'>
