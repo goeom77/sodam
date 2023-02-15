@@ -70,7 +70,12 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
       return {
         tab: null,
         }
-    }
+    },
+    computed:{
+      isLogin(){
+        return this.$store.getters.isLogin
+      }
+    },
   }
 </script>
 <style>

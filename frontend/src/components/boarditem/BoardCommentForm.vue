@@ -58,8 +58,8 @@ export default {
 
       createBoardComment() {
         const content = this.inputData
-        // const boardId = this.Boardarticle?.postId
-        // const counselorId = this.Boardarticle?.clientId
+        const boardId = this.Boardarticle?.postId
+        const counselorId = this.Boardarticle?.clientId
         if (!content) {
             alert('댓글을 입력해주세요')
             return
@@ -71,7 +71,7 @@ export default {
             data: {
                 content: content,
                 boardId: this.Boardarticle?.postId,
-                counselorId: 'counselor2'
+                counselorId: this.$store.state.payload.id
             },
             headers: {
               Authorization : `Bearer ${this.$store.state.token.token.access_token}`

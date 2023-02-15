@@ -8,7 +8,9 @@
         <img id="comment-img" :src="imgSrc">
           {{ this.counselorName }}
           </router-link> -->
-      ┖ {{ BoardComment.content }} {{ BoardComment.commentId }}
+      ┖ {{ BoardComment.content }}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <!-- <router-link :to="{name:'consultantcarditem', params: {id: this.counselor.id} }">{{ BoardComment.counselorName }}</router-link> -->
+        {{ BoardComment.counselorName }}
       </div>
       <!-- <div v-else="">
         <BoardCommentForm

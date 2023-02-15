@@ -3,7 +3,7 @@
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
       <div v-if="isLogin===true">
-        {{ this.sessionInfo }}
+        <!-- {{ this.sessionInfo }} -->
         <ClientManageCard
         v-for="(clientData,idx) in this.sessionInfo"
         :key="idx"
