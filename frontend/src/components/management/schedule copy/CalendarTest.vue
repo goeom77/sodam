@@ -4,7 +4,8 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
-import {createEventId, INITIAL_EVENTS} from './event-utils'
+import {createEventId} from './event-utils'
+import MakeNewScheduleForm from "@/components/management/schedule copy/MakeNewScheduleForm.vue";
 import axios from 'axios'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
@@ -16,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var containerEl = document.getElementById('external-events');
   var calendarEl = document.getElementById('calendar');
-  var checkbox = document.getElementById('drop-remove');
 
   // initialize the external events
   // -----------------------------------------------------------------
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     eventDrop: function (obj) {
       console.log('eventDrop' + JSON.stringify(obj));
     },
-    eventDragStop:function (info) {
+    eventDragStop: function (info) {
       console.log('eventDragStop' + JSON.stringify(info));
     }
   });
@@ -87,7 +87,7 @@ export default defineComponent({
         eventClick: this.handleEventClick, // 있는 일정 클릭시,
         eventsSet: this.handleEvents,
         events: [],//데이터를 로딩 시킨다.
-        eventDragStop:function (info) {
+        eventDragStop: function (info) {
           console.log('eventDragStop' + JSON.stringify(info));
         },
 
@@ -101,7 +101,7 @@ export default defineComponent({
           console.log('remove' + JSON.stringify(obj));
           obj.event.remove();
         },
-        eventDrop:function (obj){
+        eventDrop: function (obj) {
           console.log('eventDrop' + JSON.stringify(obj));
         },
         drop: function (arg) {
@@ -121,7 +121,9 @@ export default defineComponent({
       currentEvents: [],
       DraggableEvents: [],
       loadedEvents: [],
-      detailData: null
+      datetime: null,
+      detailData: null,
+      dialog: false,
     }
   },
   methods: {
@@ -153,26 +155,15 @@ export default defineComponent({
     handleEvents(events) {
       console.log("handleEvents222 >>: " + JSON.stringify(events))
       //여기서 등록 요청 해야 함.
-      if(events.isEmpty) return
+      if (events.isEmpty) return
       let v = null;
       let obj = events.extendedProps
       console.log("handleEvents333 >>: " + JSON.stringify(events))
       if (obj === undefined) return;
-      if("scheduleId" in obj)v = events.extendedProps.scheduleId
+      if ("scheduleId" in obj) v = events.extendedProps.scheduleId
       // if(obj.has("scheduleId") )
       console.log("handleEvents444 >>: " + JSON.stringify(events))
-      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId":v})
-      // if(!events.isEmpty && events.extendedProps.sessionId != undefined){
-      //   this.saveNewSchedule(events.extendedProps.sessionId)
-      // }
-
-      // calendarApi.addEvent({
-      //   id: createEventId(),
-      //   title,
-      //   start: selectInfo.startStr,
-      //   end: selectInfo.endStr,
-      //   allDay: selectInfo.allDay
-      // }
+      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v})
     },
     getApprovedData() {
       axios({
@@ -181,12 +172,17 @@ export default defineComponent({
         data: {
           state: 'APPROVED',
           userId: "counselor01",
-          start:new Date().toJSON().split('.')[0]
+          start: new Date().toJSON().split('.')[0]
         }
       })
           .then(res => {
             this.DraggableEvents = res.data.map(it => {
-              return {"id": it.sessionId, "title": it.name, "allDay": false,"extendedProps":{"sessionId":it.sessionId}}
+              return {
+                "id": it.sessionId,
+                "title": it.name,
+                "allDay": false,
+                "extendedProps": {"sessionId": it.sessionId}
+              }
             })
             // this.DraggableEvents = res.data
             console.log("DraggableEvents:>>>> " + JSON.stringify(this.DraggableEvents))
@@ -231,22 +227,36 @@ export default defineComponent({
         data: {
           "dateTime": monthlyEventInfo.start,
           "sessionId": monthlyEventInfo.sessionId,
-          "scheduleId": 107,
+          "scheduleId": monthlyEventInfo.extendedProps.sessionId,
         }
       })
           .then(res => {
-            this.detailData = res.map(it=> new {
-                  "id": createEventId(),
-                  "title":it.title,
-                  "start": it.start,
-                  "allDay": false,
-                  "extendedProps":{
-                    "sessionId":it.sessionId
-                  }
+            this.detailData = res.map(it => new {
+              "id": createEventId(),
+              "title": it.title,
+              "start": it.start,
+              "allDay": false,
+              "extendedProps": {
+                "sessionId": it.sessionId
+              }
             })
             console.log("detail :>>>> " + JSON.stringify(res.data))
             // this.detailData = res.data
           })
+    },
+    makeASchedule: function (obj) {
+      console.log("makeASchedule : " + JSON.stringify(obj))
+      this.dialog = true;
+      // {
+      //   "start":obj.,
+      //   "scheduleId":obj.id,
+      //   "sessionId":obj.extendedProps.sessionId
+      // }
+      this.saveNewSchedule()
+    },
+    clickApprovedData: function (obj) {
+      console.log("clickApprovedData :" + JSON.stringify(obj))
+      this.dialog = true
     },
   },
   created() {
@@ -260,14 +270,26 @@ export default defineComponent({
 <template>
   <div id="fh5co-main">
     <div class="fh5co-narrow-content">
+
+      <!--      <MakeNewScheduleForm-->
+      <!--          :asd="dialog"/>-->
+      <!--      <v-btn-->
+      <!--          color="primary"-->
+      <!--          class="ma-2"-->
+      <!--          @click="dialog = true"-->
+      <!--      >-->
+      <!--        Open Dialog 1-->
+      <!--      </v-btn>-->
+
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-          id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <p>Try scrolling the rest of the page to see this option in action.</p>
+          <a>{{ JSON.stringify(detailData) }}</a>
+          <a class="btn btn-primary disabled" role="button">상담하러가기</a>
         </div>
       </div>
       <div class='demo-app'>
@@ -275,38 +297,77 @@ export default defineComponent({
           <div class="d-flex flex-no-wrap justify-space-between">
 
             <!-- 일정 리스트  -->
-            <div id='external-events' class="drag-cover" style="width:20%;">
-              <p>
-                <strong>Draggable Events</strong>
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body
-                  scrolling
-                </button>
-              </p>
-              <div
-                  class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-event-draggable fc-daygrid-event-harness'
-                  v-for="(event,idx) in DraggableEvents"
-                  :key="idx">
-                <div class='fc-event-main'>{{ event.title }}</div>
+            <div id='external-events' style="width:20%;">
+              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
+                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
+                  <a class="list-group-item list-group-item-action list-group-item-primary"
+                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>
+                </div>
               </div>
-              <p>
-                <input type='checkbox' id='drop-remove'/>
-                <label for='drop-remove'>remove after drop</label>
-              </p>
             </div>
             <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:70%">
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
               <template v-slot:eventContent="arg">
-                <b type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
-                
-                >{{arg.event.start.toTimeString().split(' ')[0].substr(0, 5)}}</b>
-                <i>{{ arg.event.title }}</i>
-                <i>{{ arg.event.sessionId }}</i>
+                <button type="button"
+                        class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" onclick="detailData = arg">
+                  <div class="fc-daygrid-event-dot"></div>
+                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
+                  <i class="fc-event-title">{{ arg.event.title }}님</i>
+                </button>
               </template>
             </FullCalendar>
           </div>
         </div>
       </div>
+      <v-row justify="center">
+        <v-dialog
+            v-model="dialog"
+            persistent
+            width="1024"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">일정등록</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row align="center">
+                  <v-expansion-panels multiple>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header>Null Value</v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <v-flex xs4>
+                          <v-datetime-picker v-model="datetime"></v-datetime-picker>
+                        </v-flex>
+                        <div>Datetime value: <span v-text="datetime"></span></div>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-row>
+
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+              >
+                Close
+              </v-btn>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
     </div>
   </div>
 </template>
@@ -366,12 +427,12 @@ b { /* used for event dates/times */
   width: 150px;
   padding: 0 10px;
   border: 1px solid #ccc;
-  background: #eee;
+  /*background: #eee;*/
 }
 
 #external-events .fc-event {
   cursor: move;
-  margin: 3px 0;
+  margin: 3px;
 }
 
 #calendar-container {
