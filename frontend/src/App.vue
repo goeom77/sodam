@@ -58,7 +58,7 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <nav class="navbar navbar-light fixed-top d-flex justify-content-between pa-5" style="opacity=0.5">
+  <nav class="navbar navbar-light fixed-top d-flex justify-content-between pa-5 pb-0" style="opacity=0.5">
     <router-link to="/">
       <img
         id="logo"
