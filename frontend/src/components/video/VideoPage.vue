@@ -134,7 +134,7 @@
       <div style="height:30px"></div>
       <!-- session -->
       <v-row justify="center">
-        <v-col cols="4" v-if="common_code === 1">
+        <v-col cols="4" v-if="common_code === '1'">
           <v-card class="mx-auto" max-width="500">
             <v-container>
               <v-card>
@@ -312,6 +312,7 @@ export default {
     },    
     userInfo() {
       this.common_code = this.$store.state.payload.common_code
+      console.log(this.common_code)
     },
     join() {
       if (this.consultadmit == false) {

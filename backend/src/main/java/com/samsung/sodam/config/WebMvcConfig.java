@@ -18,9 +18,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods(CorsConfiguration.ALL)
                 .allowedHeaders(CorsConfiguration.ALL)
-//                .allowedOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost:5500","http://localhost:5501","http://localhost:5502")
-                //.allowedOriginPatterns(CorsConfiguration.ALL)
-                .allowedOriginPatterns(CorsConfiguration.ALL, "*")
+                .allowedOrigins("http://localhost:8080", "http://localhost:8081","http://localhost:8180", "http://localhost:5500","http://localhost:5501","http://localhost:5502")
+                .allowedOriginPatterns(CorsConfiguration.ALL)
+//                .allowedOriginPatterns(CorsConfiguration.ALL, "*")
                 .allowCredentials(true);
     }
 }
