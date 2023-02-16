@@ -8,7 +8,7 @@
       <p>내용 : {{ AlarmViewarticle?.content }}</p>
       <p>작성시간 : {{ AlarmViewarticle?.createdAt }}</p>
       <p>작성자 : {{ AlarmViewarticle?.clientId }}</p>
-      <button @click="KidBoardarticleDelete">삭제</button>
+      <button @click="AlarmViewarticleDelete">삭제</button>
     </div>
     <div>
       <hr>
@@ -30,15 +30,9 @@ export default {
   components: {
   },
   data() {
-    const postId = this.$route.params.postId
-
     return {
-      postId: postId,
       AlarmViewarticle: null,
     }
-  },
-  created() {
-    this.getAlarmViewarticleDetail()
   },
   methods: {
     getAlarmViewarticleDetail() {
@@ -48,14 +42,13 @@ export default {
       })
         .then((res) => {
           console.log(this.$route.params.postId)
-          this.KidBoardarticle = res.data
+          this.AlarmViewarticle = res.data
+          console.log(this.AlarmViewarticle)
         })
         .catch((err) => {
-          console.log('실패다옹')
-          KidBoardarticle.log(err)
+          console.log(err)
         })
     },
-
     AlarmViewarticleDelete() {
       axios({
         method: 'delete',
@@ -73,7 +66,10 @@ export default {
         console.log(err)
       })
     },
-  }
+  },
+  created() {
+    this.getAlarmViewarticleDetail()
+  },
 }
 
 </script>
