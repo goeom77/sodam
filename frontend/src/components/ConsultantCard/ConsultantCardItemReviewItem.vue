@@ -1,18 +1,53 @@
 <template>
-  <div class="reviewItem">
-    <v-card>
-      <v-card-title>{{ review.title }}</v-card-title>
-      <v-card-subtitle>
-        <v-rating
-          v-bind:model-value=rating
-          size="x-small"
-          density="comfortable"
-          color="orange"
-        ></v-rating>
-      </v-card-subtitle>
-      <v-card-text>{{ review.contents }}</v-card-text>
-      <v-card-text style="color:gray">{{ convertDate }} | {{ convertType }} ({{ convertPastCount }}) | {{ convertClientId }}</v-card-text>
-    </v-card>
+  <div>
+    <div class="container" style="padding:20px; border-bottom:1px solid #ccc">
+      <!-- 평점 -->
+      <div class="row">
+        <div class="col-6">
+          {{ review.clientId }} / 
+          {{ convertConsultType(review.type) }} 
+          <br>
+          <v-rating
+          model-value="3"
+          size="medium"
+              density="comfortable"
+              color="yellow"
+              v-model="star"
+              ></v-rating>
+            </div>
+            <div class="col-3">
+              
+            </div>
+            <div class="col-1">
+              
+            </div>
+            <div class="col-2">
+              {{ this.date }}
+            </div>
+          </div>
+          <div>
+            {{ review.title }}
+          </div>
+      <div>
+        {{ review.contents }}
+        
+      </div>
+      <div class="row">
+        <div class="col-9">
+          {{ review.pastCount }}회차 상담 후기
+        </div>
+        <div class="col-3">
+          <v-btn outlined rounded text @click="ReviewDelete">삭제</v-btn>
+        </div>
+      </div>
+      
+      
+    </div>
+    <!-- <blockquote class="grass">
+      <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>  
+      <p>{{review.contents}}</p>
+    </blockquote>    -->
+    
   </div>
 
   <!-- <div>
@@ -24,63 +59,67 @@
 </template>
 
 <script>
-
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ConsultantCardItemReviewItem',
   props:{
     review:Object,
   },
-  data() {
-    return {
-      rating: this.review.stars,
-      selectTypeList: [
-        {name:'아동 청소년', value:"CHILD_TEENAGER"},
-        {name:'재난', value:"CALAMITY"},
-        {name:'부부 및 가족상담', value:"COUPLE_FAMILY"},
-        {name:'재활 상담', value:"REHABILITATION"},
-        {name:'노인 상담', value:"AGED"},
-        {name:'중독 상담', value:"ADDICTED"},
-        {name:'정신 건강', value:"MENTAL_HEALTH"},
-        {name:'교정 상담', value:"CORRECTION"},
-        {name:'진로 상담', value:"COURSE"},
-        {name:'상담자 교육', value:"EDUCATION"},
-        {name:'성폭력 상담', value:"SEXUAL_VIOLENCY"},
-        {name:'상담자 슈퍼비전', value:"SUPERVISION"},
-        {name:'스포츠 상담', value:"SPORTS"},
-        {name:'학교 상담', value:"SCHOOL"},
-      ],
+  data(){
+    return{
+      star: this.review.stars,
+      date: this.review.createdAt.split('T')[0]
     }
   },
   methods:{
     goDetail(){
       this.$router.push({name:'ConsultantCardItemReviewItemDetail', params:{id: this.review.id}})
     },
-  },
-  computed: {
-    getRating() {
-      return this.review.stars
-    },
-    convertDate() {
-      return this.review.createdAt.split('T')[0];
-    },
-    convertPastCount() {
-      if(this.review.pastCount === 0) return '초기상담'
-      else return `${this.review.pastCount} 번 상담`
-    },
-    convertType() {
-      let result = ""
-      this.selectTypeList.forEach(e => {
-        if(this.review.type === e.value) {
-          result = e.name
-        }
+    convertConsultType(target) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
+      
+      let result = "";
+      selectTypeList.forEach( type => {
+          if(type.value === target) {
+              result += type.name + " ";
+              return;
+          }
       })
-      return result
+      return result;
     },
-    convertClientId() {
-      let prevId = this.review.clientId;
-      let currId = prevId.substr(0, 5) + '*'.repeat(prevId.length - 5);
-      return currId;
-    }
+    ReviewDelete(){
+        axios({
+          method:'delete',
+          url:`${VUE_APP_API_URL}/api/review/review?reviewId=${this.review.id}`,
+          data: {
+            reviewId: this.review.id,
+          },
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+          }
+        })
+        .then(res=>{
+          this.$router.push({name:'ConsultantCardItem'})
+          console.log(res)
+
+        })
+      }
   }
 }
 </script>

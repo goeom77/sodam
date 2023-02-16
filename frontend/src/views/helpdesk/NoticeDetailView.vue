@@ -66,7 +66,7 @@ export default {
 			createdAt: '',
 			views: 0,
 			comment: '',
-      postId: postId,
+      postId: id,
       Boardarticle: null,
       BoardCommentsCurrentPage: 1,
             
