@@ -1,35 +1,12 @@
 <template>
   <div>
-    <div class="container">
-      <div style="margin:auto; margin-top:30px;">
-        <div class="row searchbar">
-          <div class="col-10" style="text-align: center; margin: auto;">
-            <input type="text"
-            v-model="schVal"
-            label="검색"
-            >
-            <v-text-field
-            style="background-color:white;"
-            single-line
-            @keypress.enter.prevent="QnaHelpViewListarticlessearch"
-            ></v-text-field>
-          </div>
-          <div class="col-2" style="margin: auto;">
-            <Button
-              @click="QnaHelpViewListarticlessearch"
-              style="background-color: #579BB1; border-radius: 10px; width: 70%; height: 30px;  float: left; padding-bottom: 0%;"
-            >SEARCH</Button>
-          </div>
-        </div>
-      </div>
-
-      
+    <div class="container">      
       <div class="row" style="padding-top:20px">
         <div class="col-1" style="text-align: center; margin: auto;">
-
+          
         </div>
         <div class="col-8" style="text-align: center; margin: auto;">
-
+          
         </div>
         <div class="col-1" style="text-align: center; margin: auto;">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
@@ -46,14 +23,14 @@
 
       <div v-if="searchfinish===false">
         <QnaHelpViewListItem
-          v-for="(Boardarticle, index) in QnaHelpViewListarticles.content"
-          :key="Boardarticle.id"
-          :Boardarticle="Boardarticle"
-          :index="index"
-          :limit="QnaHelpViewListPage"
-          @delete-Board="getQnaHelpViewListArticles"
-          @refresh-Board="getQnaHelpViewListArticles"
-          /> 
+        v-for="(Boardarticle, index) in QnaHelpViewListarticles.content"
+        :key="Boardarticle.id"
+        :Boardarticle="Boardarticle"
+        :index="index"
+        :limit="QnaHelpViewListPage"
+        @delete-Board="getQnaHelpViewListArticles"
+        @refresh-Board="getQnaHelpViewListArticles"
+        /> 
         </div>
         <div v-if="searchfinish===true">
           <QnaHelpViewListItem
@@ -66,6 +43,19 @@
           @delete-Board="getQnaHelpViewListArticles"
           @refresh-Board="getQnaHelpViewListArticles"
           /> 
+        </div>
+      </div>
+            
+      <div style="margin:auto; padding-top:30px;">
+        <div class="searchbar">
+          <input type="text"
+          v-model="schVal"
+          placeholder="검색"
+          style="border:1px solid black; border-radius:30px; width:50%; height:50px; text-indent:20px"
+          @keypress.enter.prevent="QnaHelpViewListarticlessearch"
+          >
+          <v-btn variant="text" icon="mdi-magnify" 
+            @click="QnaHelpViewListarticlessearch"></v-btn>
         </div>
       </div>
       <div v-if="QnaHelpViewListarticles">
@@ -170,8 +160,7 @@ export default {
 }
 
 .searchbar{
-  border-bottom: 1px solid #ccc;
-  
+  text-align: center;
 }
 
 
