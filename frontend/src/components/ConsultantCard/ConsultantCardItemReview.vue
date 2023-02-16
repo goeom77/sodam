@@ -1,22 +1,46 @@
 <template>
-  <div>
-    <ConsultantCardItemReviewItem
-    v-for="(review, idx) in reviews"
-    :key="idx"
-    :review="review"/>
-    <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
-      후기작성
-    </v-btn>
+  <div> 
+    <v-tabs
+      v-model="tab"
+      bg-color="transparent"
+      color="basil"
+      grow
+    >
+      <v-tab value="one">상담사 정보</v-tab>
+      <v-tab value="two">상담 후기</v-tab>
+    </v-tabs>
+
+    <v-window v-model="tab">
+      <v-window-item value="one">
+        <div class="tabContent">
+          <ConsultantCardItemInfoDetail  />
+        </div>
+      </v-window-item>
+  
+      <v-window-item value="two">
+        <div v-if="reviews" class="tabContent">
+          <ConsultantCardItemReviewItem
+            v-for="(review, idx) in reviews"
+            :key="idx"
+            :review="review"/>
+          <v-btn outlined rounded text @click="moveTo" v-show="this.$store.state.payload.common_code == '1'">
+            후기작성
+          </v-btn>
+        </div>
+      </v-window-item>
+    </v-window>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import ConsultantCardItemReviewItem from '@/components/ConsultantCard/ConsultantCardItemReviewItem.vue'
+import ConsultantCardItemInfoDetail from '@/components/ConsultantCard/ConsultantCardItemInfoDetail.vue'
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ConsultantCardItemReview',
   components:{
+    ConsultantCardItemInfoDetail,
     ConsultantCardItemReviewItem
   },
   props:{
@@ -28,7 +52,8 @@ export default {
       clientId:null,
       counselorId:"",
       type:null,
-      page:1
+      page:1,
+      tab:null
     }
   },
   methods:{
@@ -44,7 +69,7 @@ export default {
         },
       })
       .then(res=>{
-        console.log(res)
+        console.log(res,'결과')
         this.reviews = res.data.content
       })
       .catch(res=>{
@@ -53,7 +78,7 @@ export default {
       })
     },
   },
-  beforeMount(){
+  created(){
     this.counselorId = this.$store.state.userSignupData.id;
     this.getReview()
   }
@@ -61,6 +86,11 @@ export default {
 </script>
 
 <style>
+.tabContent {
+  margin-top: 5%;
+  padding: 0 20px;
+}
+
 /* .accordion-wrap {
 	width: 100%;
 	display: flex;

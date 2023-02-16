@@ -1,5 +1,6 @@
 <template>
-  <div id="AlarmViewList">
+    <div id="fh5co-main-AlarmViewList">
+      <div class="fh5co-narrow-content">
         <v-card class="Card">
           <v-tabs
             v-model="tab"
@@ -39,6 +40,7 @@
             </v-window-item>
           </v-window>
         </v-card>
+      </div>
   </div>
 </template>
   
@@ -67,78 +69,33 @@ import AlarmViewListHelp from '../alarm/AlarmViewListHelp.vue'
   
   
   <style>
-  #AlarmViewList {
-    /* 반응형 x */
-    width: 1255px;
-    margin: 0 auto;
+ #fh5co-main-AlarmViewList {
+  width: 85%;
+  float: right;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+@media screen and (max-width: 1200px) {
+  #fh5co-main {
+    width: 70%;
   }
-  
-  a {
-    text-decoration: none;
-    color: white;
-  }
-  
-  a:visited {
-    background-color: #579BB1;
-  }
-  
-  
-  #MyBoard {
-    /* margin-top: 61px; */
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main {
     width: 100%;
-    background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
-    background-color: aliceblue;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    /* background-size: cover; */
-    text-align: center;
-    font-size: large;
-    font-weight: 100;
-    padding-top: 20px;
-    height: 250px;
-    position: relative;
   }
-  #myCategory {
-    width:100%; 
-    height:60px; 
-    line-height: 65px;
-    /* justify-content: center; */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background-color:rgba(96, 96, 96, 0.5);
-    padding-left: 60px;
-    padding-right:60px;
-    position: absolute;
-    bottom: 0px;
-  } 
-  #AlarmViewListtitle {
-    position: absolute;
-    left: 50%; 
-    bottom: 50%; 
-    transform: translate(-50%);
+}
+#fh5co-main .fh5co-narrow-content {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+@media screen and (max-width: 768px) {
+  #fh5co-main .fh5co-narrow-content {
+    width: 100%;
+    padding: 3.5em 1em;
   }
-  #myCategory a.router-link-exact-active {
-    background-color: #579BB1;
-  }
-  .CategoryClass {
-    float:left;
-    height:60px; 
-    font-weight: 700;
-    border: 1px solid white;
-    border-bottom: 0px;
-  }
-
-  .Card{
-    /* width:100%; 
-    height:1000px;  */
-    /* justify-content: center; */
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
-    /* background-color:white(0, 0, 0, 0.5);
-    padding-left: 60px;
-    padding-right:60px;
-    position: absolute; */
-
-    /* height:1000px; */
-  }
+}
   </style>

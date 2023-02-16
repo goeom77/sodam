@@ -133,7 +133,7 @@
   <!-- 상담 신청서 end -->
   <br>
     <div>
-      <ConsultantCardItemReview />
+      <ConsultantCardItemReview :counselorData="this.counselorData" />
     </div>
   </div>
   
@@ -266,7 +266,7 @@ export default {
           console.log(res)
         //   this.$router.push({name:'consultantcarditem'})
         })
-    },
+      },
     },
     created() {
       this.changePropstoData()

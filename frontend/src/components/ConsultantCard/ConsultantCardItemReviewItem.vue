@@ -49,7 +49,13 @@
     </blockquote>    -->
     
   </div>
-  
+
+  <!-- <div>
+    <blockquote class="grass">
+      <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>
+      <p>{{review.contents}}</p>
+    </blockquote>
+  </div> -->
 </template>
 
 <script>
@@ -216,5 +222,8 @@ blockquote.grass{
 .ReviewContainer{
   padding: 20px;
   border-bottom: solid 1px #ccc;
+}
+.reviewItem {
+  margin: 0 3rem 2rem 3rem;
 }
 </style>
