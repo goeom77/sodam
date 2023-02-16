@@ -1,6 +1,7 @@
 package com.samsung.sodam.api.service;
 
 import com.samsung.sodam.api.request.ReviewRequest;
+import com.samsung.sodam.api.response.ReviewResponse;
 import com.samsung.sodam.db.entity.Review;
 import com.samsung.sodam.db.repository.ReviewCustomRepository;
 import com.samsung.sodam.db.repository.ReviewRepository;
@@ -27,7 +28,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     //고객들이 적은 나의 리뷰를 확인
     @Override
-    public Page<Review> getAllMyReviews(ReviewRequest request, Pageable pageable) {
+    public Page<ReviewResponse> getAllMyReviews(ReviewRequest request, Pageable pageable) {
         return reviewCustomRepository.getAllMyReview(request, pageable);
     }
 

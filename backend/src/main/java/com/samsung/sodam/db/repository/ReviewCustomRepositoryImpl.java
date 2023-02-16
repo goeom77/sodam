@@ -2,9 +2,12 @@ package com.samsung.sodam.db.repository;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsung.sodam.api.request.ReviewRequest;
 import com.samsung.sodam.api.response.CounselorListResponse;
+import com.samsung.sodam.api.response.QReviewResponse;
+import com.samsung.sodam.api.response.ReviewResponse;
 import com.samsung.sodam.db.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,24 +30,36 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     @Override
-    public Page<Review> getAllMyReview(ReviewRequest request, Pageable pageable) {
-        List<Review> list = new ArrayList<>();
-        if (checkIsNullOrEmpty(request.getClientId()) && (checkIsNullOrEmpty(request.getType()) || request.getType().equals("ALL"))) {
-            list = queryFactory.selectFrom(review)
+    public Page<ReviewResponse> getAllMyReview(ReviewRequest request, Pageable pageable) {
+        List<ReviewResponse> list = new ArrayList<>();
+        if (!checkIsNullOrEmpty(request.getClientId()) && (checkIsNullOrEmpty(request.getType()) || request.getType().equals("ALL"))) {
+            list = queryFactory.select(new QReviewResponse(
+                        review.id, review.title, review.contents, review.stars, review.pastCount, review.type, review.clientId,
+                        review.counselorId, review.createdAt,
+                            JPAExpressions.selectFrom(review).where(review.clientId.eq(request.getClientId())).exists()
+                    ))
+                    .from(review)
                     .where(review.counselorId.eq(request.getCounselorId())).fetch();
             return new PageImpl<>(list, pageable, list.size());
         } else if (checkIsNullOrEmpty(request.getClientId())) {
-
-            list = queryFactory.selectFrom(review)
+            list = queryFactory.select(new QReviewResponse(
+                            review.id, review.title, review.contents, review.stars, review.pastCount, review.type, review.clientId,
+                            review.counselorId, review.createdAt,
+                            JPAExpressions.selectFrom(review).where(review.clientId.eq(request.getClientId())).exists()
+                    ))
+                    .from(review)
                     .where(review.counselorId.eq(request.getCounselorId()),review.type.like(request.getType())).fetch();
             return new PageImpl<>(list, pageable, list.size());
         } else if (checkIsNullOrEmpty(request.getType()) || request.getType().equals("ALL")) {
-            list = queryFactory.selectFrom(review)
+            list = queryFactory.select(new QReviewResponse(
+                            review.id, review.title, review.contents, review.stars, review.pastCount, review.type, review.clientId,
+                            review.counselorId, review.createdAt,
+                            JPAExpressions.selectFrom(review).where(review.clientId.eq(request.getClientId())).exists()
+                    ))
+                    .from(review)
                     .where(review.counselorId.eq(request.getCounselorId()),review.clientId.like(request.getClientId())).fetch();
             return new PageImpl<>(list, pageable, list.size());
         }
-
-
         return new PageImpl<>(list, pageable, 0);
     }
 

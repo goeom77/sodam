@@ -57,10 +57,13 @@ public class CounselorController extends Counselor {
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")
-    @GetMapping("counselor/{id}")
+    @GetMapping("counselor/{id}/{clientId}")
     //상담사 정보 조회
-    public CounselorListResponse getCounselorInfo(@PathVariable String id) {
-        return service.getCounselorDetail(id);
+    public CounselorListResponse getCounselorInfo(@PathVariable String id, @PathVariable String clientId) {
+//        String clientId = "";
+//        if(user != null) clientId = user.getUsername();
+
+        return service.getCounselorDetail(clientId, id);
     }
 
     @PostMapping(value = "/counselor/{id}")

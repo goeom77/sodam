@@ -107,8 +107,8 @@
           <div style="height:220px"></div>
           <ul>
             <li><router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;</li>
-            <li v-if="common_code === '1'"><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
-            <li v-if="common_code === '1'"><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li v-if="common_code == '1'"><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li v-if="common_code == '1'"><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
           </ul>
           <div style="height:220px"></div>
@@ -193,7 +193,8 @@ export default {
         headers: {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`
         },
-        withCredentials : true
+        withCredentials : true,
+        heartbeatTimeout : 86400000000
       });
 
       // 알림 권한 설정

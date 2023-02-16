@@ -40,8 +40,13 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         this.em = em;
     }
 
-    public CounselorListResponse getCounselorDetail(String id) {
+    public CounselorListResponse getCounselorDetail(String clientId, String id) {
         Counselor c = queryFactory.selectFrom(counselor).where(counselor.id.eq(id)).fetchOne();
+        boolean isLike = Boolean.TRUE.equals(queryFactory.select(favoriteCounselor.isNotNull()).from(favoriteCounselor)
+                .where(favoriteCounselor.clientId.eq(clientId).and(favoriteCounselor.CounselorId.eq(id)))
+                .fetchOne());
+        System.out.println("------------------------------------------> " + clientId + ", " + id + ", " + isLike);
+
         List<EducationResponse> eduList = queryFactory
                 .select(new QEducationResponse(
                         education.id,
@@ -70,7 +75,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         return CounselorListResponse.builder().career(c.getCareer())
                 .gender(c.getGender()).consultTypeList(c.getConsultTypeList()).tel(c.getTel())
                 .profileImg(c.getProfileImg()).introduce(c.getIntroduce()).email(c.getEmail())
-                .name(c.getName()).routine(c.getRoutine()).id(c.getId()).educations(eduList).certificates(certList).build();
+                .name(c.getName()).routine(c.getRoutine()).id(c.getId()).educations(eduList).certificates(certList).isLike(isLike).build();
     }
 
     public List<CounselorListResponse> getMyFavCounselor(String clientId) {
@@ -102,7 +107,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         Counselor c = queryFactory.selectFrom(counselor).where(counselor.id.eq(id)).fetchOne();
         if (c == null) return null;
 
-        CounselorDetailResponse result = new CounselorDetailResponse(getCounselorDetail(id));
+        CounselorDetailResponse result = new CounselorDetailResponse(getCounselorDetail(id, id));
 
         List<CertificateResponse> certList = queryFactory
                 .select(new QCertificateResponse(

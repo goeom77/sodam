@@ -1,36 +1,35 @@
 <template>
     <v-container>
-      <div v-show="counselor.career[0] != null">
-        <div class="infoList">
-          <h4 class="infoListTitle">경력</h4>
-          <div v-for="career in counselor.career" :key="career">
-            <div>{{ this.careerFormat(career) }}</div>
+      <v-card variant="tonal">
+        <div v-show="counselor.career[0] != null">
+          <div class="infoList">
+            <h4 class="infoListTitle">경력</h4>
+            <div v-for="career in counselor.career" :key="career">
+              <div>{{ this.careerFormat(career) }}</div>
+            </div>
           </div>
         </div>
-        <v-divider></v-divider>
-      </div>
-      <div v-show="counselor.certificates[0] != null">
-        <div class="infoList">
-          <h4 class="infoListTitle">자격증</h4>
-          <div v-for="certificate in counselor.certificates" :key="certificate">
-            <div>{{ this.certificateFormat(certificate) }}</div>
+        <div v-show="counselor.certificates[0] != null">
+          <div class="infoList">
+            <h4 class="infoListTitle">자격증</h4>
+            <div v-for="certificate in counselor.certificates" :key="certificate">
+              <div>{{ this.certificateFormat(certificate) }}</div>
+            </div>
           </div>
         </div>
-        <v-divider></v-divider>
-      </div>
-      <div v-show="counselor.educations[0] != null">
-        <div class="infoList">
-          <h4 class="infoListTitle">학력</h4>
-          <div v-for="education in counselor.educations" :key="education">
-            <div>{{ this.educationFormat(education) }}</div>
+        <div v-show="counselor.educations[0] != null">
+          <div class="infoList">
+            <h4 class="infoListTitle">학력</h4>
+            <div v-for="education in counselor.educations" :key="education">
+              <div>{{ this.educationFormat(education) }}</div>
+            </div>
           </div>
         </div>
-      </div>
+      </v-card>
     </v-container>
 </template>
   
-  <script>
-
+<script>
   export default {
     name:'ConsultantCardItemInfo',
     data(){
