@@ -7,6 +7,7 @@ colorama==0.4.6
 dataclasses==0.6
 distlib==0.3.6
 Flask==2.2.2
+Flask-Cors==3.0.10
 Flask-SQLAlchemy==3.0.3
 google-api-core==2.11.0
 google-auth==2.16.0

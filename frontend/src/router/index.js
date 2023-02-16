@@ -46,6 +46,7 @@ import ClientManageDetail from '@/components/management/client/ClientManageDetai
 import AlarmView from '../views/alarm/AlarmView.vue'
 import AlarmViewDetail from '../views/alarm/AlarmViewDetail.vue'
 import CalendarTest from "@/components/management/schedule copy/CalendarTest.vue";
+import ConsultDetail from "@/views/clientmanage/ConsultDetail.vue";
 
 
 const routes = [
@@ -236,6 +237,12 @@ const routes = [
     path: '/AlarmViewDetail/:id?',
     name: 'AlarmViewDetail',
     component: AlarmViewDetail
+  },
+  {
+    path: '/ConsultDetail/:id?',
+    name: 'ConsultDetail',
+    component: ConsultDetail,
+    props:true
   },
   {
     path: '/:pathMatch(.*)*',

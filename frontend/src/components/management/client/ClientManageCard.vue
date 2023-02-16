@@ -1,25 +1,21 @@
 <template>
   <v-card
-    class="mx-auto"
-    max-width="344"
+    class="mx-auto mb-3"
+    max-width=90%
   >
-  <v-card-text>
-    <!-- {{ clientData }} -->
-    <p>
-      컨설턴트 이름 : {{this.consultant_name}}
-    </p>
 
-    <p>
-      성함 : {{ clientData.name }}
-    </p>
-    
-    <div class="text--primary">
-      <!-- 연락처 -->
-      <h3>연락처 : {{ clientData.tel }}</h3><br>
-      <h3>이메일 : {{ clientData.email }} </h3>
-    </div>
+  <v-card-title>
+    {{ clientData.name }}
+    </v-card-title>
+
+    <v-card-subtitle>
+      <p><v-icon icon="mdi-phone"></v-icon> {{ clientData.tel }}</p>
+      <p><v-icon icon="mdi-email"></v-icon>{{ clientData.email }}</p>
+    </v-card-subtitle>
+  <v-card-text>
     </v-card-text>
     
+    <div class="d-flex justify-space-between ms-3">
     <v-card-actions>
       <v-btn
         text
@@ -41,6 +37,7 @@
 
       </v-btn>
     </div>
+  </div>
   </v-card>
 </template>
 

@@ -131,6 +131,7 @@ import { EventSourcePolyfill } from "event-source-polyfill";
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 const LOCAL_URL = process.env.LOCAL_URL
+const VUE_APP_STT_API_URL = process.env.VUE_APP_STT_API_URL
 
 export default {
   name:'App',
