@@ -132,7 +132,8 @@ const routes = [
   {
     path: '/NoticeCreateView',
     name: 'NoticeCreateView',
-    component: NoticeCreateView
+    component: NoticeCreateView,
+    props:true
   },
   // 문의사항 상세보기 
   {

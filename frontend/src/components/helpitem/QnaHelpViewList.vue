@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="container">      
+    <div class="container">  
+      <div>
+        <div v-if="isLogin===true" style="text-align: right; margin-right:50px; padding-top:20px">
+          <v-btn append-icon="mdi-pencil" @click="moveTo">
+            문의 작성
+          </v-btn>
+      </div>
+      </div>    
       <div class="row" style="padding-top:20px">
         <div class="col-1" style="text-align: center; margin: auto;">
           
@@ -45,7 +52,7 @@
           /> 
         </div>
       </div>
-            
+
       <div style="margin:auto; padding-top:30px;">
         <div class="searchbar">
           <input type="text"
@@ -116,6 +123,14 @@ export default {
     this.getQnaHelpViewListArticles()
 
   },
+  computed:{
+      isLogin(){
+        return this.$store.getters.isLogin
+    }
+  },
+  watch:{
+
+  },
   methods: {
     getQnaHelpViewListArticles() {
       axios({
@@ -135,7 +150,13 @@ export default {
     QnaHelpViewListarticlessearch() {
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api//help-desk/qna/list?searchword=${this.schVal}`
+        url: `${VUE_APP_API_URL}/api/help-desk/qna/list?searchword=${this.schVal}`,
+        data:{
+          searchWord: this.schVal
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
       })
         .then((res) => {
           console.log(res)
@@ -149,6 +170,9 @@ export default {
           console.log('안됐음 카멜레온')
         })
     },
+    moveTo(){
+      this.$router.push({name:'QnaCreateView'});
+    }
   }
 }
 </script>
