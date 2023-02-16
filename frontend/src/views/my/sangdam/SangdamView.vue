@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div> 여긴 상담내역 {{ history }} </div> -->
-    <button @click="gogogogogogo"> 영상 연결 ㄱㄱ</button>
+    <button @click="startMeeting"> 상담하기 </button>
     <!-- <h1>{{ this.history }}</h1> -->
   </div>
 </template>
@@ -11,17 +11,23 @@ export default {
   name: 'SangdamView',
   data() {
       return{
+        userId: undefined,
         history : null
       }
     },
   components: {
   },
-  // created() {
-  //   this.getscheduledetail()
-  // },
+  created() {
+    this.userInfo();
+    // this.getscheduledetail()
+  },
   methods: {
-    gogogogogogo() {
-      this.$router.push({ name: 'VideoPage' },)
+    startMeeting(id) {
+      this.$router.push({name: 'VideoPage', params: {id: id}});
+    },
+    userInfo() {
+      // this.common_code = this.$store.state.payload.common_code
+      this.userId = this.$store.state.payload.id
     },
     // getscheduledetail() {
     //   axios({

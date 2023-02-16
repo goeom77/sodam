@@ -3,7 +3,7 @@
     <div id="fh5co-main" >
       <div class="fh5co-narrow-content" style=" margin-left: 0;">
         <div>
-          <h3 style=" padding-left: 10px; border: solid 1px gray">최근 게시글</h3>
+          <h3>최근 게시글</h3>
           <MyPostViewListItem
             v-for="(MyPostarticle, index) in MyBoardarticles.content"
             :key="MyPostarticle.postId"
