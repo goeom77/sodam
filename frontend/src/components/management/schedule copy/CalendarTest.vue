@@ -1,92 +1,3 @@
-<template>
-  <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
-      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
-        </div>
-      </div>
-      <div class='demo-app'>
-        <div class='demo-app-main'>
-          <div class="d-flex flex-no-wrap justify-space-between">
-
-            <!-- 일정 리스트  -->
-            <div id='external-events' style="width:20%;">
-              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
-                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
-                  <a class="list-group-item list-group-item-action list-group-item-primary"
-                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>
-                </div>
-              </div>
-            </div>
-            <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
-              <template v-slot:eventContent="arg">
-                <button type="button"
-                        class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                        onclick="makeASchedule(arg); detail = arg">
-                  <div class="fc-daygrid-event-dot"></div>
-                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
-                  <i class="fc-event-title">{{ arg.event.title }}님</i>
-                </button>
-              </template>
-            </FullCalendar>
-          </div>
-        </div>
-      </div>
-      <v-row justify="center">
-        <v-dialog
-            v-model="dialog"
-            persistent
-            width="1024"
-            height="500"
-        >
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">일정등록</span>
-            </v-card-title>
-
-            <div style="height: 500px;">
-              <datepicker
-                  class="form-control"
-                  placeholder="YYYY-MM-DD" required="required"
-                  v-model="datetime"
-                  lang="ko"
-                  :lowerLimit="new Date()"
-                  :clearable="false"
-              />
-            </div>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="dialog = false"
-              >
-                Close
-              </v-btn>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="saveNewSchedule(datetime); dialog = false"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </div>
-  </div>
-</template>
-
 <script>
 import {defineComponent} from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
@@ -371,7 +282,94 @@ export default defineComponent({
 
 </script>
 
+<template>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
+        </div>
+      </div>
+      <div class='demo-app'>
+        <div class='demo-app-main'>
+          <div class="d-flex flex-no-wrap justify-space-between">
 
+            <!-- 일정 리스트  -->
+            <div id='external-events' style="width:20%;">
+              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
+                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
+                  <a class="list-group-item list-group-item-action list-group-item-primary"
+                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>
+                </div>
+              </div>
+            </div>
+            <!-- 캘린더 -->
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
+              <template v-slot:eventContent="arg">
+                <button type="button"
+                        class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                        onclick="makeASchedule(arg); detail = arg">
+                  <div class="fc-daygrid-event-dot"></div>
+                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
+                  <i class="fc-event-title">{{ arg.event.title }}님</i>
+                </button>
+              </template>
+            </FullCalendar>
+          </div>
+        </div>
+      </div>
+      <v-row justify="center">
+        <v-dialog
+            v-model="dialog"
+            persistent
+            width="1024"
+            height="500"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">일정등록</span>
+            </v-card-title>
+
+            <div style="height: 500px;">
+              <datepicker
+                  class="form-control"
+                  placeholder="YYYY-MM-DD" required="required"
+                  v-model="datetime"
+                  lang="ko"
+                  :lowerLimit="new Date()"
+                  :clearable="false"
+              />
+            </div>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+              >
+                Close
+              </v-btn>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="saveNewSchedule(datetime); dialog = false"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
+  </div>
+</template>
 
 <style lang='css'>
 
