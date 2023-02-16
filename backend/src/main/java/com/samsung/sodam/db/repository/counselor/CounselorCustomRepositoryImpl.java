@@ -179,9 +179,9 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         List<Counselor> list = queryFactory.
                 select(counselor)
                 .from(counselor)
-                .where(counselor.name.like("%" + request.getKeyword() + "%")).fetch();
-//                        , counselor.introduce.like(request.getKeyword())
-//                        , counselor.consultTypeList.contains(request.getType()))
+                .where(counselor.name.like("%" + request.getKeyword() + "%"))
+                        , counselor.introduce.like(request.getKeyword())
+                        , counselor.consultTypeList.contains(request.getType())).fetch();
 
 //        Long total = queryFactory.select(Wildcard.count)
 //                .from(counselor)

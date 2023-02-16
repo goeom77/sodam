@@ -111,7 +111,7 @@ export default {
   color: #999;
   letter-spacing: -0.005em;
   word-spacing: 1px;
-  letter-spacing: none;
+  /*letter-spacing: none;*/
 }
 
 .five h2:before {

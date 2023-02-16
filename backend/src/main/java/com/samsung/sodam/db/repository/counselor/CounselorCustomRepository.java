@@ -23,5 +23,5 @@ public interface CounselorCustomRepository{
 
     Page<CounselorListResponse> searchCounselorByType(TestRequest request);
 
-    Page<CounselorListResponse> getBestCounselor(Pageable pageable);
+    List<CounselorListResponse> getBestCounselor();
 }

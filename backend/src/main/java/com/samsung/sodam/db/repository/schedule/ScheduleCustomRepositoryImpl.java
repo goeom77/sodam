@@ -25,7 +25,6 @@ import static com.samsung.sodam.db.entity.QCounselor.counselor;
 
 @Repository
 public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
-
     final JPAQueryFactory queryFactory;
     EntityManager em;
 
@@ -38,12 +37,11 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
         return null;
     }
 
-
     @Override
     public Page<ConsultSchedule> getMySchedules(Pageable pageable, String userId) {
-        List<ConsultSchedule> list = queryFactory.selectFrom(consultSchedule).where(consultSession.counselorId.eq(userId).or(consultSession.clientId.eq(userId))).orderBy(consultSchedule.dateTime.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
-        Long count = queryFactory.select(consultSchedule.id).from(consultSchedule).where(consultSession.counselorId.eq(userId).or(consultSession.clientId.eq(userId))).orderBy(consultSchedule.dateTime.desc()).fetchOne();
-        return new PageImpl<>(list, pageable, count);
+        List<ConsultSchedule> list = queryFactory.selectFrom(consultSchedule).join(consultSession).on(consultSchedule.sessionId.eq(consultSession.id)).where(consultSession.counselorId.eq(userId)).orderBy(consultSchedule.dateTime.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+        if(list == null || list.isEmpty()) list = queryFactory.selectFrom(consultSchedule).join(consultSession).on(consultSchedule.sessionId.eq(consultSession.id)).where(consultSession.clientId.eq(userId)).orderBy(consultSchedule.dateTime.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+        return new PageImpl<>(list, pageable, 20);
     }
 
     @Override
@@ -55,7 +53,6 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
                         consultSession.counselorId.eq(request.userId),
                         consultApplicant.dueDate.between(request.start, request.end)
                 ).fetch();
-
     }
 
     @Override
