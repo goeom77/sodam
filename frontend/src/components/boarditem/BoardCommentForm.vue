@@ -71,7 +71,8 @@ export default {
             data: {
                 content: content,
                 boardId: this.Boardarticle?.postId,
-                counselorId: this.$store.state.payload.id
+                counselorId: this.$store.state.payload.id,
+                
             },
             headers: {
               Authorization : `Bearer ${this.$store.state.token.token.access_token}`
