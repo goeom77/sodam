@@ -4,7 +4,7 @@
       <MDBInput
           v-model="SearchData"
           inputGroup
-          class="py-4"
+          class="py-3"
           @input="searchCounselor()"
           :formOutline="false"
           wrapperClass="mb-3"

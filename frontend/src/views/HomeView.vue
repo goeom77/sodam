@@ -1,39 +1,20 @@
 <template>
   <div id="fh5co-main">
     <!--    <div class="fh5co-narrow-content">-->
-    <div>
-      <div class="five">
-        <div class="container bgImg">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft" style="font-size:3em;">
-            <div>
-              <em>
-                소중한 당신을 위해
-              </em>
-              <span style="margin-left: 50px; font-weight: 1000;" class="fh5co-page">소중한 당신을 위해</span>
-              <br>
-              <span>여기, 소담이 함께합니다.</span>
-            </div>
-          </h2>
+    <div class="mb-3">
+      <v-parallax
+        src="@/assets/images/backimg.jpg"
+      >
+        <div class="d-flex flex-column fill-height justify-center align-center text-white">
+          <h1 class="text-h4 font-weight-thin mb-4">
+            소중한 상담
+          </h1>
+          <h4 class="subheading">
+            여러분과 함께
+          </h4>
         </div>
-      </div>
-      <br><br>
+      </v-parallax>
     </div>
-    <v-container>
-      <vueper-slides
-          class="no-shadow"
-          :visible-slides="3"
-          slide-multiple
-          :gap="3"
-          :slide-ratio="1 / 4"
-          :dragging-distance="200"
-          :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-
-        <vueper-slide v-for="(counselor,idx) in counselorInfo" :key="idx">
-          <a>{{counselor}}</a>
-          <ConsultantCard :counselor="counselor"/>
-        </vueper-slide>
-      </vueper-slides>
-    </v-container>
     <ConsultantList/>
   </div>
 
@@ -169,9 +150,8 @@ export default {
 }
 
 .bgImg {
-  background-image: url('@/assets/images/homeImg.png');
+  background-image: url('@/assets/images/backimg.jpg');
   width: 100%;
-  height: 50vh;
   background-position: center center;
   background-repeat: no-repeat;
 }
