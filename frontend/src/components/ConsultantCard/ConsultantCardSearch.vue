@@ -27,7 +27,7 @@ export default {
     searchCounselor(){
       axios({
         method:'post',
-        url:`${VUE_APP_API_URL}/api/counselor/search`,
+        url:`${VUE_APP_API_URL}/api/counselor/test`,
         data:{
           keyword: this.SearchData
         }

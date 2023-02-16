@@ -72,7 +72,7 @@ export default {
       })
           .then(res => {
             console.log(res)
-            this.counselorInfo = res.data.content
+            this.counselorInfo = res.data
           })
     },
   },

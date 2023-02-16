@@ -35,13 +35,13 @@ public class CounselorController extends Counselor {
         this.clientService = clientService;
         this.reviewService = reviewService;
     }
-
-    //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
-    @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
-    @PostMapping("counselor/search")
-    public Page<CounselorListResponse> searchCounselor(@Validated @RequestBody CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
-        return service.searchCounselor(request, pageable);
-    }
+//
+//    //상담사 검색(목록 보기) 다른 필터링 요소 추가해야함.
+//    @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
+//    @PostMapping("counselor/search")
+//    public Page<CounselorListResponse> searchCounselor(@Validated @RequestBody CounselorSearchRequest request, @PageableDefault(value = 10) Pageable pageable) {
+//        return service.searchCounselor(request, pageable);
+//    }
 
     @ApiOperation(value = "모든 상담사를 조회")
     @PostMapping("counselor/")
@@ -85,7 +85,7 @@ public class CounselorController extends Counselor {
     }
 
     @PostMapping(value = "/counselor/test")
-    @ApiOperation(value = "검색 테스트")
+    @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
     public List<CounselorListResponse> setCounselorType(@RequestBody TestRequest request) {
         System.out.println(request.getList().toString());
         return service.counselorTest(request);

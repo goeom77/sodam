@@ -78,6 +78,7 @@ export default defineComponent({
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
+        locale:'kr',
         initialView: 'dayGridMonth',
         initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
         editable: true,

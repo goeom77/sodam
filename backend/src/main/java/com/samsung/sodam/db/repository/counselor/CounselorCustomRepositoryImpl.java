@@ -179,8 +179,8 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
         List<Counselor> list = queryFactory.
                 select(counselor)
                 .from(counselor)
-                .where(counselor.name.like("%" + request.getKeyword() + "%"))
-                        , counselor.introduce.like(request.getKeyword())
+                .where(counselor.name.like("%" + request.getKeyword() + "%")
+                        , counselor.introduce.like("%" + request.getKeyword() + "%")
                         , counselor.consultTypeList.contains(request.getType())).fetch();
 
 //        Long total = queryFactory.select(Wildcard.count)
@@ -198,7 +198,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
 //                select(counselor)
 //                .from(counselor)
 //                .where(counselor.name.like("%" + request.getKeyword() + "%")).fetch();
-
+//
 //        return queryFactory
 //                .selectFrom(counselor)
 //                .from(counselor)
