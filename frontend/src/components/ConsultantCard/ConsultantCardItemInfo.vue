@@ -14,7 +14,7 @@
 
         <!-- 이모티콘 하나 email이랑 전화 -->
         <h4>
-          {{ counselorData.consultTypeList }}
+          {{ convertConsultType(counselorData.consultTypeList) }}
         </h4>
 
 
@@ -101,6 +101,35 @@ export default {
       .then(res=>{
         console.log(res)
       })
+    },
+    convertConsultType(list) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
+
+      let result = "";
+      list.forEach(element => {
+          selectTypeList.forEach( type => {
+              if(type.value === element) {
+                  result += type.name + " ";
+                  return;
+              }
+          })
+      });
+      return result;
     }
   }
 }
