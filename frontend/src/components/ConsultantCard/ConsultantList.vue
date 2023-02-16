@@ -107,10 +107,6 @@ export default {
         let jsonData = JSON.parse(JSON.stringify(res.data.content))
         this.counselorInfo = jsonData
       })
-          .then(res => {
-            console.log(res)
-            this.counselorInfo = res.data.content
-          })
     },
     searchCounselor() {
       axios({
@@ -120,10 +116,10 @@ export default {
           keyword: this.SearchData
         }
       })
-          .then(res => {
-            console.log(res.data)
-            this.checkInfo = res.data.content
-          })
+      .then(res => {
+        console.log(res.data)
+        this.checkInfo = res.data.content
+      })
     }
   },
   created() {
