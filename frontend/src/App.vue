@@ -91,15 +91,14 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <div id="fh5co-page">
-    <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-    <div style="text-align:center">
-      <aside id="fh5co-aside" role="complementary" class="border js-fullheight d-flex justify-center align-center mb-6 bg-surface-variant" >
+  <v-container id="fh5co-page" style="width: 100%" >
+      <v-container id="fh5co-aside" role="complementary" class="border js-fullheight d-flex justify-center align-center mb-6 bg-surface-variant" style="width: 15%" >
+        <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
         <nav id="fh5co-main-menu" role="navigation">
           <router-link to="/">
             <img
               id="logo"
-              class="w-50 h-auto mr-4"
+              class="align-self-center h-auto w-50"
               :src="projectlogo"
               alt="noimage"
             />
@@ -113,10 +112,12 @@
           </ul>
           <div style="height:220px"></div>
         </nav>
-      </aside>
-    </div>
-    <router-view /> 
-  </div>
+      </v-container>
+<!--      <v-container id="fh5co-main" style="width: 100%; padding: 0; position: fixed;left: 15%; top: 0;">-->
+      <v-container id="fh5co-main" style="width: 100%;">
+        <router-view class="container-fluid" />
+      </v-container>
+  </v-container>
   
   <!-- <LoadingView :loading="loadingStatus"></LoadingView> -->
   <!-- <LoadingView :loading="this.$store.state.loadingStatus"></LoadingView> -->

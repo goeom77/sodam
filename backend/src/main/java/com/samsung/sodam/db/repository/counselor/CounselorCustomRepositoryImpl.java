@@ -226,6 +226,7 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
                 .from(counselor)
                 .join(review)
                 .on(counselor.id.eq(review.counselorId))
+                .where(counselor.profileImg.isNotNull())
                 .limit(5)
                 .fetch();
 

@@ -1,67 +1,89 @@
 <template>
-  <div id="fh5co-main">
-    <!--    <div class="fh5co-narrow-content">-->
-    <div>
-      <div class="five">
-        <div class="container bgImg">
-          <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft" style="font-size:3em;">
-            <div>
-              <em>
-                소중한 당신을 위해
-              </em>
-              <span style="margin-left: 50px; font-weight: 1000;" class="fh5co-page">소중한 당신을 위해</span>
-              <br>
-              <span>여기, 소담이 함께합니다.</span>
-            </div>
-          </h2>
-        </div>
-      </div>
-      <br><br>
-    </div>
-    <v-container>
-      <vueper-slides
-          class="no-shadow"
-          :visible-slides="3"
-          slide-multiple
-          :gap="3"
-          :slide-ratio="1 / 4"
-          :dragging-distance="200"
-          :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-
-        <vueper-slide v-for="(counselor,idx) in counselorInfo" :key="idx">
-          <a>{{counselor}}</a>
-          <ConsultantCard :counselor="counselor"/>
-        </vueper-slide>
-      </vueper-slides>
+  <v-container id="fh5co-product-section" class="p-0 m-0">
+    <v-container class="p-0 m-0">
+      <v-img src="../assets/images/banner1.png" class="h-50"/>
+      <v-btn style="top: -100px;" class="mx-auto po"> 상담사 찾기 </v-btn>
     </v-container>
-    <ConsultantList/>
-  </div>
+    <v-container style="width: 80%" class="mb-5">
+      <v-container>
+        <h2>추천 상담사</h2>
+
+        <vueper-slides
+            class="no-shadow mx-auto pb-2"
+            :visible-slides="3"
+            slide-multiple
+            :gap="3"
+            :slide-ratio="1 / 4"
+            :dragging-distance="200"
+            :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
+          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
+
+        </vueper-slides>
+      </v-container>
+      <v-container>
+        <h2> 최신글 </h2>
+
+        <vueper-slides
+            class="no-shadow mx-auto pb-2"
+            :visible-slides="3"
+            slide-multiple
+            :gap="3"
+            :slide-ratio="1 / 4"
+            :dragging-distance="200"
+            :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
+          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
+
+        </vueper-slides>
+      </v-container>
+    </v-container>
+    <!--    <v-container v-show="counselorInfo">-->
+    <!--      <vueper-slides-->
+    <!--          class="no-shadow"-->
+    <!--          :visible-slides="3"-->
+    <!--          slide-multiple-->
+    <!--          :gap="3"-->
+    <!--          :slide-ratio="1 / 4"-->
+    <!--          :dragging-distance="200"-->
+    <!--          :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">-->
+    <!--        <vueper-slide v-for="(slide, i) in counselorInfo" :key="i" :image="slide.profileImg" >-->
+    <!--          <a>{{ slide.name }}</a>-->
+    <!--        </vueper-slide>-->
+    <!--        <vueper-slide v-for="(c,idx) in counselorInfo" :key="idx" :title="c.name" :image="c.profileImg">-->
+    <!--          <img v-if="c.profileImg" v-bind:src="c.profileImg" alt="까비" class="card_image profileImg">-->
+    <!--          <img class="profileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >-->
+    <!--                    <ConsultantCard :counselor="c" style="background: black"/>-->
+    <!--        </vueper-slide>-->
+    <!--      </vueper-slides>-->
+    <!--    </v-container>-->
+    <!--    <ConsultantList/>-->
+  </v-container>
 
 </template>
 
 <script>
 // @ is an alias to /srcz
 
-import ConsultantList from '@/components/ConsultantCard/ConsultantList.vue'
-import ConsultantCardSearch from '@/components/ConsultantCard/ConsultantCardSearch.vue'
+// import ConsultantList from '@/components/ConsultantCard/ConsultantList.vue'
+// import ConsultantCardSearch from '@/components/ConsultantCard/ConsultantCardSearch.vue'
 import {VueperSlides, VueperSlide} from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
 import axios from "axios";
-import ConsultantCard from "@/components/ConsultantCard/ConsultantCard.vue";
+// import ConsultantCard from "@/components/ConsultantCard/ConsultantCard.vue";
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name: 'HomeView',
   components: {
-    ConsultantList,
-    ConsultantCardSearch,
+    // ConsultantList,
+    // ConsultantCardSearch,
     VueperSlides,
     VueperSlide,
-    ConsultantCard
+
   },
   data() {
     return {
-      counselorInfo: []
+      counselorInfo: null,
+      nullProfileImg: require('@/assets/images/사람altimg.png'),
     }
   },
   methods: {
@@ -71,7 +93,7 @@ export default {
         url: `${VUE_APP_API_URL}/api/counselor/best`,
       })
           .then(res => {
-            console.log(res)
+            console.log("getCounselorInfo:" + JSON.stringify(res.data))
             this.counselorInfo = res.data
           })
     },
@@ -170,8 +192,8 @@ export default {
 
 .bgImg {
   background-image: url('@/assets/images/homeImg.png');
-  width: 100%;
   height: 50vh;
+  width: 100%;
   background-position: center center;
   background-repeat: no-repeat;
 }
@@ -219,5 +241,18 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat";
   font-weight: 700;
   margin: 0 0 30px 0;
+}
+
+.vueperslide__image {
+  transform: scale(1.5) rotate(-10deg);
+}
+
+.vueperslide__title {
+  font-size: 7em;
+  opacity: 0.7;
+}
+
+.vueperslides--fixed-height {
+  height: 500px;
 }
 </style>
