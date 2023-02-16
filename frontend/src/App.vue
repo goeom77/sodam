@@ -1,4 +1,23 @@
 <template>
+  <div
+    class="mr-5"
+    style="position: fixed; z-index: 10; top: 20px; right:5px;"
+  >
+    <v-btn
+      v-if="isLogin=== false"
+      @click="dialogclick"
+      class="ma-2"
+      color="purple"
+      icon="mdi-account-outline"
+    ></v-btn>
+    <v-btn
+      v-else
+      @click="dialogclick"
+      class="ma-2"
+      color="indigo"
+      icon="mdi-account-outline"
+    ></v-btn>
+  </div>
   <v-card
     id="myCard"
     v-if="dialog===true"
@@ -15,7 +34,7 @@
             {{ this.$store.state.payload.id }}님
             <span id="navMypage">
               <!-- 알람 -->
-              <v-btn class="text-none" variant="plain">
+              <v-btn class="text-none" variant="plain" >
                 <v-badge :content="newNotiCount" color="error" @click="alarm">
                   <v-icon variant="text">mdi-bell-outline</v-icon>
                 </v-badge>
@@ -59,7 +78,7 @@
               <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
               <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
             </svg>
-            <p class="mt-1 ml-5">로그인</p>
+            <button @click="logIn" class="ml-5"><p class="mt-1">로그인</p></button>
           </router-link>
         </div>
         <div class="text-caption"></div>
@@ -72,24 +91,6 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <nav class="navbar navbar-light fixed-top d-flex justify-content-end pa-5 pb-0" style="opacity=0.5">
-    <div class="mr-5">
-      <v-btn
-        v-if="isLogin=== false"
-        @click="dialogclick"
-        class="ma-2"
-        color="purple"
-        icon="mdi-account-outline"
-      ></v-btn>
-      <v-btn
-        v-else
-        @click="dialogclick"
-        class="ma-2"
-        color="indigo"
-        icon="mdi-account-outline"
-      ></v-btn>
-    </div>
-  </nav>
   <div id="fh5co-page">
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
     <div style="text-align:center">
@@ -124,6 +125,7 @@
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
+import 'mdb-vue-ui-kit/css/mdb.min.css';
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 

@@ -136,6 +136,9 @@ def create_app():
 
         stt_text = sttUtil.get_text(source_dir, file_name, key)
 
+        if stt_text is None:
+            return jsonify('key error'), 401
+
         json_object = json.loads(stt_text)
 
         return json.dumps(json_object, ensure_ascii=False), 200

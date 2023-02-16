@@ -166,7 +166,7 @@ const routes = [
  
  
   {
-    path: '/VideoPage',
+    path: '/VideoPage/:id',
     name: 'VideoPage',
     component: VideoPage,
     props:true

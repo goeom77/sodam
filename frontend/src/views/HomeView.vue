@@ -1,16 +1,17 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
+<!--    <div class="fh5co-narrow-content">-->
+    <div>
       <div class="five">
-        <div class="container">
+        <div class="container bgImg">
           <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft" style="font-size:3em;" >
-            <div class="bgImg">
+            <div>
                 <em>
                   소중한 당신을 위해
                 </em>
               <span style="margin-left: 50px; font-weight: 1000;" class="fh5co-page">소중한 당신을 위해</span>
                 <br>
-                <span>여기, 소담이 함께합니다.</span> 
+                <span>여기, 소담이 함께합니다.</span>
             </div>
           </h2>
         </div>

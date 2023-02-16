@@ -1,30 +1,23 @@
 <template>
-  <div id="QnaHelpViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
-    <div>
-      <h5>{{ Boardarticle.id }}</h5>
-    </div>
-    <div >
-      <div>
-        <router-link 
-          style="color:black" 
-          :to="{ 
-            name: 'QnaDetailView', 
-            params: { id: Boardarticle.id } 
-          }"
-        >
+  <div v-if="(limit-1)*10 <= index && index < limit * 10">
+    <div class="container">
+      <div class="row" @click="moveTo" style="cursor: pointer">
+        <div class="col-1" style="text-align: center; margin:auto;" id="qnaId">
+          {{ Boardarticle.id }}
+        </div>
+        <div class="col-8" style="margin:auto;">
           {{ Boardarticle.title }}
-        </router-link>
-       
-      </div>
-      <div>
-        <p>{{ Boardarticle.writerId  }}  {{ Boardarticle?.createdAt }}</p>
+          <br>
+          {{ Boardarticle.writerId }} ID
+        </div>
+        <div class="col-1" style="text-align: center; margin:auto;">
+          {{ Boardarticle.commentCount }}
+        </div>
+        <div class="col-2" style="text-align: center; margin:auto;">
+          {{ this.date }}
+        </div>
       </div>
     </div>
-    <div >
-      <h3>{{ Boardarticle.views }}, {{ Boardarticle.commentCount }}</h3>
-    </div>
-    <hr>
-
   </div>
 </template>
 
@@ -37,8 +30,15 @@ export default {
     index: Number,
     limit: Number,
   },
+  data(){
+    return{
+      date: this.Boardarticle.createdAt.split(' ')[0]
+    }
+  },
   methods: {
-
+    moveTo(){
+      this.$router.push({name:'QnaDetailView', params: { id: this.Boardarticle.id }  })
+    },
   }
 }
 </script>
@@ -47,6 +47,9 @@ export default {
 #QnaHelpViewListItem {
   margin-left: 60px;
   margin-right: 60px;
+}
+#qnaId{
+  padding:20px
 }
 
 .flex-container{

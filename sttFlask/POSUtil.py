@@ -1,14 +1,23 @@
-from konlpy.tag import Okt
+from kiwipiepy import Kiwi, Match
+from kiwipiepy.utils import Stopwords
 import collections
 
-okt = Okt()
+kiwi = Kiwi()
+stopwords = Stopwords()
+kiwi.prepare()
+kiwi.add_user_word('소담', tag='NNP', score=0)
+kiwi.add_user_word('비대면', tag='NNP', score=0)
 
 def analysis(data):
-    result = okt.pos(data, stem=True, join=False)
+    result = kiwi.tokenize(data, stopwords=stopwords)
 
-    add_set = {'Noun', 'Adjective', 'Exclamation', 'Adverb'}
-    list = [str(tmp[0] + '/' + tmp[1]) for tmp in result if tmp[1] in add_set]
+    remove_set = {'EP', 'EF', 'EC', 'ETN', 'ETM', 'NNB'}
+    list = [str(tmp.form + '/' + tmp.tag) for tmp in result if tmp.tag not in remove_set]
 
     counter = collections.Counter(list)
     return counter
+
+# if __name__ == '__main__':
+#     print(analysis('나는 초콜릿이 아니다'))
+#     print('/' * 100)
 

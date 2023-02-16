@@ -3,10 +3,7 @@ package com.samsung.sodam.api.request.schedule;
 import com.nimbusds.openid.connect.sdk.claims.Gender;
 import com.samsung.sodam.db.entity.STATE;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.Column;
@@ -20,6 +17,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleRequest {

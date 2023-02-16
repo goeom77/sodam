@@ -1,9 +1,53 @@
-FROM python:3.8.5
+# from
+FROM ubuntu:latest
+LABEL maintainer="GYU <7eom14@gmail.com>"
 
-WORKDIR /test
+# apt init
+ENV LANG=C.UTF-8
+ENV TZ=Asia/Seoul
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tzdata g++ git curl
+
+# java stuff
+RUN apt-get install -y openjdk-8-jdk
+ENV JAVA_HOME="/usr/lib/jvm/java-1.8-openjdk"
+
+# python stuff
+RUN apt-get install -y python3-pip python3-dev
+RUN cd /usr/local/bin && \
+    ln -s /usr/bin/python3 python && \
+    ln -s /usr/bin/pip3 pip && \
+    pip3 install --upgrade pip
+
+# apt cleanse
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# copy resources
 COPY . .
+
+# timezone
+RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# workspace
+RUN mkdir -p /workspace
+WORKDIR /workspace
+
+# install python packages
+RUN pip install konlpy
+RUN cd /workspace && \
+    curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | bash -s
+
+FROM python:3.9
+
+COPY . /workspace
+
+RUN pip3 install flask 
+
+# pip install 실행
 RUN pip install -r requirements.txt
 
-EXPOSE 8280
+WORKDIR /workspace
 
-CMD python ./app.py
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port", "80"]
