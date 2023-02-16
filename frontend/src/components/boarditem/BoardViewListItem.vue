@@ -1,5 +1,29 @@
 <template>
-  <div id="BoardViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
+  <div v-if="(limit-1)*10 <= index && index < limit * 10">
+  <div class="container BoardCard">
+    <div class="row" @click="moveTo" style="cursor: pointer;">
+      <div class="col-1" style="text-align: center; margin:auto;">
+        {{ Boardarticle.category }}
+      </div>
+      <div class="col-7" style="margin:auto; padding-left: 30px;">
+        {{ Boardarticle.title }}
+        <br>
+        {{ Boardarticle.clientId }}
+      </div>
+      <div class="col-1" style="text-align: center; margin:auto;">
+        {{ Boardarticle.commentCount }}
+      </div>
+      <div class="col-1" style="text-align: center; margin:auto;">
+        {{ Boardarticle.views }}
+      </div>
+      <div class="col-2" style="text-align: center; margin:auto;">
+        {{ this.date }}
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <!-- <div id="BoardViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
     <div>
       <h5>{{ Boardarticle.postId }}</h5>
     </div>
@@ -25,7 +49,7 @@
     </div>
     <hr>
 
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -37,8 +61,15 @@ export default {
     index: Number,
     limit: Number,
   },
+  data(){
+    return{
+      date: this.Boardarticle.createdAt.split(' ')[0]
+    }
+  },
   methods: {
-
+    moveTo(){
+      this.$router.push({name:'BoardDetailView', params: { postId: this.Boardarticle.postId }  })
+    }
   }
 }
 </script>
@@ -47,6 +78,10 @@ export default {
 #BoardViewListItem {
   margin-left: 60px;
   margin-right: 60px;
+}
+.BoardCard{
+  border-bottom: 1px solid #ccc;
+  padding:20px;
 }
 
 .flex-container{

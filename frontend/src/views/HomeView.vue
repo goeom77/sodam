@@ -1,5 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div id="fh5co-main">
+  <div id="fh5co-main-HomeView">
     <div class="fh5co-narrow-content">
       <div class="five">
         <div class="container">
@@ -80,8 +80,8 @@ export default {
   line-height: 1.6;
   color: rgba(0, 0, 0, 0.5);
 }
-#fh5co-main {
-  width: 100%;
+#fh5co-main-HomeView {
+  width: 85%;
   float: right;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
@@ -99,7 +99,7 @@ export default {
 }
 #fh5co-main .fh5co-narrow-content {
   position: relative;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   padding: 4em 0;
 }
@@ -113,6 +113,7 @@ export default {
   background-image: url('@/assets/images/homeImg.png');
   width: 100%;
   height: 50vh;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
