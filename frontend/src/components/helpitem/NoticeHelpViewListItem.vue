@@ -1,6 +1,29 @@
 <template>
-  <div id="BoardViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
-    <div>
+  <div class="helplist" v-if="(limit-1)*5 <= index && index < limit * 5">
+    <div class="container">
+      <div class="row" @click="moveTo" style="cursor: pointer">
+      
+        <div class="col-1" style="text-align: center; margin:auto;" id="helpID">
+          {{ Boardarticle.id }}
+        </div>
+        <div class="col-8" style=" margin:auto; padding-left:30px">
+          {{ Boardarticle.title }}
+          <br>
+          
+            {{ Boardarticle.adminId }}ID
+          
+        </div>
+        <div class="col-1" style="text-align: center; margin:auto;">
+          {{ Boardarticle.views }}
+        </div>
+        <div class="col-2" style="text-align: center; margin:auto;">
+          {{ this.date }}
+        </div>
+
+      </div>
+
+    </div>
+    <!-- <div>
       <h5>{{ Boardarticle.postId }}</h5>
         </div>
     <div >
@@ -22,7 +45,7 @@
     <div >
       <h3>{{ Boardarticle.views }}</h3>
       </div>
-    <hr>
+    <hr> -->
 
   </div>
 </template>
@@ -68,6 +91,9 @@ export default {
 .helpdetail{
   padding-top:1em;
   padding-bottom:1em;
+}
+#helpID{
+  padding:20px;
 }
 
 .flex-container.flex-start{justify-content: flex-start;}
