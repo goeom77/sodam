@@ -9,16 +9,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y --no-install-recommends tzdata g++ git curl
 
-# java stuff
-RUN apt-get install -y openjdk-8-jdk
-ENV JAVA_HOME="/usr/lib/jvm/java-1.8-openjdk"
 
 # python stuff
 RUN apt-get install -y python3-pip python3-dev
 RUN cd /usr/local/bin && \
     ln -s /usr/bin/python3 python && \
     ln -s /usr/bin/pip3 pip && \
-    pip3 install --upgrade pip
+    /usr/local/bin/python -m pip install --upgrade pip
 
 # apt cleanse
 RUN apt-get clean && \
@@ -34,20 +31,17 @@ RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir -p /workspace
 WORKDIR /workspace
 
-# install python packages
-RUN pip install konlpy
-RUN cd /workspace && \
-    curl -s https://raw.githubusercontent.com/konlpy/konlpy/master/scripts/mecab.sh | bash -s
 
 FROM python:3.9
 
-COPY . /workspace
+COPY . /app
 
-RUN pip3 install flask 
+RUN pip3 install flask
+
+WORKDIR /app
 
 # pip install 실행
 RUN pip install -r requirements.txt
 
-WORKDIR /workspace
 
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port", "80"]
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port", "8280"]
