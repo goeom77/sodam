@@ -4,7 +4,7 @@
       <div class="child1" style="padding-right: 15px;">
         <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
       </div>
-      <div class="child2">
+      <div class="child2" style="padding-left:30px">
         <h1>
           {{ counselorData.name }} 상담사
         </h1>
@@ -16,9 +16,6 @@
         <h4>
           {{ convertConsultType(counselorData.consultTypeList) }}
         </h4>
-
-
-
 
         <div class="d-flex flex-nowrap" style="padding-top:50px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -46,13 +43,13 @@
           <div class="nd4 nds"><img class="reminder">
             <p class="letter">C</p>
           </div>
-          
+          <!-- 손가락 버튼  -->
           <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          
+          <!-- E 버튼  -->
           <div class="nd1 nds">
             <p class="letter">E</p>
           </div>
-
+          <!-- 작성 버튼 -->
           <div id="floating-button">
             <p class="plus">+</p>
             <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">

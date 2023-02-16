@@ -15,14 +15,16 @@
     >
       <template v-slot:activator="{ props }">
         <v-btn
-          color="primary"
           v-bind="props"
         >
-          Open Dialog
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
         </v-btn>
       </template>
       <div class="container">
-          <v-card style="width:70%; height:110%">
+          <v-card style=" padding-bottom: 50px;">
               <div class=" text-center mt-5 ">
                 <h1 >상담 신청서</h1>      
               </div>
@@ -98,14 +100,21 @@
                             </div>
                           </div>
                           <div class="col-md-12 d-flex justify-content-center" style="margin:auto;">
-                            <input type="submit" class="btn btn-success btn-send  pt-2 btn-block" value="Send Message" @click="reserveConsult">
                             <v-btn
-                        color="blue-darken-1"
-                        variant="text"
-                        @click="dialog = false"
-                      >
-                        Close
-                      </v-btn>
+                              color="blue-darken-1"
+                              variant="text"
+                              @click="[reserveConsult(),dialog = false]"
+
+                            >
+                              제출
+                            </v-btn>
+                            <v-btn
+                              color="blue-darken-1"
+                              variant="text"
+                              @click="dialog = false"
+                            >
+                              취소
+                            </v-btn>
                           </div>
                         </div>
                       </div>
@@ -126,8 +135,8 @@
     <div>
       <ConsultantCardItemReview />
     </div>
-
   </div>
+  
 </div>
 </template>
 
