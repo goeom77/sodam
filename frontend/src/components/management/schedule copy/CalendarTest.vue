@@ -1,3 +1,92 @@
+<template>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content">
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+          id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
+        </div>
+      </div>
+      <div class='demo-app'>
+        <div class='demo-app-main'>
+          <div class="d-flex flex-no-wrap justify-space-between">
+
+            <!-- 일정 리스트  -->
+            <div id='external-events' style="width:20%;">
+              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
+                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
+                  <a class="list-group-item list-group-item-action list-group-item-primary"
+                    v-on:click="clickApprovedData(event)">{{ event.title }}</a>
+                </div>
+              </div>
+            </div>
+            <!-- 캘린더 -->
+            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
+              <template v-slot:eventContent="arg">
+                <button type="button"
+                        class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                        onclick="makeASchedule(arg); detail = arg">
+                  <div class="fc-daygrid-event-dot"></div>
+                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
+                  <i class="fc-event-title">{{ arg.event.title }}님</i>
+                </button>
+              </template>
+            </FullCalendar>
+          </div>
+        </div>
+      </div>
+      <v-row justify="center">
+        <v-dialog
+            v-model="dialog"
+            persistent
+            width="1024"
+            height="500"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">일정등록</span>
+            </v-card-title>
+
+            <div style="height: 500px;">
+              <datepicker
+                  class="form-control"
+                  placeholder="YYYY-MM-DD" required="required"
+                  v-model="datetime"
+                  lang="ko"
+                  :lowerLimit="new Date()"
+                  :clearable="false"
+              />
+            </div>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="dialog = false"
+              >
+                Close
+              </v-btn>
+              <v-btn
+                  color="blue-darken-1"
+                  variant="text"
+                  @click="saveNewSchedule(datetime); dialog = false"
+              >
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
+  </div>
+</template>
+
 <script>
 import {defineComponent} from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
@@ -6,8 +95,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {createEventId} from './event-utils'
 import axios from 'axios'
-import Datepicker from "vue3-datepicker";
-
+// import Datepicker from "vue3-datepicker";
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -98,6 +188,42 @@ export default defineComponent({
         },
         eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트}
           console.log('eventChange' + JSON.stringify(obj));
+          let monthlyEventInfo = {
+            "sessionId": obj.event.extendedProps.sessionId,
+            "start": obj.event.start,
+            "scheduleId": obj.event.extendedProps.scheduleId,
+            "title": obj.event.title
+          };
+          monthlyEventInfo.start = obj.event.start;
+          this.detail = monthlyEventInfo
+          // var monthlyEventInfo = this.detail;
+          // monthlyEventInfo.setAttribute("start",dateTime)
+          console.log(" eventChange before call update api :>>>" + JSON.stringify(monthlyEventInfo))
+          this.detail = null;
+          axios({
+            method: 'post',
+            url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+            data: {
+              "sessionId": monthlyEventInfo.sessionId,
+              "start": monthlyEventInfo.start,
+              "scheduleId": monthlyEventInfo.scheduleId
+            }
+          })
+              .then(res => {
+                monthlyEventInfo = {
+                  "id": res.data.scheduleId,
+                  "title": monthlyEventInfo.title,
+                  "start": monthlyEventInfo.start,
+                  "allDay": false,
+                  "extendedProps": {
+                    "sessionId": monthlyEventInfo.sessionId,
+                    "scheduleId": res.data.scheduleId
+                  }
+                }
+                // let calendarApi = obj.view.calendar
+                // calendarApi.addEvent(monthlyEventInfo)
+                console.log("eventChange detail after api response :>>>>" + JSON.stringify(res.data))
+              })
         },
         eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
           console.log('remove' + JSON.stringify(obj));
@@ -105,6 +231,41 @@ export default defineComponent({
         },
         eventDrop: function (obj) {
           console.log('eventDrop' + JSON.stringify(obj));
+          let monthlyEventInfo = {
+            "sessionId": obj.event.extendedProps.sessionId,
+            "start": obj.event.start,
+            "scheduleId": obj.event.extendedProps.scheduleId,
+            "title": obj.event.title
+          };
+          monthlyEventInfo.start = obj.event.start;
+          this.detail = monthlyEventInfo
+          // var monthlyEventInfo = this.detail;
+          // monthlyEventInfo.setAttribute("start",dateTime)
+          console.log(" eventDrop before call update api :>>>" + JSON.stringify(monthlyEventInfo))
+          this.detail = null;
+          axios({
+            method: 'post',
+            url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
+            data: {
+              "sessionId": monthlyEventInfo.sessionId,
+              "start": monthlyEventInfo.start,
+              "scheduleId": monthlyEventInfo.scheduleId
+            }
+          })
+              .then(res => {
+                monthlyEventInfo = {
+                  "id": createEventId(),
+                  "title": monthlyEventInfo.title,
+                  "start": monthlyEventInfo.start,
+                  "allDay": false,
+                  "extendedProps": {
+                    "sessionId": monthlyEventInfo.sessionId
+                  }
+                }
+                // let calendarApi = obj.view.calendar
+                // calendarApi.addEvent(monthlyEventInfo)
+                console.log("eventDrop detail after api response :>>>>" + JSON.stringify(res.data))
+              })
         },
         drop: function (arg) {
           console.log('drop : ' + JSON.stringify(arg));
@@ -170,7 +331,8 @@ export default defineComponent({
       if ("scheduleId" in obj) v = events.extendedProps.scheduleId
       // if(obj.has("scheduleId") )
       console.log("handleEvents444 >>: " + JSON.stringify(events))
-      this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v})
+      this.detail = {"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v}
+      // this.saveNewSchedule({"sessionId": events.extendedProps.sessionId, "start": events.start, "scheduleId": v})
     },
     getApprovedData() {
       axios({
@@ -188,7 +350,7 @@ export default defineComponent({
                 "id": it.sessionId,
                 "title": it.name,
                 "allDay": false,
-                "extendedProps": {"sessionId": it.sessionId}
+                "extendedProps": {"sessionId": it.sessionId, "turn": it.turn}
               }
             })
             // this.DraggableEvents = res.data
@@ -232,14 +394,14 @@ export default defineComponent({
       var monthlyEventInfo = this.detail
       // monthlyEventInfo.setAttribute("start",dateTime)
       console.log(" this.detail :>>>" + JSON.stringify(monthlyEventInfo))
-      this.detail=null
+      // this.detail = null
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
         data: {
           "start": monthlyEventInfo.start,
           "sessionId": monthlyEventInfo.id,
-          "scheduleId":null,
+          "scheduleId": null,
         }
       })
           .then(res => {
@@ -252,27 +414,23 @@ export default defineComponent({
                 "sessionId": res.sessionId
               }
             }
-            console.log("detail :>>>>" + JSON.stringify(res.data))
+            // this.expectedData =  [...this.expectedData,monthlyEventInfo]
+            console.log("detail :>>>>" + JSON.stringify(this))
+            console.log("detail :>>>>" + JSON.stringify(event))
           })
     },
     makeASchedule: function (obj) {
       console.log("makeASchedule : " + JSON.stringify(obj))
       this.dialog = true
-      // {
-      //   "start":obj.,
-      //   "scheduleId":obj.id,
-      //   "sessionId":obj.extendedProps.sessionId
-      // }
-      // this.saveNewSchedule(obj,this.datetime)
     },
     clickApprovedData: function (obj) {
       console.log("clickApprovedData :" + JSON.stringify(obj))
       this.detail = obj
       this.dialog = true
     },
-    startSession(data){
-      console.log("data: "+data)
-    }
+    startMeeting(id) {
+      this.$router.push({name: 'VideoPage', params: {id: id}});
+    },
   },
   created() {
     this.getExpectedData()
@@ -281,95 +439,6 @@ export default defineComponent({
 })
 
 </script>
-
-<template>
-  <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
-      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-           id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <a class="btn btn-primary" role="button"  v-on:click="this.startSession(this.detail.sessionId)">상담하러가기</a>
-        </div>
-      </div>
-      <div class='demo-app'>
-        <div class='demo-app-main'>
-          <div class="d-flex flex-no-wrap justify-space-between">
-
-            <!-- 일정 리스트  -->
-            <div id='external-events' style="width:20%;">
-              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
-                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
-                  <a class="list-group-item list-group-item-action list-group-item-primary"
-                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>
-                </div>
-              </div>
-            </div>
-            <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
-              <template v-slot:eventContent="arg">
-                <button type="button"
-                        class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
-                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-                        onclick="makeASchedule(arg); detail = arg">
-                  <div class="fc-daygrid-event-dot"></div>
-                  <a class="fc-event-time">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
-                  <i class="fc-event-title">{{ arg.event.title }}님</i>
-                </button>
-              </template>
-            </FullCalendar>
-          </div>
-        </div>
-      </div>
-      <v-row justify="center">
-        <v-dialog
-            v-model="dialog"
-            persistent
-            width="1024"
-            height="500"
-        >
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">일정등록</span>
-            </v-card-title>
-
-            <div style="height: 500px;">
-              <datepicker
-                  class="form-control"
-                  placeholder="YYYY-MM-DD" required="required"
-                  v-model="datetime"
-                  lang="ko"
-                  :lowerLimit="new Date()"
-                  :clearable="false"
-              />
-            </div>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="dialog = false"
-              >
-                Close
-              </v-btn>
-              <v-btn
-                  color="blue-darken-1"
-                  variant="text"
-                  @click="saveNewSchedule(datetime); dialog = false"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </div>
-  </div>
-</template>
 
 <style lang='css'>
 
@@ -444,5 +513,70 @@ b { /* used for event dates/times */
   max-width: 1100px;
   margin: 20px auto;
 }
+
+.dot {
+  border-color: #122b40 !important;
+  background-color: #ff0707 !important;
+  border-width: 1.5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+:root {
+  --fc-small-font-size: .85em;
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: hsla(0,0%,82%,.3);
+  --fc-neutral-text-color: grey;
+  --fc-border-color: #ddd;
+  --fc-button-text-color: #1a252f;
+  --fc-button-bg-color: #fff;
+  --fc-button-border-color: #2c3e50;
+  --fc-button-hover-bg-color: #92CFA5FF;
+  --fc-button-hover-border-color: #1a252f;
+  --fc-button-active-bg-color: #92CFA5FF;
+  --fc-button-active-border-color: #79ab88;
+  --fc-event-bg-color: #92CFA5FF;
+  --fc-event-border-color: #79ab88;
+  --fc-event-text-color: #fff;
+  --fc-event-selected-overlay-color: rgb(255, 127, 127);
+  --fc-more-link-bg-color: #d0d0d0;
+  --fc-more-link-text-color: inherit;
+  --fc-event-resizer-thickness: 8px;
+  --fc-event-resizer-dot-total-width: 8px;
+  --fc-event-resizer-dot-border-width: 1px;
+  --fc-non-business-color: hsla(0,0%,84%,.3);
+  --fc-bg-event-color: #8fdf82;
+  --fc-bg-event-opacity: 0.3;
+  --fc-highlight-color: rgba(188,232,241,.3);
+  --fc-today-bg-color: rgba(255,220,40,.15);
+  --fc-now-indicator-color: red;
+  --bs-link-hover-color: #8fdf82;
+  --fc-col-header-cell-cushion: whitesmoke;
+  --fc-scrollgrid-section:whitesmoke;
+  --fc-scrollgrid-section-header: whitesmoke;
+}
+
+.main-green-border {
+  border-color: #92CFA5FF;
+}
+.fc-event-time{
+  color: rgba(0, 0, 0, 0.8);
+}
+.fc-event-title {
+  color: rgba(0, 0, 0, 0.8);
+}
+thead{
+  color: whitesmoke;
+}
+.fc-theme-standard{
+  --v-theme-background: #fff;
+  --v-theme-on-background: #fff;
+  --v-theme-surface: #fff;
+  --v-theme-on-surface: #fff;
+  --v-theme-overlay-multiplier: 1;
+  --v-scrollbar-offset: 0px;
+}
+
 
 </style>

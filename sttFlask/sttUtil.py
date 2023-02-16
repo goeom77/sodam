@@ -312,14 +312,21 @@ def _upload_encrypt_audio(destination_blob_name, file_name, key):
 def get_text(source_blob_name, file_name, key):
     aes = cryptoUtil.AESCipher(key)
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
     bucket = storage_client.bucket(bucket_name)
 
     path = source_blob_name + 'enc/' + file_name + '_stt.text'
 
     encrypt = storageUtil.download_blob_into_memory(path)
-    decrypt = aes.decrypt(encrypt)
-    return decrypt
+
+    try:
+        decrypt = aes.decrypt(encrypt)
+        return decrypt
+
+    except:
+        print('error')
+        traceback.print_exc()
+        return None
 
 
 def get_file(source_blob_name, file_name, key):

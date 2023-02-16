@@ -1,26 +1,126 @@
 <template>
+  <div>
+    <div class="container" style="padding:20px; border-bottom:1px solid #ccc">
+      <!-- 평점 -->
+      <div class="row">
+        <div class="col-6">
+          {{ review.clientId }} / 
+          {{ convertConsultType(review.type) }} 
+          <br>
+          <v-rating
+          model-value="3"
+          size="medium"
+              density="comfortable"
+              color="yellow"
+              v-model="star"
+              ></v-rating>
+            </div>
+            <div class="col-3">
+              
+            </div>
+            <div class="col-1">
+              
+            </div>
+            <div class="col-2">
+              {{ this.date }}
+            </div>
+          </div>
+          <div>
+            {{ review.title }}
+          </div>
       <div>
-    <blockquote class="grass">
+        {{ review.contents }}
+        
+      </div>
+      <div class="row">
+        <div class="col-9">
+          {{ review.pastCount }}회차 상담 후기
+        </div>
+        <div class="col-3">
+          <v-btn outlined rounded text @click="ReviewDelete">삭제</v-btn>
+        </div>
+      </div>
+      
+      
+    </div>
+    <!-- <blockquote class="grass">
       <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>  
       <p>{{review.contents}}</p>
-    </blockquote>   
-
+    </blockquote>    -->
+    
   </div>
-  
+
+  <!-- <div>
+    <blockquote class="grass">
+      <h1 @click="goDetail" style="cursor:pointer"><span class="Cgrass">{{review.title}}</span>-{{ review.clientId }}</h1>
+      <p>{{review.contents}}</p>
+    </blockquote>
+  </div> -->
 </template>
 
 <script>
-
+import axios from 'axios'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name:'ConsultantCardItemReviewItem',
   props:{
     review:Object,
   },
+  data(){
+    return{
+      star: this.review.stars,
+      date: this.review.createdAt.split('T')[0]
+    }
+  },
   methods:{
     goDetail(){
       this.$router.push({name:'ConsultantCardItemReviewItemDetail', params:{id: this.review.id}})
     },
-  },
+    convertConsultType(target) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
+      
+      let result = "";
+      selectTypeList.forEach( type => {
+          if(type.value === target) {
+              result += type.name + " ";
+              return;
+          }
+      })
+      return result;
+    },
+    ReviewDelete(){
+        axios({
+          method:'delete',
+          url:`${VUE_APP_API_URL}/api/review/review?reviewId=${this.review.id}`,
+          data: {
+            reviewId: this.review.id,
+          },
+          headers: {
+            Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+          }
+        })
+        .then(res=>{
+          this.$router.push({name:'ConsultantCardItem'})
+          console.log(res)
+
+        })
+      }
+  }
 }
 </script>
 
@@ -122,5 +222,8 @@ blockquote.grass{
 .ReviewContainer{
   padding: 20px;
   border-bottom: solid 1px #ccc;
+}
+.reviewItem {
+  margin: 0 3rem 2rem 3rem;
 }
 </style>

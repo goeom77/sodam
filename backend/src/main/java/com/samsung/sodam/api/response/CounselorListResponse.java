@@ -4,9 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import com.samsung.sodam.db.converter.CareerListConverter;
 import com.samsung.sodam.db.converter.ConsultListConverter;
 import com.samsung.sodam.db.converter.GenderConverter;
-import com.samsung.sodam.db.entity.CONSULT_TYPE;
-import com.samsung.sodam.db.entity.Career;
-import com.samsung.sodam.db.entity.GENDER;
+import com.samsung.sodam.db.entity.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +17,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 public class CounselorListResponse {
     @ApiModelProperty(value = "상담사 이름")
@@ -53,9 +50,15 @@ public class CounselorListResponse {
     @Convert(converter = CareerListConverter.class)
     private List<Career> career;
 
+    private List<EducationResponse> educations;
+    private List<CertificateResponse> certificates;
+
+    @Builder
     @QueryProjection
     //public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Education> education, List<Career> career) {
-    public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Career> career) {
+    public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender,
+                                 String routine, String profileImg, List<CONSULT_TYPE> consultTypeList,
+                                 List<EducationResponse> educations, List<Career> career, List<CertificateResponse> certificates) {
         this.name = name;
         this.tel = tel;
         this.email = email;
@@ -65,7 +68,25 @@ public class CounselorListResponse {
         this.routine = routine;
         this.profileImg = profileImg;
         this.consultTypeList = consultTypeList;
-//        this.education = education;
+        this.educations = educations;
+        this.career = career;
+        this.certificates = certificates;
+    }
+
+    @Builder
+    @QueryProjection
+    //public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Education> education, List<Career> career) {
+    public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender,
+                                 String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Career> career) {
+        this.name = name;
+        this.tel = tel;
+        this.email = email;
+        this.id = id;
+        this.introduce = introduce;
+        this.gender = gender;
+        this.routine = routine;
+        this.profileImg = profileImg;
+        this.consultTypeList = consultTypeList;
         this.career = career;
     }
 }

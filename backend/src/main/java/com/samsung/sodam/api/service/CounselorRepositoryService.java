@@ -4,6 +4,7 @@ import com.samsung.sodam.api.request.*;
 import com.samsung.sodam.api.response.CounselorListResponse;
 import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
+import com.samsung.sodam.db.repository.ScheduleRepository;
 import com.samsung.sodam.db.repository.counselor.CounselorCustomRepository;
 import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import lombok.AllArgsConstructor;
@@ -55,7 +56,16 @@ public class CounselorRepositoryService {
         return repository.getById(id);
     }
     public List<CounselorListResponse> counselorTest(TestRequest request) {
-        return repository.findAllByNameLikeAndGenderEquals("%"+request.getName()+"%",request.getGender()).stream().filter(it-> new HashSet<>(it.getConsultTypeList()).containsAll(request.getList())).map(it->CounselorListResponse.builder().consultTypeList(it.getConsultTypeList()).gender(it.getGender()).name(it.getName()).profileImg(it.getProfileImg()).tel(it.getTel()).build()).collect(Collectors.toList());
+        return repository.findAllByNameLikeAndGenderEquals("%"+request.getName()+"%",request.getGender()).stream()
+                .filter(it-> new HashSet<>(it.getConsultTypeList()).containsAll(request.getList()))
+                .map(it->CounselorListResponse.builder()
+                        .consultTypeList(it.getConsultTypeList())
+                        .gender(it.getGender())
+                        .name(it.getName())
+                        .profileImg(it.getProfileImg())
+                        .tel(it.getTel())
+                        .build())
+                        .collect(Collectors.toList());
 //        return null;
     }
 

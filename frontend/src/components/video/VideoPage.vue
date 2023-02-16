@@ -71,6 +71,7 @@
             <div>
               <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
               <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
+
               {{ common_code }}
               {{ myUserName }}
               {{ mySessionId }}
@@ -229,6 +230,10 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
 const OPENVIDU_SERVER_URL = "https://i8e103.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "SODAM";
+
+// const route = useRoute()
+// this.sessionId = router.params.id
+
 export default {
   name: "VideoPage",
   components: {
@@ -257,12 +262,15 @@ export default {
       message: "",
       // chatSeq: 0,
       // chatList: [],
+      sessionId:null,
+      scheduleData:null,
     };
   },
   created() {
     this.userInfo();
-    this.createmySessionId();
-    this.createmyUserName();
+    this.getSessionId();
+    // this.createmySessionId();
+    // this.createmyUserName();
   },
   // mounted() {
   //   this.preventBack();
@@ -273,11 +281,44 @@ export default {
   //   window.removeEventListener("beforeunload", this.unLoadEvent);
   // },
   methods: {
-    createmySessionId() {
-      return
+    getSessionId() {
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/detail`,
+        data: {
+          "dateTime": "2023-02-14T00:44:02",
+          "sessionId": this.id,
+          "status": "APPROVED"
+        }
+      })
+      .then(res=>{
+        console.log("getSessionId: "+JSON.stringify(res.data))
+        this.scheduleData = res.data
+        this.createmySessionId(res.data);
+      })
+    },
+    createmySessionId(inputData) {
+
+      if(this.userId === inputData.counselorId){
+        this.mySessionId = inputData.counselorId+inputData.turn+inputData.scheduleId*100
+        this.myUserName = inputData.counselorName
+      }else if(this.userId===inputData.clientId){
+        this.mySessionId = inputData.openViduId? inputData.openViduId : "sessionA"
+      }
+      createmyUserName()
     },
     createmyUserName() {
-      return
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/room/session`,
+        data: {
+          "openviduId":this.mySessionId,
+          "sessionId": this.id,
+        }
+      })
+          .then(res=>{
+            console.log("getSessionId: "+res.data)
+          })
     },
     // preventBack: function () {
     //   history.pushState(null, null, location.href);
@@ -393,7 +434,8 @@ export default {
       this.mainStreamManager = undefined;
       this.publisher = undefined;
       this.subscribers = [];
-      this.OV = undefined;
+      this.OV = undefined
+
       window.removeEventListener("beforeunload", this.leaveSession);
     },
     updateMainVideoStreamManager(stream) {

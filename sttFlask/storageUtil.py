@@ -20,7 +20,7 @@ def upload_encrypted_blob(
     # destination_blob_name = "storage-object-name"
     # base64_encryption_key = "TIbv/fjexq+VmtXzAlc63J4z5kFmWJ6NdAPQulQBT7g="
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
     bucket = storage_client.bucket(bucket_name)
 
     # Encryption key must be an AES256 key represented as a bytestring with
@@ -94,7 +94,7 @@ def upload_blob_from_memory(contents, destination_blob_name):
     # The ID of your GCS object
     # destination_blob_name = "storage-object-name"
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
@@ -113,7 +113,7 @@ def download_blob_into_memory(blob_name):
     # The ID of your GCS object
     # blob_name = "storage-object-name"
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
 
     bucket = storage_client.bucket(bucket_name)
 
@@ -142,7 +142,7 @@ def download_blob(source_blob_name, destination_file_name):
     # The path to which the file should be downloaded
     # destination_file_name = "local/path/to/file"
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
 
     bucket = storage_client.bucket(bucket_name)
 
@@ -167,7 +167,7 @@ def delete_blob(blob_name, file_name):
     # bucket_name = "your-bucket-name"
     # blob_name = "your-object-name"
 
-    storage_client = storage.Client('key.json')
+    storage_client = storage.Client.from_service_account_json('key.json')
 
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name + file_name)

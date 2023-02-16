@@ -1,10 +1,11 @@
 <template>
   <v-container>
     <div class="parent">
-      <div class="child1" style="padding-right: 15px;">
-        <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
+      <div class="child1">
+        <img class="detailProfileImg" v-if="counselorData.profileImg != null" v-bind:src="`${counselorData.profileImg}`" >
+        <img class="detailProfileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >
       </div>
-      <div class="child2">
+      <div class="child2" style="padding-left:30px">
         <h1>
           {{ counselorData.name }} 상담사
         </h1>
@@ -14,11 +15,8 @@
 
         <!-- 이모티콘 하나 email이랑 전화 -->
         <h4>
-          {{ counselorData.consultTypeList }}
+          {{ convertConsultType(counselorData.consultTypeList) }}
         </h4>
-
-
-
 
         <div class="d-flex flex-nowrap" style="padding-top:50px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -35,9 +33,20 @@
           <h4 style="padding-left:10px">
             {{ counselorData.email }}
           </h4>
-
         </div>
-          
+      </div>
+
+
+      <!-- 상담사 등록 버튼 -->
+      <div id="container-floating">
+        <div class="nd4 nds"><img class="reminder">
+          <p class="letter">C</p>
+        </div>
+        
+        <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
+        
+        <div class="nd1 nds">
+          <p class="letter">E</p>
         </div>
 
 
@@ -46,26 +55,26 @@
           <div class="nd4 nds"><img class="reminder">
             <p class="letter">C</p>
           </div>
-          
+          <!-- 손가락 버튼  -->
           <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          
+          <!-- E 버튼  -->
           <div class="nd1 nds">
             <p class="letter">E</p>
           </div>
-
+          <!-- 작성 버튼 -->
           <div id="floating-button">
             <p class="plus">+</p>
             <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
           </div>
         </div>
+      </div>
 <!-- 
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
             관심 상담사 등록 
           </button>
         </div> -->
-      </div>
-    
+    </div>
   </v-container>
   </template>
 
@@ -81,6 +90,7 @@ export default {
   },
   data(){
     return{
+      nullProfileImg : require('../../assets/images/사람altimg.png'),
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
     }
@@ -101,6 +111,35 @@ export default {
       .then(res=>{
         console.log(res)
       })
+    },
+    convertConsultType(list) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
+
+      let result = "";
+      list.forEach(element => {
+          selectTypeList.forEach( type => {
+              if(type.value === element) {
+                  result += type.name + " ";
+                  return;
+              }
+          })
+      });
+      return result;
     }
   }
 }
@@ -346,14 +385,19 @@ h3{
 }
 .parent {
     display: flex;
+    border: 1px solid #dedbdb;
+    padding: 25px 50px;
+    margin-bottom: 15px;
 }
 .child1 {
     flex: 3;
+    margin-right: 3rem;
 }
 .child2 {
     flex: 8;
     font: inherit;
-}
+    padding: 15px 0px;
+  }
 h1 {
   position: relative;
   padding: 0;
@@ -406,6 +450,11 @@ h1 em {
   flex-flow: row wrap;
   margin: 1rem;
 }
-
+.detailProfileImg {
+  height:230px;
+  width:230px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+}
 
 </style>
