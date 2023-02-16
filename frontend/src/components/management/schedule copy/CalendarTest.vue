@@ -6,8 +6,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction'
 import {createEventId} from './event-utils'
 import axios from 'axios'
-import Datepicker from "vue3-datepicker";
-
+// import Datepicker from "vue3-datepicker";
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
@@ -114,9 +115,9 @@ export default defineComponent({
             method: 'post',
             url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
             data: {
-              "sessionId":monthlyEventInfo.sessionId,
-              "start":monthlyEventInfo.start,
-              "scheduleId" : monthlyEventInfo.scheduleId
+              "sessionId": monthlyEventInfo.sessionId,
+              "start": monthlyEventInfo.start,
+              "scheduleId": monthlyEventInfo.scheduleId
             }
           })
               .then(res => {
@@ -157,9 +158,9 @@ export default defineComponent({
             method: 'post',
             url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
             data: {
-              "sessionId":monthlyEventInfo.sessionId,
-              "start":monthlyEventInfo.start,
-              "scheduleId" : monthlyEventInfo.scheduleId
+              "sessionId": monthlyEventInfo.sessionId,
+              "start": monthlyEventInfo.start,
+              "scheduleId": monthlyEventInfo.scheduleId
             }
           })
               .then(res => {
@@ -260,7 +261,7 @@ export default defineComponent({
                 "id": it.sessionId,
                 "title": it.name,
                 "allDay": false,
-                "extendedProps": {"sessionId": it.sessionId}
+                "extendedProps": {"sessionId": it.sessionId, "turn": it.turn}
               }
             })
             // this.DraggableEvents = res.data
@@ -332,23 +333,14 @@ export default defineComponent({
     makeASchedule: function (obj) {
       console.log("makeASchedule : " + JSON.stringify(obj))
       this.dialog = true
-      // {
-      //   "start":obj.,
-      //   "scheduleId":obj.id,
-      //   "sessionId":obj.extendedProps.sessionId
-      // }
-      // this.saveNewSchedule(obj,this.datetime)
     },
     clickApprovedData: function (obj) {
       console.log("clickApprovedData :" + JSON.stringify(obj))
       this.detail = obj
       this.dialog = true
     },
-    startMeet(id) {
-      this.$router.push({ name: 'VideoPage', params: {id: id}});
-    },
-    startSession(data) {
-      console.log("data: " + data)
+    startMeeting(id) {
+      this.$router.push({name: 'VideoPage', params: {id: id}});
     },
   },
   created() {
@@ -365,11 +357,12 @@ export default defineComponent({
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="z-index: 99999 !important">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">상담정보</h5>
+
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <a class="btn btn-primary" role="button" v-on:click="this.startMeet(this.detail.sessionId)">상담하러가기</a>
+          <a class="btn btn-primary" role="button" v-on:click="this.startMeeting(this.detail.sessionId)">상담하러가기</a>
         </div>
       </div>
       <div class='demo-app'>
@@ -377,13 +370,29 @@ export default defineComponent({
           <div class="d-flex flex-no-wrap justify-space-between">
 
             <!-- 일정 리스트  -->
-            <div id='external-events' style="width:20%;">
-              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">
-                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">
-                  <a class="list-group-item list-group-item-action list-group-item-primary"
-                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>
-                </div>
-              </div>
+            <div id='external-events' style="width:20%; margin-right: 10px; border-radius: 10px">
+              <v-list density="compact">
+                <v-list-subheader>내담자 목록</v-list-subheader>
+                <v-list-item
+                    v-for="(event, i) in DraggableEvents"
+                    :key="i"
+                    :value="event"
+                    active-color="primary"
+                    v-on:click="clickApprovedData(event)"
+                >
+                  <template v-slot:prepend>
+                    <div class="fc-daygrid-event-dot dot" v-show="event.extendedProps.turn===1"></div>
+                  </template>
+                  <v-list-item-title>{{ event.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+
+              <!--              <div id="calendar-events" class="py-3 mt-6 mb-5 border-t border-b border-slate-200/60">-->
+              <!--                <div class="list-group" v-for="(event,idx) in DraggableEvents" :key="idx">-->
+              <!--                  <a class="list-group-item list-group-item-action list-group-item-primary"-->
+              <!--                     v-on:click="clickApprovedData(event)">{{ event.title }}</a>-->
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
             <!-- 캘린더 -->
             <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
@@ -393,37 +402,43 @@ export default defineComponent({
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
                         onclick="makeASchedule(arg); detail = arg">
                   <div class="fc-daygrid-event-dot "></div>
-                  <a class="fc-event-time  fc-daygrid-dot-event">{{ arg.event.start.toTimeString().split(' ')[0].substr(0, 5) }}</a>
+                  <a class="fc-event-time  fc-daygrid-dot-event">{{
+                      arg.event.start.toTimeString().split(' ')[0].substr(0, 5)
+                    }}</a>
                   <i class="fc-event-title  fc-daygrid-dot-event">{{ arg.event.title }}님</i>
                 </button>
               </template>
             </FullCalendar>
           </div>
-        </div>
+        </div>sss
       </div>
       <v-row justify="center">
         <v-dialog
             v-model="dialog"
-            persistent
-            width="1024"
-            height="500"
+            width="auto"
         >
           <v-card>
             <v-card-title>
               <span class="text-h5">일정등록</span>
             </v-card-title>
+            <v-form disabled>
+              <v-text-field
+                  v-model="detail.title"
+                  label="First name"
+              ></v-text-field>
+            </v-form>
 
-            <div style="height: 500px;">
-              <datepicker
-                  class="form-control"
-                  placeholder="YYYY-MM-DD" required="required"
-                  v-model="datetime"
-                  lang="ko"
-                  :lowerLimit="new Date()"
-                  :clearable="false"
-              />
-            </div>
+            <!--              <datepicker-->
+            <!--                  class="form-control"-->
+            <!--                  placeholder="YYYY-MM-DD" required="required"-->
+            <!--                  v-model="date"-->
+            <!--                  lang="ko"-->
+            <!--                  :lowerLimit="new Date()"-->
+            <!--                  :clearable="false"-->
+            <!--                  label="날짜선택"-->
+            <!--              />-->
 
+            <Datepicker v-model="datetime" inline auto-apply class="form-control" placeholder="YYYY-MM-DD hh:mm:ss"/>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
@@ -436,8 +451,9 @@ export default defineComponent({
               <v-btn
                   color="blue-darken-1"
                   variant="text"
-                  @click="saveNewSchedule(datetime); dialog = false"
+                  @click="[saveNewSchedule(datetime),dialog = false ]"
               >
+                <!--                  v-model="datetime"-->
                 Save
               </v-btn>
             </v-card-actions>
@@ -522,4 +538,16 @@ b { /* used for event dates/times */
   margin: 20px auto;
 }
 
+.dot {
+  border-color: #122b40 !important;
+  background-color: #ff0707 !important;
+  border-width: 1.5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.main-green-border {
+  border-color: #92CFA5FF;
+}
 </style>
