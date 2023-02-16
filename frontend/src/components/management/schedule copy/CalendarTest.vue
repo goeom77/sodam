@@ -305,7 +305,7 @@ export default defineComponent({
       var monthlyEventInfo = this.detail
       // monthlyEventInfo.setAttribute("start",dateTime)
       console.log(" this.detail :>>>" + JSON.stringify(monthlyEventInfo))
-      this.detail = null
+      // this.detail = null
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
@@ -395,7 +395,7 @@ export default defineComponent({
               <!--              </div>-->
             </div>
             <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar" :options="calendarOptions" style="width:80%">
+            <FullCalendar class="demo-app-calendar fc-scrollgrid-sync-inner" :options="calendarOptions" style="width:80%">
               <template v-slot:eventContent="arg">
                 <button type="button"
                         class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
@@ -405,12 +405,12 @@ export default defineComponent({
                   <a class="fc-event-time  fc-daygrid-dot-event">{{
                       arg.event.start.toTimeString().split(' ')[0].substr(0, 5)
                     }}</a>
-                  <i class="fc-event-title  fc-daygrid-dot-event">{{ arg.event.title }}님</i>
+                  <a class="fc-event-title  fc-daygrid-dot-event">{{ arg.event.title }}님</a>
                 </button>
               </template>
             </FullCalendar>
           </div>
-        </div>sss
+        </div>
       </div>
       <v-row justify="center">
         <v-dialog
@@ -547,7 +547,48 @@ b { /* used for event dates/times */
   border-radius: 8px;
 }
 
+:root {
+  --fc-small-font-size: .85em;
+  --fc-page-bg-color: #fff;
+  --fc-neutral-bg-color: hsla(0,0%,82%,.3);
+  --fc-neutral-text-color: grey;
+  --fc-border-color: #ddd;
+  --fc-button-text-color: #1a252f;
+  --fc-button-bg-color: #fff;
+  --fc-button-border-color: #2c3e50;
+  --fc-button-hover-bg-color: #92CFA5FF;
+  --fc-button-hover-border-color: #1a252f;
+  --fc-button-active-bg-color: #92CFA5FF;
+  --fc-button-active-border-color: #151e27;
+  --fc-event-bg-color: #92CFA5FF;
+  --fc-event-border-color: #92CFA5FF;
+  --fc-event-text-color: #fff;
+  --fc-event-selected-overlay-color: rgba(0,0,0,.25);
+  --fc-more-link-bg-color: #d0d0d0;
+  --fc-more-link-text-color: inherit;
+  --fc-event-resizer-thickness: 8px;
+  --fc-event-resizer-dot-total-width: 8px;
+  --fc-event-resizer-dot-border-width: 1px;
+  --fc-non-business-color: hsla(0,0%,84%,.3);
+  --fc-bg-event-color: #8fdf82;
+  --fc-bg-event-opacity: 0.3;
+  --fc-highlight-color: rgba(188,232,241,.3);
+  --fc-today-bg-color: rgba(255,220,40,.15);
+  --fc-now-indicator-color: red;
+  --bs-link-hover-color: #8fdf82;
+  --fc-col-header-cell-cushion: whitesmoke;
+  --fc-scrollgrid-section-header: whitesmoke;
+}
+
 .main-green-border {
   border-color: #92CFA5FF;
 }
+.fc-event-time{
+  color: rgba(0, 0, 0, 0.8);
+}
+.fc-event-title {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+
 </style>
