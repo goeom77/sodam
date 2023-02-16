@@ -52,9 +52,8 @@ public class CounselorController extends Counselor {
 
     @ApiOperation(value = "평점순으로 상담사를 조회(이후 모든 상담사 조회 api와 합칠 예정")
     @PostMapping("counselor/best")
-    public Page<Counselor> getBestCounselor() {
-        Pageable pageable = Pageable.ofSize(20);
-        return service.getAllCounselor(pageable);
+    public List<CounselorListResponse> getBestCounselor() {
+        return service.getBestCounleor();
     }
 
     @ApiOperation(value = "상담사의 상세 정보를 조회")

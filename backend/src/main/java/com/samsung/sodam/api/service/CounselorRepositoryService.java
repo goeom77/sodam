@@ -48,7 +48,7 @@ public class CounselorRepositoryService {
 //        return repository.find;
 //    }
 
-    public Page<Counselor> getAllCounselor( Pageable pageable) {
+    public Page<Counselor> getAllCounselor(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
@@ -110,8 +110,8 @@ public class CounselorRepositoryService {
 //        return reviewRepository.findAllByClientId(id);
 //    }
 
-    public Page<CounselorListResponse> getBestCounleor(Pageable pageable){
-        return counselorCustomRepository.getBestCounselor(pageable);
+    public List<CounselorListResponse> getBestCounleor(){
+        return counselorCustomRepository.getBestCounselor();
     }
 
     public Page<Client> getAllClients(Pageable pageable) {
