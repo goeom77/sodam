@@ -1,26 +1,17 @@
 <template>
   <v-container>
     <div class="parent">
-      <div class="child1" style="padding-right: 15px;">
-        <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
+      <div class="child1">
+        <img class="detailProfileImg" v-if="counselorData.profileImg != null" v-bind:src="`${counselorData.profileImg}`" >
+        <img class="detailProfileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >
       </div>
       <div class="child2">
-        <h1>
-          {{ counselorData.name }} 상담사
-        </h1>
-        <h2>
-          {{ counselorData.introduce }}
-        </h2>
-
+        <h2>{{ counselorData.name }} 상담사</h2>
+        <h4>{{ counselorData.introduce }}</h4>
+        <h5>{{ convertConsultType(counselorData.consultTypeList) }}</h5>
+        
         <!-- 이모티콘 하나 email이랑 전화 -->
-        <h4>
-          {{ counselorData.consultTypeList }}
-        </h4>
-
-
-
-
-        <div class="d-flex flex-nowrap" style="padding-top:50px;">
+        <div class="d-flex flex-nowrap" style="padding-top:20px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
             <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
           </svg>
@@ -35,37 +26,34 @@
           <h4 style="padding-left:10px">
             {{ counselorData.email }}
           </h4>
-
         </div>
-          
+      </div>
+
+
+      <!-- 상담사 등록 버튼 -->
+      <div id="container-floating">
+        <div class="nd4 nds"><img class="reminder">
+          <p class="letter">C</p>
+        </div>
+        
+        <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
+        
+        <div class="nd1 nds">
+          <p class="letter">E</p>
         </div>
 
-
-        <!-- 상담사 등록 버튼 -->
-        <div id="container-floating">
-          <div class="nd4 nds"><img class="reminder">
-            <p class="letter">C</p>
-          </div>
-          
-          <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          
-          <div class="nd1 nds">
-            <p class="letter">E</p>
-          </div>
-
-          <div id="floating-button">
-            <p class="plus">+</p>
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
-          </div>
+        <div id="floating-button">
+          <p class="plus">+</p>
+          <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
         </div>
+      </div>
 <!-- 
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
             관심 상담사 등록 
           </button>
         </div> -->
-      </div>
-    
+    </div>
   </v-container>
   </template>
 
@@ -81,6 +69,7 @@ export default {
   },
   data(){
     return{
+      nullProfileImg : require('../../assets/images/사람altimg.png'),
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
     }
@@ -101,6 +90,35 @@ export default {
       .then(res=>{
         console.log(res)
       })
+    },
+    convertConsultType(list) {
+      const selectTypeList = [
+        {name:'#아동 #청소년', value:"CHILD_TEENAGER"},
+        {name:'#재난', value:"CALAMITY"},
+        {name:'#부부 #가족상담', value:"COUPLE_FAMILY"},
+        {name:'#재활', value:"REHABILITATION"},
+        {name:'#노인', value:"AGED"},
+        {name:'#중독', value:"ADDICTED"},
+        {name:'#정신', value:"MENTAL_HEALTH"},
+        {name:'#교정', value:"CORRECTION"},
+        {name:'#진로', value:"COURSE"},
+        {name:'#상담자교육', value:"EDUCATION"},
+        {name:'#성폭력', value:"SEXUAL_VIOLENCY"},
+        {name:'#상담자슈퍼비전', value:"SUPERVISION"},
+        {name:'#스포츠상담', value:"SPORTS"},
+        {name:'#학교상담', value:"SCHOOL"},
+      ];
+
+      let result = "";
+      list.forEach(element => {
+          selectTypeList.forEach( type => {
+              if(type.value === element) {
+                  result += type.name + " ";
+                  return;
+              }
+          })
+      });
+      return result;
     }
   }
 }
@@ -346,14 +364,19 @@ h3{
 }
 .parent {
     display: flex;
+    border: 1px solid #dedbdb;
+    padding: 25px 50px;
+    margin-bottom: 15px;
 }
 .child1 {
     flex: 3;
+    margin-right: 3rem;
 }
 .child2 {
     flex: 8;
     font: inherit;
-}
+    padding: 15px 0px;
+  }
 h1 {
   position: relative;
   padding: 0;
@@ -406,6 +429,11 @@ h1 em {
   flex-flow: row wrap;
   margin: 1rem;
 }
-
+.detailProfileImg {
+  height:230px;
+  width:230px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+}
 
 </style>

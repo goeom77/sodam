@@ -55,8 +55,8 @@ export default {
         url:`${VUE_APP_API_URL}/api/counselor/`,
       })
       .then(res=>{
-        console.log(res)
-        this.counselorInfo = res.data.content
+        let jsonData = JSON.parse(JSON.stringify(res.data.content))
+        this.counselorInfo = jsonData
       })
     },
     searchCounselor(){
