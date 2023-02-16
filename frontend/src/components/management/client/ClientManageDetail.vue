@@ -1,11 +1,10 @@
 <template>
-  <div>
-    {{ id }}
+    <v-container style="width:calc(60%); height:800px; margin-top: 5%;">
     <ClientManageDetailInfo
     :id="id"
 
     />
-  </div>
+    </v-container>
 </template>
 
 <script>

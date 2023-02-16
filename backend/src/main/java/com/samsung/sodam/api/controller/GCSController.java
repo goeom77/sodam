@@ -35,7 +35,7 @@ public class GCSController {
             // 해당 스케쥴 없음
             if (newRequest == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
-            String objName = newRequest.getGcsDirectory() + "enc/" + newRequest.getFileName();
+            String objName = newRequest.getGcsDirectory() + "enc/" + newRequest.getFileName() + ".webm";
             Path path = service.downloadEncryptedObject(objName, request.getKey());
 //        Path path = Paths.get("C:/workspace/sodam/backend/src/main/resources/recording_2023_FEBRUARY_0d6c94b1-7e29-4b26-969e-5f2b76daa39f_SessionA_2.webm");
             String contentType = Files.probeContentType(path);
