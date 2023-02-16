@@ -51,19 +51,19 @@
           </div>
           <hr>
           <!-- 찜목록 -->
-          <router-link to="/LikeView" style="text-decoration: none ;" class="ml-5" type="button" @click="dialogoff()">
+          <router-link to="/LikeView" style="text-decoration: none ;" class="ml-5" type="button" @click="dialogoff">
             <v-icon variant="text" size="x-large">mdi-account-star-outline</v-icon>
             <button><p class="mt-1 ml-5">찜 목록</p></button>
           </router-link>
           <hr>
           <!-- 마이페이지 -->
-          <router-link to="/mypage" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff()">
+          <router-link to="/mypage" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff">
             <v-icon variant="text" size="x-large">mdi-account-cog-outline</v-icon>
             <button><p class="mt-1 ml-5">마이페이지</p></button>
           </router-link>
           <hr>
            <!-- 개인정보 수정 -->
-          <router-link to="/CheckEditInformation" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff()">
+          <router-link to="/CheckEditInformation" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
             </svg>
@@ -73,12 +73,8 @@
         <!-- 로그인 상태 끝 -->
         <!-- 로그 아웃상태 -->
         <div v-if="isLogin===false" class="mt-3">
-          <div class="text-h6 mb-1 pt-2 pl-5">
-            고객 님,     반갑습니다.
-          </div>
-          <hr>
-          <router-link to="/login" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
+          <router-link to="/login" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
               <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
               <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
             </svg>

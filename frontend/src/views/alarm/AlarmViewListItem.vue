@@ -1,5 +1,5 @@
 <template>
-  <div id="AlarmViewListItem"  v-if="(limit-1)*10 <= index && index < limit * 10">
+  <div id="AlarmViewListItem" class="flex-container space-between"  v-if="(limit-1)*5 <= index && index < limit * 5">
     <div v-if="AlarmViewarticle.read === true" style="float:left; margin-left: 60px;">
       <h5>확인</h5>
     </div>
@@ -9,7 +9,6 @@
     <div >
       <div>
         <button @click="AlarmViewDetail">
-
           {{ AlarmViewarticle.title }}
         </button>
         <!-- <button style="color:black" @click="clickList">{{ AlarmViewarticle.title }}</button> -->
@@ -19,7 +18,7 @@
       </div>
     </div>
     <div>
-      <button @click="AlarmViewarticleDelete">알림 삭제</button>
+      <v-btn @click="AlarmViewarticleDelete">알림 삭제</v-btn>
     </div>
     <hr>
 
