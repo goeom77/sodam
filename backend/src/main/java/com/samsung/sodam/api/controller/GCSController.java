@@ -29,27 +29,31 @@ public class GCSController {
 
     @PostMapping(value = "/audio/{scheduleId}")
     public ResponseEntity<Resource> downloadAudio(@PathVariable Long scheduleId, @RequestBody SttRequest request) throws IOException, NoSuchAlgorithmException {
-        SttRequest newRequest = sttService.getSttDir(scheduleId);
+        try {
+            SttRequest newRequest = sttService.getSttDir(scheduleId);
 
-        // 해당 스케쥴 없음
-        if(newRequest == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            // 해당 스케쥴 없음
+            if (newRequest == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
-        String objName = newRequest.getGcsDirectory() +"enc/"+ newRequest.getFileName();
-        Path path = service.downloadEncryptedObject(objName, request.getKey());
+            String objName = newRequest.getGcsDirectory() + "enc/" + newRequest.getFileName();
+            Path path = service.downloadEncryptedObject(objName, request.getKey());
 //        Path path = Paths.get("C:/workspace/sodam/backend/src/main/resources/recording_2023_FEBRUARY_0d6c94b1-7e29-4b26-969e-5f2b76daa39f_SessionA_2.webm");
-        String contentType = Files.probeContentType(path);
+            String contentType = Files.probeContentType(path);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDisposition(
-                ContentDisposition.builder("attachment")
-                        .filename(newRequest.getFileName(), StandardCharsets.UTF_8)
-                        .build());
-        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(
+                    ContentDisposition.builder("attachment")
+                            .filename(newRequest.getFileName(), StandardCharsets.UTF_8)
+                            .build());
+            headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
+            Resource resource = new InputStreamResource(Files.newInputStream(path));
 
-        // 임시 파일 남아있을 시 삭제
-        Files.deleteIfExists(path);
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+            // 임시 파일 남아있을 시 삭제
+            Files.deleteIfExists(path);
+            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

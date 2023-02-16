@@ -22,7 +22,7 @@
     <div >
       <h3>{{ Noticearticle.views }}</h3>
       </div>
-    <hr>
+    <hr> -->
 
   </div>
 </template>
@@ -68,6 +68,9 @@ export default {
 .helpdetail{
   padding-top:1em;
   padding-bottom:1em;
+}
+#helpID{
+  padding:20px;
 }
 
 .flex-container.flex-start{justify-content: flex-start;}

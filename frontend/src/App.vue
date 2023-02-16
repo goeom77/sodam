@@ -1,4 +1,23 @@
 <template>
+  <div
+    class="mr-5"
+    style="position: fixed; z-index: 10; top: 20px; right:5px;"
+  >
+    <v-btn
+      v-if="isLogin=== false"
+      @click="dialogclick"
+      class="ma-2"
+      color="purple"
+      icon="mdi-account-outline"
+    ></v-btn>
+    <v-btn
+      v-else
+      @click="dialogclick"
+      class="ma-2"
+      color="indigo"
+      icon="mdi-account-outline"
+    ></v-btn>
+  </div>
   <v-card
     id="myCard"
     v-if="dialog===true"
@@ -72,24 +91,6 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <nav class="navbar navbar-light fixed-top d-flex justify-content-end pa-5 pb-0" style="opacity=0.5">
-    <div class="mr-5">
-      <v-btn
-        v-if="isLogin=== false"
-        @click="dialogclick"
-        class="ma-2"
-        color="purple"
-        icon="mdi-account-outline"
-      ></v-btn>
-      <v-btn
-        v-else
-        @click="dialogclick"
-        class="ma-2"
-        color="indigo"
-        icon="mdi-account-outline"
-      ></v-btn>
-    </div>
-  </nav>
   <div id="fh5co-page">
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
     <div style="text-align:center">
