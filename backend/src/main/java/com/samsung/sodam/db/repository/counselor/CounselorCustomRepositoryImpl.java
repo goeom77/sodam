@@ -48,16 +48,41 @@ public class CounselorCustomRepositoryImpl implements CounselorCustomRepository 
 
     public CounselorListResponse getCounselorDetail(String id) {
         Counselor c = queryFactory.selectFrom(counselor).where(counselor.id.eq(id)).fetchOne();
+        List<EducationResponse> eduList = queryFactory
+                .select(new QEducationResponse(
+                        education.id,
+                        education.degree,
+                        education.school,
+                        education.major,
+                        education.is_graduate,
+                        education.photo
+                ))
+                .from(education)
+                .where(education.counselor.id.eq(id))
+                .fetch();
+        List<CertificateResponse> certList = queryFactory
+                .select(new QCertificateResponse(
+                        certificate.id,
+                        certificate.name,
+                        certificate.serial_num,
+                        certificate.agency,
+                        certificate.photo
+                ))
+                .from(certificate)
+                .where(certificate.counselor.id.eq(id))
+                .fetch();
+
         if (c == null) return null;
         return CounselorListResponse.builder().career(c.getCareer())
                 .gender(c.getGender()).consultTypeList(c.getConsultTypeList()).tel(c.getTel())
                 .profileImg(c.getProfileImg()).introduce(c.getIntroduce()).email(c.getEmail())
-                .name(c.getName()).routine(c.getRoutine()).id(c.getId()).build();
+                .name(c.getName()).routine(c.getRoutine()).id(c.getId()).educations(eduList).certificates(certList).build();
     }
 
     public List<CounselorListResponse> getMyFavCounselor(String clientId) {
 //        queryFactory.select(CounselorListResponse.builder().).from(counselor).join(favoriteCounselor).on(favoriteCounselor.clientId.eq(counselor.id)).fetch();
         List<Counselor> c = queryFactory.selectFrom(counselor).join(favoriteCounselor).on(counselor.id.eq(favoriteCounselor.CounselorId)).where(favoriteCounselor.clientId.eq(clientId)).distinct().fetch();
+
         return c.stream().map(it -> CounselorListResponse.builder()
                 .career(it.getCareer())
                 .consultTypeList(it.getConsultTypeList())
