@@ -1,50 +1,56 @@
 <template>
   <div>
-    <!-- <div> 여긴 상담내역 {{ history }} </div> -->
-    <button @click="startMeeting"> 상담하기 </button>
-    <!-- <h1>{{ this.history }}</h1> -->
+    <SangdamList
+      v-for="(data, index) in datas"
+      :key="index"
+      :dateTime="data.dateTime"
+      :sessionId="data.sessionId"
+    />
   </div>
 </template>
 
 <script>
+import SangdamList from '@/views/my/sangdam/SangdamList.vue'
+import axios from "axios";
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL;
+
 export default {
   name: 'SangdamView',
   data() {
       return{
         userId: undefined,
-        history : null
+        history : null,
+        datas: [],
+        openviduId: undefined,
       }
     },
   components: {
+    SangdamList
   },
   created() {
     this.userInfo();
-    // this.getscheduledetail()
+    this.getSchedules();
   },
   methods: {
-    startMeeting(id) {
-      this.$router.push({name: 'VideoPage', params: {id: id}});
-    },
     userInfo() {
       // this.common_code = this.$store.state.payload.common_code
       this.userId = this.$store.state.payload.id
     },
-    // getscheduledetail() {
-    //   axios({
-    //     method: 'get',
-    //     url: `${VUE_APP_API_URL}/api/schedule/detail`,
-    //     headers: {
-    //       Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-    //     }
-    //   })
-    //   .then(() => {
-    //     this.history = res.data.
-    //     console.log('갖고왔다 상담 내역?')
-    //   })
-    //   .catch((err) => {
-    //     console.log('안된다 상담내역')
-    //   })
-    // }
+    getSchedules() {
+      axios({
+        method: 'get',
+        url: `${VUE_APP_API_URL}/api/schedule/schedules?userId=${this.userId}`,
+        // headers: {
+        //   "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`},
+      })
+      .then((res) => {
+        // console.log(res.data.content)
+        this.datas = res.data.content
+      })
+      .catch((err) => {
+          console.log(err)
+      })
+    },
   }
 }
 </script>

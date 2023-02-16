@@ -1,12 +1,8 @@
 <template>
   <div id="MyPostViewListItem" v-if="index < 3" style="margin-bottom: 10px">
     <div style="border: solid 1px gray">
-    <!-- <div  v-if="check === 0"> -->
-      <div >
-        <h5>{{ MyPostarticle.title }}</h5>
-      </div>
-      <div>
-        <div>
+      <v-card width="100%">
+        <template v-slot:title>
           <router-link 
             style="color:black" 
             :to="{ 
@@ -14,37 +10,22 @@
               params: { postId: MyPostarticle.postId } 
             }"
           >
-            <!-- {{ MyPostarticle.title }} -->
-            <!-- {{ MyPostarticle }} -->
+            {{ MyPostarticle.title }}
           </router-link>
+        </template>
+
+        <template v-slot:subtitle>
+          작성 자 : {{ MyPostarticle.clientId }}
+        </template>
+
+        <template v-slot:text>
+          {{ MyPostarticle?.createdAt }}
+        </template>
+        <div >
+          <h3>{{ MyPostarticle.views }}, {{ MyPostarticle.commentCount }}</h3>
         </div>
-        <div>
-          <p>{{ MyPostarticle.clientId }}  {{ MyPostarticle?.createdAt }}</p>
-        </div>
-      </div>
-      <div >
-        <h3>{{ MyPostarticle.views }}, {{ MyPostarticle.commentCount }}</h3>
-      </div>
+      </v-card>
     </div>
-    <!-- <div v-else>
-      <div style="float:left; margin-left: 60px;">
-        <h5>내 게시글</h5>
-      </div>
-      <div>
-        <router-link 
-          style="color:black" 
-          :to="{ 
-            name: 'InquiryDetail', 
-            params: { id: MyInquiryPostarticle.id } 
-          }"
-        >
-          {{ MyPostarticle.title }}
-        </router-link>
-      </div>
-      <div v-if="check === 1">
-        <p>{{ MyInquiryPostarticle.writerId }}  {{ MyInquiryPostarticle?.createdAt }}</p>
-      </div>
-    </div> -->
   </div>
 </template>
 

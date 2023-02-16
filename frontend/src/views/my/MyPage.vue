@@ -33,7 +33,7 @@
                 class="mx-auto pa-1"
                 width="30%"
               > 
-                <div class="font-weight-bold ms-4 mb-2 fh5co-narrow-content">
+                <div class="font-weight-bold mt-3">
                   <h3>Today</h3>
                 </div>
                 <SangdamView/>
@@ -62,7 +62,7 @@
 </template>
   
 <script>
- import axios from 'axios'
+import axios from 'axios'
 // import CheckEditInformation from '@/views/my/edit/CheckEditInformation.vue'
 // import LikeView from '@/views/my/like/LikeView.vue'
 import MyPostViewList from '@/views/my/mypost/MyPostViewList.vue'
@@ -81,12 +81,6 @@ export default {
   },
   data(){
     return{
-      links: [
-      'Dashboard',
-      'Messages',
-      'Profile',
-      'Updates',
-    ],
       tab:null,
       age: '',
       commonCodeId: '',

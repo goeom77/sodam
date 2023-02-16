@@ -5,9 +5,11 @@
       <div style="height:120px;"></div>
       <div id="cover">
         <div class="video-background"/>
-        <div id="LoginDetail">
+        <div id="LoginDetail" style="height:300px">
+          <div style="height:20%"></div>
           <h1>SODAM</h1>
-          <div>
+          <div style="height:20%"></div>
+          <v-row class="justify-content-center">
             <!-- 주의사항 테그 -->
             <v-dialog
                 v-model="dialog"
@@ -15,7 +17,7 @@
             >
               <template v-slot:activator="{ props }">
                 <v-btn
-                    color="primary"
+                    color="teal-accent-4"
                     v-bind="props"
                 >
                   주의사항
@@ -68,14 +70,11 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+            <div style="width:30px"></div>
             <div>
               <!-- 상담 일정 세션값이 들어오고, 버튼의 위치를 옮기고 나서 진행 -->
               <!-- 유저의 이름을 myUserName으로 넣고, sessionId를 "session" + 키값*100 + 턴으로 생성 -->
 
-              {{ common_code }}
-              {{ myUserName }}
-              {{ mySessionId }}
-              id : {{ id }}
               <!-- 상담사이면 -->
               <p class="text-center" v-if="common_code==='1'">
                 <v-btn
@@ -102,7 +101,7 @@
                 </v-btn>
               </p>
             </div>
-          </div>
+          </v-row>
         </div>
       </div>
     </div>

@@ -1,10 +1,8 @@
 <template>
   <div id="MyInquiryPostViewListItem" v-if="index < 3" style="margin-top: 10px">
     <div style="border: solid 1px gray">
-      <div style="float:left; margin-left: 60px;">
-        <h5>내 게시글</h5>
-      </div>
-      <div>
+      <v-card width="100%">
+      <template v-slot:title>
         <router-link 
           style="color:black" 
           :to="{ 
@@ -14,10 +12,16 @@
         >
           {{ MyInquiryPostarticle.title }}
         </router-link>
-      </div>
-      <div >
-        <p>{{ MyInquiryPostarticle.writerId }}  {{ MyInquiryPostarticle?.createdAt }}</p>
-      </div>
+      </template>
+
+      <template v-slot:subtitle>
+        작성 자 : {{ MyInquiryPostarticle.writerId }}
+      </template>
+
+      <template v-slot:text>
+        작성 일시 : {{ MyInquiryPostarticle?.createdAt }}
+      </template>
+    </v-card>
     </div>
   </div>
 </template>
