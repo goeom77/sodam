@@ -1,6 +1,6 @@
 <template>
   <h1>Demo App</h1>
-  <FullCalendar :options='calendarOptions'>
+  <FullCalendar :options='calzzzzendarOptions'>
 
   </FullCalendar>
 </template>
