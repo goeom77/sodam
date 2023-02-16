@@ -1,17 +1,15 @@
 <template>
   <v-container>
     <div class="parent">
-      <div class="child1" style="padding-right: 15px;">
-        <img v-bind:src="`${counselorData.profileImg}`" alt="까비" style="width:100%">
+      <div class="child1">
+        <img class="detailProfileImg" v-if="counselorData.profileImg != null" v-bind:src="`${counselorData.profileImg}`" >
+        <img class="detailProfileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >
       </div>
       <div class="child2">
-        <h1>
-          {{ counselorData.name }} 상담사
-        </h1>
-        <h2>
-          {{ counselorData.introduce }}
-        </h2>
-
+        <h2>{{ counselorData.name }} 상담사</h2>
+        <h4>{{ counselorData.introduce }}</h4>
+        <h5>{{ convertConsultType(counselorData.consultTypeList) }}</h5>
+        
         <!-- 이모티콘 하나 email이랑 전화 -->
         <h4>
           {{ convertConsultType(counselorData.consultTypeList) }}
@@ -35,37 +33,34 @@
           <h4 style="padding-left:10px">
             {{ counselorData.email }}
           </h4>
-
         </div>
-          
+      </div>
+
+
+      <!-- 상담사 등록 버튼 -->
+      <div id="container-floating">
+        <div class="nd4 nds"><img class="reminder">
+          <p class="letter">C</p>
+        </div>
+        
+        <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
+        
+        <div class="nd1 nds">
+          <p class="letter">E</p>
         </div>
 
-
-        <!-- 상담사 등록 버튼 -->
-        <div id="container-floating">
-          <div class="nd4 nds"><img class="reminder">
-            <p class="letter">C</p>
-          </div>
-          
-          <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          
-          <div class="nd1 nds">
-            <p class="letter">E</p>
-          </div>
-
-          <div id="floating-button">
-            <p class="plus">+</p>
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
-          </div>
+        <div id="floating-button">
+          <p class="plus">+</p>
+          <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
         </div>
+      </div>
 <!-- 
         <div>
           <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
             관심 상담사 등록 
           </button>
         </div> -->
-      </div>
-    
+    </div>
   </v-container>
   </template>
 
@@ -81,6 +76,7 @@ export default {
   },
   data(){
     return{
+      nullProfileImg : require('../../assets/images/사람altimg.png'),
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
     }
@@ -375,14 +371,19 @@ h3{
 }
 .parent {
     display: flex;
+    border: 1px solid #dedbdb;
+    padding: 25px 50px;
+    margin-bottom: 15px;
 }
 .child1 {
     flex: 3;
+    margin-right: 3rem;
 }
 .child2 {
     flex: 8;
     font: inherit;
-}
+    padding: 15px 0px;
+  }
 h1 {
   position: relative;
   padding: 0;
@@ -435,6 +436,11 @@ h1 em {
   flex-flow: row wrap;
   margin: 1rem;
 }
-
+.detailProfileImg {
+  height:230px;
+  width:230px;
+  object-fit: cover;
+  /* border-radius: 50%; */
+}
 
 </style>

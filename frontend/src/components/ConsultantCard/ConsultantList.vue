@@ -100,8 +100,12 @@ export default {
   methods: {
     getCounselorInfo() {
       axios({
-        method: 'post',
-        url: `${VUE_APP_API_URL}/api/counselor/`,
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/counselor/`,
+      })
+      .then(res=>{
+        let jsonData = JSON.parse(JSON.stringify(res.data.content))
+        this.counselorInfo = jsonData
       })
           .then(res => {
             console.log(res)

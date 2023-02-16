@@ -1,7 +1,10 @@
 <template>
   <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
     <div class="card">
-      <img v-bind:src="`${counselor.profileImg}`" alt="까비" class="card_image" style="width:100%; height: 370px; object-fit: cover;">
+      <div>
+        <img v-if="counselor.profileImg != null" v-bind:src="`${counselor.profileImg}`" alt="까비" class="card_image profileImg">
+        <img class="profileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >
+      </div>
       <div class="card__overlay">
         <div class="card__header">
           <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
@@ -82,6 +85,11 @@
 
 export default {
   name: 'ConsultantCard',
+  data() {
+    return {
+      nullProfileImg : require('../../assets/images/사람altimg.png'),
+    }
+  },
   props: {
     counselor: Object,
   },
@@ -336,6 +344,11 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 0.8rem;
+}
+.profileImg {
+  width:100%;
+  height: 370px;
+  object-fit: cover;
 }
 
 </style>
