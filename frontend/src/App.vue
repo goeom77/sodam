@@ -125,6 +125,7 @@
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
+import 'mdb-vue-ui-kit/css/mdb.min.css';
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 
