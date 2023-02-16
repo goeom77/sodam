@@ -1,49 +1,26 @@
 <template>
-  <div class="helplist" v-if="(limit-1)*5 <= index && index < limit * 5">
-    <div class="container">
-      <div class="row" @click="moveTo" style="cursor: pointer">
-      
-        <div class="col-1" style="text-align: center; margin:auto;" id="helpID">
-          {{ Boardarticle.id }}
-        </div>
-        <div class="col-8" style=" margin:auto; padding-left:30px">
-          {{ Boardarticle.title }}
-          <br>
-          
-            {{ Boardarticle.adminId }}ID
-          
-        </div>
-        <div class="col-1" style="text-align: center; margin:auto;">
-          {{ Boardarticle.views }}
-        </div>
-        <div class="col-2" style="text-align: center; margin:auto;">
-          {{ this.date }}
-        </div>
-
-      </div>
-
-    </div>
-    <!-- <div>
-      <h5>{{ Boardarticle.postId }}</h5>
+  <div id="NoticeViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
+    <div>
+      <h5>{{ Noticearticle.postId }}</h5>
         </div>
     <div >
       <div>
         <router-link 
           style="color:black" 
           :to="{ 
-            name: 'BoardDetailView', 
-            params: { id: Boardarticle.id } 
+            name: 'NoticeDetailView', 
+            params: { id: Noticearticle.id } 
           }"
         >
-            {{ Boardarticle.title }}
+            {{ Noticearticle.title }}
         </router-link>
         </div>
       <div>
-        <p>{{ Boardarticle.adminId }}  {{ Boardarticle?.createdAt }}</p>
+        <p>{{ Noticearticle.adminId }}  {{ Noticearticle?.createdAt }}</p>
         </div>
         </div>
     <div >
-      <h3>{{ Boardarticle.views }}</h3>
+      <h3>{{ Noticearticle.views }}</h3>
       </div>
     <hr> -->
 
@@ -55,25 +32,25 @@
 export default {
   name: 'NoticeHelpViewListItem',
   props: {
-    Boardarticle: Object,
+    Noticearticle: Object,
     index: Number,
     limit: Number,
   },
   data(){
     return{
-      date: this.Boardarticle.createdAt.split('T')[0]
+      date: this.Noticearticle.createdAt.split('T')[0]
     }
   },
   methods: {
     moveTo(){
-      this.$router.push({name:'BoardDetailView', params: { id: this.Boardarticle.id }  })
+      this.$router.push({name:'NoticeDetailView', params: { id: this.Noticearticle.id }  })
     },
   }
 }
 </script>
 
 <style>
-#BoardViewListItem {
+#NoticeViewListItem {
   margin-left: 60px;
   margin-right: 60px;
 }
