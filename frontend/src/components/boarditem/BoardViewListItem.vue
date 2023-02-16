@@ -19,7 +19,6 @@
       <div class="col-2" style="text-align: center; margin:auto;">
         {{ this.date }}
       </div>
-
     </div>
   </div>
   </div>
