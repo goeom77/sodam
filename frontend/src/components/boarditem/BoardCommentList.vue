@@ -1,42 +1,45 @@
 <template>
-    <div v-if="(limit-1)*10 <= index && index < limit * 10">
-      <div v-if="!this.updateStatus" id="comment_container">
-        <div class="comment-detail">
-      <!-- <div v-if=""> -->
-      <div>
-        <!-- <router-link style="text-decoration: none; color:gray; font-size:13px;" v-if="counselorName" :to="{name: 'ProfileView', params: {counselorName: this.counselorName}}">
-        <img id="comment-img" :src="imgSrc">
-          {{ this.counselorName }}
-          </router-link> -->
-      ┖ {{ BoardComment.content }}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        <!-- <router-link :to="{name:'consultantcarditem', params: {id: this.counselor.id} }">{{ BoardComment.counselorName }}</router-link> -->
-        {{ BoardComment.counselorName }}
+  <div class="container" style="padding-top:20px">
+    <div v-if="!this.updateStatus">
+      <div class="row">
+        <div class="col-10">
+          {{ BoardComment.counselorName }}상담사님의 답변
+        </div>
+        <div class="col-2">
+          {{ BoardComment.createdAt.split(' ')[0] }}
+        </div>
       </div>
-      <!-- <div v-else="">
-        <BoardCommentForm
-          :BoardComment="BoardComment"
-        />
-      </div> -->
-      <div style="margin-top:3px;">
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="updateComment">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="deleteComment">삭제</a>
-        <!-- <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.BoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.BoardComment.counselorId" @click="deleteComment">삭제</a> -->
+      <div style="margin:10px">
+        <div>
+          {{ BoardComment.content }}
+        </div>
+        <div style="text-align: right; margin-right:30px; margin-bottom:20px">
+          <v-btn append-icon="mdi-pencil" @click="changeStatus">수정</v-btn>&nbsp;
+          <v-btn append-icon="mdi-delete" color="red" @click="deleteComment">삭제</v-btn>
+        </div>
       </div>
     </div>
-      <hr style="margin:0px;">
-    </div>
-      <div v-if="this.updateStatus">
-        <form @submit.prevent="updateComment" style="border-radius:0px; height:39px;  display:flex; justify-content: space-between; width: 100px;">
-          <div>
-            <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="content" v-model.trim="content">
-          </div>
-          <div>
-            <input class="btn btn-danger" type="submit" id="submit" value="수정">
-          </div>
-        </form>
+    <div v-if="this.updateStatus">
+      <div class="row">
+        <div class="col-10">
+          {{ BoardComment.counselorName }}상담사님의 답변
+        </div>
+        <div class="col-2">
+          {{ BoardComment.createdAt.split(' ')[0] }}
+        </div>
+      </div>
+      <div style="margin:10px">
+        <div>
+          {{ BoardComment.content }}
+        </div>
+        <div style="text-align: right; margin-right:30px; margin-bottom:20px">
+          <input type="text" style="border:1px solid black; border-radius: 4px; width:100%;" v-model.trim="content">
+          <v-btn append-icon="mdi-pencil" @click="updateComment">수정</v-btn>&nbsp;
+          <v-btn append-icon="mdi-delete" color="red" @click="deleteComment">삭제</v-btn>
+        </div>
       </div>
     </div>
+  </div>
   </template>
   
   <script>
@@ -71,26 +74,10 @@
       index: Number,
       limit: Number,
     },
-    // created() {
-    //   this.getUserName()
-    // },
     methods: {
-      // getProfileImage() {
-      //   axios({
-      //     method: 'get',
-      //     url: `${VUE_APP_API_URL}/api/accounts/profile_image/${this.BoardComment.comment_user}/`,
-      //     headers: { 
-      //       'Content-Type': 'multipart/form-data',
-      //           Authorization: `Token ${this.$store.state.token}`
-      //         },
-      //     })
-      //     .then((res) => {
-      //       this.profileImageUrl=`${VUE_APP_API_URL}${res.data.profile_image}`
-      //     })
-      //     .catch((err) => {
-      //       console.log(err)
-      //     })
-      // },
+      changeStatus(){
+        this.updateStatus=!this.updateStatus
+      },
       deleteComment() {
         axios({
           method: 'delete',
@@ -122,33 +109,11 @@
           this.username = res.data.username
           this.userid = res.data.userid
         })
-        // .then(() => {
-        //   this.getProfileImage()
-        // })
+
         .catch((err) => {
           console.log(err)
         })
     },
-    // getCommentUpdate() {
-    //     axios({
-    //       method: 'get',
-    //       url: `${VUE_APP_API_URL}/api/trouble/comment/${this.BoardComment.commentId}/`,
-    //       headers: { 
-    //           Authorization: `Token ${this.$store.state.token}`
-    //       }
-    //     })
-    //     .then((res) => {
-    //       console.log('댓글 불러오기 성공')
-    //       this.content = res.data.content
-    //       this.counselorId  = res.data.counselorId 
-    //       this.commentId = res.data.commentId
-    //       this.updateStatus = true
-    //     })
-    //     .catch((err) => {
-    //       console.log('댓글 불러오기 실패')
-    //       console.log(err)
-    //     })
-    //   },
       updateComment() {
         axios({
           method: 'put',
@@ -164,11 +129,9 @@
         })
         .then(() => {
           this.$emit('update-comment')
-          console.log('댓글 수정 성공')
           this.updateStatus = false
         })
         .catch((err) => {
-          console.log('댓글 수정 실패')
           console.log(err)
         })
       },

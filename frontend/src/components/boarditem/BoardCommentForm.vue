@@ -1,13 +1,12 @@
 <template>
-  <div >
-    <!-- <div>{{Boardarticle}}</div> -->
+  <div>
     <form @submit.prevent="createBoardComment" style="border-radius:0px; height:50px;  display:flex; justify-content: space-between; width: 100px;">
       <div>
       <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="title"  v-model.trim="inputData">
     </div>
     
-    <div>
-      <input class="btn btn-danger" type="submit">
+    <div style="text-align: center; margin:auto">
+      <v-btn append-icon="mdi-arrow-left-bottom" @click="createBoardComment">확인</v-btn>
     </div>
     </form>
   </div>
@@ -31,31 +30,7 @@ export default {
         }
 
     },
-    // created() {
-    //   this.getBoardCommentDetail()
-    // },
     methods: {
-      // getBoardarticleDetail() {
-      //   axios({
-      //     method: 'get',
-      //     url: `${VUE_APP_API_URL}/api/trouble/${BoardComment.commentId}`
-      //     // url: `${VUE_APP_API_URL}/trouble/${postId}`
-      //   })
-      //     .then((res) => {
-      //       // console.log(res)
-      //       console.log('성공이다람쥐')
-      //       this.inputData = res.data.content
-      //     })
-      //     .catch((err) => {
-      //       console.log('실패이다람쥐')
-      //       Boardarticle.log(err)
-      //     })
-      // },
-
-
-
-
-
       createBoardComment() {
         const content = this.inputData
         const boardId = this.Boardarticle?.postId
@@ -79,13 +54,11 @@ export default {
             }
         })
         .then(() => {
-            console.log('되냐?')
             this.$emit('get-comment')
             this.inputData=null
         })
         .catch((err) => {
-            console.log('안되냐?')
-            console.log(err)
+
         })
     }
   }

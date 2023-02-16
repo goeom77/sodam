@@ -13,7 +13,7 @@
             <div class="col-10" style="font-size:50px; font-weight: bolder;">
               {{ this.Qnaarticle.title }}
             </div>
-            <div class="col-2" style="text-align: right; margin:auto;">
+            <div class="col-2" style="text-align: right; margin:auto; font-size:20px">
               {{ this.Qnaarticle.createdAt.split(' ')[0] }}
             </div>
           </div>
@@ -27,8 +27,6 @@
           <div style="text-align: center; padding-bottom:20px">
               <v-btn variant="outlined" @click="QnaarticleBack">목록으로</v-btn>
           </div>
-
-
 
           <div style="margin-top:30px; margin-left:30px; font-size:20px">
             총 {{ Qnaarticle.comments.length }}개의 댓글이 있습니다.

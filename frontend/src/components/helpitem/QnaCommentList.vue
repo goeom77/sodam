@@ -101,8 +101,8 @@
         })
         .then(() => {
           this.updateStatus = false
-          this.$router.go(0);
           
+          this.$emit('update-comment')
           
         })
         .catch((err) => {

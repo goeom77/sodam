@@ -23,10 +23,8 @@
               bg-color="transparent"
               color="grey"
               grow
-            
             >
               <!-- <v-tabs-slider color="yellow"></v-tabs-slider> -->
-    
               <v-tab value="one">전체</v-tab>
               <v-tab value="two">아동</v-tab>
               <v-tab value="three">청소년</v-tab>
