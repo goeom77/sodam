@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface CounselorCustomRepository{
-    CounselorListResponse getCounselorDetail(String id);
+    CounselorListResponse getCounselorDetail(String clientId, String id);
     public List<CounselorListResponse> getMyFavCounselor(String clientId);
 //
 //    public Long updateType(TestRequest request, String clientId);
