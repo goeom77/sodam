@@ -1,6 +1,7 @@
 package com.samsung.sodam.db.repository;
 
 import com.samsung.sodam.api.request.ReviewRequest;
+import com.samsung.sodam.api.response.ReviewResponse;
 import com.samsung.sodam.db.entity.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface ReviewCustomRepository {
 
     //고객이 작성한 나의 후기
-    Page<Review> getAllMyReview(ReviewRequest request,Pageable pageable);
+    Page<ReviewResponse> getAllMyReview(ReviewRequest request, Pageable pageable);
     // 내가 작성한 후기
     List<Review> getMyReview(String clientId);
 
