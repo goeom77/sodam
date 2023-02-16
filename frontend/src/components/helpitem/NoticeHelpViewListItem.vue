@@ -1,5 +1,25 @@
 <template>
-  <div id="NoticeViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
+  <div v-if="(limit-1)*10 <= index && index < limit * 10">
+    <div class="container">
+      <div class="row" @click="moveTo" style="cursor: pointer">
+        <div class="col-1" style="text-align: center; margin:auto;" id="qnaId">
+          {{ Noticearticle.id }}
+        </div>
+        <div class="col-8" style="margin:auto;">
+          {{ Noticearticle.title }}
+          <br>
+          {{ Noticearticle.writerId }} ID
+        </div>
+        <div class="col-1" style="text-align: center; margin:auto;">
+          {{ Noticearticle.views }}
+        </div>
+        <div class="col-2" style="text-align: center; margin:auto;">
+          {{ this.date }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="NoticeViewListItem" class="flex-container space-between" v-if="(limit-1)*5 <= index && index < limit * 5">
     <div>
       <h5>{{ Noticearticle.postId }}</h5>
         </div>
@@ -22,9 +42,9 @@
     <div >
       <h3>{{ Noticearticle.views }}</h3>
       </div>
-    <hr> -->
+    <hr> 
 
-  </div>
+  </div> -->
 </template>
 
 <script>
