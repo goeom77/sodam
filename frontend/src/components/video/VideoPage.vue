@@ -267,6 +267,7 @@ export default {
   },
   created() {
     this.userInfo();
+    this.getSessionId();
     this.createmySessionId();
     this.createmyUserName();
   },
@@ -279,6 +280,20 @@ export default {
   //   window.removeEventListener("beforeunload", this.unLoadEvent);
   // },
   methods: {
+    getSessionId() {
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/schedule/detail`,
+        data: {
+          "dateTime": "2023-02-14T00:44:02",
+          "sessionId": this.id,
+          "status": "APPROVED"
+        }
+      })
+      .then(res=>{
+        console.log(res)
+      })
+    },
     createmySessionId() {
       return
     },
