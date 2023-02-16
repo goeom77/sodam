@@ -197,7 +197,7 @@ def _transcribe_gcs(gcs_uri, destination_blob_name, file_name, key):
             enable_word_time_offsets=True,
             sample_rate_hertz=48000,
             audio_channel_count=2,
-            enable_separate_recognition_per_channel=True,
+            enable_separate_recognition_per_channel=False,
 
             # sample_rate_hertz=16000,
             # model="latest_long",  # fit in long conversation
@@ -217,7 +217,7 @@ def _transcribe_gcs(gcs_uri, destination_blob_name, file_name, key):
         # them to get the transcripts for the entire audio file.
         for result in response.results:
             # 다른 채널로 변경
-            channel = not channel
+            # channel = not channel
 
             # The first alternative is the most likely one for this portion.
             alternative = result.alternatives[0];
@@ -236,9 +236,9 @@ def _transcribe_gcs(gcs_uri, destination_blob_name, file_name, key):
 
             stt_data.append(origin_str)
 
-            if channel:
-                analysis_data += POSUtil.analysis(alternative.transcript)
-                print(analysis_data)
+            # if channel:
+            analysis_data += POSUtil.analysis(alternative.transcript)
+                # print(analysis_data)
 
             # print("*" * 100)
 
@@ -249,7 +249,7 @@ def _transcribe_gcs(gcs_uri, destination_blob_name, file_name, key):
 
         analysis_data_dict = dict(analysis_data)
 
-        all_data = {'script': ''.join(stt_data), 'analysis': analysis_data_dict}
+        all_data = {'script': stt_data, 'analysis': analysis_data_dict}
 
         all_data_json = json.dumps(all_data, ensure_ascii=False)
 
