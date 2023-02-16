@@ -395,7 +395,7 @@ export default defineComponent({
               <!--              </div>-->
             </div>
             <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar fc-scrollgrid-sync-inner" :options="calendarOptions" style="width:80%">
+            <FullCalendar class="demo-app-calendar fc-scrollgrid-sync-inner fc-theme-standard" :options="calendarOptions" style="width:80%">
               <template v-slot:eventContent="arg">
                 <button type="button"
                         class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
@@ -559,11 +559,11 @@ b { /* used for event dates/times */
   --fc-button-hover-bg-color: #92CFA5FF;
   --fc-button-hover-border-color: #1a252f;
   --fc-button-active-bg-color: #92CFA5FF;
-  --fc-button-active-border-color: #151e27;
+  --fc-button-active-border-color: #79ab88;
   --fc-event-bg-color: #92CFA5FF;
-  --fc-event-border-color: #92CFA5FF;
+  --fc-event-border-color: #79ab88;
   --fc-event-text-color: #fff;
-  --fc-event-selected-overlay-color: rgba(0,0,0,.25);
+  --fc-event-selected-overlay-color: rgb(255, 127, 127);
   --fc-more-link-bg-color: #d0d0d0;
   --fc-more-link-text-color: inherit;
   --fc-event-resizer-thickness: 8px;
@@ -577,6 +577,7 @@ b { /* used for event dates/times */
   --fc-now-indicator-color: red;
   --bs-link-hover-color: #8fdf82;
   --fc-col-header-cell-cushion: whitesmoke;
+  --fc-scrollgrid-section:whitesmoke;
   --fc-scrollgrid-section-header: whitesmoke;
 }
 
@@ -588,6 +589,17 @@ b { /* used for event dates/times */
 }
 .fc-event-title {
   color: rgba(0, 0, 0, 0.8);
+}
+thead{
+  color: whitesmoke;
+}
+.fc-theme-standard{
+  --v-theme-background: #fff;
+  --v-theme-on-background: #fff;
+  --v-theme-surface: #fff;
+  --v-theme-on-surface: #fff;
+  --v-theme-overlay-multiplier: 1;
+  --v-scrollbar-offset: 0px;
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(limit-1)*5 <= index && index < limit * 5">
+  <div v-if="(limit-1)*10 <= index && index < limit * 10">
     <div class="container">
       <div class="row" @click="moveTo" style="cursor: pointer">
         <div class="col-1" style="text-align: center; margin:auto;" id="qnaId">

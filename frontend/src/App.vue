@@ -34,7 +34,7 @@
             {{ this.$store.state.payload.id }}님
             <span id="navMypage">
               <!-- 알람 -->
-              <v-btn class="text-none" variant="plain">
+              <v-btn class="text-none" variant="plain" >
                 <v-badge :content="newNotiCount" color="error" @click="alarm">
                   <v-icon variant="text">mdi-bell-outline</v-icon>
                 </v-badge>
@@ -73,12 +73,16 @@
         <!-- 로그인 상태 끝 -->
         <!-- 로그 아웃상태 -->
         <div v-if="isLogin===false" class="mt-3">
+          <div class="text-h6 mb-1 pt-2 pl-5">
+            고객 님,     반갑습니다.
+          </div>
+          <hr>
           <router-link to="/login" style="text-decoration: none ;"  class="ml-5" type="button" @click="dialogoff()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16" @click="logIn">
               <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
               <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
             </svg>
-            <p class="mt-1 ml-5">로그인</p>
+            <button @click="logIn" class="ml-5"><p class="mt-1">로그인</p></button>
           </router-link>
         </div>
         <div class="text-caption"></div>
@@ -125,6 +129,7 @@
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
+import 'mdb-vue-ui-kit/css/mdb.min.css';
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 
@@ -180,11 +185,11 @@ export default {
       )
     },
     logIn(){
-      dialogoff();
+      this.dialogoff();
       this.$router.push({name:'login'});
     },
     alarm(){
-      dialogoff();
+      this.dialogoff();
       this.$router.push({name:'AlarmView'});
     },
     initNotiListener() {

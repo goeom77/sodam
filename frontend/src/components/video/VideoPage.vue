@@ -262,14 +262,15 @@ export default {
       message: "",
       // chatSeq: 0,
       // chatList: [],
-      sessionId:null
+      sessionId:null,
+      scheduleData:null,
     };
   },
   created() {
     this.userInfo();
     this.getSessionId();
-    this.createmySessionId();
-    this.createmyUserName();
+    // this.createmySessionId();
+    // this.createmyUserName();
   },
   // mounted() {
   //   this.preventBack();
@@ -291,14 +292,33 @@ export default {
         }
       })
       .then(res=>{
-        console.log(res)
+        console.log("getSessionId: "+JSON.stringify(res.data))
+        this.scheduleData = res.data
+        this.createmySessionId(res.data);
       })
     },
-    createmySessionId() {
-      return
+    createmySessionId(inputData) {
+
+      if(this.userId === inputData.counselorId){
+        this.mySessionId = inputData.counselorId+inputData.turn+inputData.scheduleId*100
+        this.myUserName = inputData.counselorName
+      }else if(this.userId===inputData.clientId){
+        this.mySessionId = inputData.openViduId? inputData.openViduId : "sessionA"
+      }
+      createmyUserName()
     },
     createmyUserName() {
-      return
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/room/session`,
+        data: {
+          "openviduId":this.mySessionId,
+          "sessionId": this.id,
+        }
+      })
+          .then(res=>{
+            console.log("getSessionId: "+res.data)
+          })
     },
     // preventBack: function () {
     //   history.pushState(null, null, location.href);
@@ -414,7 +434,8 @@ export default {
       this.mainStreamManager = undefined;
       this.publisher = undefined;
       this.subscribers = [];
-      this.OV = undefined;
+      this.OV = undefined
+
       window.removeEventListener("beforeunload", this.leaveSession);
     },
     updateMainVideoStreamManager(stream) {
