@@ -1,53 +1,49 @@
 <template>
-  <div id="NoticeCreate">
-    <div id="NoticeCreateBoard">
-      <div id="NoticeCreateBoardtitle">
-        <h1>HELP DESK</h1>
-      </div>
-
-    </div>
-    <div>
-      <div id="HelpWritebox">
-        <form @submit.prevent="NoticecreateArticle">
-        <!-- <form> -->
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
-            <label for="title">제목</label>
-            <input type="text" id="title" v-model.trim="title">
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content-Help">
+      <v-toolbar
+      class="helpTool"
+      color="white"
+      dark
+      tabs>
+      </v-toolbar>
+      <!-- 배경 End -->
+      <div class="container">
+        <div style="padding-top:30px; padding-bottom: 30px; text-align: center; font-size:40px; font-weight: bolder;"> 
+          공지사항
+        </div>
+        <div class="row" style=" border-top:1px solid black; border-bottom:1px solid #ccc;">
+          <div class="col-1" id="headercontent">
+            제목 
           </div>
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
-            <label for="content">내용</label>
-            <textarea id="content" v-model="content"></textarea>
+          <div class="col-11" id="inputcontent">
+            <input type="text" placeholder="제목" v-model="this.title"
+            style="display: flex; border: 1px solid #ccc; border-radius: 4px; width:100%; height:40px" >
           </div>
-          <!-- <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
-            <label for="image" style="float:left">사진 첨부</label>
-            <div id="image">
-              <v-file-input 
-                class="input" 
-                type="file"
-                outlined dense multiple prepend-icon="mdi-camera"
+        </div>
 
-                @change="onImageChange"
-                label="File input"
-              ></v-file-input>
-
-              이미지 미리보기
-              <v-img 
-                v-for="(item,i) in uploadimageurl" 
-                :key="i" 
-                :src="item.url"
-                contain height="150px" width="200px" style="border: 2px solid black; 
-                margin-left:100px;"/>
-            </div>
-          </div> -->
-          <input type="submit" id="submitno" value="취소">
-          <input type="submit" id="submityes" value="등록">
-          <!-- <button @click="KidBoardarticleUpdate">등록</button> -->
-
-        </form>
-        <button @click="NoticearticleUpdate">수정</button>
+        <div class="row">
+          <div class="col-1" id="headercontent">
+            내용 
+          </div>
+          <div class="col-11" id="inputcontent">
+            <textarea name="" id="" cols="30" rows="10" placeholder="내용을 작성해주세요" v-model="this.content"
+            style="display: flex; border: 1px solid #ccc; border-radius: 4px; width:100%;"></textarea>
+          </div>
+          
+        </div>
+        <div style="text-align:center;">
+            <v-btn append-icon="mdi-pencil" @click="NoticecreateArticle">
+              작성
+            </v-btn>
+            <v-btn append-icon="mdi-arrow-left" @click="moveback">
+              취소
+            </v-btn>
+          </div>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -57,12 +53,14 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'NoticeCreateView',
-
+  props:{
+    id:Number
+  },
   data() {
     return {
       uploadimageurl: [],    // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0,           // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데, 이 때 이 값도 넘겨줌
-      id: this.$route.params.id,
+      postid: this.id,
       category : null,
       title: null,
       content: null,
@@ -81,7 +79,7 @@ export default {
       const id  = this.id 
       axios({
         method: 'get',
-        url: `${VUE_APP_API_URL}/api/notice/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/notice/${this.id}`,
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
@@ -97,9 +95,6 @@ export default {
           console.log('안됐음 멍')
         })
     },
-
-
-
 
     NoticecreateArticle() {
       const title = this.title
@@ -121,6 +116,7 @@ export default {
           data: {
             title: title,
             content: content,
+            writerId: writer,
             // userType: userType,
             // writer: writer,
             // imagecnt: this.imagecnt
@@ -178,7 +174,7 @@ export default {
 
       axios({
         method: 'put',
-        url: `${VUE_APP_API_URL}/api/admin/notice/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/admin/notice/${this.id}`,
         data: {
           title: title,
           content: content,
@@ -191,7 +187,7 @@ export default {
         console.log('됨')
         this.$router.push({ 
           name: 'NoticeDetailView', 
-          params: { id: this.$route.params.id } })
+          params: { id: this.id } })
 
 
           
@@ -201,6 +197,9 @@ export default {
         console.log('안됨')
         console.log(err)
       })
+    },
+    moveback(){
+      this.$router.go(-1);
     }
   }
 }
@@ -209,104 +208,16 @@ export default {
 
 
 <style>
-#NoticeCreate {
-  width: 1255px;
-  margin: 0 auto;
-}
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-#NoticeCreateBoard {
-  background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), url('@/assets/images/hand.png');
-  background-color: aliceblue;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+#headercontent{
   text-align: center;
-  font-size: large;
-  font-weight: 100;
-  padding-top: 20px;
-  height: 250px;
-  position: relative;
+  margin:auto;
+  font-size: 20px;
+  font-weight: 500;
 }
-#NoticeCreateWrite {
-  width:100%; 
-  height:60px; 
-  line-height: 65px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  background-color:rgba(96, 96, 96, 0.5);
-  padding-left: 60px;
-  padding-right:60px;
-  position: absolute;
-  bottom: 0px;
-} 
-#NoticeCreateBoardtitle {
-  position: absolute;
-  left: 50%; 
-  bottom: 50%; 
-  transform: translate(-50%);
-}
-
-#Writebox {
-  border-top: 1px solid black;
-  /* border-bottom: 1px solid black; */
-  margin: 60px;
-}
-
-
-#title {
-width: 980px; 
-height: 50px;
-padding: .8em .5em; 
-border: 1px solid #B9B6B6;
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 100px;
-}
-
-#content {
-width: 980px; 
-height: 500px;
-padding: .8em .5em; 
-border: 1px solid #B9B6B6;
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 100px;
-}
-
-#image {
-width: 990px; 
-height: 68px;
-padding: .4em .5em; 
-/* border: 1px solid #B9B6B6; */
-font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-margin-left: 130px;
-}
-/* worryselect::-ms-expand {
-        display: none;
-} */
-
-#submitno {
-margin-top: 50px;
-}
-
-#submityes {
-margin-top: 50px;
+#inputcontent{
+  text-align: left;
+  margin:auto;
+  text-align:start; 
+  padding: 10px; 
 }
 </style>

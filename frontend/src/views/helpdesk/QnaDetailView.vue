@@ -1,5 +1,57 @@
 <template>
-	<v-container>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content-Help">
+      <v-toolbar
+      class="helpTool"
+      color="white"
+      dark
+      tabs>
+      </v-toolbar>
+      <!-- 배경 End -->
+      <div class="container">
+          <div class="row noticetitle" >
+            <div class="col-10" style="font-size:50px; font-weight: bolder;">
+              {{ this.Qnaarticle.title }}
+            </div>
+            <div class="col-2" style="text-align: right; margin:auto;">
+              {{ this.Qnaarticle.createdAt.split(' ')[0] }}
+            </div>
+          </div>
+          <div class="row noticecontent" style="margin:30px; font-size:20px">
+            {{ this.Qnaarticle.content }}
+          </div>
+          <div style="text-align: right; margin-right:30px" v-if="(this.$store.state.payload.id==`${writerId}`)">
+            <v-btn outlined rounded text @click="QnaarticleUpdate" color="blue">수정</v-btn>
+            <v-btn outlined rounded text @click="QnaarticleDelete" color="red">삭제</v-btn>
+          </div>
+          <div style="text-align: center; padding-bottom:20px">
+              <v-btn variant="outlined" @click="QnaarticleBack">목록으로</v-btn>
+          </div>
+
+
+
+          <div style="margin-top:30px; margin-left:30px; font-size:20px">
+            총 {{ Qnaarticle.comments.length }}개의 댓글이 있습니다.
+          </div>
+          <QnaCommentList
+          style="margin-left:30px"
+            v-for="(QnaComment, index) in Qnaarticle.comments"
+            :key="QnaComment.id"
+            :QnaComment="QnaComment"
+            :index="index"
+            :limit="QnaCommentsCurrentPage"
+            @delete-comment="getQnaarticleDetail"
+            @update-comment="getQnaarticleDetail"
+          />
+          <QnaCommentForm
+            style="margin-left:0%; border-top:1px solid #ccc; padding-top:20px;"
+            :Qnaarticle="Qnaarticle"
+            @get-comment="getQnaarticleDetail"
+          />
+      </div>
+    </div>
+  </div>
+	<!-- <v-container>
 		<v-card elevation="10" outlined width="100%" class="mx-auto">
 			<v-card-title>
 				<span class="mr-2">Detail</span>
@@ -56,7 +108,7 @@
       @update-comment="getQnaarticleDetail"
     />
 		</v-card>
-	</v-container>
+	</v-container> -->
 </template>
 
 <script>
@@ -72,7 +124,6 @@ export default {
 	components: {
 		QnaCommentForm,
     QnaCommentList
-
 	},
 	data() {
 
@@ -96,8 +147,12 @@ export default {
 	created() {
 		this.getQnaarticleDetail()
 	},
+  watch:{
+    Qnaarticle: function(value){
+      console.log('qweqwe')
+    }
+  },
 	methods: {
-
     getQnaarticleDetail() {
       axios({
         method: 'get',

@@ -10,22 +10,8 @@
         tabs
         style="text-align:">
           <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">HELP DESK</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <div v-if="this.$store.state.payload.id==='admin'">
-            <router-link 
-              to="/NoticeCreateView" 
-              id="NoticeCreateView"
-              class="HelpCreateButton" 
-              style="margin-right: 55px;">글쓰기</router-link> 
-          </div>
-          <div v-if="isLogin===true">
-            <router-link    
-              to="/QnaCreateView" 
-              id="QnaCreateView"
-              class="HelpCreateButton" 
-              style="margin-right: 55px;">글쓰기</router-link> 
-          </div>
-    
+          
+
           <template v-slot:extension>
             <v-tabs
               v-model="tab"
@@ -125,7 +111,7 @@ import QnaHelpViewList from '../../components/helpitem/QnaHelpViewList.vue'
   background-image: url(../../assets/images/help.png) !important;
   background-color: black !important;
   background-size: cover;
-  margin: 0;
+  margin: 0;  
   background-repeat: no-repeat;
   background-position: center;
   height: 35vh;
