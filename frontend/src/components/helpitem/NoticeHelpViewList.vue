@@ -25,13 +25,13 @@
           </div>
         </div>
         <NoticeHelpViewListItem
-          v-for="(Boardarticle, index) in NoticeHelpViewListarticles.content"
-          :key="Boardarticle.id"
-          :Boardarticle="Boardarticle"
+          v-for="(Noticearticle, index) in NoticeHelpViewListarticles.content"
+          :key="Noticearticle.id"
+          :Noticearticle="Noticearticle"
           :index="index"
           :limit="NoticeHelpViewListPage"
-          @delete-Board="getNoticeHelpViewListArticles"
-          @refresh-Board="getNoticeHelpViewListArticles"/>
+          @delete-Notice="getNoticeHelpViewListArticles"
+          @refresh-Notice="getNoticeHelpViewListArticles"/>
         
             <!-- 페이지네이션 -->
         <div v-if="NoticeHelpViewListarticles">
