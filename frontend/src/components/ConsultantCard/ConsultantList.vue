@@ -5,7 +5,7 @@
           v-model="SearchData"
           inputGroup
           class="py-3"
-          @input="searchCounselor()"
+          @input="searchCounselor"
           :formOutline="false"
           wrapperClass="mb-3"
           placeholder="상담사 찾기"
@@ -111,13 +111,14 @@ export default {
     searchCounselor() {
       axios({
         method: 'post',
-        url: `${VUE_APP_API_URL}/api/counselor/search`,
+        url: `${VUE_APP_API_URL}/api/counselor/test`,
         data: {
-          keyword: this.SearchData
+          name: this.SearchData
         }
       })
       .then(res => {
-        console.log(res.data)
+        console.log('search'+res.data)
+        
         this.checkInfo = res.data.content
       })
     }
