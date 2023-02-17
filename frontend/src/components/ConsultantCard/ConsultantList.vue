@@ -1,12 +1,26 @@
 <template>
   <div>
-    <input id="searhBar"
-           class="search-input"
-           type="text"
-           v-model="this.SearchData"
-           placeholder="상담사, 카테고리 검색.."
-           @input="searchCounselor()"
-    />
+<!--    <input id="searhBar"-->
+<!--           class="search-input"-->
+<!--           type="text"-->
+<!--           v-model="this.SearchData"-->
+<!--           placeholder="상담사, 카테고리 검색.."-->
+<!--           @input="searchCounselor()"-->
+<!--    />-->
+    <MDBInput
+        v-model="SearchData"
+        inputGroup
+        class="py-3"
+        @input="searchCounselor()"
+        :formOutline="false"
+        wrapperClass="mb-3"
+        placeholder="상담사 찾기"
+        aria-label="Search"
+        aria-describedby="button-addon2"
+    >
+      <MDBBtn outline="primary">Search</MDBBtn>
+    </MDBInput>
+
   </div>
 
   <div class="row animate-box" data-animate-effect="fadeInLeft">
@@ -35,12 +49,16 @@
 <script>
 import ConsultantCard from '@/components/ConsultantCard/ConsultantCard'
 import axios from 'axios'
+import {MDBInput, MDBBtn} from 'mdb-vue-ui-kit';
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'ConsultantList',
   components: {
-    ConsultantCard
+    ConsultantCard,
+    MDBInput,
+    MDBBtn
+
   },
   data(){
     return{
@@ -69,7 +87,7 @@ export default {
         }
       })
           .then(res=>{
-            console.log("ye"+res.data)
+            console.log("ye"+JSON.stringify(res.data))
             this.checkInfo = res.data
           })
     }
