@@ -26,7 +26,7 @@
                 </div>
                 <div class="row ">
                   <div class="col-lg-7 mx-auto">
-                    <div class="card mt-2 mx-auto p-4 bg-light">
+                    <div class="card mt-2 mx-auto p-4 bg-light" style="height: 600px;">
                       <div class="card-body bg-light">
                         <div class = "container">
                           <form id="contact-form" role="form">
