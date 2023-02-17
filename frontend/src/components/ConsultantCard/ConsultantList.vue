@@ -1,16 +1,17 @@
 <template>
   <v-container class="counselor-container align-center">
     <v-row class="searchBarArea mx-auto">
-      <MDBInput
-          v-model="SearchData"
-          inputGroup
-          class="py-3"
-          @input="searchCounselor()"
-          :formOutline="false"
-          wrapperClass="mb-3"
-          placeholder="상담사 찾기"
-          aria-label="Search"
-          aria-describedby="button-addon2"
+      <MDBInput id="searhBar"
+                class="search-input"
+                type="text"
+                v-model="SearchData"
+                placeholder="상담사, 카테고리 검색.."
+                @keyup="searchCounselor()"
+                aria-label="Search"
+                onChange={this.changeStateInputValue}
+                aria-describedby="button-addon2"
+                inputGroup
+                :formOutline="false"
       >
         <MDBBtn outline="primary">Search</MDBBtn>
       </MDBInput>
@@ -92,7 +93,7 @@ export default {
   data() {
     return {
       counselorInfo: null,
-      SearchData: null,
+      SearchData: "",
       checkInfo: null,
       tags: ["부부", "학업", "노인"]
     }
@@ -100,39 +101,40 @@ export default {
   methods: {
     getCounselorInfo() {
       axios({
-        method:'post',
-        url:`${VUE_APP_API_URL}/api/counselor/`,
-      })
-      .then(res=>{
-        let jsonData = JSON.parse(JSON.stringify(res.data.content))
-        this.counselorInfo = jsonData
-      })
-    },
-    searchCounselor() {
-      axios({
         method: 'post',
-        url: `${VUE_APP_API_URL}/api/counselor/search`,
-        data: {
+        url: `${VUE_APP_API_URL}/api/counselor/`,
+      })
+          .then(res => {
+            let jsonData = JSON.parse(JSON.stringify(res.data.content))
+            this.counselorInfo = jsonData
+          })
+    },
+    searchCounselor(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/counselor/test`,
+        data:{
           keyword: this.SearchData
         }
       })
-      .then(res => {
-        console.log(res.data)
-        this.checkInfo = res.data.content
-      })
-    }
+          .then(res=>{
+            console.log(res.data)
+            this.checkInfo = res.data
+          })
+    },
+
   },
   created() {
     this.getCounselorInfo()
-  }
-  // computed: {
-  //   ConsultantList() {
-  //     return this.$store.getters.getConsultantJsonData
-  //   },
-  // },
-  // beforeMount() {
-  //     this.$store.dispatch('getConsultantJson')
-  // },
+  },
+  computed: {
+    ConsultantList() {
+      return this.$store.getters.getConsultantJsonData
+    },
+  },
+  beforeMount() {
+      this.$store.dispatch('getConsultantJson')
+  },
 }
 </script>
 

@@ -2,17 +2,12 @@
   <div id="fh5co-main">
     <!--    <div class="fh5co-narrow-content">-->
 <v-container>
-  <div class="mb-3">
+  <div class="mb-3" style="width:auto;" >
     <v-parallax
         src="@/assets/images/banner1.png"
+        class="mx-0"
     >
       <div class="d-flex flex-column fill-height justify-center align-center text-white">
-        <h1 class="text-h4 font-weight-thin mb-4">
-          소중한 상담
-        </h1>
-        <h4 class="subheading">
-          여러분과 함께
-        </h4>
       </div>
     </v-parallax>
   </div>
@@ -29,7 +24,8 @@
             :slide-ratio="1 / 4"
             :dragging-distance="200"
             :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
+
+          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg" @click="moveTo()"/>
 
         </vueper-slides>
       </v-container>
@@ -69,12 +65,29 @@ export default {
     getCounselorInfo() {
       axios({
         method: 'post',
-        url: `${VUE_APP_API_URL}/api/counselor/best`,
+        url: `${VUE_APP_API_URL}/api/counselor/`,
       })
           .then(res => {
-            console.log("getCounselorInfo:" + JSON.stringify(res.data))
-            this.counselorInfo = res.data
+            let jsonData = JSON.parse(JSON.stringify(res.data.content))
+            this.counselorInfo = jsonData
           })
+    },
+    searchCounselor(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/counselor/test`,
+        data:{
+          keyword: this.SearchData
+        }
+      })
+          .then(res=>{
+            console.log("SearchData:"+res.data)
+            console.log(res.data)
+            this.checkInfo = res.data
+          })
+    },
+    moveTo(){
+      this.$router.push({ name: 'consultantcarditem', params: {id: this.counselor.id} })
     },
   },
   created() {
