@@ -206,7 +206,7 @@ public class CounselorRepositoryService {
 
         if(result != null) { // 상담신청 완료
             notificationService.send(request.getCounselorId(), NotificationType.CONSULT, "새로운 상담 신청이 있습니다.",
-                    "", "/AlarmView");
+                    "일정 관리 탭에서 확인할 수 있습니다.", "/AlarmView");
 
             notificationService.send(request.getClientId(), NotificationType.CONSULT, "상담신청이 정상적으로 접수되었습니다.",
                     "상담사로부터 전화가 갈 예정입니다. 초기 상담 및 일정 픽스가 진행됩니다.", "/AlarmView");
