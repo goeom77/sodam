@@ -1,20 +1,39 @@
 <template>
   <div id="fh5co-main">
     <!--    <div class="fh5co-narrow-content">-->
-    <div class="mb-3">
-      <v-parallax
-        src="@/assets/images/backimg.jpg"
-      >
-        <div class="d-flex flex-column fill-height justify-center align-center text-white">
-          <h1 class="text-h4 font-weight-thin mb-4">
-            소중한 상담
-          </h1>
-          <h4 class="subheading">
-            여러분과 함께
-          </h4>
-        </div>
-      </v-parallax>
-    </div>
+<v-container>
+  <div class="mb-3">
+    <v-parallax
+        src="@/assets/images/banner1.png"
+    >
+      <div class="d-flex flex-column fill-height justify-center align-center text-white">
+        <h1 class="text-h4 font-weight-thin mb-4">
+          소중한 상담
+        </h1>
+        <h4 class="subheading">
+          여러분과 함께
+        </h4>
+      </div>
+    </v-parallax>
+  </div>
+</v-container>
+    <v-container class="mb-5">
+      <v-container>
+        <h2>추천 상담사</h2>
+
+        <vueper-slides
+            class="no-shadow mx-auto pb-2"
+            :visible-slides="3"
+            slide-multiple
+            :gap="3"
+            :slide-ratio="1 / 4"
+            :dragging-distance="200"
+            :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
+          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
+
+        </vueper-slides>
+      </v-container>
+    </v-container>
     <ConsultantList/>
   </div>
 
