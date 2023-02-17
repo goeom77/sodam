@@ -12,6 +12,7 @@
             <h2 class="card__title">{{ counselor.name}} 상담사</h2>
             <div class="starRate">
               <v-rating
+              disabled="true"
                 model-value="3"
                 size="x-small"
                 density="comfortable"

@@ -25,14 +25,14 @@
               grow
             >
               <!-- <v-tabs-slider color="yellow"></v-tabs-slider> -->
-              <v-tab value="one">전체</v-tab>
-              <v-tab value="two">아동</v-tab>
-              <v-tab value="three">청소년</v-tab>
-              <v-tab value="four">성인</v-tab>
-              <v-tab value="five">부부</v-tab>
-              <v-tab value="six">노년</v-tab>
-              <v-tab value="seven">기타</v-tab>
-              <v-tab value="eight" v-if="isLogin===true">내 글 보기</v-tab>
+              <v-tab value="one" style="font-size:20px;">전체</v-tab>
+              <v-tab value="two" style="font-size:20px;">아동</v-tab>
+              <v-tab value="three" style="font-size:20px;">청소년</v-tab>
+              <v-tab value="four" style="font-size:20px;">성인</v-tab>
+              <v-tab value="five" style="font-size:20px;">부부</v-tab>
+              <v-tab value="six" style="font-size:20px;">노년</v-tab>
+              <v-tab value="seven" style="font-size:20px;">기타</v-tab>
+              <v-tab value="eight" v-if="isLogin===true" style="font-size:20px;">내 글 보기</v-tab>
         
             </v-tabs>
           </template>
