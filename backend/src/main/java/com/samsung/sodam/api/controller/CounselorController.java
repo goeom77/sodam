@@ -90,7 +90,7 @@ public class CounselorController extends Counselor {
     @PostMapping(value = "/counselor/test")
     @ApiOperation(value = "상담사를 검색어와 태그로 검색한다.")
     public List<CounselorListResponse> setCounselorType(@RequestBody TestRequest request) {
-        System.out.println(request.getList().toString());
+//        System.out.println(request.getList().toString());
         return service.counselorTest(request);
     }
 

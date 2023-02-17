@@ -77,7 +77,7 @@ export default {
         method:'post',
         url:`${VUE_APP_API_URL}/api/counselor/test`,
         data:{
-          keyword: this.SearchData
+          name: this.SearchData
         }
       })
           .then(res=>{
