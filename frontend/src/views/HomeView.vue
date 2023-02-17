@@ -2,9 +2,9 @@
   <v-container id="fh5co-product-section" class="p-0 m-0">
     <v-container class="p-0 m-0">
       <v-img src="../assets/images/banner1.png" class="h-50"/>
-      <v-btn style="top: -100px;" class="mx-auto po"> 상담사 찾기 </v-btn>
+<!--      <v-btn style="top: -100px;" class="mx-auto po"> 상담사 찾기 </v-btn>-->
     </v-container>
-    <v-container style="width: 80%" class="mb-5">
+    <v-container class="mb-5">
       <v-container>
         <h2>추천 상담사</h2>
 
@@ -55,7 +55,7 @@
     <!--        </vueper-slide>-->
     <!--      </vueper-slides>-->
     <!--    </v-container>-->
-    <!--    <ConsultantList/>-->
+        <ConsultantList/>
   </v-container>
 
 </template>
@@ -63,7 +63,7 @@
 <script>
 // @ is an alias to /srcz
 
-// import ConsultantList from '@/components/ConsultantCard/ConsultantList.vue'
+import ConsultantList from '@/components/ConsultantCard/ConsultantList.vue'
 // import ConsultantCardSearch from '@/components/ConsultantCard/ConsultantCardSearch.vue'
 import {VueperSlides, VueperSlide} from 'vueperslides'
 import 'vueperslides/dist/vueperslides.css'
@@ -74,7 +74,7 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 export default {
   name: 'HomeView',
   components: {
-    // ConsultantList,
+    ConsultantList,
     // ConsultantCardSearch,
     VueperSlides,
     VueperSlide,

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.samsung.sodam.util.CounselorUtil.counselorToResponse;
+
 @Service
 @AllArgsConstructor
 @Setter
@@ -111,7 +113,7 @@ public class CounselorRepositoryService {
 //    }
 
     public List<CounselorListResponse> getBestCounleor(){
-        return counselorCustomRepository.getBestCounselor();
+        return counselorToResponse(repository.getCounselorByReview());
     }
 
     public Page<Client> getAllClients(Pageable pageable) {

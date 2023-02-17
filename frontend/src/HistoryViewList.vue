@@ -18,6 +18,7 @@ import HistoryViewListItem from './HistoryViewListItem.vue';
 export default {
   name: 'HistoryViewList',
   components: {
+  components: {
     HistoryViewListItem
   },
 

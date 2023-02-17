@@ -74,7 +74,7 @@ export default {
         url:`${VUE_APP_API_URL}/api/counselor/${this.consultant_id}`,
         data:{
           id: this.consultant_id
-        },        
+        },
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
@@ -88,7 +88,25 @@ export default {
     },
     // 세션 id 내려주기 (지금 구현 안되어 있음)
     moveTo2(){
+      this.updateState = true
       this.$router.push({ name: 'VideoPage' })
+    }
+    ,updateState(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/counselor/${this.consultant_id}`,
+        data:{
+          state: "END",
+          sessionId:this.clientData.sessionId,
+          scheduleId:this.clientData.sessionId
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+          .then(res=>{
+            this.consultant_name = res.data.name
+          })
     }
   },
 }

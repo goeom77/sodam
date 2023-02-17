@@ -21,4 +21,6 @@ public class UpdateRequest {
     private Long scheduleId;
 
     private LocalDateTime start = LocalDateTime.now();
+
+    STATE state = STATE.EXPECTED;
 }

@@ -11,6 +11,7 @@ import com.samsung.sodam.api.service.schedule.ScheduleService;
 import com.samsung.sodam.db.entity.ConsultApplicant;
 import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.entity.STATE;
+import com.samsung.sodam.db.repository.ScheduleRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,16 +20,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/schedule")
 public class ScheduleController {
     final ScheduleService service;
     final ApplicantService applicantService;
+    private final ScheduleRepository scheduleRepository;
 
-    public ScheduleController(ScheduleService service, ApplicantService applicantService) {
+    public ScheduleController(ScheduleService service, ApplicantService applicantService,
+                              ScheduleRepository scheduleRepository) {
         this.service = service;
         this.applicantService = applicantService;
+        this.scheduleRepository = scheduleRepository;
     }
 
     @PostMapping("/newSchedule")
@@ -111,6 +116,18 @@ public class ScheduleController {
 //            result = service.updateScheduleTime(request);
         }
         return new MonthlyResponse(request.getScheduleId(), "유저이름", request.getStart(), request.getStart().plusMinutes(50));
+    }
+
+    @Transactional
+    @PostMapping("/update/state")
+    @ApiOperation(value = "일정진행 상태를 수정한다.", notes = "상담일정을 수정하거나 화상상담을 입장했을 때.")
+    public void updateScheduleState(@RequestBody UpdateRequest request) {
+        Pageable pageable = Pageable.ofSize(20);
+        Optional<ConsultSchedule> cs= scheduleRepository.getConsultSchedulesBySessionId(request.getSessionId());
+        if(cs.isPresent()){
+            ConsultSchedule r = cs.get();
+            scheduleRepository.save(r);
+        }
     }
 
 }

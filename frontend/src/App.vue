@@ -91,11 +91,12 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <v-container id="fh5co-page" style="width: 100%" >
+  <v-container id="fh5co-page" >
       <v-container id="fh5co-aside" role="complementary" class="border js-fullheight d-flex justify-center align-center mb-6 bg-surface-variant" style="width: 15%" >
         <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
         <nav id="fh5co-main-menu" role="navigation">
-          <router-link to="/">
+
+          <router-link to="/"  >
             <img
               id="logo"
               class="align-self-center h-auto w-50"
@@ -114,8 +115,8 @@
         </nav>
       </v-container>
 <!--      <v-container id="fh5co-main" style="width: 100%; padding: 0; position: fixed;left: 15%; top: 0;">-->
-      <v-container id="fh5co-main" style="width: 100%;">
-        <router-view class="container-fluid" />
+      <v-container>
+        <router-view />
       </v-container>
   </v-container>
   

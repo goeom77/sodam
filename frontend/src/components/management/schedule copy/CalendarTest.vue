@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     editable: true,
     droppable: true, // this allows things to be dropped onto the calendar,
-
+    locale: 'ko'
   });
   calendar.render();
 });
@@ -78,7 +78,6 @@ export default defineComponent({
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        locale:'kr',
         initialView: 'dayGridMonth',
         initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
         editable: true,
@@ -111,7 +110,7 @@ export default defineComponent({
           // var monthlyEventInfo = this.detail;
           // monthlyEventInfo.setAttribute("start",dateTime)
           console.log(" eventChange before call update api :>>>" + JSON.stringify(monthlyEventInfo))
-          this.detail = null;
+          // this.detail = null;
           axios({
             method: 'post',
             url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
@@ -154,7 +153,7 @@ export default defineComponent({
           // var monthlyEventInfo = this.detail;
           // monthlyEventInfo.setAttribute("start",dateTime)
           console.log(" eventDrop before call update api :>>>" + JSON.stringify(monthlyEventInfo))
-          this.detail = null;
+          // this.detail = null;
           axios({
             method: 'post',
             url: `${VUE_APP_API_URL}/api/schedule/update/monthly`,
@@ -210,27 +209,27 @@ export default defineComponent({
     handleWeekendsToggle() {
       this.calendarOptions.weekends = !this.calendarOptions.weekends // update a property
     },
-    handleDateSelect(selectInfo) {
-      let title = prompt('Please enter a new title for your event')
-      let calendarApi = selectInfo.view.calendar
-      calendarApi.unselect() // clear date selection
-      if (title) {
-        calendarApi.addEvent({
-          id: createEventId(),
-          title,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
-          data: {
-            customData: '되나?'
-          },
-        })
-      }
-    },
+    // handleDateSelect(selectInfo) {
+    // let title = prompt('Please enter a new title for your event')
+    // let calendarApi = selectInfo.view.calendar
+    // calendarApi.unselect() // clear date selection
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay,
+    //     data: {
+    //       customData: '되나?'
+    //     },
+    //   })
+    // }
+    // },
     handleEventClick(clickInfo) {
       console.log("상세화면 보여줄 것" + JSON.stringify(clickInfo))
-      let data = {sessionId: clickInfo.event.extendedProps.sessionId, dateTime: clickInfo.event.start}
-      this.getScheduleDetail(data)
+      this.detailData = {sessionId: clickInfo.event.extendedProps.sessionId, dateTime: clickInfo.event.start}
+      this.getScheduleDetail(this.detailData)
     },
     handleEvents(events) {
       console.log("handleEvents222 >>: " + JSON.stringify(events))
@@ -298,6 +297,7 @@ export default defineComponent({
           .then(res => {
             console.log("detail :>>>> " + JSON.stringify(res.data))
             this.detail = res.data
+            this.detailData = res.data
           })
     },
     saveNewSchedule: function (dateTime) {
@@ -343,6 +343,36 @@ export default defineComponent({
     startMeeting(id) {
       this.$router.push({name: 'VideoPage', params: {id: id}});
     },
+    convertConsultType(list) {
+      const selectTypeList = [
+        {name: '#아동 #청소년', value: "CHILD_TEENAGER"},
+        {name: '#재난', value: "CALAMITY"},
+        {name: '#부부 #가족상담', value: "COUPLE_FAMILY"},
+        {name: '#재활', value: "REHABILITATION"},
+        {name: '#노인', value: "AGED"},
+        {name: '#중독', value: "ADDICTED"},
+        {name: '#정신', value: "MENTAL_HEALTH"},
+        {name: '#교정', value: "CORRECTION"},
+        {name: '#진로', value: "COURSE"},
+        {name: '#상담자교육', value: "EDUCATION"},
+        {name: '#성폭력', value: "SEXUAL_VIOLENCY"},
+        {name: '#상담자슈퍼비전', value: "SUPERVISION"},
+        {name: '#스포츠상담', value: "SPORTS"},
+        {name: '#학교상담', value: "SCHOOL"},
+      ];
+
+      let result = "";
+      list.forEach(element => {
+        selectTypeList.forEach(type => {
+          if (type.value === element) {
+            result += type.name + " ";
+            return;
+          }
+        })
+      });
+      return result;
+    }
+    ,
   },
   created() {
     this.getExpectedData()
@@ -353,16 +383,30 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="fh5co-main">
-    <div class="fh5co-narrow-content">
+  <v-container>
+    <div>
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
            id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="z-index: 99999 !important">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">상담정보</h5>
-
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+          <a>aaa님</a>
+<!--          <span class="text-h5">{{ detailData.title }}</span>-->
+          <!--          <div>-->
+          <!--            살려줘요제발-->
+
+          <!--            <a>{{ detail.title }}님</a>-->
+          <!--            <a>상담시간 {{ detail.startTime }}</a>-->
+          <!--            <a>회차 {{ detail.turn }}</a>-->
+          <!--            <a>이메일{{ detail.email }}</a>-->
+          <!--            <a>연락처{{ detail.tel }}</a>-->
+          <!--            <a>상담유형{{ convertConsultType(detail.type) }}</a>-->
+
+
+          <!--            살려줘요제발22-->
+          <!--          </div>-->
           <a class="btn btn-primary" role="button" v-on:click="this.startMeeting(this.detail.sessionId)">상담하러가기</a>
         </div>
       </div>
@@ -396,7 +440,8 @@ export default defineComponent({
               <!--              </div>-->
             </div>
             <!-- 캘린더 -->
-            <FullCalendar class="demo-app-calendar fc-scrollgrid-sync-inner fc-theme-standard" :options="calendarOptions" style="width:80%">
+            <FullCalendar class="demo-app-calendar fc-scrollgrid-sync-inner fc-theme-standard"
+                          :options="calendarOptions" style="width:80%">
               <template v-slot:eventContent="arg">
                 <button type="button"
                         class="fc-event fc-event-draggable fc-event-resizable fc-event-future fc-daygrid-dot-event"
@@ -462,7 +507,7 @@ export default defineComponent({
         </v-dialog>
       </v-row>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <style lang='css'>
@@ -551,7 +596,7 @@ b { /* used for event dates/times */
 :root {
   --fc-small-font-size: .85em;
   --fc-page-bg-color: #fff;
-  --fc-neutral-bg-color: hsla(0,0%,82%,.3);
+  --fc-neutral-bg-color: hsla(0, 0%, 82%, .3);
   --fc-neutral-text-color: grey;
   --fc-border-color: #ddd;
   --fc-button-text-color: #1a252f;
@@ -570,31 +615,35 @@ b { /* used for event dates/times */
   --fc-event-resizer-thickness: 8px;
   --fc-event-resizer-dot-total-width: 8px;
   --fc-event-resizer-dot-border-width: 1px;
-  --fc-non-business-color: hsla(0,0%,84%,.3);
+  --fc-non-business-color: hsla(0, 0%, 84%, .3);
   --fc-bg-event-color: #8fdf82;
   --fc-bg-event-opacity: 0.3;
-  --fc-highlight-color: rgba(188,232,241,.3);
-  --fc-today-bg-color: rgba(255,220,40,.15);
+  --fc-highlight-color: rgba(188, 232, 241, .3);
+  --fc-today-bg-color: rgba(255, 220, 40, .15);
   --fc-now-indicator-color: red;
   --bs-link-hover-color: #8fdf82;
   --fc-col-header-cell-cushion: whitesmoke;
-  --fc-scrollgrid-section:whitesmoke;
+  --fc-scrollgrid-section: whitesmoke;
   --fc-scrollgrid-section-header: whitesmoke;
 }
 
 .main-green-border {
   border-color: #92CFA5FF;
 }
-.fc-event-time{
+
+.fc-event-time {
   color: rgba(0, 0, 0, 0.8);
 }
+
 .fc-event-title {
   color: rgba(0, 0, 0, 0.8);
 }
-thead{
+
+thead {
   color: whitesmoke;
 }
-.fc-theme-standard{
+
+.fc-theme-standard {
   --v-theme-background: #fff;
   --v-theme-on-background: #fff;
   --v-theme-surface: #fff;

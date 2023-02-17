@@ -114,12 +114,8 @@ const routes = [
     name: 'BoardCreateView',
     component: BoardCreateView,
   },
-  // 헬프데스크 페이지
-  {
-    path: '/HelpView',
-    name: 'HelpView',
-    component: HelpView
-  },
+
+
   // 헬프데스크 페이지
   {
     path: '/HelpView',
