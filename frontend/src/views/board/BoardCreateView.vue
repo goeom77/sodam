@@ -31,7 +31,7 @@
             <textarea style="width: 85%;" id="content" v-model="content"></textarea>
           </div>
           <router-link to="/BoardView" style="text-decoration: none; color: black;">취소</router-link>
-          <button v-if="check" @click="BoardarticleUpdate">수정</button>
+          <v-btn v-if="check" @click="BoardarticleUpdate">수정</v-btn>
           <input v-else type="submit" id="submityes" value="등록">
         </form>
         
