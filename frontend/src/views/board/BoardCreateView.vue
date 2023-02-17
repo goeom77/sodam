@@ -30,9 +30,15 @@
             <label for="content">내용</label>
             <textarea style="width: 85%;" id="content" v-model="content"></textarea>
           </div>
-          <router-link to="/BoardView" style="text-decoration: none; color: black;">취소</router-link>
-          <button v-if="check" @click="BoardarticleUpdate">수정</button>
-          <input v-else type="submit" id="submityes" value="등록">
+          <div style="text-align:center">
+            <v-btn append-icon="mdi-pencil" @click="BoardCreateArticle">
+              작성
+            </v-btn>&nbsp;
+            <v-btn append-icon="mdi-arrow-left" @click="backTo">
+              취소
+            </v-btn>
+          </div>
+
         </form>
         
       </div>
