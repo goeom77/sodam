@@ -55,6 +55,11 @@
       </v-col>
     </v-row>
     
+    <div style="text-align: right; margin:10px">
+      <v-btn append-icon="mdi-pencil" @click="moveCreate">
+        게시글 작성
+      </v-btn>
+    </div>
     <!-- 검색 -->
     <div style="margin:auto; padding-top:30px;">
       <div class="searchbar">
@@ -115,12 +120,9 @@ export default {
         //   "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 게시판 전체 목록')
           this.AdultBoardViewListarticles = res.data
         })
-        .catch((err) => {
-          console.log('어림도 없지 게시판 전체 목록')
-        })
+
     },
     AdultBoardViewListarticlessearch() {
       axios({
@@ -139,6 +141,9 @@ export default {
           console.log('안됐음 카멜레온')
         })
     },
+    moveCreate(){
+      this.$router.push({name:'BoardCreateView'})
+    }
   }
 }
 </script>

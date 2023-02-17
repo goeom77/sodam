@@ -24,40 +24,41 @@
             <v-btn outlined rounded text @click="QnaarticleUpdate" color="blue">수정</v-btn>
             <v-btn outlined rounded text @click="QnaarticleDelete" color="red">삭제</v-btn>
           </div>
-          <div style="text-align: center; padding-bottom:20px">
-              <v-btn variant="outlined" @click="QnaarticleBack">목록으로</v-btn>
-          </div>
-
+          
           <div style="margin-top:30px; margin-left:30px; font-size:20px">
             총 {{ Qnaarticle.comments.length }}개의 댓글이 있습니다.
           </div>
           <QnaCommentList
           style="margin-left:30px"
-            v-for="(QnaComment, index) in Qnaarticle.comments"
-            :key="QnaComment.id"
-            :QnaComment="QnaComment"
-            :index="index"
-            :limit="QnaCommentsCurrentPage"
-            @delete-comment="getQnaarticleDetail"
-            @update-comment="getQnaarticleDetail"
+          v-for="(QnaComment, index) in Qnaarticle.comments"
+          :key="QnaComment.id"
+          :QnaComment="QnaComment"
+          :index="index"
+          :limit="QnaCommentsCurrentPage"
+          @delete-comment="getQnaarticleDetail"
+          @update-comment="getQnaarticleDetail"
           />
           <QnaCommentForm
-            style="margin-left:0%; border-top:1px solid #ccc; padding-top:20px;"
-            :Qnaarticle="Qnaarticle"
-            @get-comment="getQnaarticleDetail"
+          
+          style="text-align: center; margin-left:0%; border-top:1px solid #ccc; padding-top:20px;"
+          :Qnaarticle="Qnaarticle"
+          @get-comment="getQnaarticleDetail"
           />
+        </div>
       </div>
-    </div>
+      <div style="text-align: center; padding-bottom:20px; padding-top: 20px;">
+          <v-btn variant="outlined" @click="QnaarticleBack">목록으로</v-btn>
+      </div>
   </div>
 	<!-- <v-container>
-		<v-card elevation="10" outlined width="100%" class="mx-auto">
-			<v-card-title>
-				<span class="mr-2">Detail</span>
+    <v-card elevation="10" outlined width="100%" class="mx-auto">
+      <v-card-title>
+        <span class="mr-2">Detail</span>
 			</v-card-title>
 			<v-card-text>
-				<v-row>
-					<v-col>
-						<v-text-field readonly :value="title" />
+        <v-row>
+          <v-col>
+            <v-text-field readonly :value="title" />
 					</v-col>
 				</v-row>
 				<v-row>

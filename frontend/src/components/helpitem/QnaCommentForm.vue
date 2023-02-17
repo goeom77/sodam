@@ -2,8 +2,8 @@
 <template>
   <div >
     <form @submit.prevent="createInquiryComment" style="border-radius:0px; height:50px;  display:flex; justify-content: space-between; width: 100px;">
-      <div>
-      <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="title"  v-model.trim="inputData">
+      <div style="text-align: center;">
+      <input style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="title"  v-model.trim="inputData">
     </div>
     
     <div style="text-align: center; margin:auto">

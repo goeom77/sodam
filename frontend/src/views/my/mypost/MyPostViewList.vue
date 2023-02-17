@@ -77,12 +77,9 @@ export default {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 문의')
           this.MyInquiryarticles = res.data
         })
-        .catch((err) => {
-          console.log('어림도 없지 문의')
-        })
+
     },
 
   }

@@ -115,12 +115,9 @@ export default {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 게시판 전체 목록')
           this.MyBoardViewListarticles = res.data
         })
-        .catch((err) => {
-          console.log('어림도 없지 게시판 전체 목록')
-        })
+
     },
     MyBoardViewListarticlessearch() {
       axios({

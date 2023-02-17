@@ -22,8 +22,8 @@
             >
               <!-- <v-tabs-slider color="yellow"></v-tabs-slider> -->
     
-              <v-tab value="one">공지사항</v-tab>
-              <v-tab value="two">1:1 문의</v-tab>
+              <v-tab value="one" style="font-size:20px; ">공지사항</v-tab>
+              <v-tab value="two" style="font-size:20px;">1:1 문의</v-tab>
         
             </v-tabs>
           </template>

@@ -10,7 +10,7 @@
       </v-toolbar>
       <div class="container" style="border-bottom:1px solid #ccc;">
         <div class="row" style="border-top:1px solid black; margin-top:20px; padding-top:20px">
-          <div class="col-10" style="margin:auto;">
+          <div class="col-10" style="margin:auto; font-size:25px; font-weight: 800;">
             [{{ convertConsultType(this.Boardarticle.category) }}] {{ this.Boardarticle.title }}
           </div>
           <div class="col-1" style="text-align:right; margin:auto;">
