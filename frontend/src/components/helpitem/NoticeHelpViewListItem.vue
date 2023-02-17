@@ -6,8 +6,9 @@
           {{ Noticearticle.id }}
         </div>
         <div class="col-8" style="margin:auto;">
-          {{ Noticearticle.title }}
-          <br>
+          <div style="font-size:20px; font-weight: 600;">
+            {{ Noticearticle.title }}
+          </div>
           {{ Noticearticle.writerId }} ID
         </div>
         <div class="col-1" style="text-align: center; margin:auto;">

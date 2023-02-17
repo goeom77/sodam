@@ -11,7 +11,6 @@
         style="text-align:">
           <v-toolbar-title style="margin-left: 50px; font-weight: 1000;">HELP DESK</v-toolbar-title>
           
-
           <template v-slot:extension>
             <v-tabs
               v-model="tab"
