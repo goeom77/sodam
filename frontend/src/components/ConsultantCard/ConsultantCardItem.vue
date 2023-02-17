@@ -191,7 +191,7 @@ export default {
         {name:'여', value:"WOMEN"},
       ],
       name:null,
-      state:'WAIT',
+      state:'APPROVED',
       tel:null,
       }
     },

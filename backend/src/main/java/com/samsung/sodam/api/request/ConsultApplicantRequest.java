@@ -29,7 +29,7 @@ public class ConsultApplicantRequest {
     @ApiModelProperty(required = true)
     private String clientId;
     @Convert(converter = StateAttributeConverter.class)
-    private STATE state=STATE.WAIT; // 신청상태
+    private STATE state=STATE.APPROVED; // 신청상태
     private String name="";
     @Convert(converter = ConsultConverter.class)
     private CONSULT_TYPE consultType = CONSULT_TYPE.ALL;
