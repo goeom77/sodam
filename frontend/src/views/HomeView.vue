@@ -1,17 +1,20 @@
 <template>
   <div id="fh5co-main">
     <!--    <div class="fh5co-narrow-content">-->
-<v-container>
-  <div class="mb-3" style="width:auto;" >
-    <v-parallax
-        src="@/assets/images/banner1.png"
-        class="mx-0"
-    >
-      <div class="d-flex flex-column fill-height justify-center align-center text-white">
-      </div>
-    </v-parallax>
-  </div>
-</v-container>
+    <div class="mb-3">
+      <v-parallax
+        src="@/assets/images/backimg.jpg"
+      >
+        <div class="d-flex flex-column fill-height justify-center align-center text-white">
+          <h1 class="text-h4 font-weight-thin mb-4">
+            소중한 상담
+          </h1>
+          <h4 class="subheading">
+            여러분과 함께
+          </h4>
+        </div>
+      </v-parallax>
+    </div>
     <v-container class="mb-5">
       <v-container>
         <h2>추천 상담사</h2>
