@@ -24,7 +24,7 @@
             {{ this.Qnaarticle.content }}
           </div>
           <div style="text-align: right; margin-right:30px" v-if="(this.$store.state.payload.id==`${writerId}`)">
-            <v-btn outlined rounded text @click="QnaarticleUpdate" color="blue">수정</v-btn>
+            <v-btn outlined rounded text @click="QnaarticleUpdate">수정</v-btn>
             <v-btn outlined rounded text @click="QnaarticleDelete" color="red">삭제</v-btn>
           </div>
           
