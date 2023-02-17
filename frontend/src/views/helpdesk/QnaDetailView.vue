@@ -10,8 +10,11 @@
       <!-- 배경 End -->
       <div class="container">
           <div class="row noticetitle" >
-            <div class="col-10" style="font-size:50px; font-weight: bolder;">
+            <div class="col-9" style="font-size:50px; font-weight: bolder;">
               {{ this.Qnaarticle.title }}
+            </div>
+            <div class="col-1" style="text-align: right; margin:auto; font-size:20px">
+              {{ this.Qnaarticle.writerId }}
             </div>
             <div class="col-2" style="text-align: right; margin:auto; font-size:20px">
               {{ this.Qnaarticle.createdAt.split(' ')[0] }}
@@ -21,7 +24,7 @@
             {{ this.Qnaarticle.content }}
           </div>
           <div style="text-align: right; margin-right:30px" v-if="(this.$store.state.payload.id==`${writerId}`)">
-            <v-btn outlined rounded text @click="QnaarticleUpdate" color="blue">수정</v-btn>
+            <v-btn outlined rounded text @click="QnaarticleUpdate">수정</v-btn>
             <v-btn outlined rounded text @click="QnaarticleDelete" color="red">삭제</v-btn>
           </div>
           

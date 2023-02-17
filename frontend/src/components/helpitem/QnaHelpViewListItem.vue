@@ -6,8 +6,9 @@
           {{ Boardarticle.id }}
         </div>
         <div class="col-8" style="margin:auto;">
-          {{ Boardarticle.title }}
-          <br>
+          <div style="font-size: 20px; font-weight: 700;">
+            {{ Boardarticle.title }}
+          </div>
           {{ Boardarticle.writerId }} ID
         </div>
         <div class="col-1" style="text-align: center; margin:auto;">

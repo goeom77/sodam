@@ -109,6 +109,11 @@
           console.log(err)
         })
       },
+      convertClientId() {
+      let prevId = this.review.clientId;
+      let currId = prevId.substr(0, 5) + '*'.repeat(prevId.length - 5);
+      return currId;
+    }
   },
     
   }

@@ -5,7 +5,6 @@
         <v-card-title>{{ review.title }}</v-card-title>
         <v-card-subtitle>
           <v-rating
-          disabled="true"
             v-bind:model-value=rating
             size="x-small"
             density="comfortable"

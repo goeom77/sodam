@@ -6,8 +6,9 @@
         {{ Boardarticle.category }}
       </div>
       <div class="col-7" style="margin:auto; padding-left: 30px;">
-        {{ Boardarticle.title }}
-        <br>
+        <h3>
+          {{ Boardarticle.title }}
+        </h3>
         {{ Boardarticle.clientId }}
       </div>
       <div class="col-1" style="text-align: center; margin:auto;">
@@ -68,6 +69,11 @@ export default {
   methods: {
     moveTo(){
       this.$router.push({name:'BoardDetailView', params: { postId: this.Boardarticle.postId }  })
+    },
+    convertClientId() {
+      let prevId = this.Boardarticle.clientId;
+      let currId = prevId.substr(0, 5) + '*'.repeat(prevId.length - 5);
+      return currId;
     }
   }
 }
