@@ -28,7 +28,7 @@
             :dragging-distance="200"
             :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
 
-          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg" @click="moveTo()"/>
+          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg" @click="moveTo(slide.id)"/>
 
         </vueper-slides>
       </v-container>
@@ -89,8 +89,8 @@ export default {
             this.checkInfo = res.data
           })
     },
-    moveTo(){
-      this.$router.push({ name: 'consultantcarditem', params: {id: this.counselor.id} })
+    moveTo(id){
+      this.$router.push({ name: 'consultantcarditem', params: {id:id} })
     },
   },
   created() {
