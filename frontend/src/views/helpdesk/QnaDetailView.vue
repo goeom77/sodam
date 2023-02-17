@@ -10,8 +10,11 @@
       <!-- 배경 End -->
       <div class="container">
           <div class="row noticetitle" >
-            <div class="col-10" style="font-size:50px; font-weight: bolder;">
+            <div class="col-9" style="font-size:50px; font-weight: bolder;">
               {{ this.Qnaarticle.title }}
+            </div>
+            <div class="col-1" style="text-align: right; margin:auto; font-size:20px">
+              {{ this.Qnaarticle.writerId }}
             </div>
             <div class="col-2" style="text-align: right; margin:auto; font-size:20px">
               {{ this.Qnaarticle.createdAt.split(' ')[0] }}
