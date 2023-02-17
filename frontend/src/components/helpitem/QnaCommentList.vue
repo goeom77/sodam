@@ -12,7 +12,7 @@
             <div style="text-align: right; padding-bottom: 20px;">
               <v-btn append-icon="mdi-pencil" @click="changeStatus">
                   수정
-                </v-btn>
+                </v-btn>&nbsp;
                 <v-btn append-icon="mdi-delete" color="red" @click="deleteComment">
                   삭제
                 </v-btn>

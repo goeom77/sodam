@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <input id="searhBar"
-           class="search-input"
-           type="text"
-           v-model="this.SearchData"
-           placeholder="상담사, 카테고리 검색.."
-           @input="searchCounselor()"
-    />
-  </div>
+  <v-container class="counselor-container align-center">
+    <v-row class="searchBarArea mx-auto">
+      <MDBInput
+          v-model="SearchData"
+          inputGroup
+          class="py-3"
+          @input="searchCounselor"
+          :formOutline="false"
+          wrapperClass="mb-3"
+          placeholder="상담사 찾기"
+          aria-label="Search"
+          aria-describedby="button-addon2"
+      >
+        <MDBBtn outline="primary">Search</MDBBtn>
+      </MDBInput>
 
   <div class="row animate-box" data-animate-effect="fadeInLeft">
     <div v-if="this.checkInfo">
@@ -29,7 +35,8 @@
     </div>
 
   </div>
-
+  </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -62,16 +69,17 @@ export default {
     },
     searchCounselor(){
       axios({
-        method:'post',
-        url:`${VUE_APP_API_URL}/api/counselor/test`,
-        data:{
+        method: 'post',
+        url: `${VUE_APP_API_URL}/api/counselor/test`,
+        data: {
           name: this.SearchData
         }
       })
-          .then(res=>{
-            console.log("ye"+res.data)
-            this.checkInfo = res.data
-          })
+      .then(res => {
+        console.log('search'+res.data)
+        
+        this.checkInfo = res.data.content
+      })
     }
   },
   created() {
