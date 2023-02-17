@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -23,10 +24,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class TestRequest {
     @Convert(converter = ConsultListConverter.class)
-    private List<CONSULT_TYPE> list;
+    private List<CONSULT_TYPE> list= Collections.emptyList();
 
     private String name;
 
     @Convert(converter = GenderConverter.class)
-    private GENDER gender;
+    private GENDER gender = GENDER.MEN;
 }

@@ -15,100 +15,59 @@
         <MDBBtn outline="primary">Search</MDBBtn>
       </MDBInput>
 
-      <v-row>
-        <v-row justify="space-around  mx-auto">
-          <v-col cols="auto">
-            <v-sheet
-                class="py-2 px-1"
-            >
-              <v-chip-group
-                  multiple
-                  selected-class="text-primary"
-              >
-                <v-chip
-                    v-for="tag in tags"
-                    :key="tag"
-                    variant="outlined"
-                    class="p-3"
-                    style="background: #ffffff"
-                >
-                  {{ tag }}
-                </v-chip>
-              </v-chip-group>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-row>
-      <!--      <mdbInput-->
-      <!--          v-model="this.SearchData"-->
-      <!--          @input="searchCounselor()"-->
-      <!--          :formOutline="false"-->
-      <!--          wrapperClass="mb-3"-->
-      <!--          placeholder="상담사, 카테고리 검색.."-->
-      <!--          aria-label="Search"-->
-      <!--          aria-describedby="button-addon2"-->
-      <!--      >-->
-      <!--        <mdbBtn outline="primary">Search</mdbBtn>-->
-      <!--      </mdbInput>-->
-    </v-row>
-
-    <v-row>
-      <div class="row animate-box" data-animate-effect="fadeInLeft">
-        <div v-if="this.checkInfo">
-          <div class="d-flex flex-wrap">
-            <ConsultantCard
-                v-for="(counselor,idx) in checkInfo"
-                :key="idx"
-                :counselor="counselor"/>
-          </div>
-        </div>
-        <div v-else-if="this.checkInfo===null">
-          <div class="d-flex flex-wrap">
-            <ConsultantCard
-                v-for="(counselor,idx) in counselorInfo"
-                :key="idx"
-                :counselor="counselor"/>
-          </div>
-        </div>
+  <div class="row animate-box" data-animate-effect="fadeInLeft">
+    <div v-if="this.checkInfo">
+      <div class="d-flex flex-wrap">
+        <ConsultantCard
+            v-for="(counselor,idx) in checkInfo"
+            :key="idx"
+            :counselor="counselor"/>
       </div>
-    </v-row>
+    </div>
+    <div v-else-if="this.checkInfo===null">
+      <div class="d-flex flex-wrap">
+        <ConsultantCard
+            v-for="(counselor,idx) in counselorInfo"
+            :key="idx"
+            :counselor="counselor"/>
+      </div>
+
+    </div>
+
+  </div>
+  </v-row>
   </v-container>
 </template>
 
 <script>
 import ConsultantCard from '@/components/ConsultantCard/ConsultantCard'
 import axios from 'axios'
-import {MDBInput, MDBBtn} from 'mdb-vue-ui-kit';
-
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'ConsultantList',
   components: {
-    ConsultantCard,
-    MDBInput,
-    MDBBtn
+    ConsultantCard
   },
-  data() {
-    return {
+  data(){
+    return{
       counselorInfo: null,
       SearchData: null,
-      checkInfo: null,
-      tags: ["부부", "학업", "노인"]
+      checkInfo:null
     }
   },
-  methods: {
-    getCounselorInfo() {
+  methods:{
+    getCounselorInfo(){
       axios({
         method:'post',
         url:`${VUE_APP_API_URL}/api/counselor/`,
       })
-      .then(res=>{
-        let jsonData = JSON.parse(JSON.stringify(res.data.content))
-        this.counselorInfo = jsonData
-      })
+          .then(res=>{
+            console.log(res)
+            this.counselorInfo = res.data.content
+          })
     },
-    searchCounselor() {
+    searchCounselor(){
       axios({
         method: 'post',
         url: `${VUE_APP_API_URL}/api/counselor/test`,
@@ -139,19 +98,13 @@ export default {
 
 <style>
 
-.counselor-container {
-  align-items: center;
-}
-
 .work-item {
   margin-bottom: 30px;
 }
-
 .work-item a {
   border: none;
   text-align: center;
 }
-
 .work-item a img {
   margin-bottom: 10px;
   float: left;
@@ -160,36 +113,22 @@ export default {
   -o-transition: 0.5s;
   transition: 0.5s;
 }
-
 .work-item a h3 {
   font-size: 20px;
   color: #000;
   margin-bottom: 10px;
 }
-
 .work-item a p {
   font-size: 14px;
   color: #cccccc;
   margin-bottom: 0;
 }
-
 .work-item a:hover, .work-item a:active, .work-item a:focus {
   text-decoration: none;
 }
-
 .work-item a:hover img, .work-item a:active img, .work-item a:focus img {
   border: 1px solid #000;
 }
-
-.searchBarArea {
-  margin-bottom: 5%;
-  width: 80%;
-}
-
-.animate-box {
-  padding: 0 7%;
-}
-
 /* h3 {
   margin: 40px 0 0;
 }
