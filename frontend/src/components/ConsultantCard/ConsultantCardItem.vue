@@ -129,7 +129,8 @@
     <!-- 상담 신청서 end -->
     <br>
 
-    <ConsultantCardItemReview :counselorData="this.counselorData" />
+    <ConsultantCardItemReview 
+    :counselorData="this.counselorData" />
   </div>
 </div>
 </template>
