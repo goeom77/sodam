@@ -4,9 +4,7 @@
   <div class="fh5co-narrow-content">
 
   <div @click="checkData">후기</div>
-    <div>
-      <div id="Writebox">
-        <form>
+    
           <div style="text-align:start; padding: 10px;">
           </div>
           <!-- 평점 -->
@@ -20,7 +18,7 @@
 
           <div style="text-align:start; padding: 10px;">
             <label for="category">대상</label>
-            <select id="worryselect" v-model="this.type" >
+            <select v-model="this.type" style="margin-left:30px; border:1px solid black; border-radius: 4px; width: 600px;" >
               <option 
                 v-for="(item, index) in selectTypeList"
                 :key="index"
@@ -30,23 +28,21 @@
               >
             </select>
           </div>
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
+          <div style="text-align:start; padding-left: 10px; border-top: 1px solid #B9B6B6;">
             <label for="title">제목</label>
-            <input type="text" id="title" v-model.trim="title">
+            <input type="text" v-model.trim="title" style="width: 600px; margin-left:30px; border:1px solid black; border-radius: 4px;">
           </div>
           <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
             <label for="content">내용</label>
-            <textarea id="content" v-model="content"></textarea>
+            <textarea  v-model="content" style="margin-left:30px; width: 600px; border:1px solid black; border-radius: 4px;"></textarea>
           </div>
           <v-btn outlined rounded text @click="ReviewCreate">등록</v-btn>
           <v-btn outlined rounded text @click="backTo">취소</v-btn>
 
           <!-- <button @click="postId !== undefined ? KidBoardarticleUpdate() : KidBoardcreateArticle()">{{ postId !== undefined ? "수정" : "작성" }}</button> -->
-        </form>
+    
         <!-- <button @click="ReviewUpdate">수정</button> -->
       </div>
-    </div>
-    </div>
     </div>
   </template>
   
