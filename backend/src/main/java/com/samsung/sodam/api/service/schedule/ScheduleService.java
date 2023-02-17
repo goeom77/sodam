@@ -18,6 +18,7 @@ public interface ScheduleService {
     ConsultSchedule makeSchedule(ConsultSchedule request);
 
     Page<ConsultSchedule> getMySchedules(Pageable pageable, String userId);
+    Page<ConsultSchedule> getMySchedules(Pageable pageable, Integer sessionId);
 
     List<ConsultApplicant> searchSchedules(SearchSchedule request);
 

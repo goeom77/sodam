@@ -46,6 +46,12 @@ public class ScheduleCustomRepositoryImpl implements ScheduleCustomRepository {
     }
 
     @Override
+    public Page<ConsultSchedule> getMySchedules(Pageable pageable, Integer sessionId) {
+        List<ConsultSchedule> list = queryFactory.selectFrom(consultSchedule).join(consultSession).on(consultSchedule.sessionId.eq(consultSession.id)).where(consultSession.id.eq(sessionId)).orderBy(consultSchedule.dateTime.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+        return new PageImpl<>(list, pageable, 20);
+    }
+
+    @Override
     public List<ConsultApplicant> searchSchedules(SearchSchedule request) {
         return queryFactory.select(consultApplicant).from(consultApplicant).join(consultSession)
                 .on(consultApplicant.sessionId.eq(consultSession.id))

@@ -13,6 +13,7 @@ import com.samsung.sodam.db.entity.ConsultSchedule;
 import com.samsung.sodam.db.entity.STATE;
 import com.samsung.sodam.db.repository.ScheduleRepository;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -66,6 +67,13 @@ public class ScheduleController {
     public Page<ConsultSchedule> getSchedules(Pageable pageable, @Validated String userId) {
         if (pageable == null) pageable = Pageable.ofSize(20);
         return service.getMySchedules(pageable, userId);
+    }
+
+    @GetMapping("/schedules/detail")
+    @ApiOperation(value = "sessionid로 본인이 포함된 일정을 조회한다")
+    public Page<ConsultSchedule> getSchedules(Pageable pageable, @Validated Integer sessionId) {
+        if (pageable == null) pageable = Pageable.ofSize(20);
+        return service.getMySchedules(pageable, sessionId);
     }
 
 

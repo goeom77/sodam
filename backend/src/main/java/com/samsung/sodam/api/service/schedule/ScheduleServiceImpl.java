@@ -48,6 +48,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public Page<ConsultSchedule> getMySchedules(Pageable pageable,Integer sessionId) {
+        return customRepository.getMySchedules(pageable,sessionId);
+    }
+
+    @Override
     public List<ConsultApplicant> searchSchedules(SearchSchedule request) {
         return customRepository.searchSchedules(request);
     }

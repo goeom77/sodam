@@ -16,6 +16,7 @@ public interface ScheduleCustomRepository {
     Page<ConsultSchedule> getSchedulesByClientId(String counselorId, String clientId);
 
     Page<ConsultSchedule> getMySchedules(Pageable pageable, String userId);
+    Page<ConsultSchedule> getMySchedules(Pageable pageable, Integer sessionId);
 
     List<ConsultApplicant> searchSchedules(SearchSchedule request);
 
