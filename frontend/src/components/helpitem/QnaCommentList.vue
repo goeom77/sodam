@@ -1,159 +1,98 @@
 <template>
     <div v-if="(limit-1)*10 <= index && index < limit * 10">
-      <div v-if="!this.updateStatus" id="comment_container">
-        <div class="comment-detail">
-      <!-- <div v-if=""> -->
-      <div>
-        <!-- <router-link style="text-decoration: none; color:gray; font-size:13px;" v-if="counselorName" :to="{name: 'ProfileView', params: {counselorName: this.counselorName}}">
-        <img id="comment-img" :src="imgSrc">
-          {{ this.counselorName }}
-          </router-link> -->
-      ┖ {{ QnaComment.content }} {{ QnaComment.commentId }}
-      </div>
-      <!-- <div v-else="">
-        <KidBoardCommentForm
-          :KidBoardComment="KidBoardComment"
-        />
-      </div> -->
-      <div style="margin-top:3px;">
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="updateComment">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" @click="deleteComment">삭제</a>
-        <!-- <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="getCommentUpdate">수정하기</a>
-        <a style="cursor:pointer; color:gray; margin-left: 8px; font-size:13px;" v-if="this.userid === this.KidBoardComment.counselorId" @click="deleteComment">삭제</a> -->
-      </div>
-    </div>
-      <hr style="margin:0px;">
-    </div>
-      <div v-if="this.updateStatus">
-        <form @submit.prevent="updateComment" style="border-radius:0px; height:39px;  display:flex; justify-content: space-between; width: 100px;">
+      <div class="container">
+        <div v-if="!this.updateStatus">
           <div>
-            <input class="form-control" style="width:742px; " placeholder="댓글을 입력해주세요" aria-label="Please input the title" aria-describedby="basic-addon1" type="text" id="content" v-model.trim="content">
+            <div style="font-size:20px">
+              {{ QnaComment.writerId }}   |   {{ QnaComment.createdAt.split(' ')[0] }}
+            </div>
+            <div>
+              {{ QnaComment.content }}
+            </div>
+            <div style="text-align: right; padding-bottom: 20px;">
+              <v-btn append-icon="mdi-pencil" @click="changeStatus">
+                  수정
+                </v-btn>
+                <v-btn append-icon="mdi-delete" color="red" @click="deleteComment">
+                  삭제
+                </v-btn>
+            </div>
+          </div>
+        </div>
+        <div v-if="this.updateStatus">
+          <div style="font-size:20px">
+            {{ QnaComment.writerId }}   |   {{ QnaComment.createdAt.split(' ')[0] }}
           </div>
           <div>
-            <input class="btn btn-danger" type="submit" id="submit" value="수정">
+            {{ QnaComment.content }}
           </div>
-        </form>
+            <div style="text-align:right">
+              <input style="border:1px solid black; border-radius: 4px; width:100%" placeholder="댓글을 입력해주세요" type="text" v-model.trim="content">
+            
+              <v-btn append-icon="mdi-pencil" @click="updateComment">
+                수정
+              </v-btn>
+            </div>
+          
+        </div>
       </div>
     </div>
   </template>
   
   <script>
   import axios from 'axios'
-  import QnaCommentForm from '../helpitem/QnaCommentForm.vue'
-
   const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
   export default {
     name: 'QnaCommentList',
+    props: {
+      QnaComment: Object,
+      index: Number,
+      limit: Number,
+    },
     data() {
       return{
-        // username: null,
         writerId: null,
         updateStatus: false,
         content: null,
-        // counselorId : null,
         id : null,
         profileImageUrl: null,
       }
-    },
-    components: {
-      QnaCommentForm,
     },
     computed: {
       imgSrc() {
         return this.profileImageUrl
       },
     },
-    props: {
-      BoardComment: Object,
-      index: Number,
-      limit: Number,
-    },
-    // created() {
-    //   this.getUserName()
-    // },
     methods: {
-      // getProfileImage() {
-      //   axios({
-      //     method: 'get',
-      //     url: `${VUE_APP_API_URL}/api/accounts/profile_image/${this.KidBoardComment.comment_user}/`,
-      //     headers: { 
-      //       'Content-Type': 'multipart/form-data',
-      //           Authorization: `Token ${this.$store.state.token}`
-      //         },
-      //     })
-      //     .then((res) => {
-      //       this.profileImageUrl=`${VUE_APP_API_URL}${res.data.profile_image}`
-      //     })
-      //     .catch((err) => {
-      //       console.log(err)
-      //     })
-      // },
+      changeStatus(){
+        this.updateStatus= !this.updateStatus
+      },
       deleteComment() {
         axios({
           method: 'delete',
-          url: `${VUE_APP_API_URL}/api/qna/comment/${this.QnaComment.id}/`,
+          url: `${VUE_APP_API_URL}/api/admin/qna/comment/${this.QnaComment.id}/`,
+          data:{
+            id: this.index
+          },
           headers: {
             Authorization : `Bearer ${this.$store.state.token.token.access_token}`
           }
         })
         .then(() => {
+          this.$router.go(0);
           this.$emit('delete-comment')
         })
         .catch((err) => {
           console.log(err)
         })
       },
-    //   getUserName() {
-    //     console.log('유저네임 들어왔냐?')
-    //     axios({
-    //       method: 'post',
-    //       url: `${VUE_APP_API_URL}/api/counselor/${this.QnaComment.counselorId}`,
-    //       data: {
-    //         userid: this.QnaComment.comment_user
-    //       },
-    //       headers: {
-    //         Authorization : `Bearer ${this.$store.state.token.token.access_token}`
-    //       }
-    //     })
-    //     .then((res) => {
-    //       this.username = res.data.username
-    //       this.userid = res.data.userid
-    //     })
-    //     .then(() => {
-    //       this.getProfileImage()
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    // },
-    // getCommentUpdate() {
-    //     axios({
-    //       method: 'get',
-    //       url: `${VUE_APP_API_URL}/api/trouble/comment/${this.KidBoardComment.commentId}/`,
-    //       headers: { 
-    //           Authorization: `Token ${this.$store.state.token}`
-    //       }
-    //     })
-    //     .then((res) => {
-    //       console.log('댓글 불러오기 성공')
-    //       this.content = res.data.content
-    //       this.counselorId  = res.data.counselorId 
-    //       this.commentId = res.data.commentId
-    //       this.updateStatus = true
-    //     })
-    //     .catch((err) => {
-    //       console.log('댓글 불러오기 실패')
-    //       console.log(err)
-    //     })
-    //   },
       updateComment() {
         axios({
           method: 'put',
-          url: `${VUE_APP_API_URL}/api/qna/comment/${this.QnaComment.id}/`,
+          url: `${VUE_APP_API_URL}/api/admin/qna/comment/${this.QnaComment.id}/`,
           data: {
             content: this.content,
-            // counselorId: this.counselorId ,
             id: this.id 
           },
           headers: {
@@ -161,12 +100,12 @@
           }
         })
         .then(() => {
-          // this.$emit('update-comment')
-          console.log('댓글 수정 성공')
           this.updateStatus = false
+          
+          this.$emit('update-comment')
+          
         })
         .catch((err) => {
-          console.log('댓글 수정 실패')
           console.log(err)
         })
       },
@@ -176,24 +115,4 @@
   </script>
   
   <style>
-  #comment_container {
-    width: 800px;
-    /* border: 2px solid white; */
-    background-color: #2d3442;
-    color: white;
-  }
-  .comment-detail {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 5px;
-    margin-right: 15px;
-  }
-  #comment-img {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 5px;
-    margin-right: 6px;
-  }
   </style>

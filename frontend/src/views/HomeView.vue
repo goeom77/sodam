@@ -1,62 +1,22 @@
 <template>
-  <v-container id="fh5co-product-section" class="p-0 m-0">
-    <v-container class="p-0 m-0">
-      <v-img src="../assets/images/banner1.png" class="h-50"/>
-<!--      <v-btn style="top: -100px;" class="mx-auto po"> 상담사 찾기 </v-btn>-->
-    </v-container>
-    <v-container class="mb-5">
-      <v-container>
-        <h2>추천 상담사</h2>
-
-        <vueper-slides
-            class="no-shadow mx-auto pb-2"
-            :visible-slides="3"
-            slide-multiple
-            :gap="3"
-            :slide-ratio="1 / 4"
-            :dragging-distance="200"
-            :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
-
-        </vueper-slides>
-      </v-container>
-      <v-container>
-        <h2> 최신글 </h2>
-
-        <vueper-slides
-            class="no-shadow mx-auto pb-2"
-            :visible-slides="3"
-            slide-multiple
-            :gap="3"
-            :slide-ratio="1 / 4"
-            :dragging-distance="200"
-            :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
-          <vueper-slide v-for="(slide, i) in this.counselorInfo" :key="i" :image="slide.profileImg"/>
-
-        </vueper-slides>
-      </v-container>
-    </v-container>
-    <!--    <v-container v-show="counselorInfo">-->
-    <!--      <vueper-slides-->
-    <!--          class="no-shadow"-->
-    <!--          :visible-slides="3"-->
-    <!--          slide-multiple-->
-    <!--          :gap="3"-->
-    <!--          :slide-ratio="1 / 4"-->
-    <!--          :dragging-distance="200"-->
-    <!--          :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">-->
-    <!--        <vueper-slide v-for="(slide, i) in counselorInfo" :key="i" :image="slide.profileImg" >-->
-    <!--          <a>{{ slide.name }}</a>-->
-    <!--        </vueper-slide>-->
-    <!--        <vueper-slide v-for="(c,idx) in counselorInfo" :key="idx" :title="c.name" :image="c.profileImg">-->
-    <!--          <img v-if="c.profileImg" v-bind:src="c.profileImg" alt="까비" class="card_image profileImg">-->
-    <!--          <img class="profileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >-->
-    <!--                    <ConsultantCard :counselor="c" style="background: black"/>-->
-    <!--        </vueper-slide>-->
-    <!--      </vueper-slides>-->
-    <!--    </v-container>-->
-        <ConsultantList/>
-  </v-container>
+  <div id="fh5co-main">
+    <!--    <div class="fh5co-narrow-content">-->
+    <div class="mb-3">
+      <v-parallax
+        src="@/assets/images/backimg.jpg"
+      >
+        <div class="d-flex flex-column fill-height justify-center align-center text-white">
+          <h1 class="text-h4 font-weight-thin mb-4">
+            소중한 상담
+          </h1>
+          <h4 class="subheading">
+            여러분과 함께
+          </h4>
+        </div>
+      </v-parallax>
+    </div>
+    <ConsultantList/>
+  </div>
 
 </template>
 
@@ -191,8 +151,7 @@ export default {
 }
 
 .bgImg {
-  background-image: url('@/assets/images/homeImg.png');
-  height: 50vh;
+  background-image: url('@/assets/images/backimg.jpg');
   width: 100%;
   background-position: center center;
   background-repeat: no-repeat;

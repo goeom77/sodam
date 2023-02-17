@@ -1,12 +1,11 @@
 <template>
   <div id="AlarmViewListAll" >
-    <div>
+    <div id="alarmList">
       <AlarmViewListItem
-        v-for="(AlarmViewarticle, index) in AlarmViewarticles.content"
+        v-for="(AlarmViewarticle, index) in AlarmViewarticles"
         :key="AlarmViewarticle.id"
         :AlarmViewarticle="AlarmViewarticle"
         :index="index"
-        :limit="AlarmViewListPage"
         @delete-alarm="getAlarmArticles"
         @refresh-alarm="getAlarmArticles"
       /> 
@@ -14,8 +13,8 @@
 
     <div v-if="AlarmViewarticles" class="text-center">
       <v-pagination
-        v-model="this.AlarmViewListPage"
-        :length="5"
+        v-model="page"
+        :length="totalPages"
       ></v-pagination>
     </div>
   </div>
@@ -33,30 +32,21 @@ export default {
   name: 'AlarmViewListAll',
   data() {
     return {
-      AlarmViewListPage: 1,
-      AlarmViewarticles: [], 
+      AlarmViewarticles: [],
+      // pagination
+      page: 1,
+      totalPages: 1,
+      offset: 1,
+      pageSize: 1,
     }
   },
   components: {
     AlarmViewListItem
   },
-  // computed: {
-  //   AlarmViewarticles() {
-  //     return this.$store.state.AlarmViewarticles
-  //   },
-  // },
   mounted() {
     this.getAlarmArticles()
-    // this.getSangdamAlarmArticles()
-    // this.getBoardAlarmArticles()
-    // this.getHelpAlarmArticles()
-    // this.getGuitarAlarmArticles()  
   },
   methods: {
-    // getAlarmArticles() {
-    //   console.log('전체알람 알람뷰')
-    //   this.$store.dispatch('getAlarmArticles')
-    // },
     getAlarmArticles() {
       axios({
         method: 'get',
@@ -65,12 +55,14 @@ export default {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 제발')
-          this.AlarmViewarticles = res.data
+          this.AlarmViewarticles = res.data.content
+          this.totalPages = res.data.totalPages
+          this.offset = res.data.pageable.offset
+          this.page = res.data.pageable.pageNumber
+          this.pageSize = res.data.pageable.pageSize
         })
         .catch((err) => {
           console.log(err);
-          console.log('어림도 없지')
         })
     },
   }
@@ -78,10 +70,7 @@ export default {
 </script>
 
 <style>
-#AlarmViewListAll {
-  width: 1255px;
+.alarmList {
+  margin: 3rem;
 }
-
-
-
 </style>

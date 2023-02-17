@@ -1,6 +1,11 @@
 <template>
   <div>
       <v-card elevation="10" outlined width="100%" class="mx-auto">
+        <div v-if="this.$store.state.payload.id==='admin'" style="text-align: right; margin-right:50px; padding-top:20px">
+          <v-btn append-icon="mdi-pencil" @click="moveTo">
+            작성
+          </v-btn>
+      </div>
         <div class="container helpContent" style="border-bottom: 1px solid #ccc;">
           <div class="row">
             <div class="col-1" style="text-align: center; margin:auto;">
@@ -85,6 +90,9 @@ export default {
           console.log('어림도 없지 게시판 전체 목록')
         })
     },
+    moveTo(){
+      this.$router.push({ name: 'NoticeCreateView'})
+    }
 
   }
 }

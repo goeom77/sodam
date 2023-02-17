@@ -1,25 +1,23 @@
 <template>
   <div id="AlarmViewListSangdam" >
-    <div>
+    <div id="alarmList">
       <AlarmViewListItem
-        v-for="(AlarmViewarticle, index) in SangdamAlarmViewarticles.content"
+        v-for="(AlarmViewarticle, index) in SangdamAlarmViewarticles"
         :key="AlarmViewarticle.id"
         :AlarmViewarticle="AlarmViewarticle"
         :index="index"
-        :limit="AlarmViewListPage"
         @delete-alarm="getSangdamAlarmArticles"
         @refresh-alarm="getSangdamAlarmArticles"
       /> 
     </div>
 
-    <div v-if="SangdamAlarmViewarticles" class="text-center">
+    <div class="text-center pt-2">
       <v-pagination
-        v-model="this.AlarmViewListPage"
-        :length="5"
+        v-model="page"
+        :length="totalPages"
       ></v-pagination>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -33,8 +31,11 @@ export default {
   name: 'AlarmViewListSangdam',
   data() {
     return {
-      AlarmViewListPage: 1,
       SangdamAlarmViewarticles: [], 
+      page: 1,
+      totalPages: 1,
+      offset: 1,
+      pageSize: 1,
     }
   },
   components: {
@@ -64,11 +65,14 @@ export default {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 제발')
-          this.SangdamAlarmViewarticles = res.data
+          this.SangdamAlarmViewarticles = res.data.content
+          this.totalPages = res.data.totalPages
+          this.offset = res.data.pageable.offset
+          this.page = res.data.pageable.pageNumber
+          this.pageSize = res.data.pageable.pageSize
         })
         .catch((err) => {
-          console.log('어림도 없지')
+          console.log(err)
         })
     },
   }
@@ -76,10 +80,7 @@ export default {
 </script>
 
 <style>
-#AlarmViewListAll {
-  width: 1255px;
+.alarmList {
+  margin: 3rem;
 }
-
-
-
 </style>

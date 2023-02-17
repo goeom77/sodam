@@ -17,7 +17,7 @@
                 density="comfortable"
                 color="yellow"
               ></v-rating>
-              <span class="text-grey-lighten-2 text-caption me-2">({{ 230 }})</span>
+              <!-- <span class="text-grey-lighten-2 text-caption me-2">({{ 230 }})</span> -->
             </div>
             <div class="card__status">{{ convertConsultType(counselor.consultTypeList) }}</div>
           </div>

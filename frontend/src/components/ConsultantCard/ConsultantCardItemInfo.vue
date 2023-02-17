@@ -1,22 +1,26 @@
 <template>
-  <v-container>
+  <v-container class="counselorInfoArea">
     <div class="parent">
       <div class="child1">
         <img class="detailProfileImg" v-if="counselorData.profileImg != null" v-bind:src="`${counselorData.profileImg}`" >
         <img class="detailProfileImg" v-else v-bind:src="`${this.nullProfileImg}`" alt="까비" >
       </div>
       <div class="child2" style="padding-left:30px">
-        <h1>
-          {{ counselorData.name }} 상담사
-        </h1>
-        <h2>
-          {{ counselorData.introduce }}
-        </h2>
+        <div v-if:toggleHeart="!toggleHeart" @click="likeCounselor">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16" style="float:right; cursor:pointer;">
+            <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+          </svg>
+        </div>
+        <div v-else @click="deleteFavCounselor">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-heart-fill" viewBox="0 0 16 16" style="float:right; cursor:pointer;">
+            <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+          </svg>
+        </div>
 
-        <!-- 이모티콘 하나 email이랑 전화 -->
-        <h4>
-          {{ convertConsultType(counselorData.consultTypeList) }}
-        </h4>
+        <h2>{{ counselorData.name }} 상담사</h2>
+        <h4>{{ counselorData.introduce }}</h4>
+        <h5>{{ convertConsultType(counselorData.consultTypeList) }}</h5>
 
         <div class="d-flex flex-nowrap" style="padding-top:50px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -35,56 +39,22 @@
           </h4>
         </div>
       </div>
-
-
-      <!-- 상담사 등록 버튼 -->
-      <div id="container-floating">
-        <div class="nd4 nds"><img class="reminder">
-          <p class="letter">C</p>
-        </div>
-        
-        <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-        
-        <div class="nd1 nds">
-          <p class="letter">E</p>
-        </div>
-
-
-        <!-- 상담사 등록 버튼 -->
-        <div id="container-floating">
-          <div class="nd4 nds"><img class="reminder">
-            <p class="letter">C</p>
-          </div>
-          <!-- 손가락 버튼  -->
-          <div class="nd3 nds"><img class="reminder" src="//ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/ic_reminders_speeddial_white_24dp.png" /></div>
-          <!-- E 버튼  -->
-          <div class="nd1 nds">
-            <p class="letter">E</p>
-          </div>
-          <!-- 작성 버튼 -->
-          <div id="floating-button">
-            <p class="plus">+</p>
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
-          </div>
-        </div>
-      </div>
-<!-- 
-        <div>
-          <button class="buttonSize" style="color:#ea4335" @click="likeCounselor">
-            관심 상담사 등록 
-          </button>
-        </div> -->
     </div>
+    <ConsultantCardItemInfoDetail  />
   </v-container>
-  </template>
+</template>
 
 <script>
 import axios from 'axios'
+import ConsultantCardItemInfoDetail from '@/components/ConsultantCard/ConsultantCardItemInfoDetail.vue'
 
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name:'ConsultantCardItemInfo',
+  components: {
+    ConsultantCardItemInfoDetail,
+  },
   props:{
     counselorData:Object
   },
@@ -93,6 +63,7 @@ export default {
       nullProfileImg : require('../../assets/images/사람altimg.png'),
       common_code: this.$store.state.payload.common_code,
       clientId:this.$store.state.payload.id,
+      toggleHeart: this.$store.state.userSignupData.like
     }
   },
   methods:{
@@ -109,7 +80,25 @@ export default {
         }
       })
       .then(res=>{
-        console.log(res)
+        this.toggleHeart = true;
+        this.$store.state.userSignupData.like = true;
+      })
+    },
+    deleteFavCounselor() {
+      axios({
+        method:'delete',
+        url:`${VUE_APP_API_URL}/api/client/${this.clientId}/fav/${this.counselorData.id}`,
+        data:{
+          clientId:this.clientId,
+          counselorId : this.counselorData.id
+        },
+        headers: {
+          Authorization : `Bearer ${this.$store.state.token.token.access_token}`
+        }
+      })
+      .then(res=>{
+        this.toggleHeart = false;
+        this.$store.state.userSignupData.like = false;
       })
     },
     convertConsultType(list) {
@@ -135,7 +124,7 @@ export default {
           selectTypeList.forEach( type => {
               if(type.value === element) {
                   result += type.name + " ";
-                  return;
+                  return
               }
           })
       });
@@ -375,7 +364,9 @@ h3{
 
 
 
-
+.counselorInfoArea {
+  border: 1px solid #dedbdb;
+}
 .child2{
   font-family: "Roboto", Arial, sans-serif;
   font-weight: 300;
@@ -385,7 +376,6 @@ h3{
 }
 .parent {
     display: flex;
-    border: 1px solid #dedbdb;
     padding: 25px 50px;
     margin-bottom: 15px;
 }

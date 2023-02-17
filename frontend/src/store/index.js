@@ -38,6 +38,7 @@ export default new Vuex.Store({
             gender: null,
             enterprise_id: null,
         },
+        sttdata : null,
     },
     getters: {
         isLogin(state) {
@@ -51,6 +52,9 @@ export default new Vuex.Store({
         },
         getIdData(state) {
             return state.payload.id
+        },
+        getSttKey(state){
+            return state.sttkey
         }
     },
     mutations: {
@@ -144,6 +148,12 @@ export default new Vuex.Store({
         },
         DISCOUNT_NOTI(state) {
             state.newNotiCount -= 1;
+        },
+        SET_STT_KEY(state, key){
+            state.sttkey = key;
+        },
+        SET_STT_DATA (state, data){
+            state.sttdata = data
         }
     },
     actions: {

@@ -107,8 +107,8 @@
           <div style="height:220px"></div>
           <ul>
             <li><router-link to="/BoardView">고민게시판</router-link>&nbsp;&nbsp;&nbsp;</li>
-            <li><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
-            <li><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li v-if="common_code == '1'"><router-link to="/Calendar">일정관리</router-link>&nbsp;&nbsp;&nbsp;</li>
+            <li v-if="common_code == '1'"><router-link to="/ClientManage">고객관리</router-link>&nbsp;&nbsp;&nbsp;</li>
             <li><router-link to="/HelpView">HELP DESK</router-link>&nbsp;&nbsp;&nbsp;</li>
           </ul>
           <div style="height:220px"></div>
@@ -127,18 +127,19 @@
 <script>
 import axios from 'axios'
 // import axios from '@/store/instance.js'
-import 'mdb-vue-ui-kit/css/mdb.min.css';
 import { EventSourcePolyfill } from "event-source-polyfill";
 // import LoadingView from '../src/views/common/LoadingView'
 
 document.querySelector('body').setAttribute('style',"margin: 0;")
 const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 const LOCAL_URL = process.env.LOCAL_URL
+const VUE_APP_STT_API_URL = process.env.VUE_APP_STT_API_URL
 
 export default {
   name:'App',
   data(){
     return{
+      common_code: this.$store.state.payload.common_code,
       dialog : false,
       projectlogo : require('../src/assets/images/projectlogoperpect.png'),
       newNotiCount : this.$store.state.newNotiCount,
@@ -195,7 +196,8 @@ export default {
         headers: {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`
         },
-        withCredentials : true
+        withCredentials : true,
+        heartbeatTimeout : 86400000000
       });
 
       // 알림 권한 설정

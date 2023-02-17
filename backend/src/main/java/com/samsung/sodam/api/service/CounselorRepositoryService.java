@@ -104,8 +104,8 @@ public class CounselorRepositoryService {
         repository.save(counselor);
     }
 
-    public CounselorListResponse getCounselorDetail(String id) {
-        return counselorCustomRepository.getCounselorDetail(id);
+    public CounselorListResponse getCounselorDetail(String clientId, String id) {
+        return counselorCustomRepository.getCounselorDetail(clientId, id);
     }
 
 //    public List<Review> getReviews(String id) {
@@ -205,11 +205,11 @@ public class CounselorRepositoryService {
         ConsultApplicant result = applicantRepository.save(applicant);
 
         if(result != null) { // 상담신청 완료
-            notificationService.send(request.getClientId(), NotificationType.CONSULT, "상담신청이 정상적으로 접수되었습니다.",
-                    "상담사로부터 전화가 갈 예정입니다. 초기 상담 및 일정 픽스가 진행됩니다.", "/AlarmView");
-
             notificationService.send(request.getCounselorId(), NotificationType.CONSULT, "새로운 상담 신청이 있습니다.",
                     "", "/AlarmView");
+
+            notificationService.send(request.getClientId(), NotificationType.CONSULT, "상담신청이 정상적으로 접수되었습니다.",
+                    "상담사로부터 전화가 갈 예정입니다. 초기 상담 및 일정 픽스가 진행됩니다.", "/AlarmView");
         } else {
             notificationService.send(request.getClientId(), NotificationType.CONSULT, "상담신청 중 문제가 발생했습니다.",
                     "관리자에게 에러가 접수되었습니다. 조금 뒤에 다시 신청 부탁드립니다.", "/AlarmView");

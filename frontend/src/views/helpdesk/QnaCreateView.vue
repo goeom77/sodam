@@ -1,51 +1,46 @@
 
 <template>
-  <div id="QnaCreateView">
-    <div id="QnaCreateBoard">
-      <div id="QnaCreateBoardtitle">
-        <h1>고민 게시판</h1>
-      </div>
-
-    </div>
-    <div>
-      <div id="Writebox">
-        <form @submit.prevent="QnaCreateArticle">
-        <!-- <form> -->
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
-            <label for="title">제목</label>
-            <input type="text" id="title" v-model.trim="title">
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content-Help">
+      <v-toolbar
+      class="helpTool"
+      color="white"
+      dark
+      tabs>
+      </v-toolbar>
+      <!-- 배경 End -->
+      <div class="container">
+        <div style="padding-top:30px; padding-bottom: 30px; text-align: center; font-size:40px; font-weight: bolder;"> 
+          문의
+        </div>
+        <div class="row" style=" border-top:1px solid black; border-bottom:1px solid #ccc;">
+          <div class="col-1" id="headercontent">
+            제목 
           </div>
-          <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6;">
-            <label for="content">내용</label>
-            <textarea id="content" v-model="content"></textarea>
+          <div class="col-11" id="inputcontent">
+            <input type="text" placeholder="제목" v-model="this.title"
+            style="display: flex; border: 1px solid #ccc; border-radius: 4px; width:100%; height:40px" >
           </div>
-          <!-- <div style="text-align:start; padding: 10px; border-top: 1px solid #B9B6B6; border-bottom: 1px solid black;">
-            <label for="image" style="float:left">사진 첨부</label>
-            <div id="image">
-              <v-file-input 
-                class="input" 
-                type="file"
-                outlined dense multiple prepend-icon="mdi-camera"
+        </div>
 
-                @change="onImageChange"
-                label="File input"
-              ></v-file-input>
-
-              이미지 미리보기
-              <v-img 
-                v-for="(item,i) in uploadimageurl" 
-                :key="i" 
-                :src="item.url"
-                contain height="150px" width="200px" style="border: 2px solid black; 
-                margin-left:100px;"/>
-            </div>
-          </div> -->
-          <input type="submit" id="submitno" value="취소">
-          <input type="submit" id="submityes" value="등록">
-          <!-- <button @click="QnaarticleUpdate">등록</button> -->
-
-        </form>
-        <button @click="QnaarticleUpdate">수정</button>
+        <div class="row">
+          <div class="col-1" id="headercontent">
+            내용 
+          </div>
+          <div class="col-11" id="inputcontent">
+            <textarea name="" id="" cols="30" rows="10" placeholder="내용을 작성해주세요" v-model="this.content"
+            style="display: flex; border: 1px solid #ccc; border-radius: 4px; width:100%;"></textarea>
+          </div>
+          
+        </div>
+        <div style="text-align:center;">
+            <v-btn append-icon="mdi-pencil" @click="QnaCreateArticle">
+              작성
+            </v-btn>
+            <v-btn append-icon="mdi-arrow-left" @click="moveback">
+              취소
+            </v-btn>
+          </div>
       </div>
     </div>
   </div>
@@ -106,9 +101,6 @@ export default {
         })
     },
 
-
-
-
     QnaCreateArticle() {
       const title = this.title
       const content = this.content
@@ -136,9 +128,9 @@ export default {
           }
         })
           .then((res) => {
-            console.log('여긴 안에러')
+            console.log(res)
             this.$router.push({ 
-              name: 'HelpView'  })
+              name: 'HelpView'})
           })
           .catch((err) => {
             console.log('여긴 에러')
@@ -207,6 +199,9 @@ export default {
         console.log('안됨')
         console.log(err)
       })
+    },
+    moveback(){
+      this.$router.go(-1);
     }
   }
 }
@@ -215,7 +210,7 @@ export default {
 
 
 <style>
-#QnaCreate {
+/* #QnaCreate {
   width: 1255px;
   margin: 0 auto;
 }
@@ -254,11 +249,10 @@ a {
   left: 50%; 
   bottom: 50%; 
   transform: translate(-50%);
-}
+} */
 
 #Writebox {
   border-top: 1px solid black;
-  /* border-bottom: 1px solid black; */
   margin: 60px;
 }
 
@@ -268,7 +262,6 @@ height: 50px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
 font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
 border-radius: 0px; 
 -webkit-appearance: none; 
 -moz-appearance: none;
@@ -282,7 +275,6 @@ height: 50px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
 font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
 border-radius: 0px; 
 -webkit-appearance: none; 
 -moz-appearance: none;
@@ -296,7 +288,6 @@ height: 500px;
 padding: .8em .5em; 
 border: 1px solid #B9B6B6;
 font-family: inherit;  
-/* background: url('arrow.jpg') no-repeat 95% 50%;  */
 border-radius: 0px; 
 -webkit-appearance: none; 
 -moz-appearance: none;

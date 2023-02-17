@@ -10,6 +10,7 @@ import config
 import grpc
 import traceback
 from datetime import datetime
+from flask_cors import CORS
 
 
 db = SQLAlchemy()
@@ -25,13 +26,13 @@ def create_app():
         file_name = db.Column(db.String(100, 'utf8mb4_0900_ai_ci'))
         gcs_directory = db.Column(db.String(100, 'utf8mb4_0900_ai_ci'))
         url = db.Column(db.String(200, 'utf8mb4_0900_ai_ci'))
-        session_id = db.Column(db.BigInteger)
+        schedule_id = db.Column(db.BigInteger)
 
-        def __init__(self, file_name, gcs_directory, url, session_id):
+        def __init__(self, file_name, gcs_directory, url, schedule_id):
             self.file_name = file_name
             self.gcs_directory = gcs_directory
             self.url = url
-            self.session_id = session_id
+            self.schedule_id = schedule_id
 
     class ConsultSchedule(db.Model):
         __tablename__ = 'consult_schedule'
@@ -128,12 +129,25 @@ def create_app():
     def get_stt_text():
         data = request.json
         key = data['key']
+        schedule_id = data['schedule_id']
         print(key)
         print(data)
 
-        source_dir = data['gcs_directory']
-        file_name = data['file_name']
+        session_data = db.session.query(ConsultSchedule).filter(ConsultSchedule.id == schedule_id).first()
+        stt_data = db.session.query(SttData).filter(SttData.schedule_id == schedule_id).first()
+        if session_data is None:
+            return jsonify(), 404
+        elif stt_data is None:
+            return jsonify(), 404
+        elif session_data.stt_status not in [2, 3]:
+            # stt 오류
+            return jsonify(), 404
 
+        source_dir = stt_data.gcs_directory
+        file_name = stt_data.file_name
+
+        print(source_dir)
+        print(file_name)
         stt_text = sttUtil.get_text(source_dir, file_name, key)
 
         if stt_text is None:
@@ -176,4 +190,5 @@ def create_app():
 if __name__ == "__main__":
     # gcpCredentials.save_credentials()
     app = create_app()
+    CORS(app)
     app.run(host="0.0.0.0", port='8280', debug=True)

@@ -52,13 +52,14 @@ public class CounselorListResponse {
 
     private List<EducationResponse> educations;
     private List<CertificateResponse> certificates;
+    private boolean isLike;
 
     @Builder
     @QueryProjection
     //public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender, String routine, String profileImg, List<CONSULT_TYPE> consultTypeList, List<Education> education, List<Career> career) {
     public CounselorListResponse(String name, String tel, String email, String id, String introduce, GENDER gender,
                                  String routine, String profileImg, List<CONSULT_TYPE> consultTypeList,
-                                 List<EducationResponse> educations, List<Career> career, List<CertificateResponse> certificates) {
+                                 List<EducationResponse> educations, List<Career> career, List<CertificateResponse> certificates, boolean isLike) {
         this.name = name;
         this.tel = tel;
         this.email = email;
@@ -71,6 +72,7 @@ public class CounselorListResponse {
         this.educations = educations;
         this.career = career;
         this.certificates = certificates;
+        this.isLike = isLike;
     }
 
     @Builder

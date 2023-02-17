@@ -1,6 +1,7 @@
 package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.ReviewRequest;
+import com.samsung.sodam.api.response.ReviewResponse;
 import com.samsung.sodam.api.service.ReviewService;
 import com.samsung.sodam.db.entity.Review;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class ReviewController {
     //상담사의 후기 목록 보기
     @PostMapping("/my/counselor")
     @ApiOperation(value = "고객이 작성한 나의 후기 목록 보기")
-    public Page<Review> getAllMyReviews(@RequestBody ReviewRequest request, @PageableDefault(size=20, sort="id") Pageable pageable) {
+    public Page<ReviewResponse> getAllMyReviews(@RequestBody ReviewRequest request, @PageableDefault(size=20, sort="id") Pageable pageable) {
         return reviewService.getAllMyReviews(request,pageable);
     }
 

@@ -1,47 +1,35 @@
 <template>
-  <!-- <div></div> -->
-	<v-container>
-		<v-card elevation="10" outlined width="100%" class="mx-auto">
-			<v-card-title>
-				<span class="mr-2">Detail</span>
-			</v-card-title>
-			<v-card-text>
-				<v-row>
-					<v-col>
-						<v-text-field readonly :value="title" />
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-text-field readonly dense label="관리자" />
-					</v-col>
-					<v-col>
-						<v-text-field
-							readonly
-							dense
-							:value="createdAt"
-						/>
-					</v-col>
-					<v-col>
-						<v-text-field readonly dense :value="views" />
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-text-field readonly dense :value="content" />
-					</v-col>
-				</v-row>
-
-			</v-card-text>
-			<v-card-actions>
-				<v-spacer></v-spacer>
-        <button @click="BoardarticleUpdate" style="width: 70px; border-radius: 20px; background-color: green;">수정</button>
-        <button @click="BoardarticleDelete"  style="width: 70px; border-radius: 20px; background-color: red; margin-left:10px">삭제</button>
-        <button @click="BoardarticleBack"  style="width: 70px; border-radius: 20px; background-color: grey; margin-left:10px; margin-right:10px">취소</button>
-			</v-card-actions>
-      <br>
-		</v-card>
-	</v-container>
+  <div id="fh5co-main">
+    <div class="fh5co-narrow-content-Help">
+      <v-toolbar
+      class="helpTool"
+      color="white"
+      dark
+      tabs>
+      </v-toolbar>
+      <!-- 배경 End -->
+      <div class="container">
+          <div class="row noticetitle" >
+            <div class="col-10" style="font-size:50px; font-weight: bolder;">
+              {{ this.NoticeData.title }}
+            </div>
+            <div class="col-2" style="text-align: right; margin:auto;">
+              {{ this.NoticeData.createdAt.split('T')[0] }}
+            </div>
+          </div>
+          <div class="row noticecontent" style="margin:30px; font-size:20px">
+            {{ this.NoticeData.content }}
+          </div>
+          <div style="text-align: right; margin-right:30px" v-if="(this.$store.state.payload.id=='admin')">
+            <v-btn outlined rounded text @click="BoardarticleUpdate" color="blue">수정</v-btn>
+            <v-btn outlined rounded text @click="BoardarticleDelete" color="red">삭제</v-btn>
+          </div>
+          <div style="text-align: center;">
+              <v-btn variant="outlined" @click="BoardarticleBack">목록으로</v-btn>
+          </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -52,25 +40,10 @@ const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'BoardDetailView',
-	components: {
-
-
-	},
 	data() {
-
-    const id = this.$route.params.id
-
 		return {
-			title: '',
-			adminId: '',
-			createdAt: '',
-			views: 0,
-			comment: '',
-      postId: id,
-      Boardarticle: null,
-      BoardCommentsCurrentPage: 1,
-            
-      imagelist: [],     
+      NoticeData:null,
+      BoardCommentsCurrentPage: 1,    
       imagecnt: 0,     
 		}
 	},
@@ -79,35 +52,24 @@ export default {
 	},
 	methods: {
     getBoardarticleDetail() {
-
       axios({
         method: 'get',
         url: `${VUE_APP_API_URL}/api/help-desk/notice/${this.$route.params.id}`,
       })
-      
-        .then((res) => {
-          console.log(this.$route.params.id)
-          this.Boardarticle = res.data
-          this.title= res.data.title
-          this.adminId= res.data.adminId
-          this.createdAt= res.data.createdAt
-          this.views= res.data.views
-          this.content= res.data.content
-          this.id= res.data.id
-        })
+      .then((res) => {
+        this.NoticeData = res.data
+      })
     },
     BoardarticleUpdate() {
-      this.$router.push({
-        name: 'BoardCreateView',
-        params: {
-          id: this.$route.params.id,
-        }
-      })
+      this.$router.push({ name: 'NoticeCreateView', params: {id: this.NoticeData.id }  })
     },
     BoardarticleDelete() {
       axios({
         method: 'delete',
-        url: `${VUE_APP_API_URL}/api/admin/${this.$route.params.id}`,
+        url: `${VUE_APP_API_URL}/api/admin/notice/${this.$route.params.id}`,
+        data:{
+          id: this.NoticeData.id
+        },
         headers: {
           Authorization : `Bearer ${this.$store.state.token.token.access_token}`
         }
@@ -123,7 +85,7 @@ export default {
     },
     BoardarticleBack() {
       this.$router.push({
-        name: 'HelpView',
+        name: 'HelpView'
       })
     },
 
@@ -131,4 +93,16 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.noticetitle{
+  border-top: 1px solid black;
+  padding:20px;
+  text-align: left;
+  margin:auto;
+}
+.noticecontent{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding:20px;
+}
+</style>

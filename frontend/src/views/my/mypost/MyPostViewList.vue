@@ -1,9 +1,9 @@
 <template>
-  <div id="MyPostViewList">
-    <div id="fh5co-main" >
-      <div class="fh5co-narrow-content" style=" margin-left: 0;">
+  <div>
+    <div class="pa-5">
+      <div style=" margin-left: 0;">
         <div>
-          <h3 style=" padding-left: 10px; border: solid 1px gray">최근 게시글</h3>
+          <h3>최근 게시글</h3>
           <MyPostViewListItem
             v-for="(MyPostarticle, index) in MyBoardarticles.content"
             :key="MyPostarticle.postId"
@@ -12,8 +12,9 @@
             :limit="MyPostListPage"
           /> 
         </div>
+        <hr>
         <div>
-          <h3 style="margin-top: 30px; border: solid 1px gray ">최근 1:1 문의</h3>
+          <h3 >최근 1:1 문의</h3>
           <MyInquiryPostViewListItem
             v-for="(MyInquiryPostarticle, index) in MyInquiryarticles.content"
             :key="MyInquiryPostarticle.id"
@@ -62,11 +63,10 @@ export default {
           "Authorization" : `Bearer ${this.$store.state.token.token.access_token}`}
       })
         .then((res) => {
-          console.log('이거 되라 게시글')
           this.MyBoardarticles = res.data
         })
         .catch((err) => {
-          console.log('어림도 없지 게시글')
+          console.log(err)
         })
     },
     getMyInquiryarticles() {
