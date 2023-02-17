@@ -53,10 +53,7 @@ export default {
 
         this.$swal.fire({
           title: this.AlarmViewarticle.title,
-          html:
-            'You can use <b>bold text</b>, ' +
-            '<a href="//sweetalert2.github.io">links</a> ' +
-            'and other HTML tags',
+          html: this.AlarmViewarticle.content,
           showCloseButton: false,
           showCancelButton: false,
           focusConfirm: false
