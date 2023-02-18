@@ -331,7 +331,7 @@ DB : MySQL
 
 ## 🔗 링크
 
-
+![소담동영상](https://youtu.be/i-G1ljWt_kc)
 
 
 
