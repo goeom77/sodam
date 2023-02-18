@@ -1,8 +1,8 @@
 **웹/모바일(웹 기술) 스켈레톤 프로젝트**
 
-![image-20230217110624982](C:\Users\SSAFY\Desktop\result\exec\메인타이틀.PNG)
+![image-20230217110624982](.\exec\메인타이틀.PNG)
 
-![image-20230217110624982](C:\Users\SSAFY\Desktop\result\exec\메인타이틀1.PNG)
+![image-20230217110624982](@\exec\메인타이틀1.PNG)
 
 <br/>
 <br/>
