@@ -37,10 +37,8 @@ public interface CounselorRepository extends JpaRepository<Counselor,String>{
     void deleteById(String id);
 
     List<Counselor> findAllByNameLikeAndGenderEquals(String name, GENDER gender);
-    List<Counselor> findAllByGenderEquals(String name, GENDER gender);
 
     @Transactional
     @Query("select c, avg (coalesce(r.stars,0)) from Counselor c join Review r on r.clientId = c.id group by c.id")
     List<Counselor> getCounselorByReview();
-
 }
