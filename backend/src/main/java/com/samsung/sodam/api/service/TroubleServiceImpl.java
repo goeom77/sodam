@@ -3,11 +3,10 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
-import com.samsung.sodam.db.entity.Counselor;
-import com.samsung.sodam.db.entity.TroubleBoard;
-import com.samsung.sodam.db.entity.TroubleComment;
-import com.samsung.sodam.db.entity.TroubleCommentLike;
+import com.samsung.sodam.api.response.TroubleResponse;
+import com.samsung.sodam.db.entity.*;
 import com.samsung.sodam.db.repository.*;
+import com.samsung.sodam.db.repository.counselor.CounselorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,21 +20,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class TroubleServiceImpl implements TroubleService {
+    private final NotificationService notificationService;
 
     private final TroubleRepository repository;
     private final TroubleCustomRepository customRepository;
     private final TroubleCommentRepository commentRepository;
+    private final ClientRepository clientRepository;
     private final CounselorRepository counselorRepository;
     private final TroubleCommentLikeRepository commentLikeRepository;
 
 
     @Override
-    public Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable) {
-        return customRepository.getAllTroubleList(userId, searchWord, pageable);
+    public Page<TroubleResponse> getAllTroubleList(String searchWord, Pageable pageable) {
+        return customRepository.getAllTroubleList(searchWord, pageable);
     }
 
-    public Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable) {
-        return customRepository.getTroubleList(userId, category, searchWord, pageable);
+    public Page<TroubleResponse> getTroubleList(String category, String searchWord, Pageable pageable) {
+        return customRepository.getTroubleList(category, searchWord, pageable);
     }
 
     @Override
@@ -53,7 +54,16 @@ public class TroubleServiceImpl implements TroubleService {
 
     @Override
     public TroubleOneResponse getTrouble(String userId, Long id) {
-        return customRepository.getTrouble(userId, id);
+        TroubleOneResponse response = customRepository.getTrouble(userId, id);
+        Optional<Client> c = clientRepository.findById(response.getClientId());
+        Client client = null;
+        if(c.isPresent()) {
+            client = c.get();
+            System.out.println(c);
+            if(client.getAge() != null )response.setAge(client.getAge().getValue());
+            response.setGender(client.getGender());
+        }
+        return response;
     }
 
     @Override
@@ -67,7 +77,7 @@ public class TroubleServiceImpl implements TroubleService {
     }
 
     @Override
-    public Page<TroubleOneResponse> getMyTroubleList(String clientId, Pageable pageable) {
+    public Page<TroubleResponse> getMyTroubleList(String clientId, Pageable pageable) {
 
         return customRepository.getMyTroubleList(clientId, pageable);
     }
@@ -86,6 +96,9 @@ public class TroubleServiceImpl implements TroubleService {
                 .build();
 
         commentRepository.save(troubleComment);
+
+        notificationService.send(troubleBoard.get().getClientId(), NotificationType.TROUBLE,
+                "고민게시글에 댓글이 등록되었습니다.", "", "/AlarmView");
     }
 
     @Override

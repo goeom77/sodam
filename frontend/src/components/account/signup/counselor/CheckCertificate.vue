@@ -3,26 +3,34 @@
     <caption @click="checkData">자격증</caption>
       <thead>
         <tr>
-          <th>발행처</th>
-          <th>자격 이름</th>
-          <th>증명서 사본</th>
+          <th>자격증 명</th>
+          <th>일련 번호</th>
+          <th>발급기관</th>
+          <th>파일</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
           <td>
-            <!-- 발행처 -->
+            <!-- 자격증 이름 -->
             <div class="haveBorder">
-              <input type="text" v-model="certificate_location" placeholder="발행처">
+              <input type="text" v-model="this.certificate_name" placeholder="자격증 명">
             </div>
           </td>
           <td>
-            <!-- 학교 -->
+            <!-- 일련 번호 -->
             <div class="haveBorder">
-              <input type="text" name="eduSchool" v-model="certificate_name" placeholder="자격 이름 ">
+              <input type="text" name="eduSchool" v-model="this.certificate_number" placeholder="일련번호 ">
             </div>
           </td>
+          <td>
+            <!-- 발급기관 -->
+            <div class="haveBorder">
+              <input type="text" name="eduSchool" v-model="this.certificate_agency" placeholder="발급기관 ">
+            </div>
+          </td>
+
 
           <td>
             <v-file-input
@@ -43,13 +51,14 @@ export default {
   name:'CheckCertificate',
   data(){
     return{
-      certificate_location:null,
       certificate_name:null,
+      certificate_number:null,
+      certificate_agency:null,
     }
   },
   methods:{
     checkData(){
-      console.log(this.certificate_location, this.certificate_name)
+      console.log(this.certificate_name)
     }
   }
 }

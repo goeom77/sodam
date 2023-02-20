@@ -3,12 +3,15 @@ package com.samsung.sodam.api.controller;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
+import com.samsung.sodam.api.response.TroubleResponse;
 import com.samsung.sodam.api.service.TroubleServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,12 +25,11 @@ public class TroubleController {
     }
 
     @GetMapping(value = "/list")
-    @ApiOperation(value="고민게시판 목록", notes="고민게시판 전체목록")
-    public ResponseEntity<Page<TroubleOneResponse>> getAllTroubleList(Pageable pageable,
+    @ApiOperation(value="고민게시판 전체목록", notes="로그인 여부와 상관없이 고민게시판 전체목록 조회")
+    public ResponseEntity<Page<TroubleResponse>> getAllTroubleList(Pageable pageable,
                                                                    @RequestParam(value = "searchword", required = false) String searchWord ) {
-
         try {
-            Page<TroubleOneResponse> list = service.getAllTroubleList("id", searchWord, pageable);
+            Page<TroubleResponse> list = service.getAllTroubleList(searchWord, pageable);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,12 +38,12 @@ public class TroubleController {
     }
 
     @GetMapping(value = "/list/{category}")
-    @ApiOperation(value="고민게시판 목록", notes="카테고리별 고민게시판 전체목록")
-    public ResponseEntity<Page<TroubleOneResponse>> getTroubleList(@PathVariable String category, Pageable pageable,
+    @ApiOperation(value="카테고리별 고민게시판 목록", notes="로그인 여부와 상관없이 카테고리별 고민게시판 전체목록 조회")
+    public ResponseEntity<Page<TroubleResponse>> getTroubleList(@PathVariable String category, Pageable pageable,
                                                                    @RequestParam(value = "searchword", required = false) String searchWord ) {
 
         try {
-            Page<TroubleOneResponse> list = service.getTroubleList("id", category, searchWord, pageable);
+            Page<TroubleResponse> list = service.getTroubleList(category, searchWord, pageable);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,10 +67,14 @@ public class TroubleController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value="고민게시글 상세보기", notes="하나의 고민게시글에 대한 상세정보")
-    public ResponseEntity<TroubleOneResponse> getTrouble(@PathVariable Long id) {
+    public ResponseEntity<TroubleOneResponse> getTrouble(@PathVariable Long id, @AuthenticationPrincipal UserDetails user) {
 
         try {
-            TroubleOneResponse troubleDetail = service.getTrouble("kimkim2", id);
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
+
+            TroubleOneResponse troubleDetail = service.getTrouble(userId, id);
             return new ResponseEntity<>(troubleDetail, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,14 +109,18 @@ public class TroubleController {
 
     @GetMapping(value="/my-trouble")
     @ApiOperation(value="고민게시글 내글보기", notes="내가 작성한 고민게시글 목록")
-    public ResponseEntity<Page<TroubleOneResponse>> getMyTroubleList(@RequestBody TroubleRequest request, Pageable pageable) {
+    public ResponseEntity<Page<TroubleResponse>> getMyTroubleList(Pageable pageable, @AuthenticationPrincipal UserDetails user) {
 
         try {
-            Page<TroubleOneResponse> list = service.getMyTroubleList(request.getClientId(), pageable);
+            String userId = "";
+            if(user != null)
+                userId = user.getUsername();
+
+            Page<TroubleResponse> list = service.getMyTroubleList(userId, pageable);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 

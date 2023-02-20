@@ -6,9 +6,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum GENDER implements BaseEnumCode<String> {
+public enum GENDER implements BaseEnumCode<String,String> {
     MEN("여성","M"),
-    WOMEN("남성","W");
+    WOMEN("남성","W"),
+    NONE("알수없음", "N");
     private final String name;
     private final String value;
 }

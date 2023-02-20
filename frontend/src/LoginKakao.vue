@@ -4,7 +4,7 @@
   </template>
   
   <script>
-  const API_URL = 'http://127.0.0.1:80'
+   VUE_APP_API_URL = process.env.VUE_APP_API_URL
   
   export default {
     name: "LoginKakao",
@@ -14,7 +14,7 @@
   
         if (window.Kakao.Auth.getAccessToken()) {
           window.Kakao.API.request({
-            url: `${API_URL}/api/auth/kakao`,
+            url: `${VUE_APP_API_URL}/api/auth/kakao`,
             success: function (response) {
               console.log(response)
             },
@@ -29,7 +29,7 @@
         window.Kakao.Auth.login({
           success: function () {
             window.Kakao.API.request({
-              url: `${API_URL}/api/auth/kakao`,
+              url: `${VUE_APP_API_URL}/api/auth/kakao`,
               data: {
                 property_keys: ["kakao_account.email"]
               },

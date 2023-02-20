@@ -1,4 +1,5 @@
 <template>
+  <div style="height:100px"></div>
   <div id="cover">
     <div class="background">
     </div>
@@ -13,7 +14,7 @@ import LoginDetail from '@/components/account/login/LoginDetail.vue'
 export default {
   name:'LoginPage',
   components: {
-    LoginDetail
+    LoginDetail,
   }
 }
 </script>
@@ -32,7 +33,7 @@ export default {
   float:left; 
   width: 800px;
   height: 608px;
-  background-image: url(../../../assets/loginImage.png);
+  background-image: url(../../../assets/images/loginImage.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }

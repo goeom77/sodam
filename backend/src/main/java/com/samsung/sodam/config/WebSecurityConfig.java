@@ -25,8 +25,10 @@ public class WebSecurityConfig {
                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 세션 사용 x
                .and()
                .authorizeRequests()
-               .antMatchers("/user/**").authenticated()
-               .antMatchers("/admin/**").hasRole("ADMIN")
+
+//               .antMatchers("/user/**", "/api/report","/api/trouble/comment").authenticated()
+               //.antMatchers( "/api/trouble/writing").hasRole("CLIENT")
+//               .antMatchers("/admin/**").hasRole("ADMIN")
                .anyRequest().permitAll()
                .and()
                .formLogin()

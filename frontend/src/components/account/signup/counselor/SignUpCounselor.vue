@@ -1,15 +1,17 @@
 <template>
-  <v-container style="width:500px; height:800px;">
+  <v-container style="width:500px; height:800px; margin-top: 5%;">
     <v-card>
       <v-card-title >
         <span class="text-h5">회원 가입</span>
       </v-card-title>
-      <v-card-text> 
+      <v-card-text>
+        <v-form>
           <v-row>
-            <v-col cols="12"> 
-              <input type="radio" name="gender" v-model="gender" @click="genderToMen" checked>남성
-              <input type="radio" name="gender" v-model="gender" @click="genderToWomen">여성
-
+            <v-col cols="12">
+              <div>
+                <input type="radio" name="gender" v-model="gender" value="MEN" checked>남성
+                <input type="radio" name="gender" v-model="gender" value="WOMEN">여성
+              </div>
               <v-text-field
               label="Id"
               type="text"
@@ -63,6 +65,16 @@
                 :rules="user_email_rule" 
                 required
               ></v-text-field>
+              <v-btn @click="CheckEmail" v-if="this.checkEmail===0">이메일 확인</v-btn>
+              <div v-else-if="this.checkEmail === 1">
+                <v-text-field
+                  label="인증 번호" type="number" v-model="this.confirm_code"
+                  required
+                ></v-text-field>
+                <v-btn @click="CheckEmailConfirm" v-bind:disabled="emailCheckMsg != null">인증</v-btn>
+                {{ this.emailCheckMsg }}
+              </div>
+              <div v-else-if="this.checkEmail === 2">이미 가입된 사용자입니다.</div>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -71,20 +83,18 @@
                 v-model="tel"
                 :rules="user_tel_rule" 
                 required
-                
               ></v-text-field>
             </v-col>
           </v-row>
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <!-- 오른쪽 끝으로 이동 -->
         <v-spacer></v-spacer>
         <!-- <div v-if="checkDuplicateFlag != 0 && passwordValidFlag && passwordCheckFlag"> -->
-          <v-btn color="blue darken-1" text @click="nextTo">확인</v-btn>
+          <v-btn color="blue darken-1" text @click="nextTo" v-bind:disabled="!checkDuplicateFlag || !passwordCheckFlag || emailCheckMsg == null">확인</v-btn>
         <!-- </div>
         <div v-else> -->
-          <v-btn color="blue darken-1" disabled text>확인</v-btn>
-        <!-- </div> -->
         
         <v-btn color="blue darken-1" text @click="moveBack">취소</v-btn>
       </v-card-actions>
@@ -93,8 +103,9 @@
 </template>
 
 <script>
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 import axios from 'axios'
+
 export default {
     name:'SignUpClient',
     data(){
@@ -129,38 +140,69 @@ export default {
         ],
         tel:null,
         user_tel_rule:[
-        v=> !! v|| '전화번호는 필수 입력사항입니다.'
+        v=> !! v || '전화번호는 필수 입력사항입니다.'
         ],
         idDuplicateFlag:true,
         // 중복 확인 여부 
-        checkDuplicateFlag:0,
-        passwordValidFlag: true,
-        passwordCheckFlag: true,
+        checkDuplicateFlag:false,
+        passwordValidFlag: false,
+        passwordCheckFlag: false,
         msg:null,
         gender:'MEN',
-
-        // 작성 규칙
+        checkEmail:0,
+        confirm_code:null,
+        // 이메일 인증 확인
+        emailCheckMsg: null
         
       }
     },
 
     methods:{
-      genderToMen(){
-        this.gender = 'MEN'
+      // 이메일 확인 
+      CheckEmail(){
+        axios({
+          method: 'post',
+          url: `${VUE_APP_API_URL}/api/auth/send-code`,
+          data:{
+            email:this.email
+          }
+        })
+        .then(res => {
+          if(res.data === 'OK') {
+            this.checkEmail = 1
+          } else if(res.data === 'CONFLICT') { // 이미 존재하는 사용자
+            this.checkEmail = 2
+          } else {  // 이메일 에러
+            this.checkEmail = 1 // -------- 이메일 복구 후 삭제
+            alert('이메일 확인 중 문제가 발생했습니다. 잠시후 시도해 주세요.')
+          }
+        })
       },
-      genderToWomen(){
-        this.gender = 'WOMEN'
+      // 이메일 인증
+      CheckEmailConfirm(){
+        axios({
+          method:'get',
+          url:`${VUE_APP_API_URL}/api/auth/confirm-mail?code=${this.confirm_code}`,
+          data:{
+            code: this.confirm_code
+          }
+        })
+        .then((res)=>{
+          this.emailCheckMsg = '이메일이 인증되었습니다.'
+        })
+        .catch((error) => {
+          this.emailCheckMsg = '인증코드가 일치하지 않습니다.'
+        })
       },
-
       checkDuplicate(){
-      this.checkDuplicateFlag = this.checkDuplicateFlag+1
+      this.checkDuplicateFlag = !this.checkDuplicateFlag
 
       },
       // 아이디 중복 검사
       duplicateId(){
         axios({
           method: 'get',
-          url:`${API_URL}/api/auth/check-duplicate-id/${this.id}`
+          url:`${VUE_APP_API_URL}/api/auth/check-duplicate-id/${this.id}`
         })
         .then(res =>{
           if (res.data === 'OK'){

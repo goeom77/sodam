@@ -6,11 +6,13 @@ import com.samsung.sodam.db.converter.StateAttributeConverter;
 import com.samsung.sodam.db.entity.CONSULT_TYPE;
 import com.samsung.sodam.db.entity.GENDER;
 import com.samsung.sodam.db.entity.STATE;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Convert;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 상담요청시 요청할 데이터
@@ -22,19 +24,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConsultApplicantRequest {
+    @ApiModelProperty(required = true)
     private String counselorId;
+    @ApiModelProperty(required = true)
     private String clientId;
     @Convert(converter = StateAttributeConverter.class)
-    private STATE state; // 신청상태
-    private String name;
+    private STATE state=STATE.APPROVED; // 신청상태
+    private String name="";
     @Convert(converter = ConsultConverter.class)
-    private CONSULT_TYPE consultType;
-    private String tel;
-    private String email;
+    private CONSULT_TYPE consultType = CONSULT_TYPE.ALL;
+    @ApiModelProperty(required = true)
+    private String tel="";
+    private String email="";
+    @ApiModelProperty(required = true)
     private String content;
     @Convert(converter = GenderConverter.class)
-    private GENDER gender;
+    @ApiModelProperty(required = true)
+    private GENDER gender=GENDER.MEN;
+    @ApiModelProperty(required = true)
     private Integer age;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime dueDate; // 희망종료날짜
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dueDate= null; // 희망종료날짜
 }

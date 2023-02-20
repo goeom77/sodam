@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width:500px; height:300px;">
+  <v-container style="width:500px; height:300px; margin-top: 5%;">
 
     <v-card>
       <v-card-title >
@@ -11,6 +11,7 @@
             <v-col cols="12">
               <v-text-field
                 label="ID"
+                v-model="id"
                 required
               ></v-text-field>
             </v-col>
@@ -18,6 +19,7 @@
               <v-text-field
                 label="Email"
                 type="Email"
+                v-model="email"
                 required
               ></v-text-field>
             </v-col>
@@ -29,10 +31,25 @@
         <v-spacer></v-spacer>
         <v-btn
           color="blue darken-1"
+          @click="[findPw(),dialog=true]"
           text
         >
           확인
         </v-btn>
+
+        <v-dialog
+          v-model="dialog"
+        >
+          <v-card>
+            <v-card-text>
+              이메일에 임시비밀번호가 발급되었습니다.
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="primary" block @click="[moveBack(),dialog = false]">로그인 창으로</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-btn
           color="blue darken-1"
           text
@@ -46,15 +63,33 @@
 </template>
 
 <script>
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
+import axios from 'axios'
+
 export default {
   name:'findId',
   data(){
     return{
-      ID: null,
-      Email: null,
+      dialog:false,
+      id: null,
+      email: null,
     }
   },
   methods:{
+    // 비밀번호 찾기
+    findPw(){
+      axios({
+        method:'post',
+        url:`${VUE_APP_API_URL}/api/auth/find-pw`,
+        data:{
+          id:this.id,
+          email:this.email
+        }
+      })
+      .then(res=>{
+        console.log(res)
+      })
+    },
     moveBack(){
         this.$router.push({ name: 'login' })
       },

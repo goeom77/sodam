@@ -2,26 +2,29 @@ package com.samsung.sodam.api.controller;
 
 import com.samsung.sodam.api.request.AuthCommonRequest;
 import com.samsung.sodam.api.request.ClientRequest;
-import com.samsung.sodam.api.request.CounselorRequest;
+import com.samsung.sodam.api.request.CounselorSignupRequest;
 import com.samsung.sodam.api.response.AuthCommonResponse;
-import com.samsung.sodam.api.service.AuthService;
-import com.samsung.sodam.api.service.EmailService;
-import com.samsung.sodam.api.service.EnterpriseService;
-import com.samsung.sodam.api.service.KakaoAuthService;
+import com.samsung.sodam.api.service.*;
 import com.samsung.sodam.db.entity.Counselor;
 import com.samsung.sodam.db.entity.Member;
+import com.samsung.sodam.jwt.JwtTokenProvider;
+import com.samsung.sodam.jwt.TokenDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 import java.util.StringTokenizer;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
@@ -32,8 +35,9 @@ public class AuthController {
     private final EmailService emailService;
     private final EnterpriseService enterpriseService;
     private final KakaoAuthService kakaoService;
+    private final CounselorProfileService counselorProfileService;
 
-
+    private final JwtTokenProvider jwtTokenProvider;
 
     private String confirmCode;
     private Boolean isFindId;
@@ -50,10 +54,11 @@ public class AuthController {
     }
     @PostMapping(value = "/signup/counselor")
     @ApiOperation(value="상담사 회원가입", notes="새로운 상담사 회원가입")
-    public ResponseEntity<String> counselorSignup(@RequestBody CounselorRequest request) {
-        try{
-            enterpriseService.existByEnterpriseId(request.getEnterpriseId());
-            System.out.println("AuthController - enterpriseId: "+request.getEnterpriseId());
+    public ResponseEntity<String> counselorSignup(CounselorSignupRequest request) {
+        try {
+            int enterpriseIdInt =  Integer.parseInt(request.getEnterprisestr());
+            enterpriseService.existByEnterpriseId(enterpriseIdInt);
+            request.setEnterpriseId(enterpriseIdInt);
 
             Counselor c = null;
             StringTokenizer st = new StringTokenizer(request.getId(), "_");
@@ -64,7 +69,9 @@ public class AuthController {
             else
                 c = authService.counselorSignup(request);
 
-            System.out.println(c.toString());
+            // 상담사 프로필에 들어가는 정보들 저장
+            counselorProfileService.uploadAssociateProfileTable(request);
+            
             return new ResponseEntity<String>(c.getId(), HttpStatus.OK);
         } catch (IllegalStateException e){
             e.printStackTrace();
@@ -75,11 +82,23 @@ public class AuthController {
         }
     }
 
-    @GetMapping(value = "/logout/{id}")
-    public HttpStatus logout(@PathVariable String id){
+    @GetMapping(value = "/logout")
+    public HttpStatus logout(HttpServletRequest request){
         try {
-            // delete refresh token
-            // delete authentication (??모름)
+            // 헤더에서 JWT 받아옴
+            String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+            String id = null;
+
+            // 유효한 토큰인지 확인
+            if (token != null && token.startsWith("Bearer ")) {
+                token = token.substring(7);
+                if (jwtTokenProvider.validateToken(token)) {
+                    id = jwtTokenProvider.getUserId(token);
+                    authService.logout(id);
+                }
+            } else {
+                log.debug("JWT Token does not begin with Bearer String");
+            }
             return HttpStatus.OK;
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -110,7 +129,7 @@ public class AuthController {
         String email = request.getEmail();
 
         try {
-            authService.validateDuplicateEmail(email);
+            authService.validateDuplicateEmail(email);  // 이메일 중복 확인
 
             Random r = new Random();
             int checkNum = r.nextInt(888888) + 111111;
@@ -127,17 +146,36 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/update-pw")
+    private ResponseEntity<String> updatePW(@RequestBody AuthCommonRequest request, HttpServletRequest httpRequest){
+        String id = null;
+        String token = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+            if (!jwtTokenProvider.validateToken(token)) {
+                return new ResponseEntity<>("재로그인해주쇼", HttpStatus.UNAUTHORIZED);
+            }
+        }
+        try {
+            id = jwtTokenProvider.getUserId(token);
+            authService.confirmPassword(id, request.getPassword());
+            authService.updatePassword(id, request.getNewPassword());
+            return new ResponseEntity<>(null,  HttpStatus.OK);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PostMapping(value = "/find-id")
     private ResponseEntity<AuthCommonResponse> findId(@RequestBody AuthCommonRequest request){
-
-        System.out.println("********************************************");
-        System.out.println(request.getEmail());
-        System.out.println(request.getName());
         AuthCommonResponse response = null;
         try {
             Member m = authService.getMemberByEmail(request.getEmail());
             response = new AuthCommonResponse();
             if(m.getName().equals(request.getName())) {
+                System.out.println(m.getName());
                 String maskingId = m.getId();
                 int index = maskingId.length() - 3;
                 maskingId = maskingId.substring(0, index);
@@ -156,10 +194,6 @@ public class AuthController {
 
     @PostMapping(value = "/find-pw")
     private HttpStatus findPw(@RequestBody AuthCommonRequest request){
-
-        System.out.println("********************************************");
-        System.out.println(request.getEmail());
-        System.out.println(request.getId());
         try {
             String email = request.getEmail();
             // 랜덤 비밀번호 생성
@@ -194,6 +228,28 @@ public class AuthController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/reissue")
+    public ResponseEntity<TokenDto> reissue(@RequestHeader("RefreshToken") String refreshToken) {
+        try {
+            return new ResponseEntity<>(authService.reissue(refreshToken), HttpStatus.OK);
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @DeleteMapping("/out/{id}")
+    public HttpStatus deleteMember(@PathVariable String id) {
+        try {
+            System.out.println(id);
+            authService.deleteMember(id);
+            return HttpStatus.OK;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return HttpStatus.NOT_FOUND;
+        }
     }
 
 }

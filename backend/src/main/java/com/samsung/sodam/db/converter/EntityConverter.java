@@ -4,9 +4,11 @@ package com.samsung.sodam.db.converter;
 import javax.persistence.AttributeConverter;
 import java.util.Arrays;
 
-public abstract class EntityConverter<X extends Enum<X> & BaseEnumCode<Y>, Y> implements AttributeConverter<X, Y> {
+public abstract class EntityConverter<X extends Enum<X> & BaseEnumCode<Y,Z>, Y,Z> implements AttributeConverter<X, Y> {
 
     protected abstract X[] getValueList();
+
+    protected abstract Z[] getNameList();
 
     @Override
     public Y convertToDatabaseColumn(X attribute) {

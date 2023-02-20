@@ -9,7 +9,7 @@ plugins {
 
 group = 'com.samsung'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "11"
 
 configurations {
     compileOnly {
@@ -65,9 +65,20 @@ dependencies {
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-gcp-starter
+    implementation 'org.springframework.cloud:spring-cloud-gcp-starter:1.2.8.RELEASE'
+// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-gcp-storage
+    implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.8.RELEASE'
+
+    // openvidu
+    implementation 'io.openvidu:openvidu-java-client:2.22.0'
+    // webflux
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 }
 
-tasks.named('test') {
+'test' {
     useJUnitPlatform()
 }
 
@@ -90,3 +101,4 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
+targetCompatibility = JavaVersion.VERSION_11

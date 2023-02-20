@@ -2,7 +2,10 @@ package com.samsung.sodam.api.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.samsung.sodam.db.converter.ConsultListConverter;
 import com.samsung.sodam.db.converter.GenderConverter;
+import com.samsung.sodam.db.entity.CONSULT_TYPE;
+import com.samsung.sodam.db.entity.Career;
 import com.samsung.sodam.db.entity.GENDER;
 import com.samsung.sodam.db.entity.Role;
 import lombok.AllArgsConstructor;
@@ -11,7 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Convert;
-import javax.persistence.Converter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +32,6 @@ public class CounselorRequest {
     private String tel;
     private String email;
 
-    private String career;
 
     private String introduce;
     private String major;
@@ -38,6 +41,18 @@ public class CounselorRequest {
     private Role role = Role.COUNSELOR;
 
     private int enterpriseId;
+    private String enterprisestr;
 
     private String profileImg;
+
+    private List<Career> careers;
+
+    //private List<String> consultType;
+    //private Integer[] consultType;
+
+    @Convert(converter = ConsultListConverter.class)
+    private ArrayList<CONSULT_TYPE> consultType;
+
+
+    ArrayList<CertRequest> certificateList;
 }

@@ -14,7 +14,7 @@
   </div> -->
 
   <a id="loginBtn" type="button" onclick="function login() {
-    const redirectUri = 'http://localhost:8080/auth/kakao/callback';
+    const redirectUri = 'VUE_APP_API_URL/auth/kakao/callback';
         const appKey = '9e0f9a70f672fba12b71ea1b5ec10e80'
             window.location.href = 'https://kauth.kakao.com/oauth/authorize?client_id=' + appKey +
     '&redirect_uri=' + redirectUri + '&response_type=code';}
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-const API_URL = 'http://127.0.0.1:8080'
+const VUE_APP_API_URL = process.env.VUE_APP_API_URL
 
 export default {
   methods: {
@@ -80,6 +80,6 @@ export default {
 .background2 {
   width:300px;
   height:40px;
-  background-image: url(../../../assets/kakao_login_btn.png);
+  background-image: url(../../../assets/images/kakao_login_btn.png);
 }
 </style>

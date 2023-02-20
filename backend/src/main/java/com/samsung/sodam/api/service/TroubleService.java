@@ -3,6 +3,7 @@ package com.samsung.sodam.api.service;
 import com.samsung.sodam.api.request.TroubleCommentRequest;
 import com.samsung.sodam.api.request.TroubleRequest;
 import com.samsung.sodam.api.response.TroubleOneResponse;
+import com.samsung.sodam.api.response.TroubleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +16,7 @@ public interface TroubleService {
      * @param pageable
      * @return
      */
-    Page<TroubleOneResponse> getAllTroubleList(String userId, String searchWord, Pageable pageable);
+    Page<TroubleResponse> getAllTroubleList(String searchWord, Pageable pageable);
 
     /**
      * 고민게시판 카테고리별 목록 조회 (검색)
@@ -25,7 +26,7 @@ public interface TroubleService {
      * @param pageable
      * @return
      */
-    Page<TroubleOneResponse> getTroubleList(String userId, String category, String searchWord, Pageable pageable);
+    Page<TroubleResponse> getTroubleList(String category, String searchWord, Pageable pageable);
 
     /**
      * 고민게시글 작성
@@ -60,7 +61,7 @@ public interface TroubleService {
      * @param pageable
      * @return
      */
-    Page<TroubleOneResponse> getMyTroubleList(String clientId, Pageable pageable);
+    Page<TroubleResponse> getMyTroubleList(String clientId, Pageable pageable);
 
     /**
      * 고민게시글 댓글 등록
